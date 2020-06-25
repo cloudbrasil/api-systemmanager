@@ -1,35 +1,64 @@
 const _ = require('lodash');
 const Joi = require('@hapi/joi');
 
-const Recruiter = require('./api/recruiter');
-const Job = require('./api/job');
-const History = require('./api/history');
+const Access = require('./api/access');
+const Dispatch = require('./api/dispatch');
+const Documents = require('./api/documents');
+const Forms = require('./api/forms');
+const Lists = require('./api/lists');
+const Tasks = require('./api/tasks');
+const Users = require('./api/users');
 
 class API {
-  constructor(options) {
+
+  /**
+   * @constructor
+   * @description Options for constructor
+   * @param {object} options Options to new instance
+   * @param {object} options.auth Options to authentication
+   * @param {string} options.auth.type Type (apikey or userpassword)
+   * @param {object} options.auth.credentials Credentials to login SM
+   * @param {string} options.auth.credentials.username Credentials to login SM
+   * @param {string} options.auth.credentials.password Credentials to login SM
+   * @param {string} options.uri Address of the server
+   * @param {object} options.debug Enable debug of requisitions
+   * @param {boolean} options.debug.success Enable debug success
+   * @param {boolean} options.debug.error Enable debug error
+   */
+  constructor(options = {}) {
 
     if (!_.isUndefined(options)) {
       Joi.assert(options, Joi.object());
-      Joi.assert(options.apiKey, Joi.string());
       Joi.assert(options.uri, Joi.string());
       Joi.assert(options.debug, Joi.object());
     }
-
     const self = this;
+
     self.options = _.defaultsDeep({}, options, {
-      apiKey: '6d938014-6f5c-4e28-973d-ce1343ead38e',
-      uri: 'http://localhost:5053',
-      callPrefix: 'Actions.empregonet.recruiter',
+      auth: {
+        type: 'apikey',
+        credentials: {
+          username: null,
+          password: null,
+          key: '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde' // apikey en_automation
+        }
+      },
+      uri: 'http://localhost:8080',
+      attemptsRetry: 3,
+      httpStatusToRetry: [401],
       debug: {success: true, error: true}
     });
-    self.header = {'x-api-key': self.options.apiKey};
 
     //
     // CALL API
     //
-    self.user = new Recruiter({parent: self});
-    self.job = new Job({parent: self});
-    self.history = new History({parent: self});
+    self.access = new Access({parent: self});
+    self.dispatch = new Dispatch({parent: self});
+    self.documents = new Documents({parent: self});
+    self.forms = new Forms({parent: self});
+    self.lists = new Lists({parent: self});
+    self.tasks = new Tasks({parent: self});
+    self.users = new Users({parent: self});
   }
 }
 
