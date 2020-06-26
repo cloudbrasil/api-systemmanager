@@ -41,7 +41,53 @@ Abaixo vamos falar das opções que possam ser passadas no construtor;
         - `success` - `true` ou `false`  Habilita debug quando uma chamada com sucesso, padrão `true`
         - `error` - `true` ou `false`  Habilita debug quando uma chamada com erro, padrão `true`
         
-        
+### Módulo access
+### `loginSU()`
+Método para fazer o login no system manager, para executar as chamadas a API, sempre que iniciar
+a api chame este méthodo para criar a sessão com o system manager
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+
+api.access.loginSU();
+````
+
+### `logoutSU()`
+Método para fazer o logout no system manager, ***cuidado ao chamar esse method você está finalizando
+a sessão do super usuário com o system manager*** e todas as chamadas não irá mais funcionar;
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+
+api.access.logoutSU();
+````
+### `loginUser(params)`
+Método para fazer o login de usuáriono system manager, podendo ser utilizado
+como login usuario e senha, Facebook ou Google.
+
+- `params` - Parâmetros passados ao method para fazer o login
+    - `network` - Informativo dos credencias da rede `empregonet`, `google` ou `facebook`
+    - `credentials` - Credenciais utilizadas no login.
+        - `username` - Email do usuário `requerido na rede empregonet`
+        - `password` - Senha do usuário `requerido na rede empregonet`
+        - `accessToken` - Login com redes sociais `requerido na rede facebook e google`
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+const login = {
+  username: 'ana.breda@gmail.com',
+  password: '123456',
+  network: 'empregonet'
+};
+
+api.access.loginUser(login);
+```
+
             
             
 
