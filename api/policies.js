@@ -40,51 +40,16 @@ class Lists {
 
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
-   * @description Get list by ID
-   * @param {string} id Id form in mongodb
+   * @description Get all policies
    * @return {Promise<unknown>}
    * @public
    * @async
    */
-  getById(id) {
+  getAll() {
     return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(id, Joi.string().required());
-
         const self = this;
-        const orgId = self.parent.dispatch.getOrgId();
-        const apiCall = self.client.get(`/admin/organizations/${orgId}/orgtags/${id}`);
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
-  }
-
-  /**
-   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
-   * @description Get all lists
-   * @param {object} params Params to pagination
-   * @param {number} params.page Current page to pagination
-   * @param {number} params.perPage Qnt itens per page
-   * @return {Promise<unknown>}
-   * @public
-   * @async
-   */
-  getAll(params = {}) {
-    return new Promise(async (resolve, reject) => {
-      try {
-
-        Joi.assert(params, Joi.object());
-        Joi.assert(params.page, Joi.number());
-        Joi.assert(params.perPage, Joi.number());
-
-        const self = this;
-        const orgId = self.parent.dispatch.getOrgId();
-        const page = _.get(params, 'page', 0);
-        const perPage = _.get(params, 'perPage', 200);
-        const apiCall = self.client.post(`/admin/organizations/${orgId}/orgtags?page=${page}&perPage=${perPage}`);
+        const apiCall = self.client.get('/admin/policies');
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {

@@ -6,6 +6,9 @@ const Dispatch = require('./api/dispatch');
 const Documents = require('./api/documents');
 const Forms = require('./api/forms');
 const Lists = require('./api/lists');
+const Plugins = require('./api/plugins');
+const Policies = require('./api/policies');
+const Proccess = require('./api/lists');
 const Tasks = require('./api/tasks');
 const Users = require('./api/users');
 
@@ -52,11 +55,14 @@ class API {
     //
     // CALL API
     //
-    self.access = new Access({parent: self});
     self.dispatch = new Dispatch({parent: self});
+    self.access = new Access({parent: self});
     self.documents = new Documents({parent: self});
     self.forms = new Forms({parent: self});
     self.lists = new Lists({parent: self});
+    self.plugins = new Plugins({parent: self});
+    self.policies = new Policies({parent: self});
+    self.proccess = new Proccess({parent: self});
     self.tasks = new Tasks({parent: self});
     self.users = new Users({parent: self});
   }

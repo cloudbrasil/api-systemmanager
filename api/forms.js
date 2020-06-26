@@ -37,6 +37,30 @@ class Forms {
       return _.get(retData, 'data', def);
     }
   }
+
+  /**
+   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @description Get advance form by ID
+   * @param {string} id Id form in mongodb
+   * @return {Promise<unknown>}
+   * @public
+   * @async
+   */
+  getById(id) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        Joi.assert(id, Joi.string().required());
+
+        const self = this;
+        const orgId = self.parent.dispatch.getOrgId();
+        const apiCall = self.client.get(`/admin/organizations/${orgId}/orgforms/${id}`);
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
+      } catch (ex) {
+        reject(ex);
+      }
+    });
+  }
 }
 
 module.exports = Forms;

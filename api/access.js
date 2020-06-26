@@ -11,7 +11,7 @@ class Access {
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
    * @constructor
-   * @param {object} options Params of the constructot
+   * @param {object} options Params of the constructor
    * @param {object} options.parent This of the pararent
    */
   constructor(options) {
@@ -44,6 +44,7 @@ class Access {
    * @param {object} userData Payload success login
    * @param {object} userData.user User data
    * @param {object} userData.user.sessionId Session JWT
+   * @param {object} userData.user.orgId Organization Id
    * @return {Promise<unknown>}
    * @private
    * @async
@@ -51,13 +52,19 @@ class Access {
   _setSessionSU(userData) {
     return new Promise((resolve, reject) => {
       try {
-        const self = this;
-        const {user: {sessionId}} = userData;
 
-        self.parent.dispatch.setSession(sessionId);
+        Joi.assert(userData, Joi.object().required());
+        Joi.assert(userData.user, Joi.object().required());
+        Joi.assert(userData.user.sessionId, Joi.string().required());
+        Joi.assert(userData.user.orgId, Joi.string().required());
+
+        const self = this;
+        const {user: {sessionId: session, orgId}} = userData;
+
+        self.parent.dispatch.setSession({session, orgId});
         resolve();
       } catch (ex) {
-        reject(ex);
+        throw new Error(ex.message);
       }
     });
   }
@@ -98,6 +105,21 @@ class Access {
         reject(ex);
       }
     });
+  }
+
+  /**
+   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @param {string} networkType NetworkType for login
+   * @return {string} Url for login
+   * @private
+   */
+  _getUrlToLoginUser(networkType) {
+    const url = {
+      empregonet: '/login',
+      google: '/login/google',
+      facebook: '/login/facebook',
+    };
+    return _.get(url, networkType, '/login');
   }
 
   /**
@@ -144,10 +166,67 @@ class Access {
       try {
         const self = this;
         const accessToken = await self._getSessionSU();
-        const payload = { accessToken };
-        const apiCall = self.client.post('/logout', payload);
+        const payload = {accessToken};
+        const apiCall = self.client.get('/logout', payload);
         const retData = self._returnData(await apiCall);
         await self._cleanSessionSU();
+        resolve(retData);
+      } catch (ex) {
+        reject(ex);
+      }
+    });
+  }
+
+  /**
+   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @param {object} params Params to make login
+   * @param {string} params.network Login in network (facebook || google || empregonet)
+   * @param {object} params.payload User data
+   * @param {string} params.payload.username Username of the user
+   * @param {string} params.payload.password Password of the user
+   * @param {string} params.payload.accessToken AccessToken "prelogin" FB or Google
+   * @return {Promise<unknown>}
+   * @public
+   * @async
+   */
+  loginUser(params) {
+    return new Promise(async (resolve, reject) => {
+      try {
+
+        Joi.assert(params, Joi.object().required());
+        Joi.assert(params.network, Joi.string().required());
+        Joi.assert(params.credentials, Joi.object().required());
+        Joi.assert(params.credentials.username, Joi.string().required());
+        Joi.assert(params.credentials.password, Joi.string().required());
+        Joi.assert(params.credentials.accessToken, Joi.string());
+
+        const self = this;
+        const {network, credentials} = params;
+        const apiCall = self.client.post(self._getUrlToLoginUser(network), credentials);
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
+      } catch (ex) {
+        reject(ex);
+      }
+    });
+  }
+
+  /**
+   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @description Logout super user system manager
+   * @return {promise}
+   * @public
+   * @async
+   */
+  logoutUser(accessToken) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        Joi.assert(accessToken, Joi.string().required());
+
+        const self = this;
+        const payload = {accessToken};
+        const apiCall = self.client.get('/logout', payload);
+        const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
         reject(ex);

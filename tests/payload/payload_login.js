@@ -1,6 +1,6 @@
 const login = {
-  username: 'en_automation',
-  email: '123456',
+  username: 'ana.breda@gmail.com',
+  password: '123456',
 };
 
 module.exports = login;
