@@ -23,6 +23,8 @@ api.access.loginSU();
 api.access.logoutSU();
 ```
 
+<!-- INTANCIA DA API -->
+
 ## Instância API
 ### `new APISystemManager(options)`
 Abaixo vamos falar das opções que possam ser passadas no construtor;
@@ -40,8 +42,14 @@ Abaixo vamos falar das opções que possam ser passadas no construtor;
     - `debug` - Habilita o debug das chamadas
         - `success` - `true` ou `false`  Habilita debug quando uma chamada com sucesso, padrão `true`
         - `error` - `true` ou `false`  Habilita debug quando uma chamada com erro, padrão `true`
-        
+
+<!-- MODULO ACCESS -->
+
 ## Módulo access
+
+Módulo para fazer chamadas de acesso, login do usuário SU que faz as chamadas internas no módulo, como login
+dos usuários externos.
+
 ### `loginSU()` - **async**
 Método para fazer o login no system manager, para executar as chamadas a API, sempre que iniciar
 a api chame este méthodo para criar a sessão com o system manager
@@ -101,8 +109,60 @@ const api = new APISystemManager();
 const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
 await api.access.logoutUser(accessToken);
 ```
-            
-            
+
+<!-- MODULO DISPATCH -->
+      
+## Módulo dispatch
+
+Módulo responsável por fazer gerenciar as chamadas as API, este módulo ele tem um `interceptors` 
+que é responsável por interceptar as chamadas a API, e quando recebe um HTTP status, `401` este
+módulo refazer o login e refaz a chamada a API.
+
+### `sessionIsValid()` - **async**
+Method que verifica se o token é válido, se o token for válido retorna o token decodificado.
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+await api.dispatch.logoutUser(accessToken);
+```
+
+<!-- MODULO DOCUMENTS -->
+      
+## Módulo dispatch
+
+Módulo responsável por gerenciar documentos do system manager.
+
+### `autoComplete(params)` - **async**
+Method faz autocomplete dos dados, utilizado para buscar dados passando um texto para busca
+utilizado muito quando se tem um grande volume de dados, exemplo buscar cidades estados do BR.
+
+- `params` - Objeto contendo os itens para busca de autocomplete.
+    - `index` - Nome do campo que será efetuado a busca. `requerido`
+    - `txtToSearch` - Texto que será feito o regex no DB para efetuar o autocomplete. `requerido`
+    - `docId` - ID do documento. `requerido`
+    - `docAreaId` - ID da doc área que o doumento pertence. `requerido`
+    - `tag` - Tag do documento. `requerido`
+    - `projecttion` - String separado por `,` para retornar somente os campos desejados. `opcional` 
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+
+const params = {
+  index: 'extraCityname',
+  txtToSearch: 'Palhoça',
+  docId: '5e5945f650b526150f651717',
+  docAreaId: '5db06b51f833e1047a27fd8b',
+  tag: 'Nome da cidade',
+  projection: 'extraCityname,extraStateabbreviation'
+};
+
+await api.document.autoComplete(params);
+```
+
 
 
 
