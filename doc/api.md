@@ -145,7 +145,7 @@ utilizado muito quando se tem um grande volume de dados, exemplo buscar cidades 
     - `docId` - ID do documento. `requerido`
     - `docAreaId` - ID da doc área que o doumento pertence. `requerido`
     - `tag` - Tag do documento. `requerido`
-    - `projecttion` - String separado por `,` para retornar somente os campos desejados. `opcional` 
+    - `projecttion` - String separado por `,` para retornar somente os campos desejados. <span style="color:red">opcional</span> 
 #### Exemplo de uso
 ```javascript
 const APISystemManager = require('@docbrasil/api-systemmanager');
