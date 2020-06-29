@@ -82,7 +82,7 @@ como login usuario e senha, Facebook ou Google.
     - `credentials` - Credenciais utilizadas no login.
         - `username` - Email do usuário `requerido na rede empregonet`
         - `password` - Senha do usuário `requerido na rede empregonet`
-        - `accessToken` - Login com redes sociais `requerido na rede facebook e google`
+        - `accessToken` - Login com redes sociais `requerido na rede facebook e google`.
 #### Exemplo de uso
 ```javascript
 const APISystemManager = require('@docbrasil/api-systemmanager');
@@ -100,7 +100,7 @@ await api.access.loginUser(login);
 Método para fazer o logout do usuário no system manager, muito utilizado quando se tem usuários externos no SM e o usuário faz
 logout do frontend
 
-- `accessToken` - É o sessionId (Token JWT)
+- `accessToken` - É o sessionId (Token JWT). `requerido`
 
 #### Exemplo de uso
 ```javascript
@@ -145,7 +145,7 @@ utilizado muito quando se tem um grande volume de dados, exemplo buscar cidades 
     - `docId` - ID do documento. `requerido`
     - `docAreaId` - ID da doc área que o doumento pertence. `requerido`
     - `tag` - Tag do documento. `requerido`
-    - `projecttion` - String separado por `,` para retornar somente os campos desejados. <span style="color:red">opcional</span> 
+    - `projecttion` - String separado por `,` para retornar somente os campos desejados. `opcional` 
 #### Exemplo de uso
 ```javascript
 const APISystemManager = require('@docbrasil/api-systemmanager');
@@ -163,6 +163,91 @@ const params = {
 await api.document.autoComplete(params);
 ```
 
+### `getById(docId)` - **async**
+Requisita um documento pelo id (_id mongo) do documento, nele traz toda a estrutura do documento
+dados e campos.
 
+- `docId` - ID do documumento `requerido`
+ 
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+
+const docId = '5d1bc97da965b23a4a0f9644';
+await api.document.autoComplete(docId);
+```
+
+### `getSignedUrl(params)` - **async**
+Requisita uma URL do buscket empregonet da AWS (Amazon).
+
+- `params` - Objecto para requisitar uma URL assinada.
+    - `methodType` - Tipo de reuquisição para bucket `get`ou `put` `requerido`.
+    - `docId` - ID do documento `requerido`.
+    - `docAreaId` - ID da doc área que está associado o documento.
+    - `type` - Mimetype do documento (image/png, image/jpg...) `requerido`
+    - `document` - Docuemnto (utilizado na requisição get); `requerido no method get`
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+// Exemplo utilizando URL assinada method PUT.
+const params = {
+  methodType: 'put',
+  docId: '5edf86fbe896b817e45b8da6',
+  fileName: 'foto',
+  docAreaId: '5edf9f8ee896b817e45b8dac',
+  type: 'image/png',
+};
+await api.document.autoComplete(params);
+```
+
+### `createCV(params)` - **async**
+Cria um documento no system manager, do tipo currículum.
+
+- `params` - Objecto para criar um documento tipo currículo.
+    - `userId` - ID do usuário que ficará associado ao documento. `requerido`
+    - `docId` - ID do documento `requerido`.
+    - `name` - Nome do documento. `requerido`
+    - `docTypeId` - ID do tipo do documento. `requerido`
+    - `areaId` - ID da doc área que o documento está associado. `requerido`
+    - `type` - Mimetype do documento (image/png, image/jpg...) `requerido`
+    - `signedUrl` - URL assinada do bucket AWS. `requerido`
+    - `bytes` -  Tamanho do arquivo em bytes. `requerido`
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+// Exemplo utilizando URL assinada method PUT.
+const params = {
+  userId = '5739d4c6ccb0ebc61f2a9557',  
+  docId: '5edf86fbe896b817e45b8da6',
+  name: 'foto',
+  docTypeId = '5edf9f8ee896b817e45b8dac',  
+  areaId = '1abcdf8ee896b817e45b8dac',  
+  type: 'image/png',
+  signedUrl: 'https://aws...',
+  byes: 1234
+};
+await api.document.createCV(params);
+```
+
+### `removeCV(docId)` - **async**
+Remove um documento no system manager, do tipo currículum.
+
+- `docId` - ID do documumento `requerido`
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const docId = '5edf86fbe896b817e45b8da6';
+await api.document.removeCV(docId);
+```
 
 

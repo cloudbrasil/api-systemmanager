@@ -166,12 +166,13 @@ class Documents {
 
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @description Get document by id database
    * @param {string} id document id
    * @return {Promise<unknown>}
    * @public
    * @async
    */
-  getAttribuitesById(id) {
+  getById(id) {
     return new Promise(async (resolve, reject) => {
       try {
         Joi.assert(id, Joi.string().required());
@@ -255,7 +256,7 @@ class Documents {
    * @public
    * @async
    */
-  create(params) {
+  createCV(params) {
     return new Promise(async (resolve, reject) => {
       try {
 
@@ -285,13 +286,13 @@ class Documents {
 
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
-   * @description Remove document
+   * @description Remove document tipo curriculo
    * @param {string} id Id of the document to remove
    * @return {Promise<unknown>}
    * @public
    * @async
    */
-  remove(id) {
+  removeCV(id) {
     return new Promise(async (resolve, reject) => {
       try {
 

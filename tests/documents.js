@@ -85,7 +85,7 @@ describe('Start API documents', function () {
 
   it('Get attribuites of the document', async function () {
     try {
-      const retData = await sm.documents.getAttribuitesById(docIdAttr);
+      const retData = await sm.documents.getById(docIdAttr);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
@@ -130,11 +130,11 @@ describe('Start API documents', function () {
     }
   });
 
-  it('Add document', async function () {
+  it('Add document CV', async function () {
     try {
       docs.userId = '5739d4c6ccb0ebc61f2a9557';
       docs.docTypeId = '5edf9f8ee896b817e45b8dac';
-      const retData = await sm.documents.create(docs);
+      const retData = await sm.documents.createCV(docs);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
@@ -150,9 +150,9 @@ describe('Start API documents', function () {
     }
   });
 
-  it('Remove document', async function () {
+  it('Remove document CV', async function () {
     try {
-      const retData = await sm.documents.remove(docCreateId);
+      const retData = await sm.documents.removeCV(docCreateId);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
