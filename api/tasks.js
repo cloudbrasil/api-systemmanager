@@ -83,7 +83,7 @@ class Tasks {
 
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
-   * @description Method to get onde tasks by task id and process id
+   * @description Method to get one tasks by task id and process id
    * @param {object} params Params to get one task
    * @param {object} params.processId Proccess id
    * @param {object} params.taskId Task id

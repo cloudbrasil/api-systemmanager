@@ -396,3 +396,107 @@ const userId = '45678906ccb0ebc61f2a9557';
 await api.tasks.listAll(userId);
 ```
 
+### `getById(params)` - **async**
+Solicita uma tarefa específica.
+
+- `params` - Objecto para solicitar uma tarefa espcífica. `requerido`
+    - `processId` - ID do processo. `requerido` 
+    - `taskId` - ID da tarefa. `requerido`
+     
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+
+const params = {
+  processId: '45678906ccb0ebc61f2a9557',
+  taskId: '5dea651508efa134018f3d99'
+} 
+await api.tasks.getById(params);
+```
+
+### `update(params)` - **async**
+Solicita uma tarefa específica.
+
+- `params` - Objecto para atualizar uma tarefa espcífica. `requerido`
+    - `userId` - ID do usuário. `requerido` 
+    - `processId` - ID do processo. `requerido` 
+    - `taskId` - ID da tarefa. `requerido`
+    - `flowName` - Nome do fluxo. `requerido`
+    - `action` - Tipo da acão realizada externamente. `requerido`
+    - `formData` - Dados que foram modificados. `requerido`
+    - `actionGuid` - ID GUID da ação executada quando houver. `opcional`
+     
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+
+const params = {
+  userId: '5e0b593bb7ba770e22c4e632',
+  processId: '45678906ccb0ebc61f2a9557',
+  taskId: '5dea651508efa134018f3d99',
+  flowName: 'Atuaizar cadastro',
+  action: 0,
+  formData: {nome: 'Cloud Brasil', age: 33, city: 'São Paulo'}
+} 
+await api.tasks.update(params);
+```
+
+<!-- MODULO USERS -->
+      
+## Módulo users
+
+Módulo responsável por gerenciar usuários no system manager.
+
+### `getProfile(userId)` - **async**
+Solicita dados do perfil do usuário
+
+- `userId` - ID do usuário (_id mongo). `requerido`
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const userId = '45678906ccb0ebc61f2a9557';
+await api.users.getProfile(userId);
+```
+
+### `updatePassword(params)` - **async**
+Altera a senha do usuário
+
+- `params` - Objecto contendo os parametros para alterar a senha. `requerido`
+    - `oldPassword` - Senha antiga. `requerido`
+    - `newPassword` - Senha nova. `requerido`
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const params = {
+  oldPassword: '123456',
+  newPassword: '123456789',
+};
+await api.users.updatePassword(params);
+```
+
+### `isunique(params)` - **async**
+Verifica em um campo no banco de dados se um valor é único. Muito utilizado para email ou CPF.
+
+- `params` - Objecto contendo os parametros para alterar a senha. `requerido`
+    - `field` - Nome do campo do banco de dados. `requerido`, `válidos: (cpf, email)`
+    - `query` - Texto a ser verificado se existe. `requerido`
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const params = {
+  field: 'email',
+  query: 'ana.breda@gmail.com',
+};
+await api.users.isunique(params);
+```
