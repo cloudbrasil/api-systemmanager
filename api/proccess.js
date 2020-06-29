@@ -52,10 +52,10 @@ class Proccess {
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.processId, Joi.string().required());
-        Joi.assert(params.payload, Joi.object().required());
+        Joi.assert(params.payload, Joi.object());
 
         const self = this;
-        const { processId, payload } = params;
+        const { processId, payload = {} } = params;
         const orgId = self.parent.dispatch.getOrgId();
         const apiCall = self.client.put(`/organizations/${orgId}/process/${processId}`, payload);
         const retData = self._returnData(await apiCall);

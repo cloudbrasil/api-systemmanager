@@ -11,7 +11,8 @@
  - [Módulo Listas](#módulo-lists) 
  - [Módulo Plugins](#módulo-plugins)
  - [Módulo Políticas de segurança](#módulo-policies)
-* tasks
+ - [Módulo Processos](#módulo-proccess)
+ - [Módulo Tarefas de usuário](#módulo-tasks)
 * users
 
 <p>Abaixo vamos descrever como se utiliza um contexto, porém você ter que ter uma instância da API fazendo:</p>
@@ -345,3 +346,53 @@ const api = new APISystemManager();
  
 await api.policies.getAll();
 ```
+
+<!-- MODULO PROCCESS -->
+      
+## Módulo proccess
+
+Módulo responsável por gerenciar processos no SM.
+
+### `startProcess(params)` - **async**
+Inicia um processo dentro do system manager, podendo apenas iniciar com dados ou apenas iniciar
+sem passar dados de entradas para `initParams`
+
+- `params` - Objeto contento dados do processo e payload para inciar um processo `requerido`
+    - `proccessId` - ID do processo a ser iniciado. `requerido`  
+    - `payload` - Dados iniciar para iniciar um processo. `opcional`  
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const params = {
+  proccessId: '45678906ccb0ebc61f2a9557',
+  payload: {
+    name: 'Cloud Brasil',
+    age: 22
+  }
+}
+await api.proccess.startProcess(params);
+```
+
+<!-- MODULO TASKS -->
+      
+## Módulo tasks
+
+Módulo responsável por gerenciar tarefas de usuários no system manager.
+
+### `listAll(userId)` - **async**
+Lista todas tarefas que tiverem associados a um usuário, passando o ID (_id mongo) do usuário.
+
+- `userId` - ID do usuário (_id mongo). `requerido`
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const userId = '45678906ccb0ebc61f2a9557';
+await api.tasks.listAll(userId);
+```
+
