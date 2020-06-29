@@ -311,4 +311,8 @@ class Documents {
   }
 }
 
+const doc = new Documents()
+
+doc.createCV()
+
 module.exports = Documents;

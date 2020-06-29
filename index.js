@@ -1,32 +1,45 @@
 const _ = require('lodash');
 const Joi = require('@hapi/joi');
 
-const Access = require('./api/access');
 const Dispatch = require('./api/dispatch');
-const Documents = require('./api/documents');
-const Forms = require('./api/forms');
-const Lists = require('./api/lists');
-const Plugins = require('./api/plugins');
-const Policies = require('./api/policies');
-const Proccess = require('./api/lists');
-const Tasks = require('./api/tasks');
-const Users = require('./api/users');
+const Session = require('./api/session');
+
+const User = require('./api/user');
+const Admin = require('./api/admin');
 
 class API {
 
   /**
    * @constructor
    * @description Options for constructor
-   * @param {object} options Options to new instance
-   * @param {object} options.auth Options to authentication
-   * @param {string} options.auth.type Type (apikey or userpassword)
-   * @param {object} options.auth.credentials Credentials to login SM
-   * @param {string} options.auth.credentials.username Credentials to login SM
-   * @param {string} options.auth.credentials.password Credentials to login SM
-   * @param {string} options.uri Address of the server
-   * @param {object} options.debug Enable debug of requisitions
-   * @param {boolean} options.debug.success Enable debug success
-   * @param {boolean} options.debug.error Enable debug error
+   * @param {object=} options Options to new instance
+   * @param {object=} options.auth Options to authentication
+   * @param {string} options.auth.type=null Type (apikey or userpassword)
+   * @param {object=} options.auth.credentials Credentials to login SM
+   * @param {string} options.auth.credentials.username=null Credentials to login SM
+   * @param {string} options.auth.credentials.password=null Credentials to login SM
+   * @param {string} options.auth.credentials.session=null Session started by social login
+   * @param {string} options.auth.credentials.apikey=null Session started by social login
+   * @param {string} options.attemptsRetry=3 Number of login attempts
+   * @param {string} options.httpStatusToRetry=[401] HTTP status to retry login
+   * @param {string} options.uri=http://127.0.0.1:8080 Address of the server
+   * @param {object=} options.debug Enable debug of requisitions
+   * @param {boolean} options.debug.success=true Enable debug success
+   * @param {boolean} options.debug.error=true Enable debug error
+   * @example
+   *
+   * const params = {
+   *   auth: {
+   *     type: 'apikey',
+   *     credentials: {
+   *       key: '36371923-27dc-4d30-b666-7fc4ecead925'
+   *     }
+   *   },
+   *   url: 'http://cloudbrasil.com.br'
+   * };
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API(params);
    */
   constructor(options = {}) {
 
@@ -39,11 +52,12 @@ class API {
 
     self.options = _.defaultsDeep({}, options, {
       auth: {
-        type: 'apikey',
+        type: null,
         credentials: {
           username: null,
           password: null,
-          key: '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde' // apikey en_automation
+          session: null,
+          key: null
         }
       },
       uri: 'http://localhost:8080',
@@ -52,19 +66,12 @@ class API {
       debug: {success: true, error: true}
     });
 
-    //
-    // CALL API
-    //
+    // API CALL
     self.dispatch = new Dispatch({parent: self});
-    self.access = new Access({parent: self});
-    self.documents = new Documents({parent: self});
-    self.forms = new Forms({parent: self});
-    self.lists = new Lists({parent: self});
-    self.plugins = new Plugins({parent: self});
-    self.policies = new Policies({parent: self});
-    self.proccess = new Proccess({parent: self});
-    self.tasks = new Tasks({parent: self});
-    self.users = new Users({parent: self});
+    self.session = new Session({parent: self});
+
+    self.user = new User({parent: self});
+    self.admin = new Admin({parent: self});
   }
 }
 

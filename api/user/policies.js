@@ -3,10 +3,10 @@ const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
 /**
- * Class for plugins
+ * Class for lists
  * @class
  */
-class Plugins {
+class Lists {
 
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
@@ -40,19 +40,16 @@ class Plugins {
 
   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
-   * @description Get plugins by id database
-   * @param {string} id Id form in mongodb
+   * @description Get all policies
    * @return {Promise<unknown>}
    * @public
    * @async
    */
-  getById(id) {
+  getAll() {
     return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(id, Joi.string().required());
-
         const self = this;
-        const apiCall = self.client.get(`/admin/plugins/${id}`);
+        const apiCall = self.client.get('/admin/policies');
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
@@ -62,4 +59,4 @@ class Plugins {
   }
 }
 
-module.exports = Plugins;
+module.exports = Lists;
