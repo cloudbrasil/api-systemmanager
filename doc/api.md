@@ -4,11 +4,13 @@
 **api-systemmanager** <p>Vamos descrever todos os methods utilizados na API. o que você precisa entender para usar é que cada method tem um contexto, facilitando assim o entendimento de cada contexto, e podendo ter uma linguagem ubiqua em cada contexto, então fique atendo ao contexto.</p>
 <p>Vamos descrever todos os contextos dentro da API e logo abaixo os methods que fazem parte de cada conexto.</p>
 
- - [Módulo Access](#módulo-access)
+ - [Módulo Acesso](#módulo-access)
  - [Módulo Dispatch](#módulo-dispatch)
  - [Módulo Documentos](#módulo-documentos)
- - [Módulo Forms](#módulo-forms) 
-* lists
+ - [Módulo Formulários](#módulo-forms)
+ - [Módulo Listas](#módulo-lists) 
+ - [Módulo Plugins](#módulo-plugins)
+ - [Módulo Políticas de segurança](#módulo-policies)
 * tasks
 * users
 
@@ -305,4 +307,41 @@ const api = new APISystemManager();
 await api.lists.getAll();
 ```
 
+<!-- MODULO PLUGINS -->
+      
+## Módulo plugins
 
+Módulo responsável por gerenciar plugins no System manager.
+
+### `getById(pluginId)` - **async**
+Solicita uma lista pelo ID.
+
+- `pluginId` - ID do plugin `requerido`
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const formId = '5739d4c6ccb0ebc61f2a9557';
+await api.plugins.getById(pluginId);
+```
+
+<!-- MODULO POLICIES -->
+      
+## Módulo policies
+
+Módulo responsável por gerenciar politicas de segurança de entrada e saída.
+
+### `getAll()` - **async**
+Solicita todas as políticas de segurança, é uma reuquisão que baixa o banco de dados de políticas e 
+utiliza em conjunto com o PEP localmente para rodar a política.
+
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+await api.policies.getAll();
+```
