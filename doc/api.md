@@ -13,7 +13,7 @@
  - [Módulo Políticas de segurança](#módulo-policies)
  - [Módulo Processos](#módulo-proccess)
  - [Módulo Tarefas de usuário](#módulo-tasks)
-* users
+ - [Módulo Usuário](#módulo-users)
 
 <p>Abaixo vamos descrever como se utiliza um contexto, porém você ter que ter uma instância da API fazendo:</p>
 
