@@ -1,6 +1,6 @@
 {
   "name": "@docbrasil/api-systemmanager",
-  "description": "Module API",
+  "description": "Module API System Manager",
   "version": "0.0.1",
   "engines": {
     "node": "10.x"
