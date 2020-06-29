@@ -4,10 +4,10 @@
 **api-systemmanager** <p>Vamos descrever todos os methods utilizados na API. o que você precisa entender para usar é que cada method tem um contexto, facilitando assim o entendimento de cada contexto, e podendo ter uma linguagem ubiqua em cada contexto, então fique atendo ao contexto.</p>
 <p>Vamos descrever todos os contextos dentro da API e logo abaixo os methods que fazem parte de cada conexto.</p>
 
-* access
-* dispatch
-* documents
-* forms
+ - [Módulo Access](#módulo-access)
+ - [Módulo Dispatch](#módulo-dispatch)
+ - [Módulo Documentos](#módulo-documentos)
+ - [Módulo Forms](#módulo-forms) 
 * lists
 * tasks
 * users
@@ -129,9 +129,9 @@ const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3OD
 await api.dispatch.logoutUser(accessToken);
 ```
 
-<!-- MODULO DOCUMENTS -->
+<!-- MODULO DOCUMENTOS -->
       
-## Módulo dispatch
+## Módulo documentos
 
 Módulo responsável por gerenciar documentos do system manager.
 
@@ -248,6 +248,61 @@ const api = new APISystemManager();
  
 const docId = '5edf86fbe896b817e45b8da6';
 await api.document.removeCV(docId);
+```
+
+<!-- MODULO FORMS -->
+      
+## Módulo forms
+
+Módulo responsável por gerenciar formulários no System manager.
+
+### `getById(formId)` - **async**
+Solicita um formulário pelo ID, é o schema que o form builder gera do Quasar.
+
+- `formId` - ID do formulário `requerido`
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const formId = '5739d4c6ccb0ebc61f2a9557';
+await api.forms.getById(formId);
+```
+
+<!-- MODULO LISTS -->
+      
+## Módulo lists
+
+Módulo responsável por gerenciar listas no System manager.
+
+### `getById(lisId)` - **async**
+Solicita uma lista pelo ID.
+
+- `listId` - ID da lista `requerido`
+    
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+const formId = '5739d4c6ccb0ebc61f2a9557';
+await api.lists.getById(listId);
+```
+
+### `getAll(params)` - **async**
+Solicita todas as listas cadastradas no system manager;
+
+- `params` - Parametros para solicitar todas listas cadastradas no SM `opcional`
+    - `page` - Página inicial `opcional, default é 0`
+    - `perPage` - Quantidade de registro por página `opcional, default é 200`
+
+#### Exemplo de uso
+```javascript
+const APISystemManager = require('@docbrasil/api-systemmanager');
+const api = new APISystemManager();
+ 
+await api.lists.getAll();
 ```
 
 
