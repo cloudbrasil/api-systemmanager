@@ -8,6 +8,9 @@ const Login = require('./api/login');
 const User = require('./api/user');
 const Admin = require('./api/admin');
 
+/**
+ * Class API
+ */
 class API {
 
   /**
@@ -22,7 +25,7 @@ class API {
    * @param {string} options.auth.credentials.session=null Session started by social login
    * @param {string} options.auth.credentials.apikey=null Session started by social login
    * @param {string} options.attemptsRetry=3 Number of login attempts
-   * @param {string} options.httpStatusToRetry=[401] HTTP status to retry login
+   * @param {array} [options.httpStatusToRetry=[401]] HTTP status to retry login
    * @param {string} options.uri=http://127.0.0.1:8080 Address of the server
    * @param {object=} options.debug Enable debug of requisitions
    * @param {boolean} options.debug.success=true Enable debug success
