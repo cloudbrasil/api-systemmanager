@@ -61,21 +61,11 @@ Class for documents, permission admin
 
 * [Documents](#Documents)
     * [new Documents(options)](#new_Documents_new)
-    * [new Documents(options)](#new_Documents_new)
     * [.findById(params, session)](#Documents+findById) ⇒ <code>Promise</code>
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
     * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
-
-<a name="new_Documents_new"></a>
-
-### new Documents(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="new_Documents_new"></a>
 
@@ -504,19 +494,9 @@ Class for task, permission admin
 
 * [Task](#Task)
     * [new Task(options)](#new_Task_new)
-    * [new Task(options)](#new_Task_new)
     * [.findOne(params, session)](#Task+findOne)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="new_Task_new"></a>
 
@@ -922,21 +902,11 @@ Class for documents, permission user
 
 * [Documents](#Documents)
     * [new Documents(options)](#new_Documents_new)
-    * [new Documents(options)](#new_Documents_new)
     * [.findById(params, session)](#Documents+findById) ⇒ <code>Promise</code>
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
     * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
-
-<a name="new_Documents_new"></a>
-
-### new Documents(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="new_Documents_new"></a>
 
@@ -1250,19 +1220,9 @@ Class for task, permission user
 
 * [Task](#Task)
     * [new Task(options)](#new_Task_new)
-    * [new Task(options)](#new_Task_new)
     * [.findOne(params, session)](#Task+findOne)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="new_Task_new"></a>
 

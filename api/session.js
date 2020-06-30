@@ -6,7 +6,7 @@ const Axios = require('axios');
  * @class Session manager of the API
  */
 class Session {
-  
+
   constructor(options) {
     Joi.assert(options, Joi.object().required());
     Joi.assert(options.parent, Joi.object().required());
