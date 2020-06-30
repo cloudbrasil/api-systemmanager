@@ -235,12 +235,12 @@ class Documents {
    * @param {string} params.docId Document id for serach
    * @param {string} params.docAreaId Doc area id
    * @param {string} params.tag Tag of the document
-   * @param {string} [params.projection=''] Projection to return fields
-   * @param {string} [params.sort='Mais\+recentes'] Sort data
+   * @param {string} [params.projection=""] Projection to return fields
+   * @param {string} [params.sort="Mais+recentes"] Sort data
    * @param {string} params.orgId Organization id (_id database)
    * @param {string} params.pagination Set pagination
-   * @param {object} [params.pagination.page=1] Page
-   * @param {string} [params.pagination.perPage=100] perPage Itens per page
+   * @param {number} [params.pagination.page=1] Page
+   * @param {number} [params.pagination.perPage=100] perPage Itens per page
    * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
