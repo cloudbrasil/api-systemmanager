@@ -1,524 +1,421 @@
+## Classes
 
-### Introdução
+<dl>
+<dt><a href="#API">API</a></dt>
+<dd></dd>
+<dt><a href="#Dispatch">Dispatch</a></dt>
+<dd><p>Api dispatch manager</p>
+</dd>
+<dt><a href="#Dispatch">Dispatch</a></dt>
+<dd><p>Login manager</p>
+</dd>
+<dt><a href="#Session">Session</a></dt>
+<dd><p>Session manager of the API</p>
+</dd>
+</dl>
 
-**api-systemmanager** <p>Vamos descrever todos os methods utilizados na API. o que você precisa entender para usar é que cada method tem um contexto, facilitando assim o entendimento de cada contexto, e podendo ter uma linguagem ubiqua em cada contexto, então fique atendo ao contexto.</p>
-<p>Vamos descrever todos os contextos dentro da API e logo abaixo os methods que fazem parte de cada conexto.</p>
+<a name="API"></a>
 
- - [Módulo Acesso](#módulo-access)
-    - [Login SU](#loginsu---async)
-    - [Logout SU](#logoutsu---async)
-    - [Login usuário](#loginuserparams---async)
-    - [logout usuário](#logoutuseraccesstoken---async)
- - [Módulo Dispatch](#módulo-dispatch)
-    - [Verificar JWT](#sessionisvalid---async)
- - [Módulo Documentos](#módulo-documentos)
-    - [Busca autocompletar](#autocompleteparams---async)
-    - [Busca documento por ID](#getbyiddocid---async)
-    - [Obter URL assinada AWS](#getsignedurlparams---async)
-    - [Cria um CV](#createcvparams---async)
-    - [Remove um CV](#removecvdocid---async)
- - [Módulo Formulários](#módulo-forms)
-    - [Busca um formulário por ID](#getbyidformid---async)
- - [Módulo Listas](#módulo-lists)
-    - [Busca uma lista por ID](#getbyidlisid---async)
-    - [Busca todas listas](#getallparams---async) 
- - [Módulo Plugins](#módulo-plugins)
-    - [Busca um plugin por ID](#getbyidpluginid---async)
- - [Módulo Políticas de segurança](#módulo-policies)
-    - [Busca todas políticas de segurança](#getall---async)
- - [Módulo Processos](#módulo-proccess)
-    - [Iniciar um processo](#startprocessparams---async)
- - [Módulo Tarefas de usuário](#módulo-tasks)
-    - [Listar todas tarefas de um usuário](#listalluserid---async)
-    - [Obter uma tarefas específica](#getbyidparams---async)
-    - [Atualizar uma tarefas específica](#updateparams---async)
- - [Módulo Usuário](#módulo-users)
-    - [Solicitar perfil do usuário](#getprofileuserid---async)
-    - [Alterar senha do usuário](#updatepasswordparams---async)
-    - [Verificar se uma informação é unica](#isuniqueparams---async)
+## API
+**Kind**: global class  
+<a name="new_API_new"></a>
 
-<p>Abaixo vamos descrever como se utiliza um contexto, porém você ter que ter uma instância da API fazendo:</p>
+### new API([options])
+Options for constructor
 
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
 
-// Exemplo de uso.
-api.access.loginSU();
-api.access.logoutSU();
-```
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| [options] | <code>object</code> |  | Options to new instance |
+| [options.auth] | <code>object</code> |  | Options to authentication |
+| options.auth.type | <code>string</code> | <code>null</code> | Type (apikey or userpassword) |
+| [options.auth.credentials] | <code>object</code> |  | Credentials to login SM |
+| options.auth.credentials.username | <code>string</code> | <code>null</code> | Credentials to login SM |
+| options.auth.credentials.password | <code>string</code> | <code>null</code> | Credentials to login SM |
+| options.auth.credentials.session | <code>string</code> | <code>null</code> | Session started by social login |
+| options.auth.credentials.apikey | <code>string</code> | <code>null</code> | Session started by social login |
+| options.attemptsRetry | <code>string</code> | <code>3</code> | Number of login attempts |
+| options.httpStatusToRetry | <code>string</code> | <code>&quot;[401&quot;</code> | HTTP status to retry login |
+| options.uri | <code>string</code> | <code>&quot;http://127.0.0.1:8080&quot;</code> | Address of the server |
+| [options.debug] | <code>object</code> |  | Enable debug of requisitions |
+| options.debug.success | <code>boolean</code> | <code>true</code> | Enable debug success |
+| options.debug.error | <code>boolean</code> | <code>true</code> | Enable debug error |
 
-<!-- INTANCIA DA API -->
-
-## Instância API
-### `new APISystemManager(options)`
-Abaixo vamos falar das opções que possam ser passadas no construtor;
-
-- `options` - configurações opcinal:
-    - `auth` - Objeto contento o tipo de autenticação do ***SU (Super usuário)*** pode ser por APIKEY ou usuário e senha.
-        - `type` - Tipo autenticação `apikey` ou `userpassword` o padrão é `apikey`
-        - `credentials` - Credenciais utilizadas para fazer login
-            - `username` - Username caso estiver utilizando uma autenticação `userpassword`
-            - `password` - Senha caso estiver utilizando uma autenticação `userpassword`
-            - `apikey` - APIKEY caso estiver utilizando uma autenticação `apikey`
-    - `uri` - Endereço do servidor exemplo: `https://cloudbrasil.com:8080` padrão é `http://127.0.0.1:8080`
-    - `attemptsRetry` - Número máximo de tentativas que vamos fazer em um login de SU padrão `3`.
-    - `httpStatusToRetry` - Os status HTTP para refazer uma autenticação de SU novamemnte padrão `[401]`
-    - `debug` - Habilita o debug das chamadas
-        - `success` - `true` ou `false`  Habilita debug quando uma chamada com sucesso, padrão `true`
-        - `error` - `true` ou `false`  Habilita debug quando uma chamada com erro, padrão `true`
-
-<!-- MODULO ACCESS -->
-
-## Módulo access
-
-Módulo para fazer chamadas de acesso, login do usuário SU que faz as chamadas internas no módulo, como login
-dos usuários externos.
-
-### `loginSU()` - **async**
-Método para fazer o login no system manager, para executar as chamadas a API, sempre que iniciar
-a api chame este méthodo para criar a sessão com o system manager
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-
-await api.access.loginSU();
-````
-
-### `logoutSU()` - **async**
-Método para fazer o logout no system manager, ***cuidado ao chamar esse method você está finalizando
-a sessão do super usuário com o system manager*** e todas as chamadas não irá mais funcionar;
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-
-await api.access.logoutSU();
-````
-### `loginUser(params)` - **async**
-Método para fazer o login de usuáriono system manager, podendo ser utilizado
-como login usuario e senha, Facebook ou Google.
-
-- `params` - Parâmetros passados ao method para fazer o login
-    - `network` - Informativo dos credencias da rede `empregonet`, `google` ou `facebook`
-    - `credentials` - Credenciais utilizadas no login.
-        - `username` - Email do usuário `requerido na rede empregonet`
-        - `password` - Senha do usuário `requerido na rede empregonet`
-        - `accessToken` - Login com redes sociais `requerido na rede facebook e google`.
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-const login = {
-  username: 'ana.breda@gmail.com',
-  password: '123456',
-  network: 'empregonet'
+**Example**  
+```js
+const params = {
+  auth: {
+    type: 'apikey',
+    credentials: {
+      key: '36371923-27dc-4d30-b666-7fc4ecead925'
+    }
+  },
+  url: 'http://cloudbrasil.com.br'
 };
 
-await api.access.loginUser(login);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API(params);
 ```
+<a name="Dispatch"></a>
 
-### `logoutUser(accessToken)` - **async**
-Método para fazer o logout do usuário no system manager, muito utilizado quando se tem usuários externos no SM e o usuário faz
-logout do frontend
+## Dispatch
+Api dispatch manager
 
-- `accessToken` - É o sessionId (Token JWT). `requerido`
+**Kind**: global class  
 
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-await api.access.logoutUser(accessToken);
+* [Dispatch](#Dispatch)
+    * [new Dispatch(options)](#new_Dispatch_new)
+    * [new Dispatch(options)](#new_Dispatch_new)
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+    * [.facebook(accessToken)](#Dispatch+facebook)
+    * [.google(accessToken)](#Dispatch+google)
+    * [.apiKey(apikey)](#Dispatch+apiKey)
+    * [.userPass(params)](#Dispatch+userPass)
+    * [.logout(session)](#Dispatch+logout) ⇒ <code>promise</code>
+
+<a name="new_Dispatch_new"></a>
+
+### new Dispatch(options)
+Options for constructor
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Options to new instance |
+| options.parent | <code>object</code> | This of the parent |
+
+<a name="new_Dispatch_new"></a>
+
+### new Dispatch(options)
+Options for constructor
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Options to new instance |
+| options.parent | <code>object</code> | This of the parent |
+
+<a name="Dispatch+getClient"></a>
+
+### dispatch.getClient() ⇒ <code>promise</code>
+Get client Axios
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>promise</code> - return client axios  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+await api.dispatch.getClient();
 ```
+<a name="Dispatch+facebook"></a>
 
-<!-- MODULO DISPATCH -->
-      
-## Módulo dispatch
+### dispatch.facebook(accessToken)
+Login with social login Facebook
 
-Módulo responsável por fazer gerenciar as chamadas as API, este módulo ele tem um `interceptors` 
-que é responsável por interceptar as chamadas a API, e quando recebe um HTTP status, `401` este
-módulo refazer o login e refaz a chamada a API.
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
-### `sessionIsValid()` - **async**
-Method que verifica se o token é válido, se o token for válido retorna o token decodificado.
+| Param | Type | Description |
+| --- | --- | --- |
+| accessToken | <code>string</code> | Access token of the system manager |
 
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-await api.dispatch.logoutUser(accessToken);
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
+const retData = await api.login.facebook(accessToken);
 ```
+<a name="Dispatch+google"></a>
 
-<!-- MODULO DOCUMENTOS -->
-      
-## Módulo documentos
+### dispatch.google(accessToken)
+Login with social login Google
 
-Módulo responsável por gerenciar documentos do system manager.
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
-### `autoComplete(params)` - **async**
-Method faz autocomplete dos dados, utilizado para buscar dados passando um texto para busca
-utilizado muito quando se tem um grande volume de dados, exemplo buscar cidades estados do BR.
+| Param | Type | Description |
+| --- | --- | --- |
+| accessToken | <code>string</code> | Access token of the system manager |
 
-- `params` - Objeto contendo os itens para busca de autocomplete.
-    - `index` - Nome do campo que será efetuado a busca. `requerido`
-    - `txtToSearch` - Texto que será feito o regex no DB para efetuar o autocomplete. `requerido`
-    - `docId` - ID do documento. `requerido`
-    - `docAreaId` - ID da doc área que o doumento pertence. `requerido`
-    - `tag` - Tag do documento. `requerido`
-    - `projecttion` - String separado por `,` para retornar somente os campos desejados. `opcional` 
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
 
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
+const retData = await api.login.google(accessToken);
+```
+<a name="Dispatch+apiKey"></a>
+
+### dispatch.apiKey(apikey)
+Login with apikey
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| apikey | <code>string</code> | Access key |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
+const retData = await api.login.apiKey(apiKey);
+```
+<a name="Dispatch+userPass"></a>
+
+### dispatch.userPass(params)
+Login with user and password
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Object with user and password |
+| params.username | <code>string</code> | Username or email of the user |
+| params.password | <code>string</code> | Password of the user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
 const params = {
-  index: 'extraCityname',
-  txtToSearch: 'Palhoça',
-  docId: '5e5945f650b526150f651717',
-  docAreaId: '5db06b51f833e1047a27fd8b',
-  tag: 'Nome da cidade',
-  projection: 'extraCityname,extraStateabbreviation'
+  username: 'ana.silva@gmail.com',
+  password: '123456'
 };
-
-await api.document.autoComplete(params);
+const retData = await api.login.userPass(params);
 ```
+<a name="Dispatch+logout"></a>
 
-### `getById(docId)` - **async**
-Requisita um documento pelo id (_id mongo) do documento, nele traz toda a estrutura do documento
-dados e campos.
+### dispatch.logout(session) ⇒ <code>promise</code>
+Logout user system manager
 
-- `docId` - ID do documumento `requerido`
- 
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
-const docId = '5d1bc97da965b23a4a0f9644';
-await api.document.autoComplete(docId);
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retData = await api.login.logout(session);
 ```
+<a name="Dispatch"></a>
 
-### `getSignedUrl(params)` - **async**
-Requisita uma URL do buscket empregonet da AWS (Amazon).
+## Dispatch
+Login manager
 
-- `params` - Objecto para requisitar uma URL assinada.
-    - `methodType` - Tipo de reuquisição para bucket `get`ou `put` `requerido`.
-    - `docId` - ID do documento `requerido`.
-    - `docAreaId` - ID da doc área que está associado o documento.
-    - `type` - Mimetype do documento (image/png, image/jpg...) `requerido`
-    - `document` - Docuemnto (utilizado na requisição get); `requerido no method get`
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-// Exemplo utilizando URL assinada method PUT.
+**Kind**: global class  
+
+* [Dispatch](#Dispatch)
+    * [new Dispatch(options)](#new_Dispatch_new)
+    * [new Dispatch(options)](#new_Dispatch_new)
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+    * [.facebook(accessToken)](#Dispatch+facebook)
+    * [.google(accessToken)](#Dispatch+google)
+    * [.apiKey(apikey)](#Dispatch+apiKey)
+    * [.userPass(params)](#Dispatch+userPass)
+    * [.logout(session)](#Dispatch+logout) ⇒ <code>promise</code>
+
+<a name="new_Dispatch_new"></a>
+
+### new Dispatch(options)
+Options for constructor
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Options to new instance |
+| options.parent | <code>object</code> | This of the parent |
+
+<a name="new_Dispatch_new"></a>
+
+### new Dispatch(options)
+Options for constructor
+
+
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Options to new instance |
+| options.parent | <code>object</code> | This of the parent |
+
+<a name="Dispatch+getClient"></a>
+
+### dispatch.getClient() ⇒ <code>promise</code>
+Get client Axios
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>promise</code> - return client axios  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+await api.dispatch.getClient();
+```
+<a name="Dispatch+facebook"></a>
+
+### dispatch.facebook(accessToken)
+Login with social login Facebook
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| accessToken | <code>string</code> | Access token of the system manager |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
+const retData = await api.login.facebook(accessToken);
+```
+<a name="Dispatch+google"></a>
+
+### dispatch.google(accessToken)
+Login with social login Google
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| accessToken | <code>string</code> | Access token of the system manager |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
+const retData = await api.login.google(accessToken);
+```
+<a name="Dispatch+apiKey"></a>
+
+### dispatch.apiKey(apikey)
+Login with apikey
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| apikey | <code>string</code> | Access key |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
+const retData = await api.login.apiKey(apiKey);
+```
+<a name="Dispatch+userPass"></a>
+
+### dispatch.userPass(params)
+Login with user and password
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Object with user and password |
+| params.username | <code>string</code> | Username or email of the user |
+| params.password | <code>string</code> | Password of the user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
 const params = {
-  methodType: 'put',
-  docId: '5edf86fbe896b817e45b8da6',
-  fileName: 'foto',
-  docAreaId: '5edf9f8ee896b817e45b8dac',
-  type: 'image/png',
+  username: 'ana.silva@gmail.com',
+  password: '123456'
 };
-await api.document.autoComplete(params);
+const retData = await api.login.userPass(params);
 ```
+<a name="Dispatch+logout"></a>
 
-### `createCV(params)` - **async**
-Cria um documento no system manager, do tipo currículum.
+### dispatch.logout(session) ⇒ <code>promise</code>
+Logout user system manager
 
-- `params` - Objecto para criar um documento tipo currículo.
-    - `userId` - ID do usuário que ficará associado ao documento. `requerido`
-    - `docId` - ID do documento `requerido`.
-    - `name` - Nome do documento. `requerido`
-    - `docTypeId` - ID do tipo do documento. `requerido`
-    - `areaId` - ID da doc área que o documento está associado. `requerido`
-    - `type` - Mimetype do documento (image/png, image/jpg...) `requerido`
-    - `signedUrl` - URL assinada do bucket AWS. `requerido`
-    - `bytes` -  Tamanho do arquivo em bytes. `requerido`
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-// Exemplo utilizando URL assinada method PUT.
-const params = {
-  userId = '5739d4c6ccb0ebc61f2a9557',  
-  docId: '5edf86fbe896b817e45b8da6',
-  name: 'foto',
-  docTypeId = '5edf9f8ee896b817e45b8dac',  
-  areaId = '1abcdf8ee896b817e45b8dac',  
-  type: 'image/png',
-  signedUrl: 'https://aws...',
-  byes: 1234
-};
-await api.document.createCV(params);
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retData = await api.login.logout(session);
 ```
+<a name="Session"></a>
 
-### `removeCV(docId)` - **async**
-Remove um documento no system manager, do tipo currículum.
+## Session
+Session manager of the API
 
-- `docId` - ID do documumento `requerido`
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const docId = '5edf86fbe896b817e45b8da6';
-await api.document.removeCV(docId);
-```
+**Kind**: global class  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+<a name="new_Session_new"></a>
 
-<!-- MODULO FORMS -->
-      
-## Módulo forms
+### new Session(options)
 
-Módulo responsável por gerenciar formulários no System manager.
-
-### `getById(formId)` - **async**
-Solicita um formulário pelo ID, é o schema que o form builder gera do Quasar.
-
-- `formId` - ID do formulário `requerido`
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const formId = '5739d4c6ccb0ebc61f2a9557';
-await api.forms.getById(formId);
-```
-
-<!-- MODULO LISTS -->
-      
-## Módulo lists
-
-Módulo responsável por gerenciar listas no System manager.
-
-### `getById(lisId)` - **async**
-Solicita uma lista pelo ID.
-
-- `listId` - ID da lista `requerido`
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const formId = '5739d4c6ccb0ebc61f2a9557';
-await api.lists.getById(listId);
-```
-
-### `getAll(params)` - **async**
-Solicita todas as listas cadastradas no system manager;
-
-- `params` - Parametros para solicitar todas listas cadastradas no SM `opcional`
-    - `page` - Página inicial `opcional, default é 0`
-    - `perPage` - Quantidade de registro por página `opcional, default é 200`
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-await api.lists.getAll();
-```
-
-<!-- MODULO PLUGINS -->
-      
-## Módulo plugins
-
-Módulo responsável por gerenciar plugins no System manager.
-
-### `getById(pluginId)` - **async**
-Solicita uma lista pelo ID.
-
-- `pluginId` - ID do plugin `requerido`
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const formId = '5739d4c6ccb0ebc61f2a9557';
-await api.plugins.getById(pluginId);
-```
-
-<!-- MODULO POLICIES -->
-      
-## Módulo policies
-
-Módulo responsável por gerenciar politicas de segurança de entrada e saída.
-
-### `getAll()` - **async**
-Solicita todas as políticas de segurança, é uma reuquisão que baixa o banco de dados de políticas e 
-utiliza em conjunto com o PEP localmente para rodar a política.
-
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-await api.policies.getAll();
-```
-
-<!-- MODULO PROCCESS -->
-      
-## Módulo proccess
-
-Módulo responsável por gerenciar processos no SM.
-
-### `startProcess(params)` - **async**
-Inicia um processo dentro do system manager, podendo apenas iniciar com dados ou apenas iniciar
-sem passar dados de entradas para `initParams`
-
-- `params` - Objeto contento dados do processo e payload para inciar um processo `requerido`
-    - `proccessId` - ID do processo a ser iniciado. `requerido`  
-    - `payload` - Dados iniciar para iniciar um processo. `opcional`  
-    
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const params = {
-  proccessId: '45678906ccb0ebc61f2a9557',
-  payload: {
-    name: 'Cloud Brasil',
-    age: 22
-  }
-}
-await api.proccess.startProcess(params);
-```
-
-<!-- MODULO TASKS -->
-      
-## Módulo tasks
-
-Módulo responsável por gerenciar tarefas de usuários no system manager.
-
-### `listAll(userId)` - **async**
-Lista todas tarefas que tiverem associados a um usuário, passando o ID (_id mongo) do usuário.
-
-- `userId` - ID do usuário (_id mongo). `requerido`
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const userId = '45678906ccb0ebc61f2a9557';
-await api.tasks.listAll(userId);
-```
-
-### `getById(params)` - **async**
-Solicita uma tarefa específica.
-
-- `params` - Objecto para solicitar uma tarefa espcífica. `requerido`
-    - `processId` - ID do processo. `requerido` 
-    - `taskId` - ID da tarefa. `requerido`
-     
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-
-const params = {
-  processId: '45678906ccb0ebc61f2a9557',
-  taskId: '5dea651508efa134018f3d99'
-} 
-await api.tasks.getById(params);
-```
-
-### `update(params)` - **async**
-Solicita uma tarefa específica.
-
-- `params` - Objecto para atualizar uma tarefa espcífica. `requerido`
-    - `userId` - ID do usuário. `requerido` 
-    - `processId` - ID do processo. `requerido` 
-    - `taskId` - ID da tarefa. `requerido`
-    - `flowName` - Nome do fluxo. `requerido`
-    - `action` - Tipo da acão realizada externamente. `requerido`
-    - `formData` - Dados que foram modificados. `requerido`
-    - `actionGuid` - ID GUID da ação executada quando houver. `opcional`
-     
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
-
-const params = {
-  userId: '5e0b593bb7ba770e22c4e632',
-  processId: '45678906ccb0ebc61f2a9557',
-  taskId: '5dea651508efa134018f3d99',
-  flowName: 'Atuaizar cadastro',
-  action: 0,
-  formData: {nome: 'Cloud Brasil', age: 33, city: 'São Paulo'}
-} 
-await api.tasks.update(params);
-```
-
-<!-- MODULO USERS -->
-      
-## Módulo users
-
-Módulo responsável por gerenciar usuários no system manager.
-
-### `getProfile(userId)` - **async**
-Solicita dados do perfil do usuário
-
-- `userId` - ID do usuário (_id mongo). `requerido`
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const userId = '45678906ccb0ebc61f2a9557';
-await api.users.getProfile(userId);
-```
-
-### `updatePassword(params)` - **async**
-Altera a senha do usuário
-
-- `params` - Objecto contendo os parametros para alterar a senha. `requerido`
-    - `oldPassword` - Senha antiga. `requerido`
-    - `newPassword` - Senha nova. `requerido`
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const params = {
-  oldPassword: '123456',
-  newPassword: '123456789',
-};
-await api.users.updatePassword(params);
-```
-
-### `isunique(params)` - **async**
-Verifica em um campo no banco de dados se um valor é único. Muito utilizado para email ou CPF.
-
-- `params` - Objecto contendo os parametros para alterar a senha. `requerido`
-    - `field` - Nome do campo do banco de dados. `requerido`, `válidos: (cpf, email)`
-    - `query` - Texto a ser verificado se existe. `requerido`
-
-#### Exemplo de uso
-```javascript
-const APISystemManager = require('@docbrasil/api-systemmanager');
-const api = new APISystemManager();
- 
-const params = {
-  field: 'email',
-  query: 'ana.breda@gmail.com',
-};
-await api.users.isunique(params);
-```
+| Param | Type | Description |
+| --- | --- | --- |
+| options | <code>object</code> | Params of the constructor |
+| options.parent | <code>object</code> | This of the pararent |
