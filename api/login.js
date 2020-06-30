@@ -6,12 +6,6 @@ const Joi = require('@hapi/joi');
  */
 class Login {
 
-  /**
-   * @constructor
-   * @description Options for constructor
-   * @param {object} options Options to new instance
-   * @param {object} options.parent This of the parent
-   */
   constructor(options) {
 
     Joi.assert(options, Joi.object().required());

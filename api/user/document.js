@@ -9,12 +9,6 @@ const Moment = require('moment');
  */
 class Documents {
 
-  /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
-   * @constructor
-   * @param {object} options Params of the constructot
-   * @param {object} options.parent This of the pararent
-   */
   constructor(options) {
     Joi.assert(options, Joi.object().required());
     Joi.assert(options.parent, Joi.object().required());

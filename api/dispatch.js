@@ -7,12 +7,6 @@ const Axios = require('axios');
  */
 class Dispatch {
 
-  /**
-   * @constructor
-   * @description Options for constructor
-   * @param {object} options Options to new instance
-   * @param {object} options.parent This of the parent
-   */
   constructor(options) {
 
     Joi.assert(options, Joi.object().required());
