@@ -4,7 +4,7 @@ const Joi = require('@hapi/joi');
 const Moment = require('moment');
 
 /**
- * Class for documents
+ * Class for documents, permission user
  * @class
  */
 class Documents {

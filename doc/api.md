@@ -2,59 +2,59 @@
 
 <dl>
 <dt><a href="#Documents">Documents</a></dt>
-<dd><p>Class for documents</p>
+<dd><p>Class for documents, permission admin</p>
 </dd>
 <dt><a href="#Form">Form</a></dt>
-<dd><p>Class for forms</p>
+<dd><p>Class for forms, permission admin</p>
 </dd>
 <dt><a href="#Admin">Admin</a></dt>
 <dd><p>API request, admin permission level</p>
 </dd>
 <dt><a href="#Lists">Lists</a></dt>
-<dd><p>Class for lists</p>
+<dd><p>Class for lists, permission admin</p>
 </dd>
 <dt><a href="#Plugin">Plugin</a></dt>
-<dd><p>Class for plugin</p>
+<dd><p>Class for plugin, permission admin</p>
 </dd>
 <dt><a href="#Policy">Policy</a></dt>
-<dd><p>Class for policy</p>
+<dd><p>Class for policy, permission admin</p>
 </dd>
 <dt><a href="#Task">Task</a></dt>
-<dd><p>Class for task</p>
+<dd><p>Class for task, permission admin</p>
 </dd>
 <dt><a href="#User">User</a></dt>
-<dd><p>Class for user</p>
+<dd><p>Class for user, permission admin</p>
 </dd>
 <dt><a href="#Dispatch">Dispatch</a></dt>
 <dd><p>Api dispatch manager</p>
 </dd>
-<dt><a href="#Dispatch">Dispatch</a></dt>
+<dt><a href="#Login">Login</a></dt>
 <dd><p>Login manager</p>
 </dd>
 <dt><a href="#Session">Session</a></dt>
 <dd><p>Session manager of the API</p>
 </dd>
 <dt><a href="#Documents">Documents</a></dt>
-<dd><p>Class for documents</p>
+<dd><p>Class for documents, permission user</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
 <dt><a href="#Organization">Organization</a></dt>
-<dd><p>Class for organizations</p>
+<dd><p>Class for organizations, permission user</p>
 </dd>
 <dt><a href="#Process">Process</a></dt>
-<dd><p>Class for process</p>
+<dd><p>Class for process, permission user</p>
 </dd>
 <dt><a href="#Task">Task</a></dt>
-<dd><p>Class for task</p>
+<dd><p>Class for task, permission user</p>
 </dd>
 </dl>
 
 <a name="Documents"></a>
 
 ## Documents
-Class for documents
+Class for documents, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -273,7 +273,7 @@ await api.user.document.signedUrl(params, session);
 <a name="Form"></a>
 
 ## Form
-Class for forms
+Class for forms, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -337,7 +337,7 @@ API request, admin permission level
 <a name="Lists"></a>
 
 ## Lists
-Class for lists
+Class for lists, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -413,7 +413,7 @@ await api.admin.list.find(params, session);
 <a name="Plugin"></a>
 
 ## Plugin
-Class for plugin
+Class for plugin, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -456,7 +456,7 @@ await api.admin.plugin.findById(id, session);
 <a name="Policy"></a>
 
 ## Policy
-Class for policy
+Class for policy, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -497,7 +497,7 @@ await api.admin.policy.find(session);
 <a name="Task"></a>
 
 ## Task
-Class for task
+Class for task, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -620,7 +620,7 @@ await api.user.task.findByIdAndUpdate(params, session);
 <a name="User"></a>
 
 ## User
-Class for user
+Class for user, permission admin
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -722,24 +722,7 @@ Api dispatch manager
 
 * [Dispatch](#Dispatch)
     * [new Dispatch(options)](#new_Dispatch_new)
-    * [new Dispatch(options)](#new_Dispatch_new)
     * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
-    * [.facebook(accessToken)](#Dispatch+facebook)
-    * [.google(accessToken)](#Dispatch+google)
-    * [.apiKey(apikey)](#Dispatch+apiKey)
-    * [.userPass(params)](#Dispatch+userPass)
-    * [.logout(session)](#Dispatch+logout) ⇒ <code>promise</code>
-
-<a name="new_Dispatch_new"></a>
-
-### new Dispatch(options)
-Options for constructor
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Options to new instance |
-| options.parent | <code>object</code> | This of the parent |
 
 <a name="new_Dispatch_new"></a>
 
@@ -767,146 +750,24 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 await api.dispatch.getClient();
 ```
-<a name="Dispatch+facebook"></a>
+<a name="Login"></a>
 
-### dispatch.facebook(accessToken)
-Login with social login Facebook
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| accessToken | <code>string</code> | Access token of the system manager |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
-const retData = await api.login.facebook(accessToken);
-```
-<a name="Dispatch+google"></a>
-
-### dispatch.google(accessToken)
-Login with social login Google
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| accessToken | <code>string</code> | Access token of the system manager |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
-const retData = await api.login.google(accessToken);
-```
-<a name="Dispatch+apiKey"></a>
-
-### dispatch.apiKey(apikey)
-Login with apikey
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| apikey | <code>string</code> | Access key |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
-const retData = await api.login.apiKey(apiKey);
-```
-<a name="Dispatch+userPass"></a>
-
-### dispatch.userPass(params)
-Login with user and password
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Object with user and password |
-| params.username | <code>string</code> | Username or email of the user |
-| params.password | <code>string</code> | Password of the user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const params = {
-  username: 'ana.silva@gmail.com',
-  password: '123456'
-};
-const retData = await api.login.userPass(params);
-```
-<a name="Dispatch+logout"></a>
-
-### dispatch.logout(session) ⇒ <code>promise</code>
-Logout user system manager
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const retData = await api.login.logout(session);
-```
-<a name="Dispatch"></a>
-
-## Dispatch
+## Login
 Login manager
 
 **Kind**: global class  
 
-* [Dispatch](#Dispatch)
-    * [new Dispatch(options)](#new_Dispatch_new)
-    * [new Dispatch(options)](#new_Dispatch_new)
-    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
-    * [.facebook(accessToken)](#Dispatch+facebook)
-    * [.google(accessToken)](#Dispatch+google)
-    * [.apiKey(apikey)](#Dispatch+apiKey)
-    * [.userPass(params)](#Dispatch+userPass)
-    * [.logout(session)](#Dispatch+logout) ⇒ <code>promise</code>
+* [Login](#Login)
+    * [new Login(options)](#new_Login_new)
+    * [.facebook(accessToken)](#Login+facebook)
+    * [.google(accessToken)](#Login+google)
+    * [.apiKey(apikey)](#Login+apiKey)
+    * [.userPass(params)](#Login+userPass)
+    * [.logout(session)](#Login+logout) ⇒ <code>promise</code>
 
-<a name="new_Dispatch_new"></a>
+<a name="new_Login_new"></a>
 
-### new Dispatch(options)
+### new Login(options)
 Options for constructor
 
 
@@ -915,38 +776,12 @@ Options for constructor
 | options | <code>object</code> | Options to new instance |
 | options.parent | <code>object</code> | This of the parent |
 
-<a name="new_Dispatch_new"></a>
+<a name="Login+facebook"></a>
 
-### new Dispatch(options)
-Options for constructor
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Options to new instance |
-| options.parent | <code>object</code> | This of the parent |
-
-<a name="Dispatch+getClient"></a>
-
-### dispatch.getClient() ⇒ <code>promise</code>
-Get client Axios
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>promise</code> - return client axios  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-await api.dispatch.getClient();
-```
-<a name="Dispatch+facebook"></a>
-
-### dispatch.facebook(accessToken)
+### login.facebook(accessToken)
 Login with social login Facebook
 
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Kind**: instance method of [<code>Login</code>](#Login)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -964,12 +799,12 @@ const api = new API(params);
 const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
 const retData = await api.login.facebook(accessToken);
 ```
-<a name="Dispatch+google"></a>
+<a name="Login+google"></a>
 
-### dispatch.google(accessToken)
+### login.google(accessToken)
 Login with social login Google
 
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Kind**: instance method of [<code>Login</code>](#Login)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -987,12 +822,12 @@ const api = new API(params);
 const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
 const retData = await api.login.google(accessToken);
 ```
-<a name="Dispatch+apiKey"></a>
+<a name="Login+apiKey"></a>
 
-### dispatch.apiKey(apikey)
+### login.apiKey(apikey)
 Login with apikey
 
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Kind**: instance method of [<code>Login</code>](#Login)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -1010,12 +845,12 @@ const api = new API(params);
 const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
 const retData = await api.login.apiKey(apiKey);
 ```
-<a name="Dispatch+userPass"></a>
+<a name="Login+userPass"></a>
 
-### dispatch.userPass(params)
+### login.userPass(params)
 Login with user and password
 
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Kind**: instance method of [<code>Login</code>](#Login)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -1038,12 +873,12 @@ const params = {
 };
 const retData = await api.login.userPass(params);
 ```
-<a name="Dispatch+logout"></a>
+<a name="Login+logout"></a>
 
-### dispatch.logout(session) ⇒ <code>promise</code>
+### login.logout(session) ⇒ <code>promise</code>
 Logout user system manager
 
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Kind**: instance method of [<code>Login</code>](#Login)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -1080,7 +915,7 @@ Session manager of the API
 <a name="Documents"></a>
 
 ## Documents
-Class for documents
+Class for documents, permission user
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -1315,7 +1150,7 @@ API request, user permission level
 <a name="Organization"></a>
 
 ## Organization
-Class for organizations
+Class for organizations, permission user
 
 **Kind**: global class  
 **Author**: Augusto Pissarra <abernardo.br@gmail.com>  
@@ -1358,7 +1193,7 @@ await api.user.organization.idCardExist(idCard, session);
 <a name="Process"></a>
 
 ## Process
-Class for process
+Class for process, permission user
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -1408,7 +1243,7 @@ await api.user.process.start(params, session);
 <a name="Task"></a>
 
 ## Task
-Class for task
+Class for task, permission user
 
 **Kind**: global class  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  

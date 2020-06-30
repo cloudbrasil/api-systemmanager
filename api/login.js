@@ -4,7 +4,7 @@ const Joi = require('@hapi/joi');
 /**
  * @class Login manager
  */
-class Dispatch {
+class Login {
 
   /**
    * @constructor
@@ -219,4 +219,4 @@ class Dispatch {
   }
 }
 
-module.exports = Dispatch;
+module.exports = Login;

@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
 /**
- * Class for lists
+ * Class for lists, permission admin
  * @class
  */
 class Lists {

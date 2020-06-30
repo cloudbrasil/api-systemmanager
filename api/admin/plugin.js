@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
 /**
- * Class for plugin
+ * Class for plugin, permission admin
  * @class
  */
 class Plugin {
