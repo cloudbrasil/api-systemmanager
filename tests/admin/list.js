@@ -1,15 +1,16 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 
-const API = require('../index');
-const login = require('./payload/payload_login');
+const API = require('../../index');
 
-let session;
+let userId;
+let orgId;
 let sm;
-let retData;
-let setPayloadLogin = () => ({...login});
+let session;
+let listId = '5e553471f0c1ed539e97519c';
+let apiKey = '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde';
 
-describe('Start API access', function () {
+describe('Start API lists', function () {
   before(function (done) {
 
     try {
@@ -22,26 +23,7 @@ describe('Start API access', function () {
 
   it('Login SU', async function () {
     try {
-      retData = await sm.access.loginSU();
-
-      expect(retData).to.not.be.empty;
-      expect(retData.auth).to.be.true;
-      expect(retData.user).to.be.an('object');
-      expect(retData.user).to.be.an('object');
-      expect(retData.user).to.not.be.empty;
-      expect(retData.user.sessionId).to.not.be.empty;
-      expect(retData.user.sessionId.split('.').length).equal(3);
-      expect(retData.user.orgId.length).equal(24);
-    } catch (ex) {
-      expect(ex).to.be.empty;
-    }
-  });
-
-  it('Login User', async function () {
-    try {
-      const credentials = setPayloadLogin();
-      const params = {network: 'empregonet', credentials}
-      retData = await sm.access.loginUser(params);
+      const retData = await sm.login.apiKey(apiKey);
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;
@@ -53,6 +35,36 @@ describe('Start API access', function () {
       expect(retData.user.orgId.length).equal(24);
 
       session = retData.user.sessionId;
+      userId = retData.user._id;
+      orgId = retData.user.orgId;
+    } catch (ex) {
+      expect(ex).to.be.empty;
+    }
+  });
+
+  it('Get list by ID', async function () {
+    try {
+      const params = {id: listId, orgId};
+      const retData = await sm.admin.list.findById(params, session);
+
+      expect(retData).to.not.be.empty;
+      expect(retData).to.be.an('object');
+      expect(retData._id).equal(listId);
+      expect(retData.list).to.not.be.empty;
+      expect(retData.list).to.be.an('array');
+    } catch (ex) {
+      expect(ex).to.be.empty;
+    }
+  });
+
+  it('Get all lists', async function () {
+    try {
+
+      const params = {orgId};
+      const retData = await sm.admin.list.find(params, session);
+
+      expect(retData).to.not.be.empty;
+      expect(retData).to.be.an('array');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
@@ -60,7 +72,7 @@ describe('Start API access', function () {
 
   it('Logout user', async function () {
     try {
-      retData = await sm.access.logoutUser(session);
+      const retData = await sm.login.logout(session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
@@ -71,3 +83,4 @@ describe('Start API access', function () {
     }
   });
 });
+

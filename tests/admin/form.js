@@ -1,14 +1,14 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 
-const API = require('../index');
-const login = require('./payload/payload_login');
+const API = require('../../index');
 
-let formId;
-let docIdAttr;
+let session;
+let userId;
+let orgId;
 let sm;
-let setPayloadLogin = () => ({...login});
-
+let formId = '5e834cf792207e480d6a879c';
+let apiKey = '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde';
 
 describe('Start API forms', function () {
   before(function (done) {
@@ -21,9 +21,9 @@ describe('Start API forms', function () {
     }
   });
 
-  it('Login', async function () {
+  it('Login SU', async function () {
     try {
-      const retData = await sm.access.loginSU();
+      const retData = await sm.login.apiKey(apiKey);
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;
@@ -33,6 +33,10 @@ describe('Start API forms', function () {
       expect(retData.user.sessionId).to.not.be.empty;
       expect(retData.user.sessionId.split('.').length).equal(3);
       expect(retData.user.orgId.length).equal(24);
+
+      session = retData.user.sessionId;
+      userId = retData.user._id;
+      orgId = retData.user.orgId;
     } catch (ex) {
       expect(ex).to.be.empty;
     }
@@ -40,8 +44,8 @@ describe('Start API forms', function () {
 
   it('Get form by ID', async function () {
     try {
-      formId = '5e834cf792207e480d6a879c';
-      const retData = await sm.forms.getById(formId);
+      const params = {id: formId, orgId};
+      const retData = await sm.admin.form.findById(params, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
@@ -50,6 +54,19 @@ describe('Start API forms', function () {
       expect(retData.form).to.be.an('object');
       expect(retData.form.form).to.not.be.empty;
       expect(retData.form.form).to.be.an('array');
+    } catch (ex) {
+      expect(ex).to.be.empty;
+    }
+  });
+
+  it('Logout user', async function () {
+    try {
+      const retData = await sm.login.logout(session);
+
+      expect(retData).to.not.be.empty;
+      expect(retData).to.be.an('object');
+      expect(retData.response).to.not.be.empty;
+      expect(retData.response).equal('OK');
     } catch (ex) {
       expect(ex).to.be.empty;
     }

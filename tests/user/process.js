@@ -1,16 +1,16 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 
-const API = require('../index');
-const login = require('./payload/payload_login');
+const API = require('../../index');
 
-let listId;
-let docIdAttr;
+let userId;
+let orgId;
 let sm;
-let setPayloadLogin = () => ({...login});
+let session;
+let processId = '5e66cc9d719a4028ffcc6276';
+let apiKey = '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde';
 
-
-describe('Start API lists', function () {
+describe('Start API process', function () {
   before(function (done) {
 
     try {
@@ -23,7 +23,7 @@ describe('Start API lists', function () {
 
   it('Login', async function () {
     try {
-      const retData = await sm.access.loginSU();
+      const retData = await sm.login.apiKey(apiKey);
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;
@@ -33,35 +33,39 @@ describe('Start API lists', function () {
       expect(retData.user.sessionId).to.not.be.empty;
       expect(retData.user.sessionId.split('.').length).equal(3);
       expect(retData.user.orgId.length).equal(24);
+
+      session = retData.user.sessionId;
+      userId = retData.user._id;
+      orgId = retData.user.orgId;
     } catch (ex) {
       expect(ex).to.be.empty;
     }
   });
 
-  it('Get list by ID', async function () {
+  it('Start process', async function () {
     try {
-      listId = '5e553471f0c1ed539e97519c';
-      const retData = await sm.lists.getById(listId);
+      const params = {processId, orgId};
+      const retData = await sm.user.process.start(params, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
-      expect(retData._id).equal(listId);
-      expect(retData.list).to.not.be.empty;
-      expect(retData.list).to.be.an('array');
+      expect(retData.exec).to.be.true;
     } catch (ex) {
       expect(ex).to.be.empty;
     }
   });
 
-  it('Get all lists', async function () {
+  it('Logout user', async function () {
     try {
-      listId = '5e553471f0c1ed539e97519c';
-      const retData = await sm.lists.getAll();
+      const retData = await sm.login.logout(session);
 
       expect(retData).to.not.be.empty;
-      expect(retData).to.be.an('array');
+      expect(retData).to.be.an('object');
+      expect(retData.response).to.not.be.empty;
+      expect(retData.response).equal('OK');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
   });
 });
+

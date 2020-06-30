@@ -3,6 +3,7 @@ const Joi = require('@hapi/joi');
 
 const Dispatch = require('./api/dispatch');
 const Session = require('./api/session');
+const Login = require('./api/login');
 
 const User = require('./api/user');
 const Admin = require('./api/admin');
@@ -69,6 +70,7 @@ class API {
     // API CALL
     self.dispatch = new Dispatch({parent: self});
     self.session = new Session({parent: self});
+    self.login = new Login({parent: self});
 
     self.user = new User({parent: self});
     self.admin = new Admin({parent: self});

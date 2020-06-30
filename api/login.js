@@ -23,6 +23,36 @@ class Dispatch {
   }
 
   /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      throw Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
+    } else {
+      return _.get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Login with social login Facebook
    * @param {string} accessToken Access token of the system manager
@@ -39,15 +69,17 @@ class Dispatch {
    * const retData = await api.login.facebook(accessToken);
    */
   facebook(accessToken) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
         Joi.assert(accessToken, Joi.string().required());
 
         const self = this;
-        resolve();
+
+        const apiCall = self._client.post('/login/facebook', {accessToken});
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
       } catch (ex) {
-        const execption = _.hasIn(ex, 'message') ? ex.message : ex;
-        reject(execption);
+        reject(ex);
       }
     });
   }
@@ -69,15 +101,17 @@ class Dispatch {
    * const retData = await api.login.google(accessToken);
    */
   google(accessToken) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
         Joi.assert(accessToken, Joi.string().required());
 
         const self = this;
-        resolve();
+
+        const apiCall = self._client.post('/login/google', {accessToken});
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
       } catch (ex) {
-        const execption = _.hasIn(ex, 'message') ? ex.message : ex;
-        reject(execption);
+        reject(ex);
       }
     });
   }
@@ -98,16 +132,18 @@ class Dispatch {
    * const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
    * const retData = await api.login.apiKey(apiKey);
    */
-  apiKey(apikey) {
-    return new Promise((resolve, reject) => {
+  apiKey(apiKey) {
+    return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(apikey, Joi.string().required());
+        Joi.assert(apiKey, Joi.string().required());
 
         const self = this;
-        resolve();
+
+        const apiCall = self._client.post('/login/api', {apiKey});
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
       } catch (ex) {
-        const execption = _.hasIn(ex, 'message') ? ex.message : ex;
-        reject(execption);
+        reject(ex);
       }
     });
   }
@@ -131,33 +167,30 @@ class Dispatch {
    *   username: 'ana.silva@gmail.com',
    *   password: '123456'
    * };
-   * const retData = await api.login.userPass(apiKey);
+   * const retData = await api.login.userPass(params);
    */
   userPass(params) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(params, Joi.object().required());
         Joi.assert(params.username, Joi.string().required());
         Joi.assert(params.password, Joi.string().required());
 
         const self = this;
-        resolve();
+
+        const apiCall = self._client.post('/login', params);
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
       } catch (ex) {
-        const execption = _.hasIn(ex, 'message') ? ex.message : ex;
-        reject(execption);
+        reject(ex);
       }
     });
   }
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
-   * @description When logging in with an external user, the session is not saved in the instance, but returned to the external user.
-   * @param {object} params Object for login
-   * @param {string} params.type Login type facebook | google | apiKey | userPass
-   * @param {string=} params.username Username or email of the user
-   * @param {string=} params.password Password of the user
-   * @param {string=} params.apiKey Key of the user
-   * @param {string=} params.accessToken Access token of the system manager
+   * @description Logout user system manager
+   * @param {string} session Session, token JWT
+   * @return {promise}
    * @public
    * @async
    * @example
@@ -167,39 +200,20 @@ class Dispatch {
    * // Params of the instance
    * const params = {...}
    * const api = new API(params);
-   * const params = {
-   *   type: 'userpass',
-   *   username: 'ana.silva@gmail.com',
-   *   password: '123456'
-   * };
-   * const retData = await api.login.externalUser(params);
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retData = await api.login.logout(session);
    */
-  externalUser(params) {
-    return new Promise((resolve, reject) => {
+  logout(session) {
+    return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.type, Joi.string().required());
-
-        const { type } = params;
-        if (type === 'facebook' || type === 'google') {
-          Joi.assert(params.accessToken, Joi.string().required());
-
-        } else if (type === 'userPass') {
-          Joi.assert(params.userpass, Joi.string().required());
-          Joi.assert(params.password, Joi.string().required());
-
-        } else if (type === 'apiKey') {
-          Joi.assert(params.apiKey, Joi.string().required());
-
-        } else {
-          throw new Error('Login type not found');
-        }
+        Joi.assert(session, Joi.string().required());
 
         const self = this;
-        resolve();
+        const apiCall = self._client.get('/logout', self._setHeader(session));
+        const retData = self._returnData(await apiCall);
+        resolve(retData);
       } catch (ex) {
-        const execption = _.hasIn(ex, 'message') ? ex.message : ex;
-        reject(execption);
+        reject(ex);
       }
     });
   }

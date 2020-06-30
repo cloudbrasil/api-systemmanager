@@ -1,16 +1,14 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 
-const API = require('../index');
-const login = require('./payload/payload_login');
+const API = require('../../index');
 
 let session;
 let userId;
 let sm;
-let retData;
-let setPayloadLogin = () => ({...login});
 let updatePass = {id: userId, oldPassword: '123456', newPassword: '123456789'};
-
+let apiKey = '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde';
+let emailExist = 'emailisunique@gmail.com';
 
 describe('Start API users', function () {
   before(function (done) {
@@ -25,26 +23,7 @@ describe('Start API users', function () {
 
   it('Login SU', async function () {
     try {
-      retData = await sm.access.loginSU();
-
-      expect(retData).to.not.be.empty;
-      expect(retData.auth).to.be.true;
-      expect(retData.user).to.be.an('object');
-      expect(retData.user).to.be.an('object');
-      expect(retData.user).to.not.be.empty;
-      expect(retData.user.sessionId).to.not.be.empty;
-      expect(retData.user.sessionId.split('.').length).equal(3);
-      expect(retData.user.orgId.length).equal(24);
-    } catch (ex) {
-      expect(ex).to.be.empty;
-    }
-  });
-
-  it('Login User', async function () {
-    try {
-      const credentials = setPayloadLogin();
-      const params = {network: 'empregonet', credentials}
-      retData = await sm.access.loginUser(params);
+      const retData = await sm.login.apiKey(apiKey);
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;
@@ -64,13 +43,13 @@ describe('Start API users', function () {
 
   it('Get profile', async function () {
     try {
-      retData = await sm.users.getProfile(userId);
+      const retData = await sm.admin.user.findById(userId, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
       expect(retData._id).equal(userId);
-      expect(retData.name).equal('Ana Breda');
-      expect(retData.username).equal('ana.breda');
+      expect(retData.name).equal('Automation SM');
+      expect(retData.username).equal('en_automation');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
@@ -78,14 +57,14 @@ describe('Start API users', function () {
 
   it('Update password', async function () {
     try {
-      updatePass.id = userId;
-      retData = await sm.users.updatePassword(updatePass);
+      updatePass.userId = userId;
+      const retData = await sm.admin.user.findByIdAndUpdatePassword(updatePass, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
       expect(retData._id).equal(userId);
-      expect(retData.name).equal('Ana Breda');
-      expect(retData.username).equal('ana.breda');
+      expect(retData.name).equal('Automation SM');
+      expect(retData.username).equal('en_automation');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
@@ -96,13 +75,13 @@ describe('Start API users', function () {
       updatePass.oldPassword = '123456789';
       updatePass.newPassword = '123456';
       updatePass.id = userId;
-      retData = await sm.users.updatePassword(updatePass);
+      const retData = await sm.admin.user.findByIdAndUpdatePassword(updatePass, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
       expect(retData._id).equal(userId);
-      expect(retData.name).equal('Ana Breda');
-      expect(retData.username).equal('ana.breda');
+      expect(retData.name).equal('Automation SM');
+      expect(retData.username).equal('en_automation');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
@@ -110,8 +89,7 @@ describe('Start API users', function () {
 
   it('Email is unique', async function () {
     try {
-      const params = {field: 'email', query: 'emailisunique@gmail.com'};
-      retData = await sm.users.isunique(params);
+      const retData = await sm.admin.user.emailExist(emailExist, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
@@ -123,8 +101,8 @@ describe('Start API users', function () {
 
   it('Email is not unique', async function () {
     try {
-      const params = {field: 'email', query: 'ana.breda@gmail.com'};
-      retData = await sm.users.isunique(params);
+      emailExist = 'ana.breda@gmail.com';
+      const retData = await sm.admin.user.emailExist(emailExist, session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');
@@ -136,7 +114,7 @@ describe('Start API users', function () {
 
   it('Logout user', async function () {
     try {
-      retData = await sm.access.logoutUser(session);
+      const retData = await sm.login.logout(session);
 
       expect(retData).to.not.be.empty;
       expect(retData).to.be.an('object');

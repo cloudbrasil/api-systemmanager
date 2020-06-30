@@ -21,33 +21,6 @@ class Dispatch {
     const self = this;
     self.parent = options.parent;
     self._client = Axios.create({baseURL: self.parent.options.uri});
-
-    self._startInterceptors();
-  }
-
-  /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
-   * @description Interceptors HTTP to request, response and errors
-   * @private
-   */
-  _startInterceptors() {
-    const self = this;
-
-    self._client.interceptors.request.use(request => {
-      return request;
-    });
-
-    self._client.interceptors.response.use(response => {
-      return response;
-    }, error => {
-      const {response} = error;
-      const httpStatusToRetry = _.get(self, 'parent.options.httpStatusToRetry');
-
-      if (httpStatusToRetry.indexOf(response.statusCode) > -1) {
-      }
-
-      return Promise.reject(error)
-    });
   }
 
   /**
@@ -65,10 +38,9 @@ class Dispatch {
   getClient() {
     try {
       const self = this;
-      return Promise.resolve(self._client);
+      return self._client;
     } catch (ex) {
-      const execption = _.hasIn(ex, 'message') ? ex.message : ex;
-      return Promise.reject(execption);
+      return ex;
     }
   }
 }

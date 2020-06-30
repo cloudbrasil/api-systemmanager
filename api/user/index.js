@@ -1,6 +1,10 @@
 const _ = require('lodash');
 const Joi = require('@hapi/joi');
 
+const Organization = require('./organization');
+const Process = require('./process');
+const Task = require('./task');
+
 /**
  * @class API request, user permission level
  */
@@ -14,6 +18,11 @@ class Users {
   constructor(options) {
     Joi.assert(options, Joi.object().required());
     Joi.assert(options.parent, Joi.object().required());
+
+    const self = this;
+    self.organization = new Organization(options);
+    self.process = new Process(options);
+    self.task = new Task(options);
   }
 }
 

@@ -1,16 +1,15 @@
 const _ = require('lodash');
 const expect = require('chai').expect;
 
-const API = require('../index');
-const login = require('./payload/payload_login');
+const API = require('../../index');
 
 let userId;
+let orgId;
 let sm;
-let setPayloadLogin = () => ({...login});
-let taskId = '5edf9f8ee8a2b117e45b8dac'
-let processId = 'bedf9f8ee8a2b117e45b8dad'
+let session;
+let apiKey = '38bd15aa-6418-4d4f-812a-e7ed5b3bfcde';
 
-describe('Start API tasks', function () {
+describe('Start API policy', function () {
   before(function (done) {
 
     try {
@@ -21,9 +20,9 @@ describe('Start API tasks', function () {
     }
   });
 
-  it('Login', async function () {
+  it('Login SU', async function () {
     try {
-      const retData = await sm.access.loginSU();
+      const retData = await sm.login.apiKey(apiKey);
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;
@@ -34,41 +33,39 @@ describe('Start API tasks', function () {
       expect(retData.user.sessionId.split('.').length).equal(3);
       expect(retData.user.orgId.length).equal(24);
 
+      session = retData.user.sessionId;
       userId = retData.user._id;
+      orgId = retData.user.orgId;
     } catch (ex) {
       expect(ex).to.be.empty;
     }
   });
 
-  it('List all task', async function () {
+  it('Get policies', async function () {
     try {
-      const retData = await sm.tasks.listAll(userId);
+      const retData = await sm.admin.policy.find(session);
 
+      expect(retData).to.not.be.empty;
       expect(retData).to.be.an('array');
+      expect(retData[0]).to.include.all.keys('_id', 'name', 'policy', 'description');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
   });
 
-  it('Get one task by id', async function () {
+  it('Logout user', async function () {
     try {
-      const payload = {taskId, processId};
-      const retData = await sm.tasks.getById(payload);
+      const retData = await sm.login.logout(session);
 
-      expect(retData).to.be.an('array');
-    } catch (ex) {
-      expect(ex).to.be.empty;
-    }
-  });
-
-  it('Update task', async function () {
-    try {
-      const payload = {taskId, processId};
-      const retData = await sm.tasks.getById(payload);
-
-      expect(retData).to.be.an('array');
+      expect(retData).to.not.be.empty;
+      expect(retData).to.be.an('object');
+      expect(retData.response).to.not.be.empty;
+      expect(retData.response).equal('OK');
     } catch (ex) {
       expect(ex).to.be.empty;
     }
   });
 });
+
+
+
