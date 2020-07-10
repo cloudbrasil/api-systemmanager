@@ -57,24 +57,13 @@
 Class for documents, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
 * [Documents](#Documents)
-    * [new Documents(options)](#new_Documents_new)
     * [.findById(params, session)](#Documents+findById) ⇒ <code>Promise</code>
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
     * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
-
-<a name="new_Documents_new"></a>
-
-### new Documents(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="Documents+findById"></a>
 
@@ -175,12 +164,12 @@ await api.user.document.findByIdAndRemove(params, session);
 | params.docId | <code>string</code> |  | Document id for serach |
 | params.docAreaId | <code>string</code> |  | Doc area id |
 | params.tag | <code>string</code> |  | Tag of the document |
-| [params.projection] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Projection to return fields |
-| [params.sort] | <code>string</code> | <code>&quot;&#x27;Mais\\+recentes&#x27;&quot;</code> | Sort data |
+| [params.projection] | <code>string</code> | <code>&quot;\&quot;\&quot;&quot;</code> | Projection to return fields |
+| [params.sort] | <code>string</code> | <code>&quot;\&quot;Mais+recentes\&quot;&quot;</code> | Sort data |
 | params.orgId | <code>string</code> |  | Organization id (_id database) |
 | params.pagination | <code>string</code> |  | Set pagination |
-| [params.pagination.page] | <code>object</code> | <code>1</code> | Page |
-| [params.pagination.perPage] | <code>string</code> | <code>100</code> | perPage Itens per page |
+| [params.pagination.page] | <code>number</code> | <code>1</code> | Page |
+| [params.pagination.perPage] | <code>number</code> | <code>100</code> | perPage Itens per page |
 | session | <code>string</code> |  | Session, token JWT |
 
 **Example**  
@@ -266,21 +255,6 @@ await api.user.document.signedUrl(params, session);
 Class for forms, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-* [Form](#Form)
-    * [new Form(options)](#new_Form_new)
-    * [.findById(params, session)](#Form+findById) ⇒ <code>Promise</code>
-
-<a name="new_Form_new"></a>
-
-### new Form(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
-
 <a name="Form+findById"></a>
 
 ### form.findById(params, session) ⇒ <code>Promise</code>
@@ -330,21 +304,10 @@ API request, admin permission level
 Class for lists, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
 * [Lists](#Lists)
-    * [new Lists(options)](#new_Lists_new)
     * [.findById(params, session)](#Lists+findById) ⇒ <code>Promise</code>
     * [.find(params, session)](#Lists+find) ⇒ <code>Promise</code>
-
-<a name="new_Lists_new"></a>
-
-### new Lists(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="Lists+findById"></a>
 
@@ -406,21 +369,6 @@ await api.admin.list.find(params, session);
 Class for plugin, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-* [Plugin](#Plugin)
-    * [new Plugin(options)](#new_Plugin_new)
-    * [.findById(id, session)](#Plugin+findById) ⇒ <code>Promise</code>
-
-<a name="new_Plugin_new"></a>
-
-### new Plugin(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
-
 <a name="Plugin+findById"></a>
 
 ### plugin.findById(id, session) ⇒ <code>Promise</code>
@@ -449,21 +397,6 @@ await api.admin.plugin.findById(id, session);
 Class for policy, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-* [Policy](#Policy)
-    * [new Policy(options)](#new_Policy_new)
-    * [.find(session)](#Policy+find) ⇒ <code>Promise</code>
-
-<a name="new_Policy_new"></a>
-
-### new Policy(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
-
 <a name="Policy+find"></a>
 
 ### policy.find(session) ⇒ <code>Promise</code>
@@ -490,22 +423,11 @@ await api.admin.policy.find(session);
 Class for task, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
 * [Task](#Task)
-    * [new Task(options)](#new_Task_new)
     * [.findOne(params, session)](#Task+findOne)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="Task+findOne"></a>
 
@@ -603,22 +525,11 @@ await api.user.task.findByIdAndUpdate(params, session);
 Class for user, permission admin
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
 * [User](#User)
-    * [new User(options)](#new_User_new)
     * [.findById(userId, session)](#User+findById) ⇒ <code>Promise</code>
     * [.findByIdAndUpdatePassword(params, session)](#User+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
     * [.emailExist(email, session)](#User+emailExist)
-
-<a name="new_User_new"></a>
-
-### new User(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="User+findById"></a>
 
@@ -699,22 +610,6 @@ await api.admin.user.emailExist(email, session);
 Api dispatch manager
 
 **Kind**: global class  
-
-* [Dispatch](#Dispatch)
-    * [new Dispatch(options)](#new_Dispatch_new)
-    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
-
-<a name="new_Dispatch_new"></a>
-
-### new Dispatch(options)
-Options for constructor
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Options to new instance |
-| options.parent | <code>object</code> | This of the parent |
-
 <a name="Dispatch+getClient"></a>
 
 ### dispatch.getClient() ⇒ <code>promise</code>
@@ -738,23 +633,11 @@ Login manager
 **Kind**: global class  
 
 * [Login](#Login)
-    * [new Login(options)](#new_Login_new)
     * [.facebook(accessToken)](#Login+facebook)
     * [.google(accessToken)](#Login+google)
     * [.apiKey(apikey)](#Login+apiKey)
     * [.userPass(params)](#Login+userPass)
     * [.logout(session)](#Login+logout) ⇒ <code>promise</code>
-
-<a name="new_Login_new"></a>
-
-### new Login(options)
-Options for constructor
-
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Options to new instance |
-| options.parent | <code>object</code> | This of the parent |
 
 <a name="Login+facebook"></a>
 
@@ -882,40 +765,19 @@ const retData = await api.login.logout(session);
 Session manager of the API
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-<a name="new_Session_new"></a>
-
-### new Session(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructor |
-| options.parent | <code>object</code> | This of the pararent |
-
 <a name="Documents"></a>
 
 ## Documents
 Class for documents, permission user
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
 * [Documents](#Documents)
-    * [new Documents(options)](#new_Documents_new)
     * [.findById(params, session)](#Documents+findById) ⇒ <code>Promise</code>
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
     * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
-
-<a name="new_Documents_new"></a>
-
-### new Documents(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="Documents+findById"></a>
 
@@ -1016,12 +878,12 @@ await api.user.document.findByIdAndRemove(params, session);
 | params.docId | <code>string</code> |  | Document id for serach |
 | params.docAreaId | <code>string</code> |  | Doc area id |
 | params.tag | <code>string</code> |  | Tag of the document |
-| [params.projection] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Projection to return fields |
-| [params.sort] | <code>string</code> | <code>&quot;&#x27;Mais\\+recentes&#x27;&quot;</code> | Sort data |
+| [params.projection] | <code>string</code> | <code>&quot;\&quot;\&quot;&quot;</code> | Projection to return fields |
+| [params.sort] | <code>string</code> | <code>&quot;\&quot;Mais+recentes\&quot;&quot;</code> | Sort data |
 | params.orgId | <code>string</code> |  | Organization id (_id database) |
 | params.pagination | <code>string</code> |  | Set pagination |
-| [params.pagination.page] | <code>object</code> | <code>1</code> | Page |
-| [params.pagination.perPage] | <code>string</code> | <code>100</code> | perPage Itens per page |
+| [params.pagination.page] | <code>number</code> | <code>1</code> | Page |
+| [params.pagination.perPage] | <code>number</code> | <code>100</code> | perPage Itens per page |
 | session | <code>string</code> |  | Session, token JWT |
 
 **Example**  
@@ -1123,21 +985,6 @@ API request, user permission level
 Class for organizations, permission user
 
 **Kind**: global class  
-**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
-
-* [Organization](#Organization)
-    * [new Organization(options)](#new_Organization_new)
-    * [.idCardExist(idcard, session)](#Organization+idCardExist)
-
-<a name="new_Organization_new"></a>
-
-### new Organization(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
-
 <a name="Organization+idCardExist"></a>
 
 ### organization.idCardExist(idcard, session)
@@ -1166,21 +1013,6 @@ await api.user.organization.idCardExist(idCard, session);
 Class for process, permission user
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-* [Process](#Process)
-    * [new Process(options)](#new_Process_new)
-    * [.start(params, session)](#Process+start) ⇒ <code>Promise</code>
-
-<a name="new_Process_new"></a>
-
-### new Process(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
-
 <a name="Process+start"></a>
 
 ### process.start(params, session) ⇒ <code>Promise</code>
@@ -1216,22 +1048,11 @@ await api.user.process.start(params, session);
 Class for task, permission user
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
 * [Task](#Task)
-    * [new Task(options)](#new_Task_new)
     * [.findOne(params, session)](#Task+findOne)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task(options)
-
-| Param | Type | Description |
-| --- | --- | --- |
-| options | <code>object</code> | Params of the constructot |
-| options.parent | <code>object</code> | This of the pararent |
 
 <a name="Task+findOne"></a>
 

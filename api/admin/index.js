@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Joi = require('@hapi/joi');
 
+const Document = require('./document');
 const Form = require('./form');
 const List = require('./list');
 const Plugin = require('./plugin');
@@ -23,6 +24,7 @@ class Admin {
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
+    self.document = new Document(options);
     self.form = new Form(options);
     self.list = new List(options);
     self.plugin = new Plugin(options);

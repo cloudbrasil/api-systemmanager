@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Joi = require('@hapi/joi');
 
+const Document = require('./document');
 const Organization = require('./organization');
 const Process = require('./process');
 const Task = require('./task');
@@ -20,6 +21,7 @@ class Users {
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
+    self.document = new Document(options);
     self.organization = new Organization(options);
     self.process = new Process(options);
     self.task = new Task(options);
