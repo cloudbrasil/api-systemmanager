@@ -72,7 +72,7 @@ class Policy {
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
-        reject(self._returnData(ex));
+        reject(ex);
       }
     });
   }

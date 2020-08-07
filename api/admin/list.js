@@ -83,7 +83,7 @@ class Lists {
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
-        reject(self._returnData(ex));
+        reject(ex);
       }
     });
   }
@@ -130,7 +130,7 @@ class Lists {
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
-        reject(self._returnData(ex));
+        reject(ex);
       }
     });
   }
