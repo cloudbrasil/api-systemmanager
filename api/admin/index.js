@@ -3,6 +3,7 @@ const Joi = require('@hapi/joi');
 
 const Document = require('./document');
 const Form = require('./form');
+const Notification = require('./notification');
 const List = require('./list');
 const Plugin = require('./plugin');
 const Policy = require('./policy');
@@ -26,6 +27,7 @@ class Admin {
     const self = this;
     self.document = new Document(options);
     self.form = new Form(options);
+    self.notification = new Notification(options);
     self.list = new List(options);
     self.plugin = new Plugin(options);
     self.policy = new Policy(options);
