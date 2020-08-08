@@ -23,7 +23,7 @@ describe('Start API access', function () {
 
   it('Login facebook', async function () {
     try {
-      const retData = await sm.login.facebook(facebookAccessToken);
+      const retData = await sm.login.facebook({ accessToken: facebookAccessToken });
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;
@@ -39,7 +39,7 @@ describe('Start API access', function () {
 
   it('Login Google', async function () {
     try {
-      const retData = await sm.login.google(googleAccessToken);
+      const retData = await sm.login.google({ accessToken: googleAccessToken });
 
       expect(retData).to.not.be.empty;
       expect(retData.auth).to.be.true;

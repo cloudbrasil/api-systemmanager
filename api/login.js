@@ -49,7 +49,10 @@ class Login {
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Login with social login Facebook
-   * @param {string} accessToken Access token of the system manager
+   * @param {object} params Params to login Facebook
+   * @param {string} params.accessToken Access token of the system manager
+   * @param {object} params.initialUserData Object with roles default if sigin
+   * @param {array} params.initialUserData.externalRoles Array with permission of user
    * @public
    * @async
    * @example
@@ -59,17 +62,23 @@ class Login {
    * // Params of the instance
    * const params = {...}
    * const api = new API(params);
-   * const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
-   * const retData = await api.login.facebook(accessToken);
+   * const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
+   * const retData = await api.login.facebook(params);
    */
-  facebook(accessToken) {
+  facebook(params) {
     return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(accessToken, Joi.string().required());
+        Joi.assert(params, Joi.object().required(), 'Params to login Facebook');
+        Joi.assert(params.accessToken, Joi.string().required(), 'Access token of the system manager');
+
+        if (_.hasIn(params, 'initialUserData')) {
+          Joi.assert(params.initialUserData, Joi.object().required(), 'Object with roles default if sigin');
+          Joi.assert(params.initialUserData.externalRoles, Joi.array().required(), 'Array with permission of user');
+        }
 
         const self = this;
 
-        const apiCall = self._client.post('/login/facebook', {accessToken});
+        const apiCall = self._client.post('/login/facebook', params);
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
@@ -81,7 +90,10 @@ class Login {
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Login with social login Google
-   * @param {string} accessToken Access token of the system manager
+   * @param {object} params Params to login Google
+   * @param {string} params.accessToken Access token of the system manager
+   * @param {object} params.initialUserData Object with roles default if sigin
+   * @param {array} params.initialUserData.externalRoles Array with permission of user
    * @public
    * @async
    * @example
@@ -94,14 +106,19 @@ class Login {
    * const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
    * const retData = await api.login.google(accessToken);
    */
-  google(accessToken) {
+  google(params) {
     return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(accessToken, Joi.string().required());
+        Joi.assert(params, Joi.object().required(), 'Params to login Google');
+        Joi.assert(params.accessToken, Joi.string().required(), 'Access token of the system manager');
+
+        if (_.hasIn(params, 'initialUserData')) {
+          Joi.assert(params.initialUserData, Joi.object().required(), 'Object with roles default if sigin');
+          Joi.assert(params.initialUserData.externalRoles, Joi.array().required(), 'Array with permission of user');
+        }
 
         const self = this;
-
-        const apiCall = self._client.post('/login/google', {accessToken});
+        const apiCall = self._client.post('/login/google', params);
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
