@@ -275,9 +275,13 @@ class Documents {
         Joi.assert(params.projection, Joi.string());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(params.sort, Joi.string());
-        Joi.assert(params.pagination, Joi.object());
-        Joi.assert(params.pagination.page, Joi.number());
-        Joi.assert(params.pagination.perPage, Joi.number());
+
+        if (_.hasIn(params, pagination)) {
+          Joi.assert(params.pagination, Joi.object());
+          Joi.assert(params.pagination.page, Joi.number());
+          Joi.assert(params.pagination.perPage, Joi.number());
+        }
+
         Joi.assert(session, Joi.string().required());
 
         const orgId = _.get(params, 'orgId');
