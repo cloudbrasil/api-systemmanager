@@ -276,7 +276,7 @@ class Documents {
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(params.sort, Joi.string());
 
-        if (_.hasIn(params, pagination)) {
+        if (_.hasIn(params, 'pagination')) {
           Joi.assert(params.pagination, Joi.object());
           Joi.assert(params.pagination.page, Joi.number());
           Joi.assert(params.pagination.perPage, Joi.number());
