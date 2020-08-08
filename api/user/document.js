@@ -216,7 +216,7 @@ class Documents {
 
         const {areaId, orgId} = params;
         const payloadToSend = self._formatDocument(params);
-        const apiCall = self.client
+        const apiCall = self._client
           .put(`/organizations/${orgId}/areas/${areaId}/documents`, payloadToSend, self._setHeader(session));
 
         const retData = self._returnData(await apiCall);
@@ -308,7 +308,7 @@ class Documents {
         defaultSearch.ix = {ix: [[index, txtToSearch, '*', 'string', tag]]};
 
         const query = self._queryReducer(defaultSearch);
-        const apiCall = self.client.get(`/organizations/${orgId}/documents/search?${query}`, self._setHeader(session));
+        const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${query}`, self._setHeader(session));
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
@@ -350,7 +350,7 @@ class Documents {
 
         const {docId, orgId} = params;
         const payloadToSend = {documents: [{_id: docId}]};
-        const apiCall = self.client.post(`/organizations/${orgId}/documents/remove`, payloadToSend, self._setHeader(session));
+        const apiCall = self._client.post(`/organizations/${orgId}/documents/remove`, payloadToSend, self._setHeader(session));
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
@@ -421,7 +421,7 @@ class Documents {
           payloadToSend = {docs: [{document}]};
         }
 
-        const apiCall = self.client
+        const apiCall = self._client
           .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, payloadToSend, self._setHeader(session));
 
         const retData = self._returnData(await apiCall);
