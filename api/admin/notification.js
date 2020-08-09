@@ -197,7 +197,7 @@ class Notification {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.notifications.findByIdAndDelete(params, session);
    */
-  findByIdAndDelete(params, session) {
+  findByIdAndRemove(params, session) {
     return new Promise(async (resolve, reject) => {
       const self = this;
 

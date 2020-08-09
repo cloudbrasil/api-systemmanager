@@ -46,7 +46,7 @@ describe('Start API Notification', function () {
   it('Delete notifications by userId', async function () {
     try {
       const params = { id: userId, orgId };
-      await sm.admin.notification.findByIdAndDelete(params, session);
+      await sm.admin.notification.findByIdAndRemove(params, session);
     } catch (ex) {
       expect(ex).to.be.empty;
     }
