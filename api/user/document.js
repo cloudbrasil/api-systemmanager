@@ -178,7 +178,7 @@ class Documents {
    *  bytes: 12345,
    *  signedUrl: 'https://s3.amazonaws.com...'
    *  docTypeFieldsData: {extraUser: '12349f8ee896b817e45b8dac'},
-   *  orgId: {extraUser: '5df7f19618430c89a41a19d2'},
+   *  orgId: '5df7f19618430c89a41a19d2',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdAndRemove(params, session);
@@ -192,30 +192,33 @@ class Documents {
         Joi.assert(params.orgname, Joi.string().required());
         Joi.assert(params.areaId, Joi.string().required());
         Joi.assert(params.docId, Joi.string().required());
-        Joi.assert(params.documentDate, Joi.string());
         Joi.assert(params.filename, Joi.string().required());
         Joi.assert(params.type, Joi.string().required());
         Joi.assert(params.name, Joi.string().required());
-        Joi.assert(params.content, Joi.string());
-        Joi.assert(params.description, Joi.string());
-        Joi.assert(params.category, Joi.string());
-        Joi.assert(params.tags, Joi.array());
         Joi.assert(params.docTypeId, Joi.string().required());
-        Joi.assert(params.hasPhisicalStorage, Joi.boolean());
-        Joi.assert(params.boxId, Joi.string());
-        Joi.assert(params.storageStatus, Joi.string());
-        Joi.assert(params.ocrDocumentBackend, Joi.boolean());
         Joi.assert(params.bytes, Joi.number().required());
-        Joi.assert(params.docAreaPermission, Joi.object());
-        Joi.assert(params.docTypeFieldsData, Joi.object());
-        Joi.assert(params.signedUrl, Joi.string().required());
-        Joi.assert(params.urlType, Joi.string());
-        Joi.assert(params.addType, Joi.string());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(session, Joi.string().required());
+        Joi.assert(params.signedUrl, Joi.string().required());
+
+        // Get fields required, and set data default to create document
+        const payloadToSend = self._formatDocument(params);
+
+        Joi.assert(payloadToSend.documentDate, Joi.string().allow(''));
+        Joi.assert(payloadToSend.content, Joi.string().allow(''));
+        Joi.assert(payloadToSend.description, Joi.string().allow(''));
+        Joi.assert(payloadToSend.category, Joi.string().allow(''));
+        Joi.assert(payloadToSend.tags, Joi.array());
+        Joi.assert(payloadToSend.hasPhisicalStorage, Joi.boolean());
+        Joi.assert(payloadToSend.boxId, Joi.string().allow(''));
+        Joi.assert(payloadToSend.storageStatus, Joi.string().allow(''));
+        Joi.assert(payloadToSend.ocrDocumentBackend, Joi.boolean());
+        Joi.assert(payloadToSend.docAreaPermission, Joi.object().allow({}));
+        Joi.assert(payloadToSend.docTypeFieldsData, Joi.object().allow({}));
+        Joi.assert(payloadToSend.urlType, Joi.string().allow(''));
+        Joi.assert(payloadToSend.addType, Joi.string().allow(''));
 
         const {areaId, orgId} = params;
-        const payloadToSend = self._formatDocument(params);
         const apiCall = self._client
           .put(`/organizations/${orgId}/areas/${areaId}/documents`, payloadToSend, self._setHeader(session));
 
