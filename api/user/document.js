@@ -192,7 +192,6 @@ class Documents {
         Joi.assert(params.orgname, Joi.string().required());
         Joi.assert(params.areaId, Joi.string().required());
         Joi.assert(params.docId, Joi.string().required());
-        Joi.assert(params.filename, Joi.string().required());
         Joi.assert(params.type, Joi.string().required());
         Joi.assert(params.name, Joi.string().required());
         Joi.assert(params.docTypeId, Joi.string().required());
