@@ -234,6 +234,7 @@ class Documents {
    * @param {object} params Object with params
    * @param {string} params.index Field to search
    * @param {string} params.txtToSearch Text to search
+   * @param {string} [params.compare=*] Filter to search (=, ~, *, =*, *=, *?)
    * @param {string} params.docId Document id for serach
    * @param {string} params.docAreaId Doc area id
    * @param {string} params.tag Tag of the document
@@ -270,7 +271,8 @@ class Documents {
 
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.index, Joi.string().required());
-        Joi.assert(params.txtToSearch, Joi.string().required());
+        Joi.assert(params.txtToSearch, Joi.string().allow(null));
+        Joi.assert(params.compare, Joi.string().allow(null));
         Joi.assert(params.docId, Joi.string().required());
         Joi.assert(params.docAreaId, Joi.string().required());
         Joi.assert(params.tag, Joi.string().required());
@@ -288,7 +290,8 @@ class Documents {
 
         const orgId = _.get(params, 'orgId');
         const index = _.get(params, 'index');
-        const txtToSearch = _.get(params, 'txtToSearch');
+        const txtToSearch = _.get(params, 'txtToSearch', null);
+        const compare = _.get(params, 'compare', '*');
         const tag = _.get(params, 'tag');
         const defaultSearch = {
           p: 100,             // Per page
@@ -307,7 +310,10 @@ class Documents {
         defaultSearch.ai = _.get(params, 'docAreaId');
         defaultSearch.di = _.get(params, 'docId');
         defaultSearch.pj = `_id,${_.get(params, 'projection', '')}`;
-        defaultSearch.ix = {ix: [[index, txtToSearch, '*', 'string', tag]]};
+
+        if (!_.isNull(txtToSearch)) {
+          defaultSearch.ix = {ix: [[index, txtToSearch, compare, 'string', tag]]};
+        }
 
         const query = self._queryReducer(defaultSearch);
         const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${query}`, self._setHeader(session));
