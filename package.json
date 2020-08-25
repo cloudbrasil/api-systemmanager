@@ -1,7 +1,7 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "0.0.84",
+  "version": "0.0.85",
   "scripts": {
     "doc": "mkdir -p  doc/api && jsdoc2md api/**/** > doc/api/api.md"
   },
