@@ -2,6 +2,9 @@
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
   "version": "0.0.83",
+  "scripts": {
+    "doc": "mkdir -p  doc/api && jsdoc2md api/**/** > doc/api/api.md"
+  },
   "engines": {
     "node": "10.x"
   },
