@@ -35,8 +35,7 @@
 <dd><p>API request, user permission level</p>
 </dd>
 <dt><a href="#Organization">Organization</a></dt>
-<dd><p>Class for organizations, permission user</p>
-</dd>
+<dd></dd>
 <dt><a href="#Process">Process</a></dt>
 <dd><p>Class for process, permission user</p>
 </dd>
@@ -994,9 +993,40 @@ API request, user permission level
 <a name="Organization"></a>
 
 ## Organization
+**Kind**: global class  
+
+* [Organization](#Organization)
+    * [new Organization()](#new_Organization_new)
+    * [.findById(orgId, session)](#Organization+findById)
+    * [.idCardExist(idcard, session)](#Organization+idCardExist)
+
+<a name="new_Organization_new"></a>
+
+### new Organization()
 Class for organizations, permission user
 
-**Kind**: global class  
+<a name="Organization+findById"></a>
+
+### organization.findById(orgId, session)
+Find organization by id
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgId | <code>string</code> | ID of the organization to find (_id database) |
+| session | <code>string</code> | Is token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.findById(idCard, session);
+```
 <a name="Organization+idCardExist"></a>
 
 ### organization.idCardExist(idcard, session)

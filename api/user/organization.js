@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
 /**
- * Class for organizations, permission user
+ * @description Class for organizations, permission user
  * @class
  */
 class Organization {
@@ -49,6 +49,41 @@ class Organization {
 
   /**
    * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Find organization by id
+   * @param {string} orgId ID of the organization to find (_id database)
+   * @param {string} session Is token JWT
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const orgId = '80443245000122';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.organization.findById(idCard, session);
+   */
+  findById(orgId, session) {
+    return new Promise(async (resolve, reject) => {
+      try {
+        Joi.assert(orgId, Joi.string().required(), 'orgId ID of the organization to find (_id database_');
+        Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
+
+        const self = this;
+
+        const apiCall = self._client.get(`/organizations/${orgId}`, self._setHeader(session));
+        const retData = self._returnData(await apiCall);
+
+        if (_.isEmpty(retData)) throw Boom.notFound('Organization not found with informed id!');
+
+        resolve(retData);
+      } catch (ex) {
+        reject(ex);
+      }
+    })
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
    * @description Check if id card exist
    * @param {string} idcard Check if id card exist
    * @param {string} session Is token JWT
@@ -65,8 +100,8 @@ class Organization {
   idCardExist(idCard, session) {
     return new Promise(async (resolve, reject) => {
       try {
-        Joi.assert(idCard, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+        Joi.assert(idCard, Joi.string().required(), 'Check if id card exist');
+        Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
 
         const self = this;
 

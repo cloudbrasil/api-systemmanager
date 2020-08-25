@@ -9,6 +9,7 @@ let sm;
 let retData;
 let login = {username: 'ana.breda', password: '123456'};
 let idCardExist = '94422089000128';
+let orgId = '5dadd01dc4af3941d42f8c5c'; // Orgname Empregonet
 
 describe('Start API users', function () {
   before(function (done) {
@@ -17,7 +18,7 @@ describe('Start API users', function () {
       sm = new API();
       done();
     } catch (ex) {
-      expect(ex).to.be.empty;
+      expect(ex).to.be.null;
     }
   });
 
@@ -37,7 +38,7 @@ describe('Start API users', function () {
       session = retData.user.sessionId;
       userId = retData.user._id;
     } catch (ex) {
-      expect(ex).to.be.empty;
+      expect(ex).to.be.null;
     }
   });
 
@@ -49,7 +50,7 @@ describe('Start API users', function () {
       expect(retData).to.be.an('object');
       expect(retData.exist).to.be.true;
     } catch (ex) {
-      expect(ex).to.be.empty;
+      expect(ex).to.be.null;
     }
   });
 
@@ -62,7 +63,30 @@ describe('Start API users', function () {
       expect(retData).to.be.an('object');
       expect(retData.exist).to.be.false;
     } catch (ex) {
-      expect(ex).to.be.empty;
+      expect(ex).to.be.null;
+    }
+  });
+
+  it('Get org by id - OK', async function () {
+    try {
+      retData = await sm.user.organization.findById(orgId, session);
+
+      expect(retData).to.not.be.empty;
+      expect(retData).to.be.an('object');
+      expect(retData._id).to.equal(orgId);
+      expect(retData.orgname).to.equal('empregonet');
+      expect(retData.name).to.equal('emprego.net');
+    } catch (ex) {
+      expect(ex).to.be.null;
+    }
+  });
+
+  it('Get org by id - NOT FOUND', async function () {
+    try {
+      retData = await sm.user.organization.findById('012345678901234567891234', session);
+    } catch (ex) {
+      expect(ex.output.statusCode).to.equal(404);
+      expect(ex.message).to.equal('Organization not found with informed id!');
     }
   });
 
@@ -75,7 +99,7 @@ describe('Start API users', function () {
       expect(retData.response).to.not.be.empty;
       expect(retData.response).equal('OK');
     } catch (ex) {
-      expect(ex).to.be.empty;
+      expect(ex).to.be.null;
     }
   });
 });
