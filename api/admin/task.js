@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
 
 /**
- * Class for task, permission admin
+ * @description Class for task, permission admin
  * @class
  */
 class Task {
@@ -84,9 +84,9 @@ class Task {
    *  userId: '55e4a3bd6be6b45210833fae',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.admin.task.findOne(params, session);
+   * await api.admin.task.find(params, session);
    */
-  findOne(params, session) {
+  find(params, session) {
     return new Promise(async (resolve, reject) => {
       const self = this;
 
