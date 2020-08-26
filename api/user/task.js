@@ -103,6 +103,7 @@ class Task {
    * @param {string} params.action Button action
    * @param {object} params.formData Data to update task
    * @param {string=} params.actionGuid GUID of the action
+   * @param {string} params.orgId Organization id (_id database)
    * @return {Promise}
    * @public
    * @async
@@ -133,10 +134,9 @@ class Task {
         Joi.assert(params.action, Joi.number().required(), 'Button action');
         Joi.assert(params.formData, Joi.object().required(), 'Data to update task');
         Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
+        Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
 
-        const orgId = self.parent.dispatch.getOrgId();
-        const {processId, taskId, flowName, action, actionGuid, formData} = params;
-
+        const {processId, taskId, flowName, action, actionGuid, formData, orgId} = params;
         const getUrl = {
           0: () => `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`,
           1: () => `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`,
