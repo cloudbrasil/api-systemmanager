@@ -74,11 +74,11 @@ class Task {
       const self = this;
 
       try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.processId, Joi.string().required());
-        Joi.assert(params.taskId, Joi.string().required());
-        Joi.assert(params.orgId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+        Joi.assert(params, Joi.object().required(), 'Params to get task');
+        Joi.assert(params.processId, Joi.string().required(), ' Proccess id (_id database)');
+        Joi.assert(params.taskId, Joi.string().required(), ' Task id (_id database)');
+        Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+        Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
         const {processId, taskId, orgId} = params;
         const apiCall = self._client
@@ -120,19 +120,19 @@ class Task {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.findByIdAndUpdate(params, session);
    */
-  findByIdAndUpdate(params) {
+  findByIdAndUpdate(params, session) {
     return new Promise(async (resolve, reject) => {
       const self = this;
 
       try {
         Joi.assert(params, Joi.object().required());
-        Joi.assert(params.userId, Joi.string().required());
-        Joi.assert(params.processId, Joi.string().required());
-        Joi.assert(params.taskId, Joi.string().required());
-        Joi.assert(params.flowName, Joi.string().required());
-        Joi.assert(params.action, Joi.number().required());
-        Joi.assert(params.formData, Joi.object().required());
-        Joi.assert(params.actionGuid, Joi.string());
+        Joi.assert(params.userId, Joi.string().required(), 'User id (_id database)');
+        Joi.assert(params.processId, Joi.string().required(), 'Proccess id (_id database)');
+        Joi.assert(params.taskId, Joi.string().required(), 'Task id (_id database)');
+        Joi.assert(params.flowName, Joi.string().required(), 'Flow name');
+        Joi.assert(params.action, Joi.number().required(), 'Button action');
+        Joi.assert(params.formData, Joi.object().required(), 'Data to update task');
+        Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
 
         const orgId = self.parent.dispatch.getOrgId();
         const {processId, taskId, flowName, action, actionGuid, formData} = params;
