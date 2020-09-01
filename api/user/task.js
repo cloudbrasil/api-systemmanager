@@ -135,15 +135,18 @@ class Task {
         Joi.assert(params.formData, Joi.object().required(), 'Data to update task');
         Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
         Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+        Joi.assert(params.contextToBody, Joi.string(), 'Context to body');
 
-        const {processId, taskId, flowName, action, actionGuid, formData, orgId} = params;
+        const {processId, taskId, flowName, action, actionGuid, formData, orgId, contextToBody} = params;
+        const body = contextToBody ? { [contextToBody]: formData } : { ... formData};
+
         const getUrl = {
           0: () => `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`,
           1: () => `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`,
           2: () => `organizations/${orgId}/adhoc/${processId}/endprocess/${taskId}/${flowName}`
         };
         const url = getUrl[action]();
-        const apiCall = self._client.put(url, formData, self._setHeader(session));
+        const apiCall = self._client.put(url, body, self._setHeader(session));
         const retData = self._returnData(await apiCall);
         resolve(retData);
       } catch (ex) {
