@@ -68,26 +68,23 @@ class User {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.user.updateAvatar(params, session);
    */
-  updateAvatar(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async updateAvatar(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.avatar, Joi.string().required());
-        Joi.assert(params.type, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.avatar, Joi.string().required());
+      Joi.assert(params.type, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
 
-        const { avatar, type } = params;
-        const payload = { avatar, type };
+      const {avatar, type} = params;
+      const payload = {avatar, type};
 
-        const apiCall = self._client.post(`/users/avatar`, payload, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.post(`/users/avatar`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -104,20 +101,17 @@ class User {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.user.removeAvatar(session);
    */
-  removeAvatar(session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async removeAvatar(session) {
+    const self = this;
 
-      try {
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(session, Joi.string().required());
 
-        const apiCall = self._client.delete(`/users/avatar`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.delete(`/users/avatar`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

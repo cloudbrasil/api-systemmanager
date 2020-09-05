@@ -68,23 +68,21 @@ class Documents {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.document.findById(params, session);
    */
-  findById(params, session) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.docId, Joi.string().required());
-        Joi.assert(params.orgId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+  async findById(params, session) {
+    const self = this;
 
-        const self = this;
-        const {docId, orgId} = params;
-        const apiCall = self._client.get(`/admin/organizations/${orgId}/documents/${docId}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.docId, Joi.string().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {docId, orgId} = params;
+      const apiCall = self._client.get(`/admin/organizations/${orgId}/documents/${docId}`, self._setHeader(session));
+      return  self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

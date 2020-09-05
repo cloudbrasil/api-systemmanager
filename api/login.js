@@ -65,26 +65,22 @@ class Login {
    * const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
    * const retData = await api.login.facebook(params);
    */
-  facebook(params) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(params, Joi.object().required(), 'Params to login Facebook');
-        Joi.assert(params.accessToken, Joi.string().required(), 'Access token of the system manager');
+  async facebook(params) {
+    const self = this;
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to login Facebook');
+      Joi.assert(params.accessToken, Joi.string().required(), 'Access token of the system manager');
 
-        if (_.hasIn(params, 'initialUserData')) {
-          Joi.assert(params.initialUserData, Joi.object().required(), 'Object with roles default if sigin');
-          Joi.assert(params.initialUserData.externalRoles, Joi.array().required(), 'Array with permission of user');
-        }
-
-        const self = this;
-
-        const apiCall = self._client.post('/login/facebook', params);
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
+      if (_.hasIn(params, 'initialUserData')) {
+        Joi.assert(params.initialUserData, Joi.object().required(), 'Object with roles default if sigin');
+        Joi.assert(params.initialUserData.externalRoles, Joi.array().required(), 'Array with permission of user');
       }
-    });
+
+      const apiCall = self._client.post('/login/facebook', params);
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -106,25 +102,22 @@ class Login {
    * const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
    * const retData = await api.login.google(accessToken);
    */
-  google(params) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(params, Joi.object().required(), 'Params to login Google');
-        Joi.assert(params.accessToken, Joi.string().required(), 'Access token of the system manager');
+  async google(params) {
+    const self = this;
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to login Google');
+      Joi.assert(params.accessToken, Joi.string().required(), 'Access token of the system manager');
 
-        if (_.hasIn(params, 'initialUserData')) {
-          Joi.assert(params.initialUserData, Joi.object().required(), 'Object with roles default if sigin');
-          Joi.assert(params.initialUserData.externalRoles, Joi.array().required(), 'Array with permission of user');
-        }
-
-        const self = this;
-        const apiCall = self._client.post('/login/google', params);
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
+      if (_.hasIn(params, 'initialUserData')) {
+        Joi.assert(params.initialUserData, Joi.object().required(), 'Object with roles default if sigin');
+        Joi.assert(params.initialUserData.externalRoles, Joi.array().required(), 'Array with permission of user');
       }
-    });
+
+      const apiCall = self._client.post('/login/google', params);
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -143,20 +136,16 @@ class Login {
    * const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
    * const retData = await api.login.apiKey(apiKey);
    */
-  apiKey(apiKey) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(apiKey, Joi.string().required());
+  async apiKey(apiKey) {
+    const self = this;
+    try {
+      Joi.assert(apiKey, Joi.string().required());
 
-        const self = this;
-
-        const apiCall = self._client.post('/login/api', {apiKey});
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.post('/login/api', {apiKey});
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -180,21 +169,17 @@ class Login {
    * };
    * const retData = await api.login.userPass(params);
    */
-  userPass(params) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(params.username, Joi.string().required());
-        Joi.assert(params.password, Joi.string().required());
+  async userPass(params) {
+    const self = this;
+    try {
+      Joi.assert(params.username, Joi.string().required());
+      Joi.assert(params.password, Joi.string().required());
 
-        const self = this;
-
-        const apiCall = self._client.post('/login', params);
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.post('/login', params);
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -214,19 +199,16 @@ class Login {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * const retData = await api.login.logout(session);
    */
-  logout(session) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(session, Joi.string().required());
+  async logout(session) {
+    const self = this;
+    try {
+      Joi.assert(session, Joi.string().required());
 
-        const self = this;
-        const apiCall = self._client.get('/logout', self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.get('/logout', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

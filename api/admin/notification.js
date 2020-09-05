@@ -70,25 +70,22 @@ class Notification {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.notifications.add(params, session);
    */
-  add(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async add(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
-        Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
-        Joi.assert(params.userId, Joi.string().required(), 'User to create notification');
-        Joi.assert(params.message, Joi.object().required(), 'Object with data to send user');
-        Joi.assert(session, Joi.string().required(), 'Session, token JWT');
+    try {
+      Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
+      Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
+      Joi.assert(params.userId, Joi.string().required(), 'User to create notification');
+      Joi.assert(params.message, Joi.object().required(), 'Object with data to send user');
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
 
-        const { orgId, ...notificationPayload } = params;
-        const apiCall = self.client.post(`/admin/organizations/${orgId}/notifications`, notificationPayload, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const {orgId, ...notificationPayload} = params;
+      const apiCall = self.client.post(`/admin/organizations/${orgId}/notifications`, notificationPayload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -112,24 +109,21 @@ class Notification {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.notifications.findById(params, session);
    */
-  findById(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findById(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
-        Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
-        Joi.assert(params.id, Joi.string().required(), 'ALERT! Id is userId or id is notificationId');
-        Joi.assert(session, Joi.string().required(), 'Session, token JWT');
+    try {
+      Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
+      Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
+      Joi.assert(params.id, Joi.string().required(), 'ALERT! Id is userId or id is notificationId');
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
 
-        const { orgId, id } = params;
-        const apiCall = self.client.get(`/admin/organizations/${orgId}/notifications/${id}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const {orgId, id} = params;
+      const apiCall = self.client.get(`/admin/organizations/${orgId}/notifications/${id}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -155,25 +149,22 @@ class Notification {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.notifications.findByIdAndUpdate(params, session);
    */
-  findByIdAndUpdate(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findByIdAndUpdate(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
-        Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
-        Joi.assert(params.id, Joi.string().required(), 'ALERT! Id is userId or id is notificationId');
-        Joi.assert(params.read, Joi.boolean().required(), 'If message is read true or false');
-        Joi.assert(session, Joi.string().required(), 'Session, token JWT');
+    try {
+      Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
+      Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
+      Joi.assert(params.id, Joi.string().required(), 'ALERT! Id is userId or id is notificationId');
+      Joi.assert(params.read, Joi.boolean().required(), 'If message is read true or false');
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
 
-        const { orgId, id, ...statusPayload } = params;
-        const apiCall = self.client.put(`/admin/organizations/${orgId}/notifications/${id}`, statusPayload, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const {orgId, id, ...statusPayload} = params;
+      const apiCall = self.client.put(`/admin/organizations/${orgId}/notifications/${id}`, statusPayload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -197,24 +188,21 @@ class Notification {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.notifications.findByIdAndDelete(params, session);
    */
-  findByIdAndRemove(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findByIdAndRemove(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
-        Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
-        Joi.assert(params.id, Joi.string().required(), 'ALERT! Id is userId or id is notificationId');
-        Joi.assert(session, Joi.string().required(), 'Session, token JWT');
+    try {
+      Joi.assert(params, Joi.object().required(), 'Object with params to add notifications');
+      Joi.assert(params.orgId, Joi.string().required(), 'OrgId of the user SU');
+      Joi.assert(params.id, Joi.string().required(), 'ALERT! Id is userId or id is notificationId');
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
 
-        const { orgId, id } = params;
-        const apiCall = self.client.delete(`/admin/organizations/${orgId}/notifications/${id}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const {orgId, id} = params;
+      const apiCall = self.client.delete(`/admin/organizations/${orgId}/notifications/${id}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

@@ -64,21 +64,18 @@ class Session {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.session.information(token, session);
    */
-  information(sessionId, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async information(sessionId, session) {
+    const self = this;
 
-      try {
-        Joi.assert(sessionId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(sessionId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
 
-        const apiCall = self._client.get(`session?token=${sessionId}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.get(`session?token=${sessionId}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

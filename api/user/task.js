@@ -69,27 +69,24 @@ class Task {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.findById(params, session);
    */
-  findById(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findById(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required(), 'Params to get task');
-        Joi.assert(params.processId, Joi.string().required(), ' Proccess id (_id database)');
-        Joi.assert(params.taskId, Joi.string().required(), ' Task id (_id database)');
-        Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
-        Joi.assert(session, Joi.string().required(), 'Session token JWT');
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get task');
+      Joi.assert(params.processId, Joi.string().required(), ' Proccess id (_id database)');
+      Joi.assert(params.taskId, Joi.string().required(), ' Task id (_id database)');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
-        const {processId, taskId, orgId} = params;
-        const apiCall = self._client
-          .get(`/organizations/${orgId}/process/${processId}/execute/${taskId}`, self._setHeader(session));
+      const {processId, taskId, orgId} = params;
+      const apiCall = self._client
+        .get(`/organizations/${orgId}/process/${processId}/execute/${taskId}`, self._setHeader(session));
 
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -121,38 +118,35 @@ class Task {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.findByIdAndUpdate(params, session);
    */
-  findByIdAndUpdate(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findByIdAndUpdate(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.userId, Joi.string().required(), 'User id (_id database)');
-        Joi.assert(params.processId, Joi.string().required(), 'Proccess id (_id database)');
-        Joi.assert(params.taskId, Joi.string().required(), 'Task id (_id database)');
-        Joi.assert(params.flowName, Joi.string().required(), 'Flow name');
-        Joi.assert(params.action, Joi.number().required(), 'Button action');
-        Joi.assert(params.formData, Joi.object().required(), 'Data to update task');
-        Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
-        Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
-        Joi.assert(params.contextToBody, Joi.string(), 'Context to body');
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.userId, Joi.string().required(), 'User id (_id database)');
+      Joi.assert(params.processId, Joi.string().required(), 'Proccess id (_id database)');
+      Joi.assert(params.taskId, Joi.string().required(), 'Task id (_id database)');
+      Joi.assert(params.flowName, Joi.string().required(), 'Flow name');
+      Joi.assert(params.action, Joi.number().required(), 'Button action');
+      Joi.assert(params.formData, Joi.object().required(), 'Data to update task');
+      Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(params.contextToBody, Joi.string(), 'Context to body');
 
-        const {processId, taskId, flowName, action, actionGuid, formData, orgId, contextToBody} = params;
-        const body = contextToBody ? { [contextToBody]: formData } : { ... formData};
+      const {processId, taskId, flowName, action, actionGuid, formData, orgId, contextToBody} = params;
+      const body = contextToBody ? {[contextToBody]: formData} : {...formData};
 
-        const getUrl = {
-          0: () => `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`,
-          1: () => `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`,
-          2: () => `organizations/${orgId}/adhoc/${processId}/endprocess/${taskId}/${flowName}`
-        };
-        const url = getUrl[action]();
-        const apiCall = self._client.put(url, body, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const getUrl = {
+        0: () => `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`,
+        1: () => `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`,
+        2: () => `organizations/${orgId}/adhoc/${processId}/endprocess/${taskId}/${flowName}`
+      };
+      const url = getUrl[action]();
+      const apiCall = self._client.put(url, body, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

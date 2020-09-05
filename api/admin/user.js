@@ -63,22 +63,19 @@ class User {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.user.findById(userId, session);
    */
-  findById(userId, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findById(userId, session) {
+    const self = this;
 
-      try {
+    try {
 
-        Joi.assert(userId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+      Joi.assert(userId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
 
-        const apiCall = self.client.get(`/admin/users/${userId}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self.client.get(`/admin/users/${userId}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -104,25 +101,22 @@ class User {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.user.findByIdAndUpdatePassword(params, session);
    */
-  findByIdAndUpdatePassword(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findByIdAndUpdatePassword(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.userId, Joi.string().required());
-        Joi.assert(params.oldPassword, Joi.string().required());
-        Joi.assert(params.newPassword, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.userId, Joi.string().required());
+      Joi.assert(params.oldPassword, Joi.string().required());
+      Joi.assert(params.newPassword, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
 
-        const {userId, ...payload} = params;
-        const apiCall = self.client.put(`/admin/users/${userId}/password`, payload, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const {userId, ...payload} = params;
+      const apiCall = self.client.put(`/admin/users/${userId}/password`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -140,22 +134,19 @@ class User {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.user.emailExist(email, session);
    */
-  emailExist(email, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async emailExist(email, session) {
+    const self = this;
 
-      try {
-        Joi.assert(email, Joi.string().email().required());
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(email, Joi.string().email().required());
+      Joi.assert(session, Joi.string().required());
 
-        const payload = {email};
-        const apiCall = self.client.post(`/admin/users/email/exist`, payload, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    })
+      const payload = {email};
+      const apiCall = self.client.post(`/admin/users/email/exist`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

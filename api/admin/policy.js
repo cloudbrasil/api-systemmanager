@@ -61,20 +61,17 @@ class Policy {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.policy.find(session);
    */
-  find(session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async find(session) {
+    const self = this;
 
-      try {
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(session, Joi.string().required());
 
-        const apiCall = self._client.get('/admin/policies', self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const apiCall = self._client.get('/admin/policies', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

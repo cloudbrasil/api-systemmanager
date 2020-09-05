@@ -86,30 +86,27 @@ class Task {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.admin.task.find(params, session);
    */
-  find(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async find(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.userId, Joi.string().required());
-        Joi.assert(params.filter, Joi.string());
-        Joi.assert(params.includeOwner, Joi.boolean());
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.userId, Joi.string().required());
+      Joi.assert(params.filter, Joi.string());
+      Joi.assert(params.includeOwner, Joi.boolean());
+      Joi.assert(session, Joi.string().required());
 
-        const filterType = _.get(params, 'filter', 'NOT_DONE');
-        const includeOwner = _.get(params, 'includeOwner', false);
-        const {userId} = params;
+      const filterType = _.get(params, 'filter', 'NOT_DONE');
+      const includeOwner = _.get(params, 'includeOwner', false);
+      const {userId} = params;
 
-        const filter = self._taskFilters(filterType);
-        const queryString = `taskFilter=${filter}&includeOwner=${includeOwner}`;
-        const apiCall = self._client.get(`/admin/users/${userId}/tasks?${queryString}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const filter = self._taskFilters(filterType);
+      const queryString = `taskFilter=${filter}&includeOwner=${includeOwner}`;
+      const apiCall = self._client.get(`/admin/users/${userId}/tasks?${queryString}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

@@ -183,50 +183,47 @@ class Documents {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdAndRemove(params, session);
    */
-  add(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async add(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.orgname, Joi.string().required());
-        Joi.assert(params.areaId, Joi.string().required());
-        Joi.assert(params.docId, Joi.string().required());
-        Joi.assert(params.type, Joi.string().required());
-        Joi.assert(params.name, Joi.string().required());
-        Joi.assert(params.docTypeId, Joi.string().required());
-        Joi.assert(params.bytes, Joi.number().required());
-        Joi.assert(params.orgId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
-        Joi.assert(params.signedUrl, Joi.string().required());
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.orgname, Joi.string().required());
+      Joi.assert(params.areaId, Joi.string().required());
+      Joi.assert(params.docId, Joi.string().required());
+      Joi.assert(params.type, Joi.string().required());
+      Joi.assert(params.name, Joi.string().required());
+      Joi.assert(params.docTypeId, Joi.string().required());
+      Joi.assert(params.bytes, Joi.number().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+      Joi.assert(params.signedUrl, Joi.string().required());
 
-        // Get fields required, and set data default to create document
-        const payloadToSend = self._formatDocument(params);
+      // Get fields required, and set data default to create document
+      const payloadToSend = self._formatDocument(params);
 
-        Joi.assert(payloadToSend.documentDate, Joi.string().allow(''));
-        Joi.assert(payloadToSend.content, Joi.string().allow(''));
-        Joi.assert(payloadToSend.description, Joi.string().allow(''));
-        Joi.assert(payloadToSend.category, Joi.string().allow(''));
-        Joi.assert(payloadToSend.tags, Joi.array());
-        Joi.assert(payloadToSend.hasPhisicalStorage, Joi.boolean());
-        Joi.assert(payloadToSend.boxId, Joi.string().allow(''));
-        Joi.assert(payloadToSend.storageStatus, Joi.string().allow(''));
-        Joi.assert(payloadToSend.ocrDocumentBackend, Joi.boolean());
-        Joi.assert(payloadToSend.docAreaPermission, Joi.object().allow({}));
-        Joi.assert(payloadToSend.docTypeFieldsData, Joi.object().allow({}));
-        Joi.assert(payloadToSend.urlType, Joi.string().allow(''));
-        Joi.assert(payloadToSend.addType, Joi.string().allow(''));
+      Joi.assert(payloadToSend.documentDate, Joi.string().allow(''));
+      Joi.assert(payloadToSend.content, Joi.string().allow(''));
+      Joi.assert(payloadToSend.description, Joi.string().allow(''));
+      Joi.assert(payloadToSend.category, Joi.string().allow(''));
+      Joi.assert(payloadToSend.tags, Joi.array());
+      Joi.assert(payloadToSend.hasPhisicalStorage, Joi.boolean());
+      Joi.assert(payloadToSend.boxId, Joi.string().allow(''));
+      Joi.assert(payloadToSend.storageStatus, Joi.string().allow(''));
+      Joi.assert(payloadToSend.ocrDocumentBackend, Joi.boolean());
+      Joi.assert(payloadToSend.docAreaPermission, Joi.object().allow({}));
+      Joi.assert(payloadToSend.docTypeFieldsData, Joi.object().allow({}));
+      Joi.assert(payloadToSend.urlType, Joi.string().allow(''));
+      Joi.assert(payloadToSend.addType, Joi.string().allow(''));
 
-        const {areaId, orgId} = params;
-        const apiCall = self._client
-          .put(`/organizations/${orgId}/areas/${areaId}/documents`, payloadToSend, self._setHeader(session));
+      const {areaId, orgId} = params;
+      const apiCall = self._client
+        .put(`/organizations/${orgId}/areas/${areaId}/documents`, payloadToSend, self._setHeader(session));
 
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -263,66 +260,63 @@ class Documents {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdAndRemove(params, session);
    */
-  find(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async find(params, session) {
+    const self = this;
 
-      try {
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.index, Joi.string().required());
+      Joi.assert(params.txtToSearch, Joi.string().allow(null));
+      Joi.assert(params.compare, Joi.string().allow(null));
+      Joi.assert(params.docId, Joi.string().required());
+      Joi.assert(params.docAreaId, Joi.string().required());
+      Joi.assert(params.tag, Joi.string().required());
+      Joi.assert(params.projection, Joi.string());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(params.sort, Joi.string());
 
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.index, Joi.string().required());
-        Joi.assert(params.txtToSearch, Joi.string().allow(null));
-        Joi.assert(params.compare, Joi.string().allow(null));
-        Joi.assert(params.docId, Joi.string().required());
-        Joi.assert(params.docAreaId, Joi.string().required());
-        Joi.assert(params.tag, Joi.string().required());
-        Joi.assert(params.projection, Joi.string());
-        Joi.assert(params.orgId, Joi.string().required());
-        Joi.assert(params.sort, Joi.string());
-
-        if (_.hasIn(params, 'pagination')) {
-          Joi.assert(params.pagination, Joi.object());
-          Joi.assert(params.pagination.page, Joi.number());
-          Joi.assert(params.pagination.perPage, Joi.number());
-        }
-
-        Joi.assert(session, Joi.string().required());
-
-        const orgId = _.get(params, 'orgId');
-        const index = _.get(params, 'index');
-        const txtToSearch = _.get(params, 'txtToSearch', null);
-        const compare = _.get(params, 'compare', '*');
-        const tag = _.get(params, 'tag');
-        const defaultSearch = {
-          p: 100,             // Per page
-          i: 1,               // Initial page
-          s: 'Mais+recentes', // Sort to search
-          ai: '',             // Doc Area Id lists emprego_net
-          di: '',             // Document Type Id
-          m: 'w',             // Default
-          pj: ''              // Projection
-        };
-
-        // Mount query to search autocomplete
-        defaultSearch.p = _.get(params, 'pagination.perPage', 100);
-        defaultSearch.i = _.get(params, 'pagination.page', 1);
-        defaultSearch.s = _.get(params, 'sort', 'Mais+recentes');
-        defaultSearch.ai = _.get(params, 'docAreaId');
-        defaultSearch.di = _.get(params, 'docId');
-        defaultSearch.pj = `_id,${_.get(params, 'projection', '')}`;
-
-        if (!_.isNull(txtToSearch)) {
-          defaultSearch.ix = {ix: [[index, txtToSearch, compare, 'string', tag]]};
-        }
-
-        const query = self._queryReducer(defaultSearch);
-        const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${query}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
+      if (_.hasIn(params, 'pagination')) {
+        Joi.assert(params.pagination, Joi.object());
+        Joi.assert(params.pagination.page, Joi.number());
+        Joi.assert(params.pagination.perPage, Joi.number());
       }
-    });
+
+      Joi.assert(session, Joi.string().required());
+
+      const orgId = _.get(params, 'orgId');
+      const index = _.get(params, 'index');
+      const txtToSearch = _.get(params, 'txtToSearch', null);
+      const compare = _.get(params, 'compare', '*');
+      const tag = _.get(params, 'tag');
+      const defaultSearch = {
+        p: 100,             // Per page
+        i: 1,               // Initial page
+        s: 'Mais+recentes', // Sort to search
+        ai: '',             // Doc Area Id lists emprego_net
+        di: '',             // Document Type Id
+        m: 'w',             // Default
+        pj: ''              // Projection
+      };
+
+      // Mount query to search autocomplete
+      defaultSearch.p = _.get(params, 'pagination.perPage', 100);
+      defaultSearch.i = _.get(params, 'pagination.page', 1);
+      defaultSearch.s = _.get(params, 'sort', 'Mais+recentes');
+      defaultSearch.ai = _.get(params, 'docAreaId');
+      defaultSearch.di = _.get(params, 'docId');
+      defaultSearch.pj = `_id,${_.get(params, 'projection', '')}`;
+
+      if (!_.isNull(txtToSearch)) {
+        defaultSearch.ix = {ix: [[index, txtToSearch, compare, 'string', tag]]};
+      }
+
+      const query = self._queryReducer(defaultSearch);
+      const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${query}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+
   }
 
   /**
@@ -346,25 +340,22 @@ class Documents {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdAndRemove(params, session);
    */
-  findByIdAndRemove(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async findByIdAndRemove(params, session) {
+    const self = this;
 
-      try {
-        Joi.assert(params, Joi.object().required());
-        Joi.assert(params.docId, Joi.string().required());
-        Joi.assert(params.orgId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.docId, Joi.string().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
 
-        const {docId, orgId} = params;
-        const payloadToSend = {documents: [{_id: docId}]};
-        const apiCall = self._client.post(`/organizations/${orgId}/documents/remove`, payloadToSend, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    });
+      const {docId, orgId} = params;
+      const payloadToSend = {documents: [{_id: docId}]};
+      const apiCall = self._client.post(`/organizations/${orgId}/documents/remove`, payloadToSend, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -396,48 +387,45 @@ class Documents {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.signedUrl(params, session);
    */
-  signedUrl(params, session) {
-    return new Promise(async (resolve, reject) => {
-      const self = this;
+  async signedUrl(params, session) {
+    const self = this;
 
-      try {
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.methodType, Joi.string().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {methodType} = params;
+
+      if (methodType === 'put') {
         Joi.assert(params, Joi.object().required());
-        Joi.assert(params.methodType, Joi.string().required());
-        Joi.assert(params.orgId, Joi.string().required());
-        Joi.assert(session, Joi.string().required());
-
-        const {methodType} = params;
-
-        if (methodType === 'put') {
-          Joi.assert(params, Joi.object().required());
-          Joi.assert(params.docId, Joi.string().required());
-          Joi.assert(params.docAreaId, Joi.string().required());
-          Joi.assert(params.fileName, Joi.string().required());
-          Joi.assert(params.type, Joi.string().required());
-        } else {
-          Joi.assert(params.document, Joi.string().required());
-        }
-
-        const {orgId} = params;
-        let payloadToSend;
-
-        if (params.methodType === 'put') {
-          const {docId, fileName: name, docAreaId: areaId, type} = params;
-          payloadToSend = {docs: [{docId, name, areaId, type}]};
-        } else {
-          const {document} = params;
-          payloadToSend = {docs: [{document}]};
-        }
-
-        const apiCall = self._client
-          .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, payloadToSend, self._setHeader(session));
-
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
+        Joi.assert(params.docId, Joi.string().required());
+        Joi.assert(params.docAreaId, Joi.string().required());
+        Joi.assert(params.fileName, Joi.string().required());
+        Joi.assert(params.type, Joi.string().required());
+      } else {
+        Joi.assert(params.document, Joi.string().required());
       }
-    });
+
+      const {orgId} = params;
+      let payloadToSend;
+
+      if (params.methodType === 'put') {
+        const {docId, fileName: name, docAreaId: areaId, type} = params;
+        payloadToSend = {docs: [{docId, name, areaId, type}]};
+      } else {
+        const {document} = params;
+        payloadToSend = {docs: [{document}]};
+      }
+
+      const apiCall = self._client
+        .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, payloadToSend, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 

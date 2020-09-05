@@ -62,24 +62,18 @@ class Organization {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.organization.findById(idCard, session);
    */
-  findById(orgId, session) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(orgId, Joi.string().required(), 'orgId ID of the organization to find (_id database_');
-        Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
+  async findById(orgId, session) {
+    const self = this;
 
-        const self = this;
+    try {
+      Joi.assert(orgId, Joi.string().required(), 'orgId ID of the organization to find (_id database_');
+      Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
 
-        const apiCall = self._client.get(`/organizations/${orgId}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-
-        if (_.isEmpty(retData)) throw Boom.notFound('Organization not found with informed id!');
-
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    })
+      const apiCall = self._client.get(`/organizations/${orgId}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
   /**
@@ -97,21 +91,18 @@ class Organization {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.organization.idCardExist(idCard, session);
    */
-  idCardExist(idCard, session) {
-    return new Promise(async (resolve, reject) => {
-      try {
-        Joi.assert(idCard, Joi.string().required(), 'Check if id card exist');
-        Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
+  async idCardExist(idCard, session) {
+    const self = this;
 
-        const self = this;
+    try {
+      Joi.assert(idCard, Joi.string().required(), 'Check if id card exist');
+      Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
 
-        const apiCall = self._client.get(`/organizations/exist/idcard/${idCard}`, self._setHeader(session));
-        const retData = self._returnData(await apiCall);
-        resolve(retData);
-      } catch (ex) {
-        reject(ex);
-      }
-    })
+      const apiCall = self._client.get(`/organizations/exist/idcard/${idCard}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 }
 
