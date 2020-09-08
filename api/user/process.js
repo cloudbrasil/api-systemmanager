@@ -120,7 +120,7 @@ class Process {
       Joi.assert(session, Joi.string().required());
 
       const {processId, orgId, payload = {}} = params;
-      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}/properties`, payload, self._setHeader(session));
+      const apiCall = self._client.get(`/organizations/${orgId}/process/${processId}/properties`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
