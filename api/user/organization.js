@@ -1,6 +1,7 @@
 const _ = require('lodash');
 const Boom = require('@hapi/boom');
 const Joi = require('@hapi/joi');
+const Axios = require('axios');
 
 /**
  * @description Class for organizations, permission user
@@ -100,6 +101,69 @@ class Organization {
 
       const apiCall = self._client.get(`/organizations/exist/idcard/${idCard}`, self._setHeader(session));
       return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Call URL internal
+   * @param {!object} params Params to call fectch (URL internal)
+   * @param {!string} params.url URL to call
+   * @param {!string} [params.method=POST] Fetch Method
+   * @param {string} params.payload Payload to send
+   * @returns {promise}
+   * @public
+   * @async
+   /**
+   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @description Call URL internal, need auth JWT (session)
+   * @param {!object} params Params to call fectch (URL internal)
+   * @param {!string} params.url URL to call
+   * @param {!string} [params.method=POST] Fetch Method
+   * @param {string} params.payload Payload to send system manager
+   * @returns {promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   *
+   * const params = {
+   *   url: 'http://localhost:8080/organizations/..../process/..../task/candidateAccepted/end/....',
+   *   method: 'POST'
+   * }
+   * await api.user.organization.callFetchs(params, session);
+   */
+  async callFetch(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to call fectch (URL internal)');
+      Joi.assert(params.url, Joi.string().required(), 'URL to call');
+      Joi.assert(params.method, Joi.string(), 'Fetch Method');
+      Joi.assert(params.payload, Joi.object(), 'Payload to send system manager');
+      Joi.assert(session, Joi.string().required(), 'Session to call');
+
+      const {url, payload = {}} = params;
+      let {method} = params;
+
+      method = method.toLowerCase();
+      const methodWithPayload = ['post', 'put'];
+
+      const options = {
+        method,
+        headers: {authorization: session},
+        url,
+      };
+
+      if (methodWithPayload.indexOf(method) !== -1)
+        options.data = payload;
+
+      return await self._returnData(await Axios(options));
+
     } catch (ex) {
       throw ex;
     }

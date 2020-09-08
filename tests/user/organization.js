@@ -90,6 +90,23 @@ describe('Start API users', function () {
     }
   });
 
+  it('Fetch URL', async function () {
+    try {
+      const setParams = {
+        method: 'POST',
+        url: 'http://localhost:8080/organizations/5dadd01dc4af3941d42f8c5c/process/b32ab980f21811ea8879bbc12d8d05a7/task/candidateAccepted/end/44e4ef2bfbe5d41c94141370345529e1'
+      }
+      retData = await sm.user.organization.callFetch(setParams, session);
+      expect(retData).to.not.be.empty;
+      expect(retData).to.be.an('object');
+      expect(retData.response).to.not.be.empty;
+      expect(retData.response).equal('OK');
+    } catch (ex) {
+      expect(ex.output.statusCode).to.equal(404);
+      expect(ex.message).to.equal('Organization not found with informed id!');
+    }
+  });
+
   it('Logout user', async function () {
     try {
       retData = await sm.login.logout(session);
