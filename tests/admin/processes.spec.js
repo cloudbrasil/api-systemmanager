@@ -41,7 +41,7 @@ describe('Start API policy', function () {
     }
   });
 
-  it('Search process', async function () {
+  it('Search process: Context recruiter', async function () {
     try {
       const setParams = {
         orgProcessId: {value: '5f57d4f3b8fe3d0d22fc99be'},
@@ -65,6 +65,28 @@ describe('Start API policy', function () {
              type: 'date_time',
              oper: '<=',
              name: 'initParams.endDateTime'
+          },
+        ],
+        orgId
+      };
+      const retData = await sm.admin.processes.search(setParams, session);
+
+      expect(retData.items).to.not.be.empty;
+      expect(retData.items).to.be.an('array');
+      expect(retData.items[0]).to.include.all.keys('history', 'properties');
+    } catch (ex) {
+      expect(ex).to.be.empty;
+    }
+  });
+
+  it('Search process: Context professional', async function () {
+    try {
+      const setParams = {
+        orgProcessId: {value: '5f57d4f3b8fe3d0d22fc99be'},
+        initParams: [
+          {
+            value: [{id: '5f677fa16d92486104823bcb'}],
+            name: 'initParams.candidates.id',
           },
         ],
         orgId

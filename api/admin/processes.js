@@ -16,7 +16,7 @@ class Processes {
     self.parent = options.parent;
     self._client = self.parent.dispatch.getClient();
 
-    self._operatorsType = ['string', 'date', 'date_time', 'idcard', 'orgidcard', 'number', 'currency'],
+    self._operatorsType = ['string', 'date', 'datetime', 'idcard', 'orgidcard', 'number', 'currency'];
     self._operatorOfString = ['=', '*', '*=', '=*', '*?', '~'];
 
     /**
@@ -180,7 +180,7 @@ class Processes {
       name: Joi.string().required().label('User sub department'),
     });
 
-    self._schemaNp = Joi.number().default(0).label('Enable or disable pagination');
+    self._schemaNp = Joi.number().default(0).label('Enable or disable pagination'); // 1 disable pagination, 0 enable pagination
 
     self._schemaPj = Joi.array().items(
       Joi.string().label('Value to projection')
