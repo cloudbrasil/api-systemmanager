@@ -79,11 +79,18 @@ class Processes {
       value: Joi.string().default('FINISHED').valid(self._status.toString()).label('Process Status'),
       type: Joi.string().default('string').valid('string').label('Operation type'),
       oper: Joi.string().default('=').valid('=').label('Type of condition'),
-    }).default({
-      value: 'FINISHED',
-      type: 'string',
-      oper: '='
-    });
+    }).default([
+      {
+        value: 'FINISHED',
+        type: 'string',
+        oper: '='
+      },
+      {
+        value: 'NOT_FINISHED',
+        type: 'string',
+        oper: '='
+      },
+    ]);
 
     self._schemaOrgProcessId = Joi.object({
       value: Joi.string().required().label('Organization process id'),
