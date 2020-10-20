@@ -49,10 +49,70 @@ class Documents {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Advanced search of document in elastic search ussing system manager
+   * @param {!object} params - Params to search document
+   * @param {!string} params.docId - Document id (_id database)
+   * @param {!object} params.query - Query to search in elastic search
+   * @param {!string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   docId: '5edd11c46b6ce9729c2c297c',
+   *   query: {
+   *      "query": {
+   *        "bool": {
+   *          "minimum_should_match": 1,
+   *          "should": [
+   *            {
+   *              "match": {
+   *                "locationText.keyword": {
+   *                  "query": "sao pau"
+   *                }
+   *              }
+   *            },
+   *            {
+   *              "wildcard": {
+   *                "locationText.normalized": "*sao pau*"
+   *              }
+   *            }
+   *          ]
+   *        }
+   *      }
+   *    }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.document.advancedSearch(params, session);
+   */
+  async advancedSearch(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to search document');
+      Joi.assert(params.docId, Joi.string().required(), 'Document ID');
+      Joi.assert(params.query, Joi.object().required(), 'eQuery, query to search document in elastic search');
+      Joi.assert(session, Joi.string().required(), 'Session is token JWT');
+
+      const {docId: docTypeId, query} = params;
+      const payload = {docTypeId, query};
+
+      const {docId, orgId} = params;
+      const apiCall = self._client.post(`/admin/documents/search`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Get document by id
-   * @param {object} params Params to get document by id
-   * @param {string} params.docId Document id (_id database)
-   * @param {string} params.orgId Organization id (_id database)
+   * @param {object} params - Params to get document by id
+   * @param {string} params.docId - Document id (_id database)
+   * @param {string} params.orgId - Organization id (_id database)
    * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
@@ -72,14 +132,14 @@ class Documents {
     const self = this;
 
     try {
-      Joi.assert(params, Joi.object().required());
-      Joi.assert(params.docId, Joi.string().required());
-      Joi.assert(params.orgId, Joi.string().required());
-      Joi.assert(session, Joi.string().required());
+      Joi.assert(params, Joi.object().required(), 'Params to get document by id');
+      Joi.assert(params.docId, Joi.string().required(), 'Document id (_id database)');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session is token JWT');
 
       const {docId, orgId} = params;
       const apiCall = self._client.get(`/admin/organizations/${orgId}/documents/${docId}`, self._setHeader(session));
-      return  self._returnData(await apiCall);
+      return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
     }
