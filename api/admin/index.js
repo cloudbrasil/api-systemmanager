@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Joi = require('@hapi/joi');
+const Joi = require('joi');
 
 const Document = require('./document');
 const Form = require('./form');

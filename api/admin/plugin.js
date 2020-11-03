@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Boom = require('@hapi/boom');
-const Joi = require('@hapi/joi');
+const Joi = require('joi');
 
 /**
  * Class for plugin, permission admin
