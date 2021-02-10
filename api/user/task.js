@@ -183,11 +183,11 @@ class Task {
       Joi.assert(params.taskId, Joi.string().required(), 'Task id (_id database)');
       Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
       Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
-      Joi.assert(params.body, Joi.any(), 'Payload to send in action');
+      Joi.assert(params.payload, Joi.any(), 'Payload to send in action');
 
-      const {taskId, actionGuid, orgId, body = {}} = params;
+      const {taskId, actionGuid, orgId, payload = {}} = params;
       const url = `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`;
-      const apiCall = self._client.put(url, body, self._setHeader(session));
+      const apiCall = self._client.put(url, payload, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
