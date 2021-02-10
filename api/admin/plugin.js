@@ -47,6 +47,41 @@ class Plugin {
     };
   }
 
+   /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Find plugins
+   * @param {object} params - Params to search plugins
+   * @param {number} params.page - Start page to pagination
+   * @param {number} params.perPage - Items per page
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {page: 1, perPage: 200};
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.organization.findById(params, session);
+   */
+  async find(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to search plugins');
+      Joi.assert(params.page, Joi.number(), 'Start page to pagination');
+      Joi.assert(params.perPage, Joi.number(), 'Items per page');
+      Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
+
+      const {page = 1, perPage = 300} = params
+      const queryString = `page=${page}&perPage=${perPage}`;
+
+      const apiCall = self._client.post(`/admin/plugins?${queryString}`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Get plugin by ID

@@ -99,7 +99,6 @@ class Documents {
       const {docId: docTypeId, query} = params;
       const payload = {docTypeId, query};
 
-      const {docId, orgId} = params;
       const apiCall = self._client.post(`/admin/documents/search`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {

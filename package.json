@@ -1,12 +1,12 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "0.0.98",
+  "version": "1.0.2",
   "scripts": {
     "doc": "mkdir -p  doc/api && jsdoc2md api/**/** > doc/api/api.md"
   },
   "engines": {
-    "node": "10.x"
+    "node": "14.x"
   },
   "repository": {
     "type": "git",

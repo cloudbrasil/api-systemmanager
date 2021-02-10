@@ -101,6 +101,7 @@ class Task {
    * @param {object} params.formData Data to update task
    * @param {string=} params.actionGuid GUID of the action
    * @param {string} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
    * @async
@@ -143,6 +144,51 @@ class Task {
       };
       const url = getUrl[action]();
       const apiCall = self._client.put(url, body, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Find task by id and update
+   * @param {!object} params Params - to update task
+   * @param {!string} params.taskId - Task id (_id database)
+   * @param {!string} params.actionGuid - GUID of the action
+   * @param {!string} params.orgId - Organization id (_id database)
+   * @param {any} params.orgId={} - Payload to send in action
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  taskId: '5df7f19618430c89a41a19d2',
+   *  actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d'
+   *  orgId: '5df7f19618430c89a41a1bc3',
+   *  body: {}',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.executeActionFinalize(params, session);
+   */
+  async executeActionFinalize(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.taskId, Joi.string().required(), 'Task id (_id database)');
+      Joi.assert(params.actionGuid, Joi.string(), 'GUID of the action');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(params.body, Joi.any(), 'Payload to send in action');
+
+      const {taskId, actionGuid, orgId, body = {}} = params;
+      const url = `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`;
+      const apiCall = self._client.put(url, body, self._setHeader(session));
+
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
