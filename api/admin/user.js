@@ -120,7 +120,7 @@ class User {
   }
 
   /**
-   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
    * @description Check if email is unique
    * @param {string} email Check if email is unique
    * @param {string} session Is token JWT

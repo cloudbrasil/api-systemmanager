@@ -316,6 +316,55 @@ class Processes {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Advanced search of process in elastic search ussing system manager
+   * @param {!object} params - Params to search document
+   * @param {!string} params.orgProcessId - Document id (_id database) of the process
+   * @param {!object} params.query - Query to search in elastic search
+   * @param {!string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgProcessId: '5edd11c46b6ce9729c2c297c',
+   *   query: {
+   *      "_source": "processData.properties.processProperties",
+   *      "query": {
+   *        "term": {
+   *          "initParams.email.keyword": {
+   *            "value": "clintes001@gmail.com"
+   *          }
+   *        }
+   *      }
+   *   }
+   * }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.processes.advancedSearch(params, session);
+   */
+  async advancedSearch(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to search document');
+      Joi.assert(params.orgProcessId, Joi.string().required(), 'Document id (_id database) of the process');
+      Joi.assert(params.query, Joi.object().required(), 'eQuery, query to search document in elastic search');
+      Joi.assert(session, Joi.string().required(), 'Session is token JWT');
+
+      const {orgProcessId, query} = params;
+      const payload = {orgProcessId, query};
+
+      const apiCall = self._client.post(`/admin/processes/search`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 module.exports = Processes;
