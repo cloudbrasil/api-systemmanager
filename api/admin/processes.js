@@ -354,13 +354,12 @@ class Processes {
       Joi.assert(params, Joi.object().required(), 'Params to search document');
       Joi.assert(params.orgProcessId, Joi.string().required(), 'Document id (_id database) of the process');
       Joi.assert(params.query, Joi.object().required(), 'eQuery, query to search document in elastic search');
-      Joi.assert(params.orgId, Joi.string().required(), 'Organization ID');
       Joi.assert(session, Joi.string().required(), 'Session is token JWT');
 
-      const {orgProcessId, query, orgId} = params;
+      const {orgProcessId, query} = params;
       const payload = {orgProcessId, query};
 
-      const apiCall = self._client.post(`/admin/organizations/${orgId}/processes/search/advanced`, payload, self._setHeader(session));
+      const apiCall = self._client.post(`/admin/processes/search`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
