@@ -10,6 +10,7 @@ const Policy = require('./policy');
 const Task = require('./task');
 const User = require('./user');
 const Processes = require('./processes');
+const Message = require('./message');
 
 /**
  * @class API request, admin permission level
@@ -35,6 +36,7 @@ class Admin {
     self.task = new Task(options);
     self.user = new User(options);
     self.processes = new Processes(options);
+    self.message = new Message(options);
   }
 }
 
