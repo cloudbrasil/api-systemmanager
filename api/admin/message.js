@@ -117,6 +117,42 @@ class Message {
       throw ex;
     }
   }
+
+  /**
+   * @description Get geolocation
+   * @param {!object} params - Params to get location
+   * @param {!string} params.apiKey - Organization API key
+   * @param {!string} params.message - The text message to send
+   * @param {!string} params.recipient - The telephone number without with only numbers
+   * @param {?number} params.limitSize=130 - Size limit to send SMS
+   * @return {Promise<{}>}
+   */
+  async sendSMS(params) {
+    const self = this;
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to send SMS');
+      Joi.assert(params.apiKey, Joi.string().required(), 'Organization API key');
+      Joi.assert(params.message, Joi.string().required(), 'The text message to send');
+      Joi.assert(params.recipient, Joi.string().required(), 'The telephone number without with only numbers');
+      Joi.assert(params.limitSize, Joi.number(), 'Size limit to send SMS');
+
+      const defaultSize = 130;
+      const { apiKey, message, recipient, limitSize = defaultSize } = params;
+
+      const paramsOfThePagination = { message, limitSize };
+      const smsData = self.#paginationOfTheSMS(paramsOfThePagination);
+
+      for await (const smsText of smsData) {
+        const payload = { apiKey, data: { message: smsText }, recipient };
+        await self.client.post('/sms/send', payload);
+      }
+
+      return { success: true, send: smsData.length };
+
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 module.exports = Message;
