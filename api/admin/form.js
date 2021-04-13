@@ -3,10 +3,10 @@ const Boom = require('@hapi/boom');
 const Joi = require('joi');
 
 /**
- * Class for forms, permission admin
+ * Admin Class for forms, permission admin
  * @class
  */
-class Form {
+class AdminForm {
 
   #client;
 
@@ -150,4 +150,4 @@ class Form {
   }
 }
 
-module.exports = Form;
+module.exports = AdminForm;

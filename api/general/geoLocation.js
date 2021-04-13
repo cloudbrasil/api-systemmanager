@@ -3,7 +3,7 @@ const Boom = require('@hapi/boom');
 const Joi = require('joi');
 
 /**
- * Class for user, permission organization
+ * General Class for user, permission organization
  * @class
  */
 class GeoLocation {

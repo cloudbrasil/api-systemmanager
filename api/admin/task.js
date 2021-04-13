@@ -3,10 +3,10 @@ const Boom = require('@hapi/boom');
 const Joi = require('joi');
 
 /**
- * Class for task, permission admin
+ * Admin Class for task, permission admin
  * @class
  */
-class Task {
+class AdminTask {
 
   constructor(options) {
     Joi.assert(options, Joi.object().required());
@@ -110,4 +110,4 @@ class Task {
   }
 }
 
-module.exports = Task;
+module.exports = AdminTask;
