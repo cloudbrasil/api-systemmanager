@@ -21,4 +21,4 @@ const api = new APISystemManager();
 <p>Feito agora você já pode chamar os methos e fazer a interação com system manager</p>
 
 ### API
-Abaixo temos o link para documentação da API, [CLIQUE AQUI!](https://github.com/abernardobr/api-systemmanager/blob/develop/doc/api.md)
+Link para documentação da API: [CLIQUE AQUI!](https://github.com/cloudbrasil/api-systemmanager/blob/develop/doc/api.md)
