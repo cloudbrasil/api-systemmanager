@@ -1,0 +1,47 @@
+{
+  "name": "@docbrasil/api-systemmanager",
+  "description": "Module API System Manager",
+  "version": "1.0.14",
+  "scripts": {
+    "doc": "mkdir -p  doc/api && jsdoc2md api/**/** > doc/api/api.md"
+  },
+  "engines": {
+    "node": "14.x"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/abernardobr/api-systemmanager"
+  },
+  "license": "Apache-2.0",
+  "licenses": [
+    {
+      "type": "Apache-2.0",
+      "url": "https://spdx.org/licenses/Apache-2.0.html"
+    }
+  ],
+  "dependencies": {
+    "@hapi/boom": "^8.0.1",
+    "async": "^3.1.0",
+    "axios": "^0.21.1",
+    "i": "^0.3.6",
+    "joi": "^17.3.0",
+    "jsdoc-to-markdown": "^6.0.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.27.0",
+    "npm": "^6.4.1"
+  },
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "glob": "~7.1.1",
+    "license-checker": "^8.0.4",
+    "mocha": "^3.2.0",
+    "proxyquire": "^1.8.0",
+    "sinon": "^7.5.0"
+  },
+  "maintainers": [
+    {
+      "name": "abernardo.br",
+      "email": "abernardo.br@gmail.com"
+    }
+  ]
+}
