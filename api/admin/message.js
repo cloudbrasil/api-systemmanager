@@ -3,10 +3,10 @@ const Boom = require('@hapi/boom');
 const Joi = require('joi');
 
 /**
- * Class for user, permission admin
+ * Admin Class for user, permission admin
  * @class
  */
-class Message {
+class AdminMessage {
 
   constructor(options) {
     Joi.assert(options, Joi.object().required());
@@ -110,7 +110,7 @@ class Message {
         const payload = { apiKey, data: { message: smsText }, recipient };
         await self.client.post('/sms/send', payload);
       }
-      
+
       return { success: true, send: smsData.length };
 
     } catch (ex) {
@@ -155,4 +155,4 @@ class Message {
   }
 }
 
-module.exports = Message;
+module.exports = AdminMessage;

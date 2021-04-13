@@ -167,7 +167,7 @@ class Documents {
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
-   * const params - {
+   * const params = {
    *  orgname: 'cloundbrasil',
    *  areaId: '5edf9f8ee896b817e45b8dac',
    *  docId: '5edf86fbe896b817e45b8da6',
@@ -326,7 +326,12 @@ class Documents {
    * @param {string} params.docId Document Id (_id database)
    * @param {string} params.orgId Organizarion id (_id database)
    * @param {string} session Session, token JWT
-   * @return {Promise}
+   * @return {Promise<object>} data The returned data
+   * @return {number} data.removed The quantity of removed documents
+   * @return {array<object>} data.errors Array of errors
+   * @return {string} data.errors.id Id of the document that had an error
+   * @return {string} data.errors.code Error code
+   * @return {string} data.errors.message Error message
    * @public
    * @async
    * @example
@@ -360,6 +365,52 @@ class Documents {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Remove documents
+   * @param {object} params Params to remove document
+   * @param {array<string>} params.documents An array ids of documents (_id database)
+   * @param {array<string>} params.documents._id The document id (_id database)
+   * @param {string} params.orgId Organizarion id (_id database)
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} data The returned data
+   * @return {number} data.removed The quantity of removed documents
+   * @return {array<object>} data.errors Array of errors
+   * @return {string} data.errors.id Id of the document that had an error
+   * @return {string} data.errors.code Error code
+   * @return {string} data.errors.message Error message
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  documents: [{ _id: '5dadd01dc4af3941d42f8c5c' }],
+   *  orgIdId: '5df7f19618430c89a41a19d2',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.document.findByIdsAndRemove(params, session);
+   */
+  async findByIdsAndRemove(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.documents, Joi.array().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {documents, orgId} = params;
+      const payloadToSend = { documents };
+      const apiCall = self._client.post(`/organizations/${orgId}/documents/remove`, payloadToSend, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   *
+   * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Request signed url url to put or get
    * @param {object} params Params to request signed url
    * @param {string} params.methodType Method type HTTP get or put
@@ -367,10 +418,15 @@ class Documents {
    * @param {string} params.fileName File name
    * @param {string} params.docAreaId docAreaId of the document
    * @param {string} params.type mimeType image/png image/jpg others
-   * @param {string} params.document Name document to request
+   * @param {string} params.document Name document to request if method type is get
    * @param {string} params.orgId Organization id (_id database)
    * @param {string} session Session, token JWT
-   * @return {Promise}
+   * @return {Promise<object>} doc Returned document data with the signed url
+   * @return {string} doc.docId Document id
+   * @return {string} doc.name The name of the document, which is the fileName
+   * @return {string} doc.areaId docAreaId of the document
+   * @return {string} doc.type the document mimi type
+   * @return {string} doc.signedUrl the signed URL to upload
    * @public
    * @async
    * @example
@@ -385,7 +441,18 @@ class Documents {
    *  type: 'image/png'
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.document.signedUrl(params, session);
+   * const { doc: { docId, name, areaId, type, signedUrl } } = await api.user.document.signedUrl(params, session);
+   *
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  methodType: 'get',
+   *  document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const base64Data = await api.user.document.signedUrl(params, session);
    */
   async signedUrl(params, session) {
     const self = this;
@@ -427,6 +494,49 @@ class Documents {
       throw ex;
     }
   }
+
+  /**
+   * Uploads the file
+   * @param {object} params Params to upload document
+   * @param {string|buffer} params.content The content of the file (base64 or Buffer)
+   * @param {string} params.signedUrl The signed URL
+   * @param {string} params.type The file mime type
+   * @return {Promise<boolean>} True if success
+   *
+   * @public
+   * @async
+   * @example
+   *
+   * const FS = require('fs');
+   * const Path = require('path');
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  content: FS.readFileSync(Path.join(__dirname, '.mypdf.pdf')),
+   *  signedUrl: 'https://signedurl.com/token...',
+   *  type: 'application/pdf'
+   * };
+   * const retData = await api.user.document.uploadSignedDocument(params);
+   */
+  async uploadSignedDocument(params) {
+    const { content, signedUrl, type } = params;
+    Joi.assert(params, Joi.object().required());
+    Joi.assert(params.content, Joi.string().required());
+    Joi.assert(params.signedUrl, Joi.string().required());
+    Joi.assert(params.type, Joi.string().required());
+
+    const self = this;
+    const headers = {
+      headers: {
+        'Content-Type': type
+      }
+    };
+    const apiCall = self._client
+        .put(signedUrl, content, headers);
+    const retData = self._returnData(await apiCall);
+    return true;
+  }
+
 }
 
 module.exports = Documents;

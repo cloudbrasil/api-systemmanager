@@ -1,43 +1,44 @@
 ## Classes
 
 <dl>
-<dt><a href="#Documents">Documents</a></dt>
-<dd><p>Class for documents, permission admin</p>
+<dt><a href="#AdminDocuments">AdminDocuments</a></dt>
+<dd><p>Admin Class for documents, permission admin</p>
 </dd>
-<dt><a href="#Form">Form</a></dt>
-<dd><p>Class for forms, permission admin</p>
+<dt><a href="#AdminForm">AdminForm</a></dt>
+<dd><p>Admin Class for forms, permission admin</p>
 </dd>
 <dt><a href="#Admin">Admin</a></dt>
 <dd><p>API request, admin permission level</p>
 </dd>
-<dt><a href="#Lists">Lists</a></dt>
-<dd><p>Class for lists, permission admin</p>
+<dt><a href="#AdminLists">AdminLists</a></dt>
+<dd><p>Admin Class for lists, permission admin</p>
 </dd>
-<dt><a href="#Message">Message</a></dt>
-<dd><p>Class for user, permission admin</p>
+<dt><a href="#AdminMessage">AdminMessage</a></dt>
+<dd><p>Admin Class for user, permission admin</p>
 </dd>
-<dt><a href="#Notification">Notification</a></dt>
-<dd><p>Class for notification, permission admin</p>
+<dt><a href="#AdminNotification">AdminNotification</a></dt>
+<dd><p>Admin Class for notification, permission admin</p>
 </dd>
-<dt><a href="#Plugin">Plugin</a></dt>
-<dd><p>Class for plugin, permission admin</p>
+<dt><a href="#AdminPlugin">AdminPlugin</a></dt>
+<dd><p>Admin Class for plugin, permission admin</p>
 </dd>
-<dt><a href="#Policy">Policy</a></dt>
-<dd><p>Class for policy, permission admin</p>
+<dt><a href="#AdminPolicy">AdminPolicy</a></dt>
+<dd><p>Admin Class for policy, permission admin</p>
 </dd>
-<dt><a href="#Processes">Processes</a></dt>
-<dd><p>Class for processes, permission admin</p>
+<dt><a href="#AdminProcesses">AdminProcesses</a></dt>
+<dd><p>Admin Class for processes, permission admin</p>
 </dd>
-<dt><a href="#Task">Task</a></dt>
-<dd></dd>
-<dt><a href="#User">User</a></dt>
-<dd><p>Class for user, permission admin</p>
+<dt><a href="#AdminTask">AdminTask</a></dt>
+<dd><p>Admin Class for task, permission admin</p>
+</dd>
+<dt><a href="#AdminUser">AdminUser</a></dt>
+<dd><p>Admin Class for user, permission admin</p>
 </dd>
 <dt><a href="#Dispatch">Dispatch</a></dt>
 <dd><p>Api dispatch manager</p>
 </dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
-<dd><p>Class for user, permission user</p>
+<dd><p>General Class for user, permission organization</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
@@ -55,7 +56,8 @@
 <dd><p>API request, user permission level</p>
 </dd>
 <dt><a href="#Organization">Organization</a></dt>
-<dd></dd>
+<dd><p>Class for organizations, permission user</p>
+</dd>
 <dt><a href="#Process">Process</a></dt>
 <dd><p>Class for process, permission user</p>
 </dd>
@@ -67,27 +69,23 @@
 </dd>
 </dl>
 
-<a name="Documents"></a>
+<a name="AdminDocuments"></a>
 
-## Documents
-Class for documents, permission admin
+## AdminDocuments
+Admin Class for documents, permission admin
 
 **Kind**: global class  
 
-* [Documents](#Documents)
-    * [.advancedSearch(params, session)](#Documents+advancedSearch) ⇒ <code>Promise</code>
-    * [.findById(params, session)](#Documents+findById) ⇒ <code>Promise</code>
-    * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
-    * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
-    * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
-    * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
+* [AdminDocuments](#AdminDocuments)
+    * [.advancedSearch(params, session)](#AdminDocuments+advancedSearch) ⇒ <code>Promise</code>
+    * [.findById(params, session)](#AdminDocuments+findById) ⇒ <code>Promise</code>
 
-<a name="Documents+advancedSearch"></a>
+<a name="AdminDocuments+advancedSearch"></a>
 
-### documents.advancedSearch(params, session) ⇒ <code>Promise</code>
+### adminDocuments.advancedSearch(params, session) ⇒ <code>Promise</code>
 Advanced search of document in elastic search ussing system manager
 
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -128,12 +126,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.document.advancedSearch(params, session);
 ```
-<a name="Documents+findById"></a>
+<a name="AdminDocuments+findById"></a>
 
-### documents.findById(params, session) ⇒ <code>Promise</code>
+### adminDocuments.findById(params, session) ⇒ <code>Promise</code>
 Get document by id
 
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -155,181 +153,23 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.document.findById(params, session);
 ```
-<a name="Documents+add"></a>
+<a name="AdminForm"></a>
 
-### documents.add(params, session) ⇒ <code>Promise</code>
-Create new document
-
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | Object for add new document |
-| params.orgname | <code>string</code> |  | Organization name |
-| params.areaId | <code>string</code> |  | Doc area id (_id database) |
-| params.docId | <code>string</code> |  | Document id (_id database) |
-| [params.documentDate] | <code>string</code> | <code>&quot;new\\ Date()&quot;</code> | Date of document |
-| params.filename | <code>string</code> |  | File name |
-| params.type | <code>string</code> |  | Mimetype of the document (image/png) |
-| params.name | <code>string</code> |  | Document name |
-| [params.content] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Content of document |
-| [params.description] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Description of document |
-| [params.category] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Category of document |
-| [params.tags] | <code>array</code> | <code>[]</code> | Tags of document |
-| params.docTypeId | <code>string</code> |  | Document type id (_id database) |
-| [params.hasPhisicalStorage] | <code>boolean</code> | <code>false</code> | Has Phisical Storage |
-| [params.boxId] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Box ID |
-| [params.storageStatus] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | Storage status |
-| [params.ocrDocumentBackend] | <code>boolean</code> | <code>false</code> | Ocr document backend |
-| params.bytes | <code>number</code> |  | Size document in bytes |
-| [params.docAreaPermission] | <code>object</code> | <code>{}</code> | Permission to doc area |
-| [params.docTypeFieldsData] | <code>object</code> | <code>{}</code> | Fields data "extraField' |
-| params.signedUrl | <code>string</code> |  | SIgned URL |
-| [params.urlType] | <code>string</code> | <code>&quot;&#x27;S3&#x27;&quot;</code> | URL type |
-| [params.addType] | <code>string</code> | <code>&quot;&#x27;S3_SIGNED&#x27;&quot;</code> | Add type |
-| params.orgId | <code>string</code> |  | Organization id (_id database) |
-| session | <code>string</code> |  | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- orgname: 'cloundbrasil',
- areaId: '5edf9f8ee896b817e45b8dac',
- docId: '5edf86fbe896b817e45b8da6',
- fileName: 'foto',
- type: 'image/png',
- name: 'Fotografia',
- docTypeId = '5edf9f8ee896b817e45b8dac',
- bytes: 12345,
- signedUrl: 'https://s3.amazonaws.com...'
- docTypeFieldsData: {extraUser: '12349f8ee896b817e45b8dac'},
- orgId: '5df7f19618430c89a41a19d2',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.document.findByIdAndRemove(params, session);
-```
-<a name="Documents+find"></a>
-
-### documents.find(params, session) ⇒ <code>Promise</code>
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | Object with params |
-| params.index | <code>string</code> |  | Field to search |
-| params.txtToSearch | <code>string</code> |  | Text to search |
-| [params.compare] | <code>string</code> | <code>&quot;*&quot;</code> | Filter to search (=, ~, *, =*, *=, *?) |
-| params.docId | <code>string</code> |  | Document id for serach |
-| params.docAreaId | <code>string</code> |  | Doc area id |
-| params.tag | <code>string</code> |  | Tag of the document |
-| [params.projection] | <code>string</code> | <code>&quot;\&quot;\&quot;&quot;</code> | Projection to return fields |
-| [params.sort] | <code>string</code> | <code>&quot;\&quot;Mais+recentes\&quot;&quot;</code> | Sort data |
-| params.orgId | <code>string</code> |  | Organization id (_id database) |
-| params.pagination | <code>string</code> |  | Set pagination |
-| [params.pagination.page] | <code>number</code> | <code>1</code> | Page |
-| [params.pagination.perPage] | <code>number</code> | <code>100</code> | perPage Itens per page |
-| session | <code>string</code> |  | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- index: 'extraCity',
- txtToSearch: 'São',
- docId: '5df7f19618430c89a41a19d2',
- docAreaId: '5edd11c46b6ce9729c2c297c',
- tag: 'Nome da cidade',
- orgId: '1234d01dc4af3941d42f8c5c'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.document.findByIdAndRemove(params, session);
-```
-<a name="Documents+findByIdAndRemove"></a>
-
-### documents.findByIdAndRemove(params, session) ⇒ <code>Promise</code>
-Remove document by id
-
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to remove document |
-| params.docId | <code>string</code> | Document Id (_id database) |
-| params.orgId | <code>string</code> | Organizarion id (_id database) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- docId: '5dadd01dc4af3941d42f8c5c',
- orgIdId: '5df7f19618430c89a41a19d2',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.document.findByIdAndRemove(params, session);
-```
-<a name="Documents+signedUrl"></a>
-
-### documents.signedUrl(params, session) ⇒ <code>Promise</code>
-Request signed url url to put or get
-
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to request signed url |
-| params.methodType | <code>string</code> | Method type HTTP get or put |
-| params.docId | <code>string</code> | Document id |
-| params.fileName | <code>string</code> | File name |
-| params.docAreaId | <code>string</code> | docAreaId of the document |
-| params.type | <code>string</code> | mimeType image/png image/jpg others |
-| params.document | <code>string</code> | Name document to request |
-| params.orgId | <code>string</code> | Organization id (_id database) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- methodType: 'put',
- docId: '5dadd01dc4af3941d42f8c5c',
- docAreaId: '5df7f19618430c89a41a19d2',
- fileName: 'Foto',
- type: 'image/png'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.document.signedUrl(params, session);
-```
-<a name="Form"></a>
-
-## Form
-Class for forms, permission admin
+## AdminForm
+Admin Class for forms, permission admin
 
 **Kind**: global class  
 
-* [Form](#Form)
-    * [.findById(params, session)](#Form+findById) ⇒ <code>Promise</code>
-    * [.getFormList(params, session)](#Form+getFormList) ⇒ <code>Promise</code>
+* [AdminForm](#AdminForm)
+    * [.findById(params, session)](#AdminForm+findById) ⇒ <code>Promise</code>
+    * [.getFormList(params, session)](#AdminForm+getFormList) ⇒ <code>Promise</code>
 
-<a name="Form+findById"></a>
+<a name="AdminForm+findById"></a>
 
-### form.findById(params, session) ⇒ <code>Promise</code>
+### adminForm.findById(params, session) ⇒ <code>Promise</code>
 Get advance form by ID
 
-**Kind**: instance method of [<code>Form</code>](#Form)  
+**Kind**: instance method of [<code>AdminForm</code>](#AdminForm)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -351,12 +191,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.form.findById(params, session);
 ```
-<a name="Form+getFormList"></a>
+<a name="AdminForm+getFormList"></a>
 
-### form.getFormList(params, session) ⇒ <code>Promise</code>
+### adminForm.getFormList(params, session) ⇒ <code>Promise</code>
 Request signed url url to put or get
 
-**Kind**: instance method of [<code>Form</code>](#Form)  
+**Kind**: instance method of [<code>AdminForm</code>](#AdminForm)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -397,23 +237,23 @@ API request, admin permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
-<a name="Lists"></a>
+<a name="AdminLists"></a>
 
-## Lists
-Class for lists, permission admin
+## AdminLists
+Admin Class for lists, permission admin
 
 **Kind**: global class  
 
-* [Lists](#Lists)
-    * [.findById(params, session)](#Lists+findById) ⇒ <code>Promise</code>
-    * [.find(params, session)](#Lists+find) ⇒ <code>Promise</code>
+* [AdminLists](#AdminLists)
+    * [.findById(params, session)](#AdminLists+findById) ⇒ <code>Promise</code>
+    * [.find(params, session)](#AdminLists+find) ⇒ <code>Promise</code>
 
-<a name="Lists+findById"></a>
+<a name="AdminLists+findById"></a>
 
-### lists.findById(params, session) ⇒ <code>Promise</code>
+### adminLists.findById(params, session) ⇒ <code>Promise</code>
 Get list by ID
 
-**Kind**: instance method of [<code>Lists</code>](#Lists)  
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -435,12 +275,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.list.findById(params, session);
 ```
-<a name="Lists+find"></a>
+<a name="AdminLists+find"></a>
 
-### lists.find(params, session) ⇒ <code>Promise</code>
+### adminLists.find(params, session) ⇒ <code>Promise</code>
 Get all lists
 
-**Kind**: instance method of [<code>Lists</code>](#Lists)  
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -462,23 +302,23 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.list.find(params, session);
 ```
-<a name="Message"></a>
+<a name="AdminMessage"></a>
 
-## Message
-Class for user, permission admin
+## AdminMessage
+Admin Class for user, permission admin
 
 **Kind**: global class  
 
-* [Message](#Message)
-    * [.sendSMS(params)](#Message+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
-    * [.sendSMS(params)](#Message+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
+* [AdminMessage](#AdminMessage)
+    * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
+    * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
 
-<a name="Message+sendSMS"></a>
+<a name="AdminMessage+sendSMS"></a>
 
-### message.sendSMS(params) ⇒ <code>Promise.&lt;{}&gt;</code>
+### adminMessage.sendSMS(params) ⇒ <code>Promise.&lt;{}&gt;</code>
 Send an SMS message
 
-**Kind**: instance method of [<code>Message</code>](#Message)  
+**Kind**: instance method of [<code>AdminMessage</code>](#AdminMessage)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -488,12 +328,12 @@ Send an SMS message
 | params.recipient | <code>string</code> |  | The telephone number without with only numbers |
 | params.limitSize | <code>number</code> | <code>130</code> | Size limit to send SMS |
 
-<a name="Message+sendSMS"></a>
+<a name="AdminMessage+sendSMS"></a>
 
-### message.sendSMS(params) ⇒ <code>Promise.&lt;{}&gt;</code>
+### adminMessage.sendSMS(params) ⇒ <code>Promise.&lt;{}&gt;</code>
 Get geolocation
 
-**Kind**: instance method of [<code>Message</code>](#Message)  
+**Kind**: instance method of [<code>AdminMessage</code>](#AdminMessage)  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -503,25 +343,25 @@ Get geolocation
 | params.recipient | <code>string</code> |  | The telephone number without with only numbers |
 | params.limitSize | <code>number</code> | <code>130</code> | Size limit to send SMS |
 
-<a name="Notification"></a>
+<a name="AdminNotification"></a>
 
-## Notification
-Class for notification, permission admin
+## AdminNotification
+Admin Class for notification, permission admin
 
 **Kind**: global class  
 
-* [Notification](#Notification)
-    * [.add(params, session)](#Notification+add) ⇒ <code>Promise</code>
-    * [.findById(params, session)](#Notification+findById) ⇒ <code>Promise</code>
-    * [.findByIdAndUpdate(params, session)](#Notification+findByIdAndUpdate) ⇒ <code>Promise</code>
-    * [.findByIdAndRemove(params, session)](#Notification+findByIdAndRemove) ⇒ <code>Promise</code>
+* [AdminNotification](#AdminNotification)
+    * [.add(params, session)](#AdminNotification+add) ⇒ <code>Promise</code>
+    * [.findById(params, session)](#AdminNotification+findById) ⇒ <code>Promise</code>
+    * [.findByIdAndUpdate(params, session)](#AdminNotification+findByIdAndUpdate) ⇒ <code>Promise</code>
+    * [.findByIdAndRemove(params, session)](#AdminNotification+findByIdAndRemove) ⇒ <code>Promise</code>
 
-<a name="Notification+add"></a>
+<a name="AdminNotification+add"></a>
 
-### notification.add(params, session) ⇒ <code>Promise</code>
+### adminNotification.add(params, session) ⇒ <code>Promise</code>
 Create notification
 
-**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -545,12 +385,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.notifications.add(params, session);
 ```
-<a name="Notification+findById"></a>
+<a name="AdminNotification+findById"></a>
 
-### notification.findById(params, session) ⇒ <code>Promise</code>
+### adminNotification.findById(params, session) ⇒ <code>Promise</code>
 Search notification using (notificationId or userId)
 
-**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -572,12 +412,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.notifications.findById(params, session);
 ```
-<a name="Notification+findByIdAndUpdate"></a>
+<a name="AdminNotification+findByIdAndUpdate"></a>
 
-### notification.findByIdAndUpdate(params, session) ⇒ <code>Promise</code>
+### adminNotification.findByIdAndUpdate(params, session) ⇒ <code>Promise</code>
 Update notification using (notificationId or userId)
 
-**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -601,12 +441,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.notifications.findByIdAndUpdate(params, session);
 ```
-<a name="Notification+findByIdAndRemove"></a>
+<a name="AdminNotification+findByIdAndRemove"></a>
 
-### notification.findByIdAndRemove(params, session) ⇒ <code>Promise</code>
+### adminNotification.findByIdAndRemove(params, session) ⇒ <code>Promise</code>
 Delete notification using (notificationId or userId)
 
-**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -628,23 +468,23 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.notifications.findByIdAndDelete(params, session);
 ```
-<a name="Plugin"></a>
+<a name="AdminPlugin"></a>
 
-## Plugin
-Class for plugin, permission admin
+## AdminPlugin
+Admin Class for plugin, permission admin
 
 **Kind**: global class  
 
-* [Plugin](#Plugin)
-    * [.find(params)](#Plugin+find)
-    * [.findById(id, session)](#Plugin+findById) ⇒ <code>Promise</code>
+* [AdminPlugin](#AdminPlugin)
+    * [.find(params)](#AdminPlugin+find)
+    * [.findById(id, session)](#AdminPlugin+findById) ⇒ <code>Promise</code>
 
-<a name="Plugin+find"></a>
+<a name="AdminPlugin+find"></a>
 
-### plugin.find(params)
+### adminPlugin.find(params)
 Find plugins
 
-**Kind**: instance method of [<code>Plugin</code>](#Plugin)  
+**Kind**: instance method of [<code>AdminPlugin</code>](#AdminPlugin)  
 **Access**: public  
 **Author**: Augusto Pissarra <abernardo.br@gmail.com>  
 
@@ -662,12 +502,12 @@ const params = {page: 1, perPage: 200};
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.organization.findById(params, session);
 ```
-<a name="Plugin+findById"></a>
+<a name="AdminPlugin+findById"></a>
 
-### plugin.findById(id, session) ⇒ <code>Promise</code>
+### adminPlugin.findById(id, session) ⇒ <code>Promise</code>
 Get plugin by ID
 
-**Kind**: instance method of [<code>Plugin</code>](#Plugin)  
+**Kind**: instance method of [<code>AdminPlugin</code>](#AdminPlugin)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -684,18 +524,18 @@ const id ='55e4a3bd6be6b45210833fae',
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.plugin.findById(id, session);
 ```
-<a name="Policy"></a>
+<a name="AdminPolicy"></a>
 
-## Policy
-Class for policy, permission admin
+## AdminPolicy
+Admin Class for policy, permission admin
 
 **Kind**: global class  
-<a name="Policy+find"></a>
+<a name="AdminPolicy+find"></a>
 
-### policy.find(session) ⇒ <code>Promise</code>
+### adminPolicy.find(session) ⇒ <code>Promise</code>
 Find all policies
 
-**Kind**: instance method of [<code>Policy</code>](#Policy)  
+**Kind**: instance method of [<code>AdminPolicy</code>](#AdminPolicy)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -710,23 +550,23 @@ const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.policy.find(session);
 ```
-<a name="Processes"></a>
+<a name="AdminProcesses"></a>
 
-## Processes
-Class for processes, permission admin
+## AdminProcesses
+Admin Class for processes, permission admin
 
 **Kind**: global class  
 
-* [Processes](#Processes)
-    * [.search()](#Processes+search) ⇒ <code>Promise</code>
-    * [.advancedSearch(params, session)](#Processes+advancedSearch) ⇒ <code>Promise</code>
+* [AdminProcesses](#AdminProcesses)
+    * [.search()](#AdminProcesses+search) ⇒ <code>Promise</code>
+    * [.advancedSearch(params, session)](#AdminProcesses+advancedSearch) ⇒ <code>Promise</code>
 
-<a name="Processes+search"></a>
+<a name="AdminProcesses+search"></a>
 
-### processes.search() ⇒ <code>Promise</code>
+### adminProcesses.search() ⇒ <code>Promise</code>
 Advanced search of processes, check documentation, to verify all params, pass to method search
 
-**Kind**: instance method of [<code>Processes</code>](#Processes)  
+**Kind**: instance method of [<code>AdminProcesses</code>](#AdminProcesses)  
 **Access**: public  
 **See**: https://confluence.external-share.com/content/7450b014-52c6-4d9e-b30e-a062b57453b5/17104899/17694721/532545537  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
@@ -743,12 +583,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.processes.search(params, session);
 ```
-<a name="Processes+advancedSearch"></a>
+<a name="AdminProcesses+advancedSearch"></a>
 
-### processes.advancedSearch(params, session) ⇒ <code>Promise</code>
+### adminProcesses.advancedSearch(params, session) ⇒ <code>Promise</code>
 Advanced search of process in elastic search ussing system manager
 
-**Kind**: instance method of [<code>Processes</code>](#Processes)  
+**Kind**: instance method of [<code>AdminProcesses</code>](#AdminProcesses)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -779,29 +619,18 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.processes.advancedSearch(params, session);
 ```
-<a name="Task"></a>
+<a name="AdminTask"></a>
 
-## Task
+## AdminTask
+Admin Class for task, permission admin
+
 **Kind**: global class  
+<a name="AdminTask+find"></a>
 
-* [Task](#Task)
-    * [new Task()](#new_Task_new)
-    * [.find(params, session)](#Task+find)
-    * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
-    * [.findByIdAndUpdate(params, session)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
-    * [.executeActionFinalize(params, session)](#Task+executeActionFinalize) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task()
-Class for task, permission admin
-
-<a name="Task+find"></a>
-
-### task.find(params, session)
+### adminTask.find(params, session)
 Get task by user Id
 
-**Kind**: instance method of [<code>Task</code>](#Task)  
+**Kind**: instance method of [<code>AdminTask</code>](#AdminTask)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -823,122 +652,24 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.task.find(params, session);
 ```
-<a name="Task+findById"></a>
+<a name="AdminUser"></a>
 
-### task.findById(params, session) ⇒ <code>promise</code>
-Method to find task by id
-
-**Kind**: instance method of [<code>Task</code>](#Task)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to get task |
-| params.processId | <code>object</code> | Proccess id (_id database) |
-| params.taskId | <code>object</code> | Task id (_id database) |
-| params.orgId | <code>object</code> | Organization id (_id database) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- processId: '5dadd01dc4af3941d42f8c5c',
- taskId: '5df7f19618430c89a41a19d2',
- orgId: '55e4a3bd6be6b45210833fae',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.findById(params, session);
-```
-<a name="Task+findByIdAndUpdate"></a>
-
-### task.findByIdAndUpdate(params, session) ⇒ <code>Promise</code>
-Find task by id and update
-
-**Kind**: instance method of [<code>Task</code>](#Task)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to update task |
-| params.userId | <code>object</code> | User id (_id database) |
-| params.processId | <code>string</code> | Proccess id (_id database) |
-| params.taskId | <code>string</code> | Task id (_id database) |
-| params.flowName | <code>string</code> | Flow name |
-| params.action | <code>string</code> | Button action |
-| params.formData | <code>object</code> | Data to update task |
-| [params.actionGuid] | <code>string</code> | GUID of the action |
-| params.orgId | <code>string</code> | Organization id (_id database) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- userId: '5739d4c6ccb0ebc61f2a9557',
- processId: '5dadd01dc4af3941d42f8c5c',
- taskId: '5df7f19618430c89a41a19d2',
- action: 1,
- formData: {name: 'CloudBrasil'},
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.findByIdAndUpdate(params, session);
-```
-<a name="Task+executeActionFinalize"></a>
-
-### task.executeActionFinalize(params, session) ⇒ <code>Promise</code>
-Find task by id and update
-
-**Kind**: instance method of [<code>Task</code>](#Task)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | Params - to update task |
-| params.taskId | <code>string</code> |  | Task id (_id database) |
-| params.actionGuid | <code>string</code> |  | GUID of the action |
-| params.orgId | <code>string</code> |  | Organization id (_id database) |
-| params.orgId | <code>any</code> | <code>{}</code> | Payload to send in action |
-| session | <code>string</code> |  | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- taskId: '5df7f19618430c89a41a19d2',
- actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d'
- orgId: '5df7f19618430c89a41a1bc3',
- body: {}',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.executeActionFinalize(params, session);
-```
-<a name="User"></a>
-
-## User
-Class for user, permission admin
+## AdminUser
+Admin Class for user, permission admin
 
 **Kind**: global class  
 
-* [User](#User)
-    * [.findById(userId, session)](#User+findById) ⇒ <code>Promise</code>
-    * [.findByIdAndUpdatePassword(params, session)](#User+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
-    * [.emailExist(email, session)](#User+emailExist)
-    * [.updateAvatar(params, session)](#User+updateAvatar) ⇒ <code>Promise</code>
-    * [.removeAvatar(session)](#User+removeAvatar) ⇒ <code>Promise</code>
+* [AdminUser](#AdminUser)
+    * [.findById(userId, session)](#AdminUser+findById) ⇒ <code>Promise</code>
+    * [.findByIdAndUpdatePassword(params, session)](#AdminUser+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
+    * [.emailExist(email, session)](#AdminUser+emailExist)
 
-<a name="User+findById"></a>
+<a name="AdminUser+findById"></a>
 
-### user.findById(userId, session) ⇒ <code>Promise</code>
+### adminUser.findById(userId, session) ⇒ <code>Promise</code>
 Request profile by userId
 
-**Kind**: instance method of [<code>User</code>](#User)  
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -955,12 +686,12 @@ const userId = '55e4a3bd6be6b45210833fae';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.findById(userId, session);
 ```
-<a name="User+findByIdAndUpdatePassword"></a>
+<a name="AdminUser+findByIdAndUpdatePassword"></a>
 
-### user.findByIdAndUpdatePassword(params, session) ⇒ <code>Promise.&lt;unknown&gt;</code>
+### adminUser.findByIdAndUpdatePassword(params, session) ⇒ <code>Promise.&lt;unknown&gt;</code>
 Update password by userId
 
-**Kind**: instance method of [<code>User</code>](#User)  
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -984,12 +715,12 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.findByIdAndUpdatePassword(params, session);
 ```
-<a name="User+emailExist"></a>
+<a name="AdminUser+emailExist"></a>
 
-### user.emailExist(email, session)
+### adminUser.emailExist(email, session)
 Check if email is unique
 
-**Kind**: instance method of [<code>User</code>](#User)  
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
 **Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
 
@@ -1005,53 +736,6 @@ const api = new API();
 const email = 'ana.silva@gmail.com';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.emailExist(email, session);
-```
-<a name="User+updateAvatar"></a>
-
-### user.updateAvatar(params, session) ⇒ <code>Promise</code>
-Update avatar of user by session of user not allow session user SU
-
-**Kind**: instance method of [<code>User</code>](#User)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to update avatar |
-| params.avatar | <code>string</code> | Image in base64 to update |
-| params.type | <code>string</code> | mimeType (image/png) |
-| session | <code>string</code> | Is token JWT of user NOT allow SU |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- avatar: '55e4a3bd6be6b45210833fae',
- type: '123456',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.user.updateAvatar(params, session);
-```
-<a name="User+removeAvatar"></a>
-
-### user.removeAvatar(session) ⇒ <code>Promise</code>
-Remove avatar of user by session of user not allow session user SU
-
-**Kind**: instance method of [<code>User</code>](#User)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| session | <code>string</code> | Is token JWT of user NOT allow SU |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.user.removeAvatar(session);
 ```
 <a name="Dispatch"></a>
 
@@ -1077,7 +761,7 @@ await api.dispatch.getClient();
 <a name="GeoLocation"></a>
 
 ## GeoLocation
-Class for user, permission user
+General Class for user, permission organization
 
 **Kind**: global class  
 <a name="GeoLocation+location"></a>
@@ -1315,86 +999,11 @@ Class for documents, permission user
 **Kind**: global class  
 
 * [Documents](#Documents)
-    * [.advancedSearch(params, session)](#Documents+advancedSearch) ⇒ <code>Promise</code>
-    * [.findById(params, session)](#Documents+findById) ⇒ <code>Promise</code>
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
     * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
 
-<a name="Documents+advancedSearch"></a>
-
-### documents.advancedSearch(params, session) ⇒ <code>Promise</code>
-Advanced search of document in elastic search ussing system manager
-
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to search document |
-| params.docId | <code>string</code> | Document id (_id database) |
-| params.query | <code>object</code> | Query to search in elastic search |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
-  docId: '5edd11c46b6ce9729c2c297c',
-  query: {
-     "query": {
-       "bool": {
-         "minimum_should_match": 1,
-         "should": [
-           {
-             "match": {
-               "locationText.keyword": {
-                 "query": "sao pau"
-               }
-             }
-           },
-           {
-             "wildcard": {
-               "locationText.normalized": "*sao pau*"
-             }
-           }
-         ]
-       }
-     }
-   }
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.document.advancedSearch(params, session);
-```
-<a name="Documents+findById"></a>
-
-### documents.findById(params, session) ⇒ <code>Promise</code>
-Get document by id
-
-**Kind**: instance method of [<code>Documents</code>](#Documents)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to get document by id |
-| params.docId | <code>string</code> | Document id (_id database) |
-| params.orgId | <code>string</code> | Organization id (_id database) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- docId: '5edd11c46b6ce9729c2c297c',
- orgId: '55e4a3bd6be6b45210833fae'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.document.findById(params, session);
-```
 <a name="Documents+add"></a>
 
 ### documents.add(params, session) ⇒ <code>Promise</code>
@@ -1586,18 +1195,14 @@ API request, user permission level
 <a name="Organization"></a>
 
 ## Organization
+Class for organizations, permission user
+
 **Kind**: global class  
 
 * [Organization](#Organization)
-    * [new Organization()](#new_Organization_new)
     * [.findById(orgId, session)](#Organization+findById)
     * [.idCardExist(idcard, session)](#Organization+idCardExist)
     * [.callFetch(params, params)](#Organization+callFetch) ⇒ <code>promise</code> \| <code>promise</code>
-
-<a name="new_Organization_new"></a>
-
-### new Organization()
-Class for organizations, permission user
 
 <a name="Organization+findById"></a>
 
@@ -1750,44 +1355,10 @@ Class for task, permission user
 **Kind**: global class  
 
 * [Task](#Task)
-    * [new Task()](#new_Task_new)
-    * [.find(params, session)](#Task+find)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params, session)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
     * [.executeActionFinalize(params, session)](#Task+executeActionFinalize) ⇒ <code>Promise</code>
 
-<a name="new_Task_new"></a>
-
-### new Task()
-Class for task, permission admin
-
-<a name="Task+find"></a>
-
-### task.find(params, session)
-Get task by user Id
-
-**Kind**: instance method of [<code>Task</code>](#Task)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | Params to get task |
-| params.userId | <code>string</code> |  | User id (_id database) |
-| [params.filter] | <code>string</code> | <code>&quot;NOT_DONE&quot;</code> | Filter type CLEAN | EXECUTED | PENDING | LATE | NOT_DONE | DONE |
-| [params.includeOwner] | <code>boolean</code> | <code>false</code> | Include owner true | false |
-| session | <code>string</code> |  | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- userId: '55e4a3bd6be6b45210833fae',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.task.find(params, session);
-```
 <a name="Task+findById"></a>
 
 ### task.findById(params, session) ⇒ <code>promise</code>
@@ -1892,85 +1463,9 @@ Class for user, permission user
 **Kind**: global class  
 
 * [User](#User)
-    * [.findById(userId, session)](#User+findById) ⇒ <code>Promise</code>
-    * [.findByIdAndUpdatePassword(params, session)](#User+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
-    * [.emailExist(email, session)](#User+emailExist)
     * [.updateAvatar(params, session)](#User+updateAvatar) ⇒ <code>Promise</code>
     * [.removeAvatar(session)](#User+removeAvatar) ⇒ <code>Promise</code>
 
-<a name="User+findById"></a>
-
-### user.findById(userId, session) ⇒ <code>Promise</code>
-Request profile by userId
-
-**Kind**: instance method of [<code>User</code>](#User)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| userId | <code>string</code> | User identifier (_id database) |
-| session | <code>string</code> | Is token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const userId = '55e4a3bd6be6b45210833fae';
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.user.findById(userId, session);
-```
-<a name="User+findByIdAndUpdatePassword"></a>
-
-### user.findByIdAndUpdatePassword(params, session) ⇒ <code>Promise.&lt;unknown&gt;</code>
-Update password by userId
-
-**Kind**: instance method of [<code>User</code>](#User)  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to update password |
-| params.userId | <code>string</code> | Id of the user |
-| params.oldPassword | <code>string</code> | Old password |
-| params.newPassword | <code>string</code> | New password |
-| session | <code>string</code> | Is token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- userId: '55e4a3bd6be6b45210833fae',
- oldPassword: '123456',
- newPassword: '123456789'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.user.findByIdAndUpdatePassword(params, session);
-```
-<a name="User+emailExist"></a>
-
-### user.emailExist(email, session)
-Check if email is unique
-
-**Kind**: instance method of [<code>User</code>](#User)  
-**Access**: public  
-**Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| email | <code>string</code> | Check if email is unique |
-| session | <code>string</code> | Is token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const email = 'ana.silva@gmail.com';
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.user.emailExist(email, session);
-```
 <a name="User+updateAvatar"></a>
 
 ### user.updateAvatar(params, session) ⇒ <code>Promise</code>

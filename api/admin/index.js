@@ -1,16 +1,17 @@
 const _ = require('lodash');
 const Joi = require('joi');
 
-const Document = require('./document');
-const Form = require('./form');
-const Notification = require('./notification');
-const List = require('./list');
-const Plugin = require('./plugin');
-const Policy = require('./policy');
-const Task = require('./task');
-const User = require('./user');
-const Processes = require('./processes');
-const Message = require('./message');
+const AdminDocument = require('./document');
+const AdminForm = require('./form');
+const AdminNotification = require('./notification');
+const AdminList = require('./list');
+const AdminPlugin = require('./plugin');
+const AdminPolicy = require('./policy');
+const AdminTask = require('./task');
+const AdminUser = require('./user');
+const AdminProcesses = require('./processes');
+const AdminMessage = require('./message');
+const AdminDocTypes = require('./doctypes');
 
 /**
  * @class API request, admin permission level
@@ -27,16 +28,17 @@ class Admin {
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
-    self.document = new Document(options);
-    self.form = new Form(options);
-    self.notification = new Notification(options);
-    self.list = new List(options);
-    self.plugin = new Plugin(options);
-    self.policy = new Policy(options);
-    self.task = new Task(options);
-    self.user = new User(options);
-    self.processes = new Processes(options);
-    self.message = new Message(options);
+    self.document = new AdminDocument(options);
+    self.form = new AdminForm(options);
+    self.notification = new AdminNotification(options);
+    self.list = new AdminList(options);
+    self.plugin = new AdminPlugin(options);
+    self.policy = new AdminPolicy(options);
+    self.task = new AdminTask(options);
+    self.user = new AdminUser(options);
+    self.processes = new AdminProcesses(options);
+    self.message = new AdminMessage(options);
+    self.doctypes = new AdminDocTypes(options);
   }
 }
 

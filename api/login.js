@@ -218,7 +218,8 @@ class Login {
       Joi.assert(session, Joi.string().required());
 
       const apiCall = self._client.get('/logout', self._setHeader(session));
-      return self._returnData(await apiCall);
+      const { response = 'NOT_OK' } = self._returnData(await apiCall);
+      return response === 'OK';
     } catch (ex) {
       throw ex;
     }
