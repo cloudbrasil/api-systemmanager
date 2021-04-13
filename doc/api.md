@@ -1001,8 +1001,10 @@ Class for documents, permission user
 * [Documents](#Documents)
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
-    * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise</code>
-    * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise</code>
+    * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.findByIdsAndRemove(params, session)](#Documents+findByIdsAndRemove) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.uploadSignedDocument(params)](#Documents+uploadSignedDocument) ⇒ <code>Promise.&lt;boolean&gt;</code>
 
 <a name="Documents+add"></a>
 
@@ -1045,7 +1047,7 @@ Create new document
 ```js
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
-const params - {
+const params = {
  orgname: 'cloundbrasil',
  areaId: '5edf9f8ee896b817e45b8dac',
  docId: '5edf86fbe896b817e45b8da6',
@@ -1102,10 +1104,11 @@ await api.user.document.findByIdAndRemove(params, session);
 ```
 <a name="Documents+findByIdAndRemove"></a>
 
-### documents.findByIdAndRemove(params, session) ⇒ <code>Promise</code>
+### documents.findByIdAndRemove(params, session) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
 Remove document by id
 
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The returned data<code>number</code> - data.removed The quantity of removed documents<code>array.&lt;object&gt;</code> - data.errors Array of errors<code>string</code> - data.errors.id Id of the document that had an error<code>string</code> - data.errors.code Error code<code>string</code> - data.errors.message Error message  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -1127,12 +1130,42 @@ const params - {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdAndRemove(params, session);
 ```
+<a name="Documents+findByIdsAndRemove"></a>
+
+### documents.findByIdsAndRemove(params, session) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+Remove documents
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The returned data<code>number</code> - data.removed The quantity of removed documents<code>array.&lt;object&gt;</code> - data.errors Array of errors<code>string</code> - data.errors.id Id of the document that had an error<code>string</code> - data.errors.code Error code<code>string</code> - data.errors.message Error message  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to remove document |
+| params.documents | <code>array.&lt;string&gt;</code> | An array ids of documents (_id database) |
+| params.documents._id | <code>array.&lt;string&gt;</code> | The document id (_id database) |
+| params.orgId | <code>string</code> | Organizarion id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ documents: [{ _id: '5dadd01dc4af3941d42f8c5c' }],
+ orgIdId: '5df7f19618430c89a41a19d2',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdsAndRemove(params, session);
+```
 <a name="Documents+signedUrl"></a>
 
-### documents.signedUrl(params, session) ⇒ <code>Promise</code>
+### documents.signedUrl(params, session) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
 Request signed url url to put or get
 
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url<code>string</code> - doc.docId Document id<code>string</code> - doc.name The name of the document, which is the fileName<code>string</code> - doc.areaId docAreaId of the document<code>string</code> - doc.type the document mimi type<code>string</code> - doc.signedUrl the signed URL to upload  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -1144,7 +1177,7 @@ Request signed url url to put or get
 | params.fileName | <code>string</code> | File name |
 | params.docAreaId | <code>string</code> | docAreaId of the document |
 | params.type | <code>string</code> | mimeType image/png image/jpg others |
-| params.document | <code>string</code> | Name document to request |
+| params.document | <code>string</code> | Name document to request if method type is get |
 | params.orgId | <code>string</code> | Organization id (_id database) |
 | session | <code>string</code> | Session, token JWT |
 
@@ -1160,7 +1193,47 @@ const params - {
  type: 'image/png'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.document.signedUrl(params, session);
+const { doc: { docId, name, areaId, type, signedUrl } } = await api.user.document.signedUrl(params, session);
+```
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'get',
+ document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const base64Data = await api.user.document.signedUrl(params, session);
+```
+<a name="Documents+uploadSignedDocument"></a>
+
+### documents.uploadSignedDocument(params) ⇒ <code>Promise.&lt;boolean&gt;</code>
+Uploads the file
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;boolean&gt;</code> - True if success  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to upload document |
+| params.content | <code>string</code> \| <code>buffer</code> | The content of the file (base64 or Buffer) |
+| params.signedUrl | <code>string</code> | The signed URL |
+| params.type | <code>string</code> | The file mime type |
+
+**Example**  
+```js
+const FS = require('fs');
+const Path = require('path');
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ content: FS.readFileSync(Path.join(__dirname, '.mypdf.pdf')),
+ signedUrl: 'https://signedurl.com/token...',
+ type: 'application/pdf'
+};
+const retData = await api.user.document.uploadSignedDocument(params);
 ```
 <a name="Users"></a>
 
