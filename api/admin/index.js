@@ -11,6 +11,7 @@ const AdminTask = require('./task');
 const AdminUser = require('./user');
 const AdminProcesses = require('./processes');
 const AdminMessage = require('./message');
+const AdminDocTypes = require('./doctypes');
 
 /**
  * @class API request, admin permission level
@@ -37,6 +38,7 @@ class Admin {
     self.user = new AdminUser(options);
     self.processes = new AdminProcesses(options);
     self.message = new AdminMessage(options);
+    self.doctypes = new AdminDocTypes(options);
   }
 }
 
