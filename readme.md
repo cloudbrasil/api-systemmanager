@@ -22,3 +22,4 @@ const api = new APISystemManager();
 
 ### API
 Link para documentação da API: [CLIQUE AQUI!](https://github.com/cloudbrasil/api-systemmanager/blob/develop/doc/api.md)
+Exemplos de uso da API:: [CLIQUE AQUI!](https://github.com/cloudbrasil/api-systemmanager/wiki)
