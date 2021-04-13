@@ -53,6 +53,9 @@ class Login {
    * @param {string} params.accessToken Access token of the system manager
    * @param {object} params.initialUserData Object with roles default if sigin
    * @param {array} params.initialUserData.externalRoles Array with permission of user
+   * @return {promise<object>} data
+   * @return {object} data.auth true or false if we have the user authenticaited correctly
+   * @return {object} data.user the logged user
    * @public
    * @async
    * @example
@@ -63,7 +66,7 @@ class Login {
    * const params = {...}
    * const api = new API(params);
    * const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
-   * const retData = await api.login.facebook(params);
+   * const { auth, user } = await api.login.facebook(params);
    */
   async facebook(params) {
     const self = this;
@@ -90,6 +93,9 @@ class Login {
    * @param {string} params.accessToken Access token of the system manager
    * @param {object} params.initialUserData Object with roles default if sigin
    * @param {array} params.initialUserData.externalRoles Array with permission of user
+   * @return {promise<object>} data
+   * @return {object} data.auth true or false if we have the user authenticaited correctly
+   * @return {object} data.user the logged user
    * @public
    * @async
    * @example
@@ -100,7 +106,7 @@ class Login {
    * const params = {...}
    * const api = new API(params);
    * const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
-   * const retData = await api.login.google(accessToken);
+   * const { auth, user } = await api.login.google(accessToken);
    */
   async google(params) {
     const self = this;
@@ -124,6 +130,9 @@ class Login {
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Login with apikey
    * @param {string} apikey Access key
+   * @return {promise<object>} data
+   * @return {object} data.auth true or false if we have the user authenticaited correctly
+   * @return {object} data.user the logged user
    * @public
    * @async
    * @example
@@ -134,7 +143,7 @@ class Login {
    * const params = {...}
    * const api = new API(params);
    * const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
-   * const retData = await api.login.apiKey(apiKey);
+   * const { auth, user } = await api.login.apiKey(apiKey);
    */
   async apiKey(apiKey) {
     const self = this;
@@ -154,6 +163,9 @@ class Login {
    * @param {object} params Object with user and password
    * @param {string} params.username Username or email of the user
    * @param {string} params.password Password of the user
+   * @return {promise<object>} data
+   * @return {object} data.auth true or false if we have the user authenticaited correctly
+   * @return {object} data.user the logged user
    * @public
    * @async
    * @example
@@ -167,7 +179,7 @@ class Login {
    *   username: 'ana.silva@gmail.com',
    *   password: '123456'
    * };
-   * const retData = await api.login.userPass(params);
+   * const { auth, user } = await api.login.userPass(params);
    */
   async userPass(params) {
     const self = this;
@@ -186,7 +198,8 @@ class Login {
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Logout user system manager
    * @param {string} session Session, token JWT
-   * @return {promise}
+   * @return {promise<object>}} data
+   * @return {boolean} data.success true|false
    * @public
    * @async
    * @example
@@ -197,7 +210,7 @@ class Login {
    * const params = {...}
    * const api = new API(params);
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retData = await api.login.logout(session);
+   * const { success } = await api.login.logout(session);
    */
   async logout(session) {
     const self = this;
