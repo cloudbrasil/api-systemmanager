@@ -4,7 +4,7 @@ const Joi = require('joi');
 const Axios = require('axios');
 
 /**
- * @description Class for organizations, permission user
+ * Class for organizations, permission user
  * @class
  */
 class Organization {

@@ -29,7 +29,8 @@
 <dd><p>Class for processes, permission admin</p>
 </dd>
 <dt><a href="#Task">Task</a></dt>
-<dd></dd>
+<dd><p>Class for task, permission admin</p>
+</dd>
 <dt><a href="#User">User</a></dt>
 <dd><p>Class for user, permission admin</p>
 </dd>
@@ -37,7 +38,7 @@
 <dd><p>Api dispatch manager</p>
 </dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
-<dd><p>Class for user, permission user</p>
+<dd><p>Class for user, permission organization</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
@@ -55,7 +56,8 @@
 <dd><p>API request, user permission level</p>
 </dd>
 <dt><a href="#Organization">Organization</a></dt>
-<dd></dd>
+<dd><p>Class for organizations, permission user</p>
+</dd>
 <dt><a href="#Process">Process</a></dt>
 <dd><p>Class for process, permission user</p>
 </dd>
@@ -782,19 +784,15 @@ await api.admin.processes.advancedSearch(params, session);
 <a name="Task"></a>
 
 ## Task
+Class for task, permission admin
+
 **Kind**: global class  
 
 * [Task](#Task)
-    * [new Task()](#new_Task_new)
     * [.find(params, session)](#Task+find)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params, session)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
     * [.executeActionFinalize(params, session)](#Task+executeActionFinalize) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task()
-Class for task, permission admin
 
 <a name="Task+find"></a>
 
@@ -1077,7 +1075,7 @@ await api.dispatch.getClient();
 <a name="GeoLocation"></a>
 
 ## GeoLocation
-Class for user, permission user
+Class for user, permission organization
 
 **Kind**: global class  
 <a name="GeoLocation+location"></a>
@@ -1586,18 +1584,14 @@ API request, user permission level
 <a name="Organization"></a>
 
 ## Organization
+Class for organizations, permission user
+
 **Kind**: global class  
 
 * [Organization](#Organization)
-    * [new Organization()](#new_Organization_new)
     * [.findById(orgId, session)](#Organization+findById)
     * [.idCardExist(idcard, session)](#Organization+idCardExist)
     * [.callFetch(params, params)](#Organization+callFetch) ⇒ <code>promise</code> \| <code>promise</code>
-
-<a name="new_Organization_new"></a>
-
-### new Organization()
-Class for organizations, permission user
 
 <a name="Organization+findById"></a>
 
@@ -1750,16 +1744,10 @@ Class for task, permission user
 **Kind**: global class  
 
 * [Task](#Task)
-    * [new Task()](#new_Task_new)
     * [.find(params, session)](#Task+find)
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params, session)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
     * [.executeActionFinalize(params, session)](#Task+executeActionFinalize) ⇒ <code>Promise</code>
-
-<a name="new_Task_new"></a>
-
-### new Task()
-Class for task, permission admin
 
 <a name="Task+find"></a>
 
