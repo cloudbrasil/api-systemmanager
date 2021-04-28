@@ -1012,24 +1012,24 @@ Session manager of the API
 **Kind**: global class  
 <a name="Session+information"></a>
 
-### session.information(sessionId, session) ⇒ <code>Promise</code>
-Show information for session (Valid token JWT)
+### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
+Show information for session, thus validating the session (Valid token JWT)
 
 **Kind**: instance method of [<code>Session</code>](#Session)  
 **Access**: public  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| sessionId | <code>string</code> | Is session (Token JWT) |
-| session | <code>string</code> | Is session (token JWT) of th user SU |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sessionId | <code>string</code> |  | The user session (JWT Token) |
+| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
 
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.session.information(token, session);
+const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.session.information(sessionId, suSessionId);
 ```
 <a name="Documents"></a>
 
