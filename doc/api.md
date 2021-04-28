@@ -310,8 +310,23 @@ Admin Class for user, permission admin
 **Kind**: global class  
 
 * [AdminMessage](#AdminMessage)
+    * [._paginationOfTheSMS(params)](#AdminMessage+_paginationOfTheSMS)
     * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
     * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
+
+<a name="AdminMessage+_paginationOfTheSMS"></a>
+
+### adminMessage.\_paginationOfTheSMS(params)
+Pagination SMS texts
+
+**Kind**: instance method of [<code>AdminMessage</code>](#AdminMessage)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Params to pagintion SMS |
+| params.message | <code>string</code> |  | Message to pagination |
+| params.limitSize | <code>number</code> | <code>130</code> | Limit of the start pagination |
+| params.continueText | <code>number</code> | <code>continua...</code> | Text to continue other SMS |
 
 <a name="AdminMessage+sendSMS"></a>
 
@@ -743,6 +758,31 @@ await api.admin.user.emailExist(email, session);
 Api dispatch manager
 
 **Kind**: global class  
+
+* [Dispatch](#Dispatch)
+    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+
+<a name="Dispatch+getContext"></a>
+
+### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the URL context
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>string</code> |  | Full url |
+| session | <code>session</code> | <code></code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
+```
 <a name="Dispatch+getClient"></a>
 
 ### dispatch.getClient() ⇒ <code>promise</code>
