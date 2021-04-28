@@ -8,15 +8,13 @@ const Joi = require('joi');
  */
 class AdminForm {
 
-  #client;
-
   constructor(options) {
     Joi.assert(options, Joi.object().required());
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
     self.parent = options.parent;
-    self.#client = self.parent.dispatch.getClient();
+    self._client = self.parent.dispatch.getClient();
   }
 
   /**
@@ -26,7 +24,7 @@ class AdminForm {
    * @return {*}
    * @private
    */
-  #returnData(retData, def = {}) {
+  _returnData(retData, def = {}) {
     if (retData.status !== 200) {
       return Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
     } else {
@@ -41,7 +39,7 @@ class AdminForm {
    * @return {object} header with new session
    * @private
    */
-  #setHeader(session) {
+  _setHeader(session) {
     return {
       headers: {
         authorization: session,
@@ -80,8 +78,8 @@ class AdminForm {
       Joi.assert(session, Joi.string().required());
 
       const {id, orgId} = params;
-      const apiCall = self.#client.get(`/admin/organizations/${orgId}/orgforms/${id}/form`, self.#setHeader(session));
-      return self.#returnData(await apiCall);
+      const apiCall = self._client.get(`/admin/organizations/${orgId}/orgforms/${id}/form`, self._setHeader(session));
+      return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
     }
@@ -139,10 +137,10 @@ class AdminForm {
 
       const payloadToSend = { orgId, type, $project: project, sort };
 
-      const apiCall = self.#client
-        .post(`/admin/organizations/${orgId}/orgforms?page=${page}&perPage=${perPage}`, payloadToSend, self.#setHeader(session));
+      const apiCall = self._client
+        .post(`/admin/organizations/${orgId}/orgforms?page=${page}&perPage=${perPage}`, payloadToSend, self._setHeader(session));
 
-      return self.#returnData(await apiCall);
+      return self._returnData(await apiCall);
 
     } catch (ex) {
       throw ex;

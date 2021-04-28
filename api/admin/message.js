@@ -54,7 +54,7 @@ class AdminMessage {
    * @param {!number} params.limitSize=130 - Limit of the start pagination
    * @param {!number} params.continueText=continua... - Text to continue other SMS
    */
-  #paginationOfTheSMS(params) {
+  _paginationOfTheSMS(params) {
     const self = this;
     try {
       Joi.assert(params, Joi.object().required(), 'Params to paginate SMS');
@@ -104,7 +104,7 @@ class AdminMessage {
       const { apiKey, message, recipient, limitSize = defaultSize } = params;
 
       const paramsOfThePagination = { message, limitSize };
-      const smsData = self.#paginationOfTheSMS(paramsOfThePagination);
+      const smsData = self._paginationOfTheSMS(paramsOfThePagination);
 
       for await (const smsText of smsData) {
         const payload = { apiKey, data: { message: smsText }, recipient };
@@ -140,7 +140,7 @@ class AdminMessage {
       const { apiKey, message, recipient, limitSize = defaultSize } = params;
 
       const paramsOfThePagination = { message, limitSize };
-      const smsData = self.#paginationOfTheSMS(paramsOfThePagination);
+      const smsData = self._paginationOfTheSMS(paramsOfThePagination);
 
       for await (const smsText of smsData) {
         const payload = { apiKey, data: { message: smsText }, recipient };
