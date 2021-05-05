@@ -163,6 +163,7 @@ class Login {
    * @param {object} params Object with user and password
    * @param {string} params.username Username or email of the user
    * @param {string} params.password Password of the user
+   * @param {string} params.orgname The organame of the user
    * @return {promise<object>} data
    * @return {object} data.auth true or false if we have the user authenticaited correctly
    * @return {object} data.user the logged user
@@ -186,8 +187,14 @@ class Login {
     try {
       Joi.assert(params.username, Joi.string().required());
       Joi.assert(params.password, Joi.string().required());
-
-      const apiCall = self._client.post('/login', params);
+      const { orgname = '' } = params;
+      let url;
+      if(orgname !== '') {
+        url = `/login/${orgname}`;
+      } else {
+        url = `/login`;
+      }
+      const apiCall = self._client.post(url, params);
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;

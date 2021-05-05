@@ -966,6 +966,7 @@ Login with user and password
 | params | <code>object</code> | Object with user and password |
 | params.username | <code>string</code> | Username or email of the user |
 | params.password | <code>string</code> | Password of the user |
+| params.orgname | <code>string</code> | The organame of the user |
 
 **Example**  
 ```js
