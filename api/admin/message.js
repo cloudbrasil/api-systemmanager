@@ -83,6 +83,28 @@ class AdminMessage {
   }
 
   /**
+   * @description Validation struct to send email
+   * @param {!object} params - Params to send email
+   * @param {!string} params.subject - Subject of the email
+   * @param {!string} params.message - Body of the email
+   * @param {!string} params.to - Destination email
+   * @param {?string} params.from - Source email
+   */
+  _validItemToSendEmail(params) {
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to send email');
+      Joi.assert(params.subject, Joi.string().required(), 'Subject of the email');
+      Joi.assert(params.message, Joi.string().required(), 'Body of the email');
+      Joi.assert(params.to, Joi.string().required(), 'Destination email');
+      Joi.assert(params.from, Joi.string(), 'Source email');
+
+      return true;
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
    * @description Send an SMS message
    * @param {!object} params - Params to send SMS
    * @param {!string} params.apiKey - Organization API key
@@ -119,35 +141,49 @@ class AdminMessage {
   }
 
   /**
-   * @description Get geolocation
-   * @param {!object} params - Params to get location
-   * @param {!string} params.apiKey - Organization API key
-   * @param {!string} params.message - The text message to send
-   * @param {!string} params.recipient - The telephone number without with only numbers
-   * @param {?number} params.limitSize=130 - Size limit to send SMS
-   * @return {Promise<{}>}
+   * @description Send email, array with email list or send one email
+   * @param {!object} params - Params to send email
+   * @param {!string} params.subject - Subject of the email
+   * @param {!string} params.message - Body of the email
+   * @param {!string} params.to - Destination email
+   * @param {?string} params.from - Source email
+   * @param {string} session - Session, token JWT
+   * @return {Promise<{success: boolean, sent: object[]}>} - Success and email sent
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  subject: 'Test email',
+   *  message: '<h1>Hi!</h1>',
+   *  to: 'destination@gmail.com'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.message.sendEmail(params, session);
    */
-  async sendSMS(params) {
+  async sendEmail(params, session) {
     const self = this;
+
     try {
-      Joi.assert(params, Joi.object().required(), 'Params to send SMS');
-      Joi.assert(params.apiKey, Joi.string().required(), 'Organization API key');
-      Joi.assert(params.message, Joi.string().required(), 'The text message to send');
-      Joi.assert(params.recipient, Joi.string().required(), 'The telephone number without with only numbers');
-      Joi.assert(params.limitSize, Joi.number(), 'Size limit to send SMS');
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
 
-      const defaultSize = 130;
-      const { apiKey, message, recipient, limitSize = defaultSize } = params;
+      let emailList = [];
+      const emailSent = [];
 
-      const paramsOfThePagination = { message, limitSize };
-      const smsData = self._paginationOfTheSMS(paramsOfThePagination);
-
-      for await (const smsText of smsData) {
-        const payload = { apiKey, data: { message: smsText }, recipient };
-        await self.client.post('/sms/send', payload);
+      if (Array.isArray(params)) {
+        params.forEach(element => self._validItemToSendEmail(element));
+        emailList = [...params];
+      } else {
+        self._validItemToSendEmail(params);
+        emailList = [params];
       }
 
-      return { success: true, send: smsData.length };
+      for await (const email of emailList) {
+        await self.client.post('/admin/email', email, self._setHeader(session));
+        emailSent.push(email);
+      }
+
+      return { success: true, sent: emailSent };
 
     } catch (ex) {
       throw ex;
