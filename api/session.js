@@ -50,9 +50,9 @@ class Session {
   }
 
   /**
-   * @description Show information for session (Valid token JWT)
-   * @param {string} sessionId Is session (Token JWT)
-   * @param {string} session Is session (token JWT) of th user SU
+   * @description Show information for session, thus validating the session (Valid token JWT)
+   * @param {string} sessionId The user session (JWT Token)
+   * @param {string} suSessionId=sessionId Given a JWT Token of a SU (SuperAdmin), allow to check session for another user.
    * @return {Promise}
    * @public
    * @async
@@ -61,17 +61,20 @@ class Session {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.session.information(token, session);
+   * const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.session.information(sessionId, suSessionId);
+   *
    */
-  async information(sessionId, session) {
+  async information(sessionId, suSessionId = null) {
     const self = this;
 
     try {
       Joi.assert(sessionId, Joi.string().required());
-      Joi.assert(session, Joi.string().required());
 
-      const apiCall = self._client.get(`session?token=${sessionId}`, self._setHeader(session));
+      // if not provided, just use the same sessionId
+      suSessionId = suSessionId || sessionId;
+
+      const apiCall = self._client.get(`session?token=${sessionId}`, self._setHeader(suSessionId));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;

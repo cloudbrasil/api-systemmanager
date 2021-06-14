@@ -310,8 +310,23 @@ Admin Class for user, permission admin
 **Kind**: global class  
 
 * [AdminMessage](#AdminMessage)
+    * [._paginationOfTheSMS(params)](#AdminMessage+_paginationOfTheSMS)
     * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
     * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
+
+<a name="AdminMessage+_paginationOfTheSMS"></a>
+
+### adminMessage.\_paginationOfTheSMS(params)
+Pagination SMS texts
+
+**Kind**: instance method of [<code>AdminMessage</code>](#AdminMessage)  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Params to pagintion SMS |
+| params.message | <code>string</code> |  | Message to pagination |
+| params.limitSize | <code>number</code> | <code>130</code> | Limit of the start pagination |
+| params.continueText | <code>number</code> | <code>continua...</code> | Text to continue other SMS |
 
 <a name="AdminMessage+sendSMS"></a>
 
@@ -743,6 +758,31 @@ await api.admin.user.emailExist(email, session);
 Api dispatch manager
 
 **Kind**: global class  
+
+* [Dispatch](#Dispatch)
+    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+
+<a name="Dispatch+getContext"></a>
+
+### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the URL context
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>string</code> |  | Full url |
+| session | <code>session</code> | <code></code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
+```
 <a name="Dispatch+getClient"></a>
 
 ### dispatch.getClient() ⇒ <code>promise</code>
@@ -926,6 +966,7 @@ Login with user and password
 | params | <code>object</code> | Object with user and password |
 | params.username | <code>string</code> | Username or email of the user |
 | params.password | <code>string</code> | Password of the user |
+| params.orgname | <code>string</code> | The organame of the user |
 
 **Example**  
 ```js
@@ -972,24 +1013,24 @@ Session manager of the API
 **Kind**: global class  
 <a name="Session+information"></a>
 
-### session.information(sessionId, session) ⇒ <code>Promise</code>
-Show information for session (Valid token JWT)
+### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
+Show information for session, thus validating the session (Valid token JWT)
 
 **Kind**: instance method of [<code>Session</code>](#Session)  
 **Access**: public  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| sessionId | <code>string</code> | Is session (Token JWT) |
-| session | <code>string</code> | Is session (token JWT) of th user SU |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sessionId | <code>string</code> |  | The user session (JWT Token) |
+| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
 
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.session.information(token, session);
+const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.session.information(sessionId, suSessionId);
 ```
 <a name="Documents"></a>
 

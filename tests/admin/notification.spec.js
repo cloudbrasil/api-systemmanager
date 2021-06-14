@@ -161,9 +161,9 @@ describe('Start API Notification', function () {
       const retData = await sm.login.logout(session);
 
       expect(retData).to.not.be.empty;
-      expect(retData).to.be.an('object');
-      expect(retData.response).to.not.be.empty;
-      expect(retData.response).equal('OK');
+      expect(retData).to.be.an('boolean');
+      expect(retData).to.not.be.empty;
+      expect(retData).equal(true);
     } catch (ex) {
       expect(ex).to.be.empty;
     }
