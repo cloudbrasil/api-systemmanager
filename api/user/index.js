@@ -6,6 +6,7 @@ const Organization = require('./organization');
 const Process = require('./process');
 const Task = require('./task');
 const User = require('./user');
+const Register = require('./register');
 
 /**
  * @class API request, user permission level
@@ -27,6 +28,7 @@ class Users {
     self.process = new Process(options);
     self.task = new Task(options);
     self.user = new User(options);
+    self.register = new Register(options);
   }
 }
 

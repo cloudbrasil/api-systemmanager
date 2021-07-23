@@ -34,20 +34,11 @@
 <dt><a href="#AdminUser">AdminUser</a></dt>
 <dd><p>Admin Class for user, permission admin</p>
 </dd>
-<dt><a href="#Dispatch">Dispatch</a></dt>
-<dd><p>Api dispatch manager</p>
-</dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
 <dd><p>General Class for user, permission organization</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
-</dd>
-<dt><a href="#Login">Login</a></dt>
-<dd><p>Login manager</p>
-</dd>
-<dt><a href="#Session">Session</a></dt>
-<dd><p>Session manager of the API</p>
 </dd>
 <dt><a href="#Documents">Documents</a></dt>
 <dd><p>Class for documents, permission user</p>
@@ -60,6 +51,9 @@
 </dd>
 <dt><a href="#Process">Process</a></dt>
 <dd><p>Class for process, permission user</p>
+</dd>
+<dt><a href="#Register">Register</a></dt>
+<dd><p>Class for user registration in a organization</p>
 </dd>
 <dt><a href="#Task">Task</a></dt>
 <dd><p>Class for task, permission user</p>
@@ -311,8 +305,9 @@ Admin Class for user, permission admin
 
 * [AdminMessage](#AdminMessage)
     * [._paginationOfTheSMS(params)](#AdminMessage+_paginationOfTheSMS)
+    * [._validItemToSendEmail(params)](#AdminMessage+_validItemToSendEmail)
     * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
-    * [.sendSMS(params)](#AdminMessage+sendSMS) ⇒ <code>Promise.&lt;{}&gt;</code>
+    * [.sendEmail(params, session)](#AdminMessage+sendEmail) ⇒ <code>Promise.&lt;{success: boolean, sent: Array.&lt;object&gt;}&gt;</code>
 
 <a name="AdminMessage+_paginationOfTheSMS"></a>
 
@@ -327,6 +322,21 @@ Pagination SMS texts
 | params.message | <code>string</code> |  | Message to pagination |
 | params.limitSize | <code>number</code> | <code>130</code> | Limit of the start pagination |
 | params.continueText | <code>number</code> | <code>continua...</code> | Text to continue other SMS |
+
+<a name="AdminMessage+_validItemToSendEmail"></a>
+
+### adminMessage.\_validItemToSendEmail(params)
+Validation struct to send email
+
+**Kind**: instance method of [<code>AdminMessage</code>](#AdminMessage)  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to send email |
+| params.subject | <code>string</code> | Subject of the email |
+| params.message | <code>string</code> | Body of the email |
+| params.to | <code>string</code> | Destination email |
+| params.from | <code>string</code> | Source email |
 
 <a name="AdminMessage+sendSMS"></a>
 
@@ -343,21 +353,35 @@ Send an SMS message
 | params.recipient | <code>string</code> |  | The telephone number without with only numbers |
 | params.limitSize | <code>number</code> | <code>130</code> | Size limit to send SMS |
 
-<a name="AdminMessage+sendSMS"></a>
+<a name="AdminMessage+sendEmail"></a>
 
-### adminMessage.sendSMS(params) ⇒ <code>Promise.&lt;{}&gt;</code>
-Get geolocation
+### adminMessage.sendEmail(params, session) ⇒ <code>Promise.&lt;{success: boolean, sent: Array.&lt;object&gt;}&gt;</code>
+Send email, array with email list or send one email
 
 **Kind**: instance method of [<code>AdminMessage</code>](#AdminMessage)  
+**Returns**: <code>Promise.&lt;{success: boolean, sent: Array.&lt;object&gt;}&gt;</code> - - Success and email sent  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | Params to get location |
-| params.apiKey | <code>string</code> |  | Organization API key |
-| params.message | <code>string</code> |  | The text message to send |
-| params.recipient | <code>string</code> |  | The telephone number without with only numbers |
-| params.limitSize | <code>number</code> | <code>130</code> | Size limit to send SMS |
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to send email |
+| params.subject | <code>string</code> | Subject of the email |
+| params.message | <code>string</code> | Body of the email |
+| params.to | <code>string</code> | Destination email |
+| params.from | <code>string</code> | Source email |
+| session | <code>string</code> | Session, token JWT |
 
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ subject: 'Test email',
+ message: '<h1>Hi!</h1>',
+ to: 'destination@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.message.sendEmail(params, session);
+```
 <a name="AdminNotification"></a>
 
 ## AdminNotification
@@ -752,52 +776,6 @@ const email = 'ana.silva@gmail.com';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.emailExist(email, session);
 ```
-<a name="Dispatch"></a>
-
-## Dispatch
-Api dispatch manager
-
-**Kind**: global class  
-
-* [Dispatch](#Dispatch)
-    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
-
-<a name="Dispatch+getContext"></a>
-
-### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
-Get the URL context
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
-**Access**: public  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | Full url |
-| session | <code>session</code> | <code></code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-```
-<a name="Dispatch+getClient"></a>
-
-### dispatch.getClient() ⇒ <code>promise</code>
-Get client Axios
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>promise</code> - return client axios  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-await api.dispatch.getClient();
-```
 <a name="GeoLocation"></a>
 
 ## GeoLocation
@@ -859,179 +837,6 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
-<a name="Login"></a>
-
-## Login
-Login manager
-
-**Kind**: global class  
-
-* [Login](#Login)
-    * [.facebook(params)](#Login+facebook) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.google(params)](#Login+google) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.apiKey(apikey)](#Login+apiKey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.userPass(params)](#Login+userPass) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.logout(session)](#Login+logout) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-
-<a name="Login+facebook"></a>
-
-### login.facebook(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with social login Facebook
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to login Facebook |
-| params.accessToken | <code>string</code> | Access token of the system manager |
-| params.initialUserData | <code>object</code> | Object with roles default if sigin |
-| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
-const { auth, user } = await api.login.facebook(params);
-```
-<a name="Login+google"></a>
-
-### login.google(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with social login Google
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to login Google |
-| params.accessToken | <code>string</code> | Access token of the system manager |
-| params.initialUserData | <code>object</code> | Object with roles default if sigin |
-| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
-const { auth, user } = await api.login.google(accessToken);
-```
-<a name="Login+apiKey"></a>
-
-### login.apiKey(apikey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with apikey
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| apikey | <code>string</code> | Access key |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
-const { auth, user } = await api.login.apiKey(apiKey);
-```
-<a name="Login+userPass"></a>
-
-### login.userPass(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with user and password
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Object with user and password |
-| params.username | <code>string</code> | Username or email of the user |
-| params.password | <code>string</code> | Password of the user |
-| params.orgname | <code>string</code> | The organame of the user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const params = {
-  username: 'ana.silva@gmail.com',
-  password: '123456'
-};
-const { auth, user } = await api.login.userPass(params);
-```
-<a name="Login+logout"></a>
-
-### login.logout(session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-Logout user system manager
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const { success } = await api.login.logout(session);
-```
-<a name="Session"></a>
-
-## Session
-Session manager of the API
-
-**Kind**: global class  
-<a name="Session+information"></a>
-
-### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
-Show information for session, thus validating the session (Valid token JWT)
-
-**Kind**: instance method of [<code>Session</code>](#Session)  
-**Access**: public  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| sessionId | <code>string</code> |  | The user session (JWT Token) |
-| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.session.information(sessionId, suSessionId);
-```
 <a name="Documents"></a>
 
 ## Documents
@@ -1460,6 +1265,120 @@ const params = {
 }
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.process.getProcessProperties(params, session);
+```
+<a name="Register"></a>
+
+## Register
+Class for user registration in a organization
+
+**Kind**: global class  
+
+* [Register](#Register)
+    * [.getOrgname()](#Register+getOrgname) ⇒ <code>string</code>
+    * [.validateEmail(params)](#Register+validateEmail) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>boolean</code> \| <code>string</code> \| <code>object</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>object</code> \| <code>string</code> \| <code>string</code>
+    * [.execute(params)](#Register+execute) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>boolean</code> \| <code>object</code> \| <code>string</code>
+
+<a name="Register+getOrgname"></a>
+
+### register.getOrgname() ⇒ <code>string</code>
+**Kind**: instance method of [<code>Register</code>](#Register)  
+**Returns**: <code>string</code> - orgname The orgname of the organization in the registerId  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params.registerId | <code>object</code> | The registerId that comes with the registration page context |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ registerId: 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...'
+};
+const orgname = await api.user.register.getOrgname(params);
+```
+<a name="Register+validateEmail"></a>
+
+### register.validateEmail(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>boolean</code> \| <code>string</code> \| <code>object</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>object</code> \| <code>string</code> \| <code>string</code>
+Method to find task by id
+
+**Kind**: instance method of [<code>Register</code>](#Register)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success If the operation was successfully done (true|false)<code>boolean</code> - data.userAlreadyExists If the user already exists (true|false), if true, then the other information is not returned<code>string</code> - data.registrationEmailInfoRaw The fully cryptographed registration information<code>object</code> - data.registrationEmailInfo The registration information<code>string</code> - data.registrationEmailInfo.orgname The orgname<code>string</code> - data.registrationEmailInfo.orgId The orgId of the organization<code>string</code> - data.registrationEmailInfo.guid The unique id for the registration<code>object</code> - data.registrationEmailInfo.emailValidation The email validation information<code>string</code> - data.registrationEmailInfo.emailValidation.email The email that the code was sent to<code>string</code> - data.registrationEmailInfo.emailValidation.code The 4 digit code to validate the email  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.registerId | <code>string</code> | The registerId that comes with the registration page context |
+| params.email | <code>object</code> | The email to validate |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ registerId: 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',
+ email: 'myemail@company.com'
+};
+const retData = await api.user.register.validateEmail(params);
+```
+<a name="Register+execute"></a>
+
+### register.execute(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>boolean</code> \| <code>object</code> \| <code>string</code>
+Method to find task by id
+
+**Kind**: instance method of [<code>Register</code>](#Register)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success If the operation was successfully done (true|false)<code>boolean</code> - data.userAlreadyExists If the user already exists (true|false), if true, then the other information is not returned<code>object</code> - auth The full authentication data with session, if login is true.<code>string</code> - auth.redirectUrl The url to redirect.  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.registerId | <code>string</code> | The registerId that comes with the registration page context |
+| params.login | <code>boolean</code> | If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically. |
+| params.emailInfo | <code>object</code> | The information for the email validation |
+| params.emailInfo.email | <code>string</code> | The email validation information |
+| params.emailInfo.code | <code>string</code> | The 4 digit code to validate the email |
+| params.registerData | <code>object</code> | The registration data |
+| params.registerData.name | <code>string</code> | The name if the user |
+| params.registerData.registerEmail | <code>string</code> | The email of the user |
+| params.registerData.phone | <code>string</code> | The phone of the user |
+| params.registerData.idcard | <code>string</code> | The ID card of the user |
+| params.registerData.registerPassword | <code>string</code> | The user password in open text |
+| params.registerData.emailValidationCode | <code>string</code> | The code used to validate the email |
+| params.registerData.phoneValidationCode | <code>string</code> | The code used to validate the phone |
+| params.registerData.language | <code>string</code> | The defaulf navigator language (i.e.: navigator.language) |
+| params.registerData.timezone | <code>string</code> | The defaulf navigator timezone (i.e.: Intl.DateTimeFormat().resolvedOptions().timeZone) |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params ={
+    "registerId": 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',
+    "login": false,
+    "emailInfo": {
+      "code": "5974",
+      "email": "cbtoto_1@mailinator.com"
+    },
+    "registerData": {
+      "name": "Augusto Totlo",
+      "registerEmail": "cbtoto_1@mailinator.com",
+      "phone": "",
+      "idcard": "",
+      "dob": "1978-01-12T03:00:00.000Z",
+      "registerPassword": "123456",
+      "emailValidationCode": "5974",
+      "phoneValidationCode": "",
+      "language": "en-US",
+      "timezone": "Europe/Dublin"
+    }
+  };
+const retData = await api.user.register.execute(params);
 ```
 <a name="Task"></a>
 
