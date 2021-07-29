@@ -105,7 +105,8 @@ class Register {
 
       const { registerId = '', email = '' } = params;
       const registerInfo = Cypher.get(registerId) || {};
-      const payload = { ...registerInfo, email };
+      const infoData = { ...registerInfo, email };
+      const payload = { info: Cypher.set(infoData) };
       const apiCall = self._client
         .post(`/users/validate/email`, payload);
 
