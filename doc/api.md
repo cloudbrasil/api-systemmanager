@@ -73,6 +73,9 @@ Admin Class for documents, permission admin
 * [AdminDocuments](#AdminDocuments)
     * [.advancedSearch(params, session)](#AdminDocuments+advancedSearch) ⇒ <code>Promise</code>
     * [.findById(params, session)](#AdminDocuments+findById) ⇒ <code>Promise</code>
+    * [.signedUrl(params, apiKey)](#AdminDocuments+signedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.updateContent(params, apiKey)](#AdminDocuments+updateContent) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.updateAI(params, apiKey)](#AdminDocuments+updateAI) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="AdminDocuments+advancedSearch"></a>
 
@@ -146,6 +149,107 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.document.findById(params, session);
+```
+<a name="AdminDocuments+signedUrl"></a>
+
+### adminDocuments.signedUrl(params, apiKey) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+Request signed url url to put or get
+
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url<code>string</code> - doc.docId Document id<code>string</code> - doc.name The name of the document, which is the fileName<code>string</code> - doc.areaId docAreaId of the document<code>string</code> - doc.type the document mimi type<code>string</code> - doc.signedUrl the signed URL to upload  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to request signed url |
+| params.methodType | <code>string</code> | Method type HTTP get or put |
+| params.docId | <code>string</code> | The unique id of the document |
+| apiKey | <code>string</code> | Api Key as permission to use this functionality |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'put',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+const { docId, name, areaId, type, signedUrl } = await api.admin.document.signedUrl(params, apiKey);
+```
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'get',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiKey);
+```
+<a name="AdminDocuments+updateContent"></a>
+
+### adminDocuments.updateContent(params, apiKey) ⇒ <code>Promise.&lt;object&gt;</code>
+Update a document content
+
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to request signed url |
+| params.content | <code>string</code> | The content text |
+| params.docId | <code>string</code> | The unique id of the document |
+| apiKey | <code>string</code> | Api Key as permission to use this functionality |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ content: 'some text...',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.updateContent(params, apiKey);
+```
+<a name="AdminDocuments+updateAI"></a>
+
+### adminDocuments.updateAI(params, apiKey) ⇒ <code>Promise.&lt;object&gt;</code>
+Update a document content
+
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to request signed url |
+| params.content | <code>string</code> | The content text |
+| params.docId | <code>string</code> | The unique id of the document |
+| params.searchablePDFURL | <code>string</code> | The searchable PDF Url |
+| params.overlay | <code>object</code> | The overlay information |
+| params.entities | <code>array</code> | The list of entities extracted from the text |
+| params.language | <code>object</code> | The language detected |
+| params.language.name | <code>string</code> | The language name detected |
+| params.language.confidence | <code>string</code> | The confidence that it is the language |
+| apiKey | <code>string</code> | Api Key as permission to use this functionality |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ content: 'some text...',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.updateContent(params, apiKey);
 ```
 <a name="AdminForm"></a>
 
@@ -1335,24 +1439,24 @@ Method to find task by id
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to get task |
-| params.registerId | <code>string</code> | The registerId that comes with the registration page context |
-| params.login | <code>boolean</code> | If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically. |
-| params.emailInfo | <code>object</code> | The information for the email validation |
-| params.emailInfo.email | <code>string</code> | The email validation information |
-| params.emailInfo.code | <code>string</code> | The 4 digit code to validate the email |
-| params.registerData | <code>object</code> | The registration data |
-| params.registerData.name | <code>string</code> | The name if the user |
-| params.registerData.registerEmail | <code>string</code> | The email of the user |
-| params.registerData.phone | <code>string</code> | The phone of the user |
-| params.registerData.idcard | <code>string</code> | The ID card of the user |
-| params.registerData.registerPassword | <code>string</code> | The user password in open text |
-| params.registerData.emailValidationCode | <code>string</code> | The code used to validate the email |
-| params.registerData.phoneValidationCode | <code>string</code> | The code used to validate the phone |
-| params.registerData.language | <code>string</code> | The defaulf navigator language (i.e.: navigator.language) |
-| params.registerData.timezone | <code>string</code> | The defaulf navigator timezone (i.e.: Intl.DateTimeFormat().resolvedOptions().timeZone) |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Params to get task |
+| params.registerId | <code>string</code> |  | The registerId that comes with the registration page context |
+| params.login | <code>boolean</code> | <code>false</code> | If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically. |
+| params.emailInfo | <code>object</code> |  | The information for the email validation |
+| params.emailInfo.email | <code>string</code> |  | The email validation information |
+| params.emailInfo.code | <code>string</code> |  | The 4 digit code to validate the email |
+| params.registerData | <code>object</code> |  | The registration data |
+| params.registerData.name | <code>string</code> |  | The name if the user |
+| params.registerData.registerEmail | <code>string</code> |  | The email of the user |
+| params.registerData.phone | <code>string</code> |  | The phone of the user |
+| params.registerData.idcard | <code>string</code> |  | The ID card of the user |
+| params.registerData.registerPassword | <code>string</code> |  | The user password in open text |
+| params.registerData.emailValidationCode | <code>string</code> |  | The code used to validate the email |
+| params.registerData.phoneValidationCode | <code>string</code> |  | The code used to validate the phone |
+| params.registerData.language | <code>string</code> |  | The defaulf navigator language (i.e.: navigator.language) |
+| params.registerData.timezone | <code>string</code> |  | The defaulf navigator timezone (i.e.: Intl.DateTimeFormat().resolvedOptions().timeZone) |
 
 **Example**  
 ```js

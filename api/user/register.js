@@ -123,7 +123,7 @@ class Register {
    * @description Method to find task by id
    * @param {object} params Params to get task
    * @param {string} params.registerId The registerId that comes with the registration page context
-   * @param {boolean} params.login If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically.
+   * @param {boolean} params.login=false If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically.
    * @param {object} params.emailInfo The information for the email validation
    * @param {string} params.emailInfo.email The email validation information
    * @param {string} params.emailInfo.code The 4 digit code to validate the email
@@ -178,7 +178,7 @@ class Register {
       Joi.assert(params.emailInfo, Joi.object().required(), ' The email info');
       Joi.assert(params.registerData, Joi.object().required(), ' The registerData');
 
-      const { registerId = '', emailInfo = {}, registerData = {}  } = params;
+      const { registerId = '', emailInfo = {}, registerData = {}, login = false  } = params;
       const registerInfo = Cypher.get(registerId) || {};
       const payload = { ...registerInfo, login,  emailInfo,registerData  };
       const apiCall = self._client
