@@ -180,9 +180,10 @@ class Register {
 
       const { registerId = '', emailInfo = {}, registerData = {}, login = false  } = params;
       const registerInfo = Cypher.get(registerId) || {};
-      const payload = { ...registerInfo, login,  emailInfo,registerData  };
+      const payload = { ...registerInfo, login, emailInfo, registerData };
+      const payloadInfo = { info: Cypher.set(payload) };
       const apiCall = self._client
-          .post(`/users/register`, payload);
+          .put(`/users/register`, payloadInfo);
 
       const { success = false, userAlreadyExists = false, auth } = self._returnData(await apiCall);
       const retData = { success, userAlreadyExists, auth };
