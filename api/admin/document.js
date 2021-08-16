@@ -143,6 +143,148 @@ class AdminDocuments {
       throw ex;
     }
   }
+
+  /**
+   *
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Request signed url url to put or get
+   * @param {object} params Params to request signed url
+   * @param {string} params.methodType Method type HTTP get or put
+   * @param {string} params.docId The unique id of the document
+   * @param {string} apiKey Api Key as permission to use this functionality
+   * @return {Promise<object>} doc Returned document data with the signed url
+   * @return {string} doc.docId Document id
+   * @return {string} doc.name The name of the document, which is the fileName
+   * @return {string} doc.areaId docAreaId of the document
+   * @return {string} doc.type the document mimi type
+   * @return {string} doc.signedUrl the signed URL to upload
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  methodType: 'put',
+   *  docId: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const apiKey: '...';
+   * const { docId, name, areaId, type, signedUrl } = await api.admin.document.signedUrl(params, apiKey);
+   *
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  methodType: 'get',
+   *  docId: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const apiKey: '...';
+   * const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiKey);
+   */
+  async signedUrl(params = {}, apiKey) {
+
+    Joi.assert(params, Joi.object().required());
+    Joi.assert(params.methodType, Joi.string().required());
+    Joi.assert(params.docId, Joi.string().required());
+    Joi.assert(apiKey, Joi.string().required());
+
+    const self = this;
+    const { methodType, docId } = params;
+    const url = `/api/documents/signedurl?apiKey=${apiKey}&methodType=${methodType}&docId=${docId}`;
+    const apiCall = self._client
+        .get(url);
+
+    return self._returnData(await apiCall);
+  }
+
+  /**
+   *
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update a document content
+   * @param {object} params Params to request signed url
+   * @param {string} params.content The content text
+   * @param {string} params.docId The unique id of the document
+   * @param {string} apiKey Api Key as permission to use this functionality
+   * @return {Promise<object>} doc Returned document data with the signed url
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  content: 'some text...',
+   *  docId: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const apiKey: '...';
+   * await api.admin.document.updateContent(params, apiKey);
+   */
+  async updateContent(params = {}, apiKey) {
+
+    Joi.assert(params, Joi.object().required());
+    Joi.assert(params.content, Joi.string().required());
+    Joi.assert(params.docId, Joi.string().required());
+    Joi.assert(apiKey, Joi.string().required());
+
+    const self = this;
+    const { content, docId } = params;
+    const url = `/api/documents/${docId}/content?apiKey=${apiKey}`;
+    const data = { content };
+    const apiCall = self._client
+        .put(url, data, {
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity
+        });
+    return self._returnData(await apiCall);
+  }
+
+  /**
+   *
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update a document content
+   * @param {object} params Params to request signed url
+   * @param {string} params.content The content text
+   * @param {string} params.docId The unique id of the document
+   * @param {string} params.searchablePDFURL The searchable PDF Url
+   * @param {object} params.overlay The overlay information
+   * @param {array} params.entities The list of entities extracted from the text
+   * @param {object} params.language The language detected
+   * @param {string} params.language.name The language name detected
+   * @param {string} params.language.confidence The confidence that it is the language
+   * @param {string} apiKey Api Key as permission to use this functionality
+   * @return {Promise<object>} doc Returned document data with the signed url
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  content: 'some text...',
+   *  docId: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const apiKey: '...';
+   * await api.admin.document.updateContent(params, apiKey);
+   */
+  async updateAI(params = {}, apiKey) {
+
+    Joi.assert(params, Joi.object().required());
+    Joi.assert(params.docId, Joi.string().required());
+    Joi.assert(apiKey, Joi.string().required());
+
+    const self = this;
+    const { docId } = params;
+    delete params.docId;
+    const url = `/api/documents/${docId}/ai?apiKey=${apiKey}`;
+    const apiCall = self._client
+        .put(url, params, {
+          maxContentLength: Infinity,
+          maxBodyLength: Infinity
+        });
+    return self._returnData(await apiCall);
+  }
+
 }
 
 module.exports = AdminDocuments;
