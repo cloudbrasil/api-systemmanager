@@ -806,6 +806,7 @@ Admin Class for user, permission admin
     * [.findById(userId, session)](#AdminUser+findById) ⇒ <code>Promise</code>
     * [.findByIdAndUpdatePassword(params, session)](#AdminUser+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
     * [.emailExist(email, session)](#AdminUser+emailExist)
+    * [.findByIdAndUpdate(userId, payload, session)](#AdminUser+findByIdAndUpdate) ⇒ <code>Promise.&lt;\*&gt;</code>
 
 <a name="AdminUser+findById"></a>
 
@@ -879,6 +880,29 @@ const api = new API();
 const email = 'ana.silva@gmail.com';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.emailExist(email, session);
+```
+<a name="AdminUser+findByIdAndUpdate"></a>
+
+### adminUser.findByIdAndUpdate(userId, payload, session) ⇒ <code>Promise.&lt;\*&gt;</code>
+update userData by userSMId
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | User SM Id |
+| payload | <code>object</code> | Payload to update |
+| session | <code>string</code> | Is token JWT |
+
+**Example**  
+```js
+const userId = '55e4a3bd6be6b45210833fae';
+const payload = {
+  name: 'Maria joaquina',
+  email: 'maria@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
 <a name="GeoLocation"></a>
 
