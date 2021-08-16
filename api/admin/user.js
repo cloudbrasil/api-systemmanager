@@ -148,6 +148,38 @@ class AdminUser {
       throw ex;
     }
   }
+
+  /**
+   * @description update userData by userSMId
+   * @param {string} userId - User SM Id
+   * @param {object} payload - Payload to update
+   * @param {string} session - Is token JWT
+   * @returns {Promise<*>}
+   * @async
+   * @public
+   * @example
+   *
+   * const userId = '55e4a3bd6be6b45210833fae';
+   * const payload = {
+   *   name: 'Maria joaquina',
+   *   email: 'maria@gmail.com'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   */
+  async findByIdAndUpdate(userId, payload, session) {
+    const self = this;
+
+    try {
+      Joi.assert(userId, Joi.string().required(), 'User id of SM');
+      Joi.assert(payload, Joi.object().required(), 'Payload to update');
+      Joi.assert(session, Joi.string().required(), 'Session user admin');
+
+      const apiCall = self.client.put(`/admin/users/${userId}`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 module.exports = AdminUser;
