@@ -84,7 +84,7 @@ class Documents {
         areaId: _.get(params, 'areaId'),
         docId: _.get(params, 'docId'),
         documentDate: _.get(params, 'documentDate', Moment().format()),
-        document: _.get(params, 'filename'),
+        document: _.get(params, 'document'),
         type: _.get(params, 'type'),
         name: _.get(params, 'name'),
         content: _.get(params, 'content', ''),
@@ -140,6 +140,7 @@ class Documents {
    * @param {string} params.areaId Doc area id (_id database)
    * @param {string} params.docId Document id (_id database)
    * @param {string} [params.documentDate=new\ Date()] Date of document
+   * @param {string} params.document The path to the file. If S3, the key to S3, gotten after getting a signed URL
    * @param {string} params.filename File name
    * @param {string} params.type Mimetype of the document (image/png)
    * @param {string} params.name Document name

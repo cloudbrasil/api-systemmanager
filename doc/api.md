@@ -53,7 +53,7 @@
 <dd><p>Class for process, permission user</p>
 </dd>
 <dt><a href="#Register">Register</a></dt>
-<dd><p>Class for user registration in a organization</p>
+<dd><p>Class for user registration in a user</p>
 </dd>
 <dt><a href="#Task">Task</a></dt>
 <dd><p>Class for task, permission user</p>
@@ -996,6 +996,7 @@ Create new document
 | params.areaId | <code>string</code> |  | Doc area id (_id database) |
 | params.docId | <code>string</code> |  | Document id (_id database) |
 | [params.documentDate] | <code>string</code> | <code>&quot;new\\ Date()&quot;</code> | Date of document |
+| params.document | <code>string</code> |  | The path to the file. If S3, the key to S3, gotten after getting a signed URL |
 | params.filename | <code>string</code> |  | File name |
 | params.type | <code>string</code> |  | Mimetype of the document (image/png) |
 | params.name | <code>string</code> |  | Document name |
@@ -1397,7 +1398,7 @@ await api.user.process.getProcessProperties(params, session);
 <a name="Register"></a>
 
 ## Register
-Class for user registration in a organization
+Class for user registration in a user
 
 **Kind**: global class  
 
@@ -1456,7 +1457,7 @@ const retData = await api.user.register.validateEmail(params);
 <a name="Register+execute"></a>
 
 ### register.execute(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>boolean</code> \| <code>object</code> \| <code>string</code>
-Method to find task by id
+Method to register a user
 
 **Kind**: instance method of [<code>Register</code>](#Register)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success If the operation was successfully done (true|false)<code>boolean</code> - data.userAlreadyExists If the user already exists (true|false), if true, then the other information is not returned<code>object</code> - auth The full authentication data with session, if login is true.<code>string</code> - auth.redirectUrl The url to redirect.  
@@ -1467,6 +1468,7 @@ Method to find task by id
 | --- | --- | --- | --- |
 | params | <code>object</code> |  | Params to get task |
 | params.registerId | <code>string</code> |  | The registerId that comes with the registration page context |
+| params.type | <code>string</code> | <code>&quot;sign&quot;</code> | The type of the registration. By defailt, |
 | params.login | <code>boolean</code> | <code>false</code> | If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically. |
 | params.emailInfo | <code>object</code> |  | The information for the email validation |
 | params.emailInfo.email | <code>string</code> |  | The email validation information |
@@ -1488,6 +1490,7 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params ={
     "registerId": 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',
+    "type": 'sign',
     "login": false,
     "emailInfo": {
       "code": "5974",
