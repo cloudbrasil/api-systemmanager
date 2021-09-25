@@ -4,7 +4,7 @@ const Joi = require('joi');
 const Cypher = require('../utils/cypher');
 
 /**
- * Class for user registration in a organization
+ * Class for user registration in a user
  * @class
  */
 class Register {
@@ -120,9 +120,10 @@ class Register {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
-   * @description Method to find task by id
+   * @description Method to register a user
    * @param {object} params Params to get task
    * @param {string} params.registerId The registerId that comes with the registration page context
+   * @param {string} params.type=sign The type of the registration. By defailt,
    * @param {boolean} params.login=false If we want to login the user directly after registering the user successfully. If you have a redirect, the best option is to login automatically.
    * @param {object} params.emailInfo The information for the email validation
    * @param {string} params.emailInfo.email The email validation information
@@ -149,6 +150,7 @@ class Register {
    * const api = new API();
    * const params ={
    *     "registerId": 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',
+   *     "type": 'sign',
    *     "login": false,
    *     "emailInfo": {
    *       "code": "5974",
@@ -178,9 +180,15 @@ class Register {
       Joi.assert(params.emailInfo, Joi.object().required(), ' The email info');
       Joi.assert(params.registerData, Joi.object().required(), ' The registerData');
 
-      const { registerId = '', emailInfo = {}, registerData = {}, login = false  } = params;
+      const {
+        type = 'sign',
+        registerId = '',
+        emailInfo = {},
+        registerData = {},
+        login = false
+      } = params;
       const registerInfo = Cypher.get(registerId) || {};
-      const payload = { ...registerInfo, login, emailInfo, registerData };
+      const payload = { ...registerInfo, type, login, emailInfo, registerData };
       const payloadInfo = { info: Cypher.set(payload) };
       const apiCall = self._client
           .put(`/users/register`, payloadInfo);
