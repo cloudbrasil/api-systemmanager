@@ -15,6 +15,11 @@ class User {
     const self = this;
     self._parent = options.parent;
     self._client = self._parent.dispatch.getClient();
+    self.gender = {
+      male: 1,
+      female: 2,
+      nonBinary: 3
+    };
   }
 
   /**
@@ -66,7 +71,7 @@ class User {
    *  type: '123456',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.user.updateAvatar(params, session);
+   * await api.user.profile.updateAvatar(params, session);
    */
   async updateAvatar(params, session) {
     const self = this;
@@ -99,7 +104,7 @@ class User {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.user.removeAvatar(session);
+   * await api.user.profile.removeAvatar(session);
    */
   async removeAvatar(session) {
     const self = this;
@@ -108,6 +113,54 @@ class User {
       Joi.assert(session, Joi.string().required());
 
       const apiCall = self._client.delete(`/users/avatar`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update a user profile by id
+   * @param {object} params Params to update task
+   * @param {string} params.name The name of the user
+   * @param {string} params.site The site of the user
+   * @param {string} params.faceboook The faceboook of the user
+   * @param {string} params.linkedin The linkedin of the user
+   * @param {date} params.dob The date of birth of the user
+   * @param {number<UserGender>} params.gender The gender of of the user self.gender
+   * @param {string} params.phone The phone
+   * @param {string} params.phone2 The phone 2
+   * @param {string} params.phone3 The phone 3
+   * @param {string} params.password The password to change
+   * @param {string} params.secQuestion The security question
+   * @param {string} params.secAnswer The security answer
+   * @param {string} params.timezone The timezone
+   * @param {string} params.userLanguage The user language
+   * @param {string} params.changePassword If we need to change the status and we changed the password
+   * @param {string} params.acceptTermsOfUse If the user has accepted the terms of change
+   * @param {string} session Session, token JWT
+   * @return {Promise<void>}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  name: 'New Name'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.findByIdAndUpdate(params, session);
+   */
+  async findByIdAndUpdate(params = {}, session) {
+    const self = this;
+
+    try {
+      if(_.isEmpty(params)) return;
+
+      const url = 'users';
+      const apiCall = self._client.put(url, params, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
