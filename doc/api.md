@@ -1250,6 +1250,8 @@ Class for organizations, permission user
 * [Organization](#Organization)
     * [.findById(orgId, session)](#Organization+findById)
     * [.idCardExist(idcard, session)](#Organization+idCardExist)
+    * [.upsertAvatar(params, session)](#Organization+upsertAvatar) ⇒ <code>Promise</code>
+    * [.removeAvatar(session)](#Organization+removeAvatar) ⇒ <code>Promise</code>
     * [.callFetch(params, params)](#Organization+callFetch) ⇒ <code>promise</code> \| <code>promise</code>
 
 <a name="Organization+findById"></a>
@@ -1295,6 +1297,53 @@ const api = new API();
 const idCard = '80443245000122';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.organization.idCardExist(idCard, session);
+```
+<a name="Organization+upsertAvatar"></a>
+
+### organization.upsertAvatar(params, session) ⇒ <code>Promise</code>
+Update avatar of organization by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update avatar |
+| params.avatar | <code>string</code> | Image in base64 to update |
+| params.type | <code>string</code> | mimeType (image/png) |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.updateAvatar(params, session);
+```
+<a name="Organization+removeAvatar"></a>
+
+### organization.removeAvatar(session) ⇒ <code>Promise</code>
+Remove avatar of user by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.removeAvatar(session);
 ```
 <a name="Organization+callFetch"></a>
 
@@ -1629,6 +1678,7 @@ Class for user, permission user
 * [User](#User)
     * [.updateAvatar(params, session)](#User+updateAvatar) ⇒ <code>Promise</code>
     * [.removeAvatar(session)](#User+removeAvatar) ⇒ <code>Promise</code>
+    * [.findByIdAndUpdate(params, session)](#User+findByIdAndUpdate) ⇒ <code>Promise.&lt;void&gt;</code>
 
 <a name="User+updateAvatar"></a>
 
@@ -1655,7 +1705,7 @@ const params = {
  type: '123456',
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.user.updateAvatar(params, session);
+await api.user.profile.updateAvatar(params, session);
 ```
 <a name="User+removeAvatar"></a>
 
@@ -1675,5 +1725,45 @@ Remove avatar of user by session of user not allow session user SU
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.user.removeAvatar(session);
+await api.user.profile.removeAvatar(session);
+```
+<a name="User+findByIdAndUpdate"></a>
+
+### user.findByIdAndUpdate(params, session) ⇒ <code>Promise.&lt;void&gt;</code>
+Update a user profile by id
+
+**Kind**: instance method of [<code>User</code>](#User)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update task |
+| params.name | <code>string</code> | The name of the user |
+| params.site | <code>string</code> | The site of the user |
+| params.faceboook | <code>string</code> | The faceboook of the user |
+| params.linkedin | <code>string</code> | The linkedin of the user |
+| params.dob | <code>date</code> | The date of birth of the user |
+| params.gender | <code>number.&lt;UserGender&gt;</code> | The gender of of the user self.gender |
+| params.phone | <code>string</code> | The phone |
+| params.phone2 | <code>string</code> | The phone 2 |
+| params.phone3 | <code>string</code> | The phone 3 |
+| params.password | <code>string</code> | The password to change |
+| params.secQuestion | <code>string</code> | The security question |
+| params.secAnswer | <code>string</code> | The security answer |
+| params.timezone | <code>string</code> | The timezone |
+| params.userLanguage | <code>string</code> | The user language |
+| params.changePassword | <code>string</code> | If we need to change the status and we changed the password |
+| params.acceptTermsOfUse | <code>string</code> | If the user has accepted the terms of change |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ name: 'New Name'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.findByIdAndUpdate(params, session);
 ```
