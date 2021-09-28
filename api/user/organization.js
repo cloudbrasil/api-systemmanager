@@ -107,6 +107,73 @@ class Organization {
   }
 
   /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update avatar of organization by session of user not allow session user SU
+   * @param {object} params Params to update avatar
+   * @param {string} params.avatar Image in base64 to update
+   * @param {string} params.type mimeType (image/png)
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+   *  type: 'image/png',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.updateAvatar(params, session);
+   */
+  async upsertAvatar(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.avatar, Joi.string().required());
+      Joi.assert(params.type, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {avatar, type} = params;
+      const payload = {avatar, type};
+
+      const apiCall = self._client.put('/organizations/1234567890/logo', payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Remove avatar of user by session of user not allow session user SU
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.removeAvatar(session);
+   */
+  async removeAvatar(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.delete('/organizations/1234567890/logo', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
    * @author Augusto Pissarra <abernardo.br@gmail.com>
    * @description Call URL internal
    * @param {!object} params Params to call fectch (URL internal)
