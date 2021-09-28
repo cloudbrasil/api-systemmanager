@@ -27,7 +27,7 @@ class Users {
     self.organization = new Organization(options);
     self.process = new Process(options);
     self.task = new Task(options);
-    self.user = new User(options);
+    self.user = self.profile = new User(options);
     self.register = new Register(options);
   }
 }
