@@ -1,7 +1,12 @@
 const _ = require('lodash');
 const Boom = require('../../helper/boom');
 const Joi = require('joi');
-const Axios = require('axios');
+
+let Axios = require('axios');
+
+if (Axios.__esModule) {
+  Axios = Axios.default;
+}
 
 /**
  * Class for organizations, permission user
