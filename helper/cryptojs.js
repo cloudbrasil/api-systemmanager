@@ -14,7 +14,7 @@
         // Global (browser)
         root.CryptoJS = factory();
     }
-}(this, function () {
+}(window, function () {
 
     /*globals window, global, require*/
 
