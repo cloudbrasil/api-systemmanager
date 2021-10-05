@@ -137,7 +137,7 @@ class User {
    * @param {string} params.secAnswer The security answer
    * @param {string} params.timezone The timezone
    * @param {string} params.userLanguage The user language
-   * @param {string} params.changePassword If we need to change the status and we changed the password
+   * @param {string} params.changePassword (required) If we need to change the status and we changed the password
    * @param {string} params.acceptTermsOfUse If the user has accepted the terms of change
    * @param {string} session Session, token JWT
    * @return {Promise<void>}
@@ -157,7 +157,19 @@ class User {
     const self = this;
 
     try {
+      Joi.assert(session, Joi.string().required());
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.changePassword, Joi.boolean().required());
+
       if(_.isEmpty(params)) return;
+
+      const { changePassword = false, password = '' } = params;
+
+      if(changePassword && password === '') {
+        throw new Error('It is required to change the password')
+      } else {
+        params.changePassword = false;
+      }
 
       const url = 'users';
       const apiCall = self._client.put(url, params, self._setHeader(session));
