@@ -1,6 +1,6 @@
 const _ = require('lodash');
 const Joi = require('joi');
-const Boom = require('@hapi/boom');
+const Boom = require('../helper/boom');
 
 /**
  * @class Session manager of the API
