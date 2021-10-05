@@ -1,5 +1,6 @@
+
 const _ = require('lodash');
-const CryptoJS = require('crypto-js');
+const CryptoJS = require('../../helper/cryptojs');
 
 class Cypher {
 
