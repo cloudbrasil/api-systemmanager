@@ -1,3 +1,5 @@
+
+
 /**
  * Crypto-js
  */
@@ -12,9 +14,12 @@
     }
     else {
         // Global (browser)
-        root.CryptoJS = factory();
+        try {
+            const root = window;
+            root.CryptoJS = factory();
+        } catch(ex) {}
     }
-}(window, function () {
+}(undefined, function () {
 
     /*globals window, global, require*/
 
