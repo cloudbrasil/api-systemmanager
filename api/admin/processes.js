@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Boom = require('../../helper/boom');
+const Boom = require('@hapi/boom');
 const Joi = require('joi');
 
 /**

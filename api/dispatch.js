@@ -1,11 +1,6 @@
 const _ = require('lodash');
 const Joi = require('joi');
-
-let Axios = require('axios');
-
-if (Axios.__esModule) {
-  Axios = Axios.default;
-}
+const Axios = require('axios');
 
 /**
  * @class Api dispatch manager

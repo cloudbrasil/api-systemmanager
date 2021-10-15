@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const Boom = require('../../helper/boom');
+const Boom = require('@hapi/boom');
 
 class ThePromise {
 
