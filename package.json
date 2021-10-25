@@ -1,13 +1,14 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "1.0.47",
+  "version": "1.0.48",
   "scripts": {
     "doc": "rm -f  doc/api.md && jsdoc2md api/**/** > doc/api.md",
     "build": "rollup -c"
   },
   "type": "module",
   "main": "./dist/bundle.mjs",
+  "browser": "./dist/bundle.mjs",
   "exports": {
     "require": "./dist/bundle.cjs",
     "import": "./dist/bundle.mjs"
