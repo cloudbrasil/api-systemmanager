@@ -1,7 +1,7 @@
-const _ = require('lodash');
-const Boom = require('@hapi/boom');
-const Joi = require('joi');
-const Moment = require('moment');
+import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
+import Moment from 'moment';
 
 /**
  * Class for documents, permission user
@@ -540,4 +540,4 @@ class Documents {
 
 }
 
-module.exports = Documents;
+export default Documents;

@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const Boom = require('@hapi/boom');
-const Joi = require('joi');
+import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
 
 /**
  * General Class for user, permission organization
@@ -85,4 +85,4 @@ class GeoLocation {
   }
 }
 
-module.exports = GeoLocation;
+export default GeoLocation;

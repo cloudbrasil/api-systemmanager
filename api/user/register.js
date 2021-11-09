@@ -1,7 +1,7 @@
-const _ = require('lodash');
-const Boom = require('@hapi/boom');
-const Joi = require('joi');
-const Cypher = require('../utils/cypher');
+import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
+import Cypher from '../utils/cypher';
 
 /**
  * Class for user registration in a user
@@ -202,4 +202,4 @@ class Register {
   }
 }
 
-module.exports = Register;
+export default Register;

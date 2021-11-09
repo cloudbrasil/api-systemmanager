@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const Joi = require('joi');
-const Boom = require('../helper/boom');
+import _ from 'lodash';
+import Joi from 'joi';
+import Boom from '@hapi/boom';
 
 /**
  * @class Session manager of the API
@@ -82,4 +82,4 @@ class Session {
   }
 }
 
-module.exports = Session;
+export default Session;

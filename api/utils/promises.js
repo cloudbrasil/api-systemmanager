@@ -1,5 +1,5 @@
-const _ = require('lodash');
-const Boom = require('@hapi/boom');
+imnport _ from 'lodash';
+imnport Boom from '@hapi/boom';
 
 class ThePromise {
 
@@ -115,4 +115,4 @@ class ThePromise {
 
 const thePromise = new ThePromise();
 
-module.exports = thePromise;
+export default thePromise;

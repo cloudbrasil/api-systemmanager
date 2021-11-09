@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const Joi = require('joi');
-const Axios = require('axios');
+import _ from 'lodash';
+import Joi from 'joi';
+import Axios from 'axios';
 
 /**
  * @class Api dispatch manager
@@ -98,4 +98,4 @@ class Dispatch {
   }
 }
 
-module.exports = Dispatch;
+export default Dispatch;

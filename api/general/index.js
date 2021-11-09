@@ -1,7 +1,5 @@
-const _ = require('lodash');
-const Joi = require('joi');
-
-const Geo = require('./geoLocation');
+import Joi from 'joi';
+import Geo from './geoLocation';
 
 /**
  * @class API request, user permission level
@@ -22,4 +20,4 @@ class Users {
   }
 }
 
-module.exports = Users;
+export default Users;

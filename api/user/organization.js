@@ -1,7 +1,7 @@
-const _ = require('lodash');
-const Boom = require('@hapi/boom');
-const Joi = require('joi');
-const Axios = require('axios');
+import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
+import Axios from 'axios';
 
 /**
  * Class for organizations, permission user
@@ -237,4 +237,4 @@ class Organization {
   }
 }
 
-module.exports = Organization;
+export default Organization;

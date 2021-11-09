@@ -1,4 +1,4 @@
-const _ = require('lodash');
+import * _ from 'lodash';
 
 const Hoek = {
   clone: message => _.clone(message),

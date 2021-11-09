@@ -1,13 +1,13 @@
-const _ = require('lodash');
-const Joi = require('joi');
+import _ from 'lodash';
+import Joi from 'joi';
 
-const Dispatch = require('./api/dispatch');
-const Session = require('./api/session');
-const Login = require('./api/login');
+import Dispatch from './api/dispatch';
+import Session from './api/session';
+import Login from './api/login';
 
-const General = require('./api/general');
-const User = require('./api/user');
-const Admin = require('./api/admin');
+import General from './api/general';
+import User from './api/user';
+import Admin from './api/admin';
 
 /**
  * Class API
@@ -82,4 +82,4 @@ class API {
   }
 }
 
-module.exports = API;
+export default API;

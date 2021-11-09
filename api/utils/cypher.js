@@ -1,6 +1,5 @@
-
-const _ = require('lodash');
-const CryptoJS = require('crypto-js');
+import _ from 'lodash';
+import CryptoJS from 'crypto-js';
 
 class Cypher {
 
@@ -35,4 +34,4 @@ class Cypher {
 }
 
 const cypher = new Cypher();
-module.exports = cypher;
+export default cypher;

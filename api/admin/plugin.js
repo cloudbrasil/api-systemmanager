@@ -1,6 +1,6 @@
-const _ = require('lodash');
-const Boom = require('@hapi/boom');
-const Joi = require('joi');
+import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
 
 /**
  * Admin Class for plugin, permission admin
@@ -113,4 +113,4 @@ class AdminPlugin {
   }
 }
 
-module.exports = AdminPlugin;
+export default AdminPlugin;

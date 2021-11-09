@@ -1,5 +1,5 @@
-const _ = require('lodash');
-const Joi = require('joi');
+import _ from 'lodash';
+import Joi from 'joi';
 
 /**
  * @class Login manager
@@ -233,4 +233,4 @@ class Login {
   }
 }
 
-module.exports = Login;
+export default Login;

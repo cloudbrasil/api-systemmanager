@@ -1,17 +1,17 @@
-const _ = require('lodash');
-const Joi = require('joi');
+import _ from 'lodash';
+import Joi from 'joi';
 
-const AdminDocument = require('./document');
-const AdminForm = require('./form');
-const AdminNotification = require('./notification');
-const AdminList = require('./list');
-const AdminPlugin = require('./plugin');
-const AdminPolicy = require('./policy');
-const AdminTask = require('./task');
-const AdminUser = require('./user');
-const AdminProcesses = require('./processes');
-const AdminMessage = require('./message');
-const AdminDocTypes = require('./doctypes');
+import AdminDocument from './document';
+import AdminForm from './form';
+import AdminNotification from './notification';
+import AdminList from './list';
+import AdminPlugin from './plugin';
+import AdminPolicy from './policy';
+import AdminTask from './task';
+import AdminUser from './user';
+import AdminProcesses from './processes';
+import AdminMessage from './message';
+import AdminDocTypes from './doctypes';
 
 /**
  * @class API request, admin permission level
@@ -42,4 +42,4 @@ class Admin {
   }
 }
 
-module.exports = Admin;
+export default Admin;

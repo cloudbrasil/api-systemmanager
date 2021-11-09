@@ -1,12 +1,12 @@
-const _ = require('lodash');
-const Joi = require('joi');
+import _ from 'lodash';
+import Joi from 'joi';
 
-const Document = require('./document');
-const Organization = require('./organization');
-const Process = require('./process');
-const Task = require('./task');
-const User = require('./user');
-const Register = require('./register');
+import Document from './document';
+import Organization from './organization';
+import Process from './process';
+import Task from './task';
+import User from './user';
+import Register from './register';
 
 /**
  * @class API request, user permission level
@@ -32,4 +32,4 @@ class Users {
   }
 }
 
-module.exports = Users;
+export default Users;
