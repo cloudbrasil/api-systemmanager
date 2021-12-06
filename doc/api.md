@@ -1193,7 +1193,7 @@ Uploads the file
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Params to upload document |
-| params.content | <code>string</code> \| <code>buffer</code> | The content of the file (base64 or Buffer) |
+| params.content | <code>buffer</code> | The content of the file (Buffer) |
 | params.signedUrl | <code>string</code> | The signed URL |
 | params.type | <code>string</code> | The file mime type |
 
@@ -1252,7 +1252,7 @@ Class for organizations, permission user
     * [.idCardExist(idcard, session)](#Organization+idCardExist)
     * [.upsertAvatar(params, session)](#Organization+upsertAvatar) ⇒ <code>Promise</code>
     * [.removeAvatar(session)](#Organization+removeAvatar) ⇒ <code>Promise</code>
-    * [.callFetch(params, params)](#Organization+callFetch) ⇒ <code>promise</code> \| <code>promise</code>
+    * [.callFetch(params)](#Organization+callFetch) ⇒ <code>promise</code>
 
 <a name="Organization+findById"></a>
 
@@ -1347,20 +1347,15 @@ await api.user.profile.removeAvatar(session);
 ```
 <a name="Organization+callFetch"></a>
 
-### organization.callFetch(params, params) ⇒ <code>promise</code> \| <code>promise</code>
+### organization.callFetch(params) ⇒ <code>promise</code>
 Call URL internal, need auth JWT (session)
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
 **Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| params | <code>object</code> |  | Params to call fectch (URL internal) |
-| params.url | <code>string</code> |  | URL to call |
-| [params.method] | <code>string</code> | <code>&quot;POST&quot;</code> | Fetch Method |
-| params.payload | <code>string</code> |  | Payload to send |
 | params | <code>object</code> |  | Params to call fectch (URL internal) |
 | params.url | <code>string</code> |  | URL to call |
 | [params.method] | <code>string</code> | <code>&quot;POST&quot;</code> | Fetch Method |
@@ -1753,7 +1748,7 @@ Update a user profile by id
 | params.secAnswer | <code>string</code> | The security answer |
 | params.timezone | <code>string</code> | The timezone |
 | params.userLanguage | <code>string</code> | The user language |
-| params.changePassword | <code>string</code> | If we need to change the status and we changed the password |
+| params.changePassword | <code>string</code> | (required) If we need to change the status and we changed the password |
 | params.acceptTermsOfUse | <code>string</code> | If the user has accepted the terms of change |
 | session | <code>string</code> | Session, token JWT |
 

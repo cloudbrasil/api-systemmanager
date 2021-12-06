@@ -1020,7 +1020,7 @@ class Documents {
   /**
    * Uploads the file
    * @param {object} params Params to upload document
-   * @param {string|buffer} params.content The content of the file (base64 or Buffer)
+   * @param {buffer} params.content The content of the file (Buffer)
    * @param {string} params.signedUrl The signed URL
    * @param {string} params.type The file mime type
    * @return {Promise<boolean>} True if success
@@ -1043,7 +1043,7 @@ class Documents {
   async uploadSignedDocument(params) {
     const { content, signedUrl, type } = params;
     Joi__default["default"].assert(params, Joi__default["default"].object().required());
-    Joi__default["default"].assert(params.content, Joi__default["default"].string().required());
+    Joi__default["default"].assert(params.content, Joi__default["default"].required());
     Joi__default["default"].assert(params.signedUrl, Joi__default["default"].string().required());
     Joi__default["default"].assert(params.type, Joi__default["default"].string().required());
 
@@ -1232,16 +1232,6 @@ class Organization {
   }
 
   /**
-   * @author Augusto Pissarra <abernardo.br@gmail.com>
-   * @description Call URL internal
-   * @param {!object} params Params to call fectch (URL internal)
-   * @param {!string} params.url URL to call
-   * @param {!string} [params.method=POST] Fetch Method
-   * @param {string} params.payload Payload to send
-   * @returns {promise}
-   * @public
-   * @async
-   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
    * @description Call URL internal, need auth JWT (session)
    * @param {!object} params Params to call fectch (URL internal)
