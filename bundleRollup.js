@@ -107,13 +107,13 @@ class BuildRollup {
 
     try {
       const bundle = await rollup.rollup(config.entry);
-      self.log('Bundle genered');
+      self.log('Bundle generated');
 
       await bundle.write(config.output);
-      self.log('Bundle write');
+      self.log('Bundle writen');
 
       await bundle.close();
-      self.log('Bundle finish\n');
+      self.log('Bundle finished\n');
 
     } catch (ex) {
       throw ex;
