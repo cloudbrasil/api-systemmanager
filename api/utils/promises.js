@@ -1,5 +1,5 @@
-imnport _ from 'lodash';
-imnport Boom from '@hapi/boom';
+import _ from 'lodash';
+import Boom from '@hapi/boom';
 
 class ThePromise {
 
