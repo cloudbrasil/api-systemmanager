@@ -174,16 +174,6 @@ class Organization {
   }
 
   /**
-   * @author Augusto Pissarra <abernardo.br@gmail.com>
-   * @description Call URL internal
-   * @param {!object} params Params to call fectch (URL internal)
-   * @param {!string} params.url URL to call
-   * @param {!string} [params.method=POST] Fetch Method
-   * @param {string} params.payload Payload to send
-   * @returns {promise}
-   * @public
-   * @async
-   /**
    * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
    * @description Call URL internal, need auth JWT (session)
    * @param {!object} params Params to call fectch (URL internal)
