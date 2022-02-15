@@ -499,7 +499,7 @@ class Documents {
   /**
    * Uploads the file
    * @param {object} params Params to upload document
-   * @param {string|buffer} params.content The content of the file (base64 or Buffer)
+   * @param {buffer} params.content The content of the file (Buffer)
    * @param {string} params.signedUrl The signed URL
    * @param {string} params.type The file mime type
    * @return {Promise<boolean>} True if success
@@ -522,7 +522,7 @@ class Documents {
   async uploadSignedDocument(params) {
     const { content, signedUrl, type } = params;
     Joi.assert(params, Joi.object().required());
-    Joi.assert(params.content, Joi.string().required());
+    Joi.assert(params.content, Joi.required());
     Joi.assert(params.signedUrl, Joi.string().required());
     Joi.assert(params.type, Joi.string().required());
 
