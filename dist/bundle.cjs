@@ -1065,7 +1065,7 @@ class Documents {
  * Class for organizations, permission user
  * @class
  */
-class Organization {
+class Organization$1 {
 
   constructor(options) {
     Joi__default["default"].assert(options, Joi__default["default"].object().required());
@@ -8733,7 +8733,7 @@ class Users {
 
     const self = this;
     self.document = new Documents(options);
-    self.organization = new Organization(options);
+    self.organization = new Organization$1(options);
     self.process = new Process(options);
     self.task = new Task(options);
     self.user = self.profile = new User(options);
@@ -10601,6 +10601,125 @@ class AdminDocTypes {
 }
 
 /**
+ * Class for organizations, permission user
+ * @class
+ */
+class Organization {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      throw Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update avatar of organization by session of user not allow session user SU
+   * @param {object} params Params to update avatar
+   * @param {string} params.orgId - Organization id
+   * @param {string} params.avatar - Image in base64 to update
+   * @param {string} params.type - MimeType (image/png)
+   * @param {string} session - Is token JWT of user SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '5dadd01dc4af3941d42f8c5c',
+   *  avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+   *  type: 'image/png',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.organizations.upsertAvatar(params, session);
+   */
+  async upsertAvatar(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id');
+      Joi__default["default"].assert(params.avatar, Joi__default["default"].string().required(), 'Image in base64 to update');
+      Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), 'MimeType (image/png)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Is token JWT of user SU');
+
+      const {orgId, avatar, type} = params;
+      const payload = {avatar, type};
+
+      const apiCall = self._client.put(`/admin/organizations/${orgId}/logo`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Remove avatar of user by session of user not allow session user SU
+   * @param {string} params.orgId - Organization id
+   * @param {string} session - Is token JWT of user SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const orgId = '5dadd01dc4af3941d42f8c5c';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.organizations.removeAvatar(orgId, session);
+   */
+  async removeAvatar(orgId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(orgId, Joi__default["default"].string().required(), 'Organization id');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Is token JWT of user SU');
+
+      const apiCall = self._client.delete(`/admin/organizations/${orgId}/logo`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+/**
  * @class API request, admin permission level
  */
 class Admin {
@@ -10615,17 +10734,18 @@ class Admin {
     Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
 
     const self = this;
+    self.doctypes = new AdminDocTypes(options);
     self.document = new AdminDocuments(options);
     self.form = new AdminForm(options);
-    self.notification = new AdminNotification(options);
     self.list = new AdminLists(options);
+    self.message = new AdminMessage(options);
+    self.organizations = new Organization(options);
+    self.notification = new AdminNotification(options);
     self.plugin = new AdminPlugin(options);
     self.policy = new AdminPolicy(options);
+    self.processes = new AdminProcesses(options);
     self.task = new AdminTask(options);
     self.user = new AdminUser(options);
-    self.processes = new AdminProcesses(options);
-    self.message = new AdminMessage(options);
-    self.doctypes = new AdminDocTypes(options);
   }
 }
 
