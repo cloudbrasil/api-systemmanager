@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import Joi from 'joi';
 
 import AdminDocument from './document';
@@ -12,6 +11,7 @@ import AdminUser from './user';
 import AdminProcesses from './processes';
 import AdminMessage from './message';
 import AdminDocTypes from './doctypes';
+import AdminOrganizations from './organization';
 
 /**
  * @class API request, admin permission level
@@ -28,17 +28,18 @@ class Admin {
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
+    self.doctypes = new AdminDocTypes(options);
     self.document = new AdminDocument(options);
     self.form = new AdminForm(options);
-    self.notification = new AdminNotification(options);
     self.list = new AdminList(options);
+    self.message = new AdminMessage(options);
+    self.organizations = new AdminOrganizations(options);
+    self.notification = new AdminNotification(options);
     self.plugin = new AdminPlugin(options);
     self.policy = new AdminPolicy(options);
+    self.processes = new AdminProcesses(options);
     self.task = new AdminTask(options);
     self.user = new AdminUser(options);
-    self.processes = new AdminProcesses(options);
-    self.message = new AdminMessage(options);
-    self.doctypes = new AdminDocTypes(options);
   }
 }
 
