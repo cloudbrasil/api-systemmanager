@@ -285,6 +285,48 @@ class AdminDocuments {
     return self._returnData(await apiCall);
   }
 
+  /**
+   *
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Get the content of a document
+   * @param {object} params Params to request signed url
+   * @param {string} params.docId The unique id of the document
+   * @param {string} params.page The page, from 0, or 'all' if all pages (the full content)
+   * @param {string} apiKey Api Key as permission to use this functionality
+   * @return {Promise<object>} data the document content
+   * @return {string} data._id the _id of the document
+   * @return {string} data.content all the pages or if asked by page, just one page, the one requested
+   * @return {string} data.content.TextOverlay the overlay text if requested
+   * @return {string} data.content.ParsedText the page text content
+   * @return {number} data.total the total number of pages
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  page: '0',
+   *  docId: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const apiKey: '...';
+   * await api.admin.document.getContent(params, apiKey);
+   */
+  async getContent(params = {}, apiKey) {
+
+    Joi.assert(params, Joi.object().required());
+    Joi.assert(params.docId, Joi.string().required());
+    Joi.assert(params.page, Joi.string().required());
+    Joi.assert(apiKey, Joi.string().required());
+
+    const self = this;
+    const { page, docId } = params;
+    const url = `/api/documents/${docId}/content/${page}?apiKey=${apiKey}`;
+    const apiCall = self._client
+        .get(url);
+    return self._returnData(await apiCall);
+  }
+
 }
 
 export default AdminDocuments;
