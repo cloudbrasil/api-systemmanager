@@ -19,6 +19,9 @@
 <dt><a href="#AdminNotification">AdminNotification</a></dt>
 <dd><p>Admin Class for notification, permission admin</p>
 </dd>
+<dt><a href="#Organization">Organization</a></dt>
+<dd><p>Class for organizations, permission user</p>
+</dd>
 <dt><a href="#AdminPlugin">AdminPlugin</a></dt>
 <dd><p>Admin Class for plugin, permission admin</p>
 </dd>
@@ -34,11 +37,20 @@
 <dt><a href="#AdminUser">AdminUser</a></dt>
 <dd><p>Admin Class for user, permission admin</p>
 </dd>
+<dt><a href="#Dispatch">Dispatch</a></dt>
+<dd><p>Api dispatch manager</p>
+</dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
 <dd><p>General Class for user, permission organization</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
+</dd>
+<dt><a href="#Login">Login</a></dt>
+<dd><p>Login manager</p>
+</dd>
+<dt><a href="#Session">Session</a></dt>
+<dd><p>Session manager of the API</p>
 </dd>
 <dt><a href="#Documents">Documents</a></dt>
 <dd><p>Class for documents, permission user</p>
@@ -76,6 +88,7 @@ Admin Class for documents, permission admin
     * [.signedUrl(params, apiKey)](#AdminDocuments+signedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.updateContent(params, apiKey)](#AdminDocuments+updateContent) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.updateAI(params, apiKey)](#AdminDocuments+updateAI) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getContent(params, apiKey)](#AdminDocuments+getContent) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>number</code>
 
 <a name="AdminDocuments+advancedSearch"></a>
 
@@ -250,6 +263,34 @@ const params - {
 };
 const apiKey: '...';
 await api.admin.document.updateContent(params, apiKey);
+```
+<a name="AdminDocuments+getContent"></a>
+
+### adminDocuments.getContent(params, apiKey) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>number</code>
+Get the content of a document
+
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data the document content<code>string</code> - data._id the _id of the document<code>string</code> - data.content all the pages or if asked by page, just one page, the one requested<code>string</code> - data.content.TextOverlay the overlay text if requested<code>string</code> - data.content.ParsedText the page text content<code>number</code> - data.total the total number of pages  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to request signed url |
+| params.docId | <code>string</code> | The unique id of the document |
+| params.page | <code>string</code> | The page, from 0, or 'all' if all pages (the full content) |
+| apiKey | <code>string</code> | Api Key as permission to use this functionality |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ page: '0',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.getContent(params, apiKey);
 ```
 <a name="AdminForm"></a>
 
@@ -611,6 +652,191 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.notifications.findByIdAndDelete(params, session);
 ```
+<a name="Organization"></a>
+
+## Organization
+Class for organizations, permission user
+
+**Kind**: global class  
+
+* [Organization](#Organization)
+    * [.upsertAvatar(params, session)](#Organization+upsertAvatar) ⇒ <code>Promise</code>
+    * [.removeAvatar(session)](#Organization+removeAvatar) ⇒ <code>Promise</code>
+    * [.findById(orgId, session)](#Organization+findById)
+    * [.idCardExist(idcard, session)](#Organization+idCardExist)
+    * [.upsertAvatar(params, session)](#Organization+upsertAvatar) ⇒ <code>Promise</code>
+    * [.removeAvatar(session)](#Organization+removeAvatar) ⇒ <code>Promise</code>
+    * [.callFetch(params)](#Organization+callFetch) ⇒ <code>promise</code>
+
+<a name="Organization+upsertAvatar"></a>
+
+### organization.upsertAvatar(params, session) ⇒ <code>Promise</code>
+Update avatar of organization by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update avatar |
+| params.orgId | <code>string</code> | Organization id |
+| params.avatar | <code>string</code> | Image in base64 to update |
+| params.type | <code>string</code> | MimeType (image/png) |
+| session | <code>string</code> | Is token JWT of user SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5dadd01dc4af3941d42f8c5c',
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.upsertAvatar(params, session);
+```
+<a name="Organization+removeAvatar"></a>
+
+### organization.removeAvatar(session) ⇒ <code>Promise</code>
+Remove avatar of user by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params.orgId | <code>string</code> | Organization id |
+| session | <code>string</code> | Is token JWT of user SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '5dadd01dc4af3941d42f8c5c';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.removeAvatar(orgId, session);
+```
+<a name="Organization+findById"></a>
+
+### organization.findById(orgId, session)
+Find organization by id
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgId | <code>string</code> | ID of the organization to find (_id database) |
+| session | <code>string</code> | Is token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.findById(idCard, session);
+```
+<a name="Organization+idCardExist"></a>
+
+### organization.idCardExist(idcard, session)
+Check if id card exist
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| idcard | <code>string</code> | Check if id card exist |
+| session | <code>string</code> | Is token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const idCard = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.idCardExist(idCard, session);
+```
+<a name="Organization+upsertAvatar"></a>
+
+### organization.upsertAvatar(params, session) ⇒ <code>Promise</code>
+Update avatar of organization by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update avatar |
+| params.avatar | <code>string</code> | Image in base64 to update |
+| params.type | <code>string</code> | mimeType (image/png) |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.updateAvatar(params, session);
+```
+<a name="Organization+removeAvatar"></a>
+
+### organization.removeAvatar(session) ⇒ <code>Promise</code>
+Remove avatar of user by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.removeAvatar(session);
+```
+<a name="Organization+callFetch"></a>
+
+### organization.callFetch(params) ⇒ <code>promise</code>
+Call URL internal, need auth JWT (session)
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Params to call fectch (URL internal) |
+| params.url | <code>string</code> |  | URL to call |
+| [params.method] | <code>string</code> | <code>&quot;POST&quot;</code> | Fetch Method |
+| params.payload | <code>string</code> |  | Payload to send system manager |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+
+const params = {
+  url: 'http://localhost:8080/organizations/..../process/..../task/candidateAccepted/end/....',
+  method: 'POST'
+}
+await api.user.organization.callFetchs(params, session);
+```
 <a name="AdminPlugin"></a>
 
 ## AdminPlugin
@@ -904,6 +1130,52 @@ const payload = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
+<a name="Dispatch"></a>
+
+## Dispatch
+Api dispatch manager
+
+**Kind**: global class  
+
+* [Dispatch](#Dispatch)
+    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+
+<a name="Dispatch+getContext"></a>
+
+### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the URL context
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>string</code> |  | Full url |
+| session | <code>session</code> | <code></code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
+```
+<a name="Dispatch+getClient"></a>
+
+### dispatch.getClient() ⇒ <code>promise</code>
+Get client Axios
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>promise</code> - return client axios  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+await api.dispatch.getClient();
+```
 <a name="GeoLocation"></a>
 
 ## GeoLocation
@@ -965,6 +1237,179 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
+<a name="Login"></a>
+
+## Login
+Login manager
+
+**Kind**: global class  
+
+* [Login](#Login)
+    * [.facebook(params)](#Login+facebook) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.google(params)](#Login+google) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.apiKey(apikey)](#Login+apiKey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.userPass(params)](#Login+userPass) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.logout(session)](#Login+logout) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+
+<a name="Login+facebook"></a>
+
+### login.facebook(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with social login Facebook
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to login Facebook |
+| params.accessToken | <code>string</code> | Access token of the system manager |
+| params.initialUserData | <code>object</code> | Object with roles default if sigin |
+| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
+const { auth, user } = await api.login.facebook(params);
+```
+<a name="Login+google"></a>
+
+### login.google(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with social login Google
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to login Google |
+| params.accessToken | <code>string</code> | Access token of the system manager |
+| params.initialUserData | <code>object</code> | Object with roles default if sigin |
+| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
+const { auth, user } = await api.login.google(accessToken);
+```
+<a name="Login+apiKey"></a>
+
+### login.apiKey(apikey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with apikey
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| apikey | <code>string</code> | Access key |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
+const { auth, user } = await api.login.apiKey(apiKey);
+```
+<a name="Login+userPass"></a>
+
+### login.userPass(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with user and password
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Object with user and password |
+| params.username | <code>string</code> | Username or email of the user |
+| params.password | <code>string</code> | Password of the user |
+| params.orgname | <code>string</code> | The organame of the user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const params = {
+  username: 'ana.silva@gmail.com',
+  password: '123456'
+};
+const { auth, user } = await api.login.userPass(params);
+```
+<a name="Login+logout"></a>
+
+### login.logout(session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+Logout user system manager
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const { success } = await api.login.logout(session);
+```
+<a name="Session"></a>
+
+## Session
+Session manager of the API
+
+**Kind**: global class  
+<a name="Session+information"></a>
+
+### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
+Show information for session, thus validating the session (Valid token JWT)
+
+**Kind**: instance method of [<code>Session</code>](#Session)  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sessionId | <code>string</code> |  | The user session (JWT Token) |
+| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.session.information(sessionId, suSessionId);
+```
 <a name="Documents"></a>
 
 ## Documents
@@ -1248,12 +1693,65 @@ Class for organizations, permission user
 **Kind**: global class  
 
 * [Organization](#Organization)
+    * [.upsertAvatar(params, session)](#Organization+upsertAvatar) ⇒ <code>Promise</code>
+    * [.removeAvatar(session)](#Organization+removeAvatar) ⇒ <code>Promise</code>
     * [.findById(orgId, session)](#Organization+findById)
     * [.idCardExist(idcard, session)](#Organization+idCardExist)
     * [.upsertAvatar(params, session)](#Organization+upsertAvatar) ⇒ <code>Promise</code>
     * [.removeAvatar(session)](#Organization+removeAvatar) ⇒ <code>Promise</code>
     * [.callFetch(params)](#Organization+callFetch) ⇒ <code>promise</code>
 
+<a name="Organization+upsertAvatar"></a>
+
+### organization.upsertAvatar(params, session) ⇒ <code>Promise</code>
+Update avatar of organization by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update avatar |
+| params.orgId | <code>string</code> | Organization id |
+| params.avatar | <code>string</code> | Image in base64 to update |
+| params.type | <code>string</code> | MimeType (image/png) |
+| session | <code>string</code> | Is token JWT of user SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5dadd01dc4af3941d42f8c5c',
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.upsertAvatar(params, session);
+```
+<a name="Organization+removeAvatar"></a>
+
+### organization.removeAvatar(session) ⇒ <code>Promise</code>
+Remove avatar of user by session of user not allow session user SU
+
+**Kind**: instance method of [<code>Organization</code>](#Organization)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params.orgId | <code>string</code> | Organization id |
+| session | <code>string</code> | Is token JWT of user SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '5dadd01dc4af3941d42f8c5c';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.removeAvatar(orgId, session);
+```
 <a name="Organization+findById"></a>
 
 ### organization.findById(orgId, session)
