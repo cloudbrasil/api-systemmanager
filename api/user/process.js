@@ -49,6 +49,23 @@ class Process {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header for a bigger payload
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setMaxContentHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+        maxContentLength: Infinity,
+        maxBodyLength: Infinity
+      }
+    };
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Start process
    * @param {object} params Params to start process
    * @param {string} params.processId Process id (_id database);
@@ -81,7 +98,7 @@ class Process {
       Joi.assert(session, Joi.string().required());
 
       const {processId, orgId, payload = {}} = params;
-      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}`, payload, self._setHeader(session));
+      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}`, payload, self._setMaxContentHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
