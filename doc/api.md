@@ -1250,6 +1250,7 @@ Login manager
     * [.apiKey(apikey)](#Login+apiKey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
     * [.userPass(params)](#Login+userPass) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
     * [.logout(session)](#Login+logout) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+    * [.recover(username)](#Login+recover) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
 
 <a name="Login+facebook"></a>
 
@@ -1382,6 +1383,29 @@ const params = {...}
 const api = new API(params);
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const { success } = await api.login.logout(session);
+```
+<a name="Login+recover"></a>
+
+### login.recover(username) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+Recover the password
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| username | <code>string</code> | The username or email |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const { success } = await api.login.recover('myusername');
 ```
 <a name="Session"></a>
 

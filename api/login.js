@@ -231,6 +231,37 @@ class Login {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Recover the password
+   * @param {string} username The username or email
+   * @return {promise<object>}} data
+   * @return {boolean} data.success true|false
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   *
+   * // Params of the instance
+   * const params = {...}
+   * const api = new API(params);
+   * const { success } = await api.login.recover('myusername');
+   */
+  async recover(username) {
+    const self = this;
+
+    try {
+      Joi.assert(username, Joi.string().required());
+
+      const url = `users/${username}/sendResetEmail`;
+      const apiCall = self._client.get(url);
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Login;
