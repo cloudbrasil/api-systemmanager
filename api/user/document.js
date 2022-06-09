@@ -98,6 +98,7 @@ class Documents {
         ocrDocumentBackend: _.get(params, 'ocrDocumentBackend', false),
         bytes: _.get(params, 'bytes'),
         docAreaPermission: _.get(params, 'docAreaPermission', {}),
+        docTypeFields: _.get(params, 'docTypeFields', {}), // {"extraId": userId},
         docTypeFieldsData: _.get(params, 'docTypeFieldsData', {}), // {"extraId": userId},
         signedUrl: _.get(params, 'signedUrl', ''),
         urlType: _.get(params, 'urlType', 'S3'),
