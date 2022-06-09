@@ -650,6 +650,7 @@ class Documents {
         ocrDocumentBackend: ___default["default"].get(params, 'ocrDocumentBackend', false),
         bytes: ___default["default"].get(params, 'bytes'),
         docAreaPermission: ___default["default"].get(params, 'docAreaPermission', {}),
+        docTypeFields: ___default["default"].get(params, 'docTypeFields', []), // {"extraId": userId},
         docTypeFieldsData: ___default["default"].get(params, 'docTypeFieldsData', {}), // {"extraId": userId},
         signedUrl: ___default["default"].get(params, 'signedUrl', ''),
         urlType: ___default["default"].get(params, 'urlType', 'S3'),
