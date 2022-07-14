@@ -121,6 +121,80 @@ class User {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Remove the signature of user by session
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.removeSignature(session);
+   */
+  async removeSignature(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.delete(`/users/signature`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Sava a new signature of user by session
+   * @param {object} data The signature data to save
+   * @param {string} data.type CURSIVE or HANDWRITE
+   * @param {string} data.file CURSIVE the <fontname>:<name used on the signature>
+   *                      HANDWRITE the base 64 image (w/o the mime a base prefix)
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const data = {
+   *    type: 'CURSIVE',
+   *    file: 'allura:Mary John Heart'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.saveSignature(data, session);
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const data = {
+   *    type: 'HANDWRITE',
+   *    file: 'iVBORw0KGgoAAAANSUhEUgAAAj...'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.saveSignature(session);
+   */
+  async saveSignature(data, session) {
+    const self = this;
+
+    try {
+      Joi.assert(data, Joi.object().required());
+      Joi.assert(data.type, Joi.string().required());
+      Joi.assert(data.file, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.delete(`/users/signature`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Update a user profile by id
    * @param {object} params Params to update task
    * @param {string} params.name The name of the user
