@@ -252,6 +252,36 @@ class User {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Change a user's organization
+   * @param {string} id Organization id
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const id = '616eccaaa9360a05293b10fe';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.changeOrganization.updateAvatar(id, session);
+   */
+  async changeOrganization(id, session) {
+    const self = this;
+
+    try {
+      Joi.assert(id, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.put(`/organizations/${id}/change`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default User;

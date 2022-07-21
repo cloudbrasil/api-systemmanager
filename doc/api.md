@@ -1946,6 +1946,7 @@ Class for user, permission user
     * [.removeSignature(session)](#User+removeSignature) ⇒ <code>Promise</code>
     * [.saveSignature(data, session)](#User+saveSignature) ⇒ <code>Promise</code>
     * [.findByIdAndUpdate(params, session)](#User+findByIdAndUpdate) ⇒ <code>Promise.&lt;void&gt;</code>
+    * [.changeOrganization(id, session)](#User+changeOrganization) ⇒ <code>Promise</code>
 
 <a name="User+updateAvatar"></a>
 
@@ -2089,4 +2090,26 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.profile.findByIdAndUpdate(params, session);
+```
+<a name="User+changeOrganization"></a>
+
+### user.changeOrganization(id, session) ⇒ <code>Promise</code>
+Change a user's organization
+
+**Kind**: instance method of [<code>User</code>](#User)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Organization id |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const id = '616eccaaa9360a05293b10fe';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.changeOrganization.updateAvatar(id, session);
 ```
