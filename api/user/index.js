@@ -7,6 +7,7 @@ import Process from './process';
 import Task from './task';
 import User from './user';
 import Register from './register';
+import Notification from './notification';
 
 /**
  * @class API request, user permission level
@@ -29,6 +30,7 @@ class Users {
     self.task = new Task(options);
     self.user = self.profile = new User(options);
     self.register = new Register(options);
+    self.notification = new Notification(options);
   }
 }
 
