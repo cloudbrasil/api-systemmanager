@@ -173,7 +173,7 @@ class Login {
    *
    * const API = require('@docbrasil/api-systemmanager');
    *
-   * // Params of the instance
+   * // Params of the instance  
    * const params = {...}
    * const api = new API(params);
    * const params = {

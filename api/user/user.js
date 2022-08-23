@@ -186,7 +186,7 @@ class User {
       Joi.assert(data.file, Joi.string().required());
       Joi.assert(session, Joi.string().required());
 
-      const apiCall = self._client.delete(`/users/signature`, self._setHeader(session));
+      const apiCall = self._client.put(`/users/signature`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -276,7 +276,7 @@ class User {
       Joi.assert(id, Joi.string().required());
       Joi.assert(session, Joi.string().required());
 
-      const apiCall = self._client.put(`/organizations/${id}/change`, self._setHeader(session));
+      const apiCall = self._client.put(`/organizations/${id}/change`, null, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
