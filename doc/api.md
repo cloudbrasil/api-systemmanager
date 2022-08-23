@@ -49,6 +49,9 @@
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
+<dt><a href="#Notification">Notification</a></dt>
+<dd><p>Class for user registration in a user</p>
+</dd>
 <dt><a href="#Organization">Organization</a></dt>
 <dd><p>Class for organizations, permission user</p>
 </dd>
@@ -1457,6 +1460,51 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
+<a name="Notification"></a>
+
+## Notification
+Class for user registration in a user
+
+**Kind**: global class  
+
+* [Notification](#Notification)
+    * [.tokenTypes](#Notification+tokenTypes) ⇒ <code>Object</code>
+    * [.addToken(params, session)](#Notification+addToken) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+
+<a name="Notification+tokenTypes"></a>
+
+### notification.tokenTypes ⇒ <code>Object</code>
+Notification token types
+
+**Kind**: instance property of [<code>Notification</code>](#Notification)  
+<a name="Notification+addToken"></a>
+
+### notification.addToken(params, session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+Method to add a notification token
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data._id the id of the added token  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to add notification token |
+| params.token | <code>string</code> | The token |
+| params.type | <code>object</code> | The token type |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+ type: 'FCM_WEB'
+};
+const retData = await api.user.notification.addToken(params, session);
+```
 <a name="Organization"></a>
 
 ## Organization

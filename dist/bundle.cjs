@@ -362,7 +362,7 @@ class Login {
    *
    * const API = require('@docbrasil/api-systemmanager');
    *
-   * // Params of the instance
+   * // Params of the instance  
    * const params = {...}
    * const api = new API(params);
    * const params = {
@@ -1837,7 +1837,7 @@ class User {
       Joi__default["default"].assert(data.file, Joi__default["default"].string().required());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const apiCall = self._client.delete(`/users/signature`, self._setHeader(session));
+      const apiCall = self._client.put(`/users/signature`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -1927,7 +1927,7 @@ class User {
       Joi__default["default"].assert(id, Joi__default["default"].string().required());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const apiCall = self._client.put(`/organizations/${id}/change`, self._setHeader(session));
+      const apiCall = self._client.put(`/organizations/${id}/change`, null, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -8871,6 +8871,102 @@ class Register {
 }
 
 /**
+ * Class for user registration in a user
+ * @class
+ */
+class Notification {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * Notification token types
+   * @return {{FCM_CAPACITOR: string, FCM_WEB: string}}
+   */
+  get tokenTypes () {
+    return {
+      FCM_WEB: 'FCM_WEB',
+      FCM_CAPACITOR: 'FCM_CAPACITOR'
+    };
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to add a notification token
+   * @param {object} params Params to add notification token
+   * @param {string} params.token The token
+   * @param {object} params.type The token type
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @returns {promise<object>} data
+   * @returns {boolean} data._id the id of the added token
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const params = {
+   *  token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+   *  type: 'FCM_WEB'
+   * };
+   * const retData = await api.user.notification.addToken(params, session);
+   */
+  async addToken(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
+      Joi__default["default"].assert(params.token, Joi__default["default"].string().required(), 'Token is required');
+      Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), ' The token type');
+
+      const apiCall = self._client
+        .put(`/users/notifications/token`, params, self._setHeader(session));
+
+      const retData = self._returnData(await apiCall);
+      return retData;
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+/**
  * @class API request, user permission level
  */
 class Users {
@@ -8891,6 +8987,7 @@ class Users {
     self.task = new Task(options);
     self.user = self.profile = new User(options);
     self.register = new Register(options);
+    self.notification = new Notification(options);
   }
 }
 
