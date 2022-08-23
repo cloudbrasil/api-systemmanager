@@ -1837,7 +1837,7 @@ class User {
       Joi__default["default"].assert(data.file, Joi__default["default"].string().required());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const apiCall = self._client.put(`/users/signature`, self._setHeader(session));
+      const apiCall = self._client.put(`/users/signature`, data, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
