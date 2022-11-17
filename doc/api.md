@@ -1416,6 +1416,7 @@ Uploads the file
 | params.content | <code>buffer</code> | The content of the file (Buffer) |
 | params.signedUrl | <code>string</code> | The signed URL |
 | params.type | <code>string</code> | The file mime type |
+| params.onUploadProgress | <code>string</code> | A callback for the upload progress. It will return a progressEvent. |
 
 **Example**  
 ```js
@@ -1429,6 +1430,11 @@ const params - {
  type: 'application/pdf'
 };
 const retData = await api.user.document.uploadSignedDocument(params);
+
+onUploadProgress return the progressEvent
+ - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
+ - loaded: The number of bytes of the file that have been uploaded.
+ - total: The total number of bytes in the file.
 ```
 <a name="Users"></a>
 

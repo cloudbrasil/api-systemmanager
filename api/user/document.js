@@ -503,6 +503,7 @@ class Documents {
    * @param {buffer} params.content The content of the file (Buffer)
    * @param {string} params.signedUrl The signed URL
    * @param {string} params.type The file mime type
+   * @param {string} params.onUploadProgress A callback for the upload progress. It will return a progressEvent.
    * @return {Promise<boolean>} True if success
    *
    * @public
@@ -519,8 +520,13 @@ class Documents {
    *  type: 'application/pdf'
    * };
    * const retData = await api.user.document.uploadSignedDocument(params);
+   *
+   * onUploadProgress return the progressEvent
+   *  - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
+   *  - loaded: The number of bytes of the file that have been uploaded.
+   *  - total: The total number of bytes in the file.
    */
-  async uploadSignedDocument(params) {
+  async uploadSignedDocument(params= {}) {
     const { content, signedUrl, type } = params;
     Joi.assert(params, Joi.object().required());
     Joi.assert(params.content, Joi.required());
@@ -528,14 +534,21 @@ class Documents {
     Joi.assert(params.type, Joi.string().required());
 
     const self = this;
-    const headers = {
+    const reqOpts = {
       headers: {
         'Content-Type': type
       }
     };
+
+    const onUploadProgress = params.onUploadProgress;
+
+    if(onUploadProgress) {
+      reqOpts.onUploadProgress = onUploadProgress;
+    }
+
     const apiCall = self._client
-        .put(signedUrl, content, headers);
-    const retData = self._returnData(await apiCall);
+        .put(signedUrl, content, reqOpts);
+    self._returnData(await apiCall);
     return true;
   }
 
