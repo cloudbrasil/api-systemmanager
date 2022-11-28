@@ -735,7 +735,7 @@ class Documents {
    *  orgId: '5df7f19618430c89a41a19d2',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.document.findByIdAndRemove(params, session);
+   * await api.user.document.add(params, session);
    */
   async add(params, session) {
     const self = this;
@@ -870,7 +870,6 @@ class Documents {
     } catch (ex) {
       throw ex;
     }
-
   }
 
   /**
@@ -993,9 +992,11 @@ class Documents {
    *  docAreaId: '5df7f19618430c89a41a19d2',
    *  fileName: 'Foto',
    *  type: 'image/png'
+   *  orgId: '5df7f19618430c89a41a19f8'
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const { doc: { docId, name, areaId, type, signedUrl } } = await api.user.document.signedUrl(params, session);
+   * // each doc: { docId, name, areaId, type, signedUrl }
+   * const { docs } = await api.user.document.signedUrl(params, session);
    *
    * @example
    *
@@ -1042,6 +1043,80 @@ class Documents {
 
       const apiCall = self._client
         .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, payloadToSend, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   *
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Request signed url url to put or get
+   * @param {object} params Params to request signed url
+   * @param {array} params.docs the list of documents to get the signed urls
+   * @param {string} params.docs.docId Document id
+   * @param {string} params.docs.name File name
+   * @param {string} params.docs.areaId docAreaId of the document
+   * @param {string} params.docs.type mimeType image/png image/jpg others
+   * @param {string} params.docs.document Name document to request if method type is get
+   * @param {string} params.methodType Method type HTTP get or put
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} doc Returned document data with the signed url
+   * @return {string} doc.docId Document id
+   * @return {string} doc.name The name of the document, which is the fileName
+   * @return {string} doc.areaId docAreaId of the document
+   * @return {string} doc.type the document mimi type
+   * @return {string} doc.signedUrl the signed URL to upload
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  methodType: 'put',
+   *  orgId: '5df7f19618430c89a41a19f8'
+   *  docs: [
+   *      {
+   *        docId: '5dadd01dc4af3941d42f8c5c',
+   *        areaId: '5df7f19618430c89a41a19d2',
+   *        name: 'Foto.png',
+   *        type: 'image/png'
+   *      }
+   *  ]
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * // each doc: { docId, name, areaId, type, signedUrl }
+   * const { docs } = await api.user.document.signedUrls(params, session);
+   *
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  methodType: 'get',
+   *  docs: [
+   *      { document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf' }
+   *  ],
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const base64Data = await api.user.document.signedUrls(params, session);
+   */
+  async signedUrls(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.docs, Joi__default["default"].array().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const {orgId, methodType = 'put', docs = []} = params;
+      const apiCall = self._client
+          .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, docs, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
