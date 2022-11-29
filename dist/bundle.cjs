@@ -1116,7 +1116,7 @@ class Documents {
 
       const {orgId, methodType = 'put', docs = []} = params;
       const apiCall = self._client
-          .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, docs, self._setHeader(session));
+          .post(`/organizations/${orgId}/documents/getDocumentSignedUrl/${methodType}`, { docs }, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
