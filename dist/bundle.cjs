@@ -10138,6 +10138,12 @@ class AdminTask {
    * @param {object} params Params to get task
    * @param {string} params.userId User id (_id database)
    * @param {string} [params.filter=NOT_DONE] Filter type CLEAN | EXECUTED | PENDING | LATE | NOT_DONE | DONE
+
+   * @param {object} params.project Project to return
+   * @param {boolean} params.project.returnProcessProperties Return process properties
+   * @param {boolean} params.project.returnInitParams Return init params
+
+   * @param {string} params.userId User id (_id database)
    * @param {boolean} [params.includeOwner=false] Include owner true | false
    * @param {string} session Session, token JWT
    * @public
@@ -10159,15 +10165,21 @@ class AdminTask {
       Joi__default["default"].assert(params, Joi__default["default"].object().required());
       Joi__default["default"].assert(params.userId, Joi__default["default"].string().required());
       Joi__default["default"].assert(params.filter, Joi__default["default"].string());
+      Joi__default["default"].assert(params.project, Joi__default["default"].object());
       Joi__default["default"].assert(params.includeOwner, Joi__default["default"].boolean());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const filterType = ___default["default"].get(params, 'filter', 'NOT_DONE');
-      const includeOwner = ___default["default"].get(params, 'includeOwner', false);
+      const filterType = ___default["default"].get(params, 'filter', 'NOT_DONE') || 'NOT_DONE';
+      const includeOwner = ___default["default"].get(params, 'includeOwner', false) || false;
       const {userId} = params;
-
       const filter = self._taskFilters(filterType);
-      const queryString = `taskFilter=${filter}&includeOwner=${includeOwner}`;
+      const { returnProcessProperties, returnInitParams } = params?.project ?? {};
+
+      let queryString = `taskFilter=${filter}&includeOwner=${includeOwner}`;
+
+      if (returnProcessProperties) queryString = `${queryString}&returnProcessProperties=${returnProcessProperties}`;
+      if (returnInitParams) queryString = `${queryString}&returnInitParams=${returnInitParams}`;
+
       const apiCall = self._client.get(`/admin/users/${userId}/tasks?${queryString}`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
