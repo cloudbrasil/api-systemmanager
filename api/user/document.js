@@ -611,10 +611,10 @@ class Documents {
     const self = this;
     const reqOpts = {
       headers: {
-        'Content-Type': type,
-        maxContentLength: Infinity,
-        maxBodyLength: Infinity
-      }
+        'Content-Type': type
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
     };
 
     const onUploadProgress = params.onUploadProgress;

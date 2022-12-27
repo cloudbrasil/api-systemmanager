@@ -57,10 +57,10 @@ class Process {
   _setMaxContentHeader(session) {
     return {
       headers: {
-        authorization: session,
-        maxContentLength: Infinity,
-        maxBodyLength: Infinity
-      }
+        authorization: session
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
     };
   }
 

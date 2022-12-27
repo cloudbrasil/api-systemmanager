@@ -1163,10 +1163,10 @@ class Documents {
     const self = this;
     const reqOpts = {
       headers: {
-        'Content-Type': type,
-        maxContentLength: Infinity,
-        maxBodyLength: Infinity
-      }
+        'Content-Type': type
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
     };
 
     const onUploadProgress = params.onUploadProgress;
@@ -1462,10 +1462,10 @@ class Process {
   _setMaxContentHeader(session) {
     return {
       headers: {
-        authorization: session,
-        maxContentLength: Infinity,
-        maxBodyLength: Infinity
-      }
+        authorization: session
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
     };
   }
 
