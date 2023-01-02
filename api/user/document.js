@@ -140,7 +140,7 @@ class Documents {
    * @param {string} params.orgname Organization name
    * @param {string} params.areaId Doc area id (_id database)
    * @param {string} params.docId Document id (_id database)
-   * @param {string} [params.documentDate=new\ Date()] Date of document
+   * @param {string} [params.documentDate=new Date()] Date of document
    * @param {string} params.document The path to the file. If S3, the key to S3, gotten after getting a signed URL
    * @param {string} params.filename File name
    * @param {string} params.type Mimetype of the document (image/png)
@@ -189,34 +189,33 @@ class Documents {
     const self = this;
 
     try {
-      Joi.assert(params, Joi.object().required());
-      Joi.assert(params.orgname, Joi.string().required());
-      Joi.assert(params.areaId, Joi.string().required());
-      Joi.assert(params.docId, Joi.string().required());
-      Joi.assert(params.type, Joi.string().required());
-      Joi.assert(params.name, Joi.string().required());
-      Joi.assert(params.docTypeId, Joi.string().required());
-      Joi.assert(params.bytes, Joi.number().required());
-      Joi.assert(params.orgId, Joi.string().required());
-      Joi.assert(session, Joi.string().required());
-      Joi.assert(params.signedUrl, Joi.string().required());
+      Joi.assert(params, Joi.object().required().error(new Error('params is required')));
+      Joi.assert(params.orgname, Joi.string().required().error(new Error('orgname is required')));
+      Joi.assert(params.areaId, Joi.string().required().error(new Error('areaId is required')));
+      Joi.assert(params.docId, Joi.string().required().error(new Error('docId is required')));
+      Joi.assert(params.type, Joi.string().required().error(new Error('type is required')));
+      Joi.assert(params.name, Joi.string().required().error(new Error('name is required')));
+      Joi.assert(params.docTypeId, Joi.string().required().error(new Error('docTypeId is required')));
+      Joi.assert(params.bytes, Joi.number().required().error(new Error('bytes is required')));
+      Joi.assert(params.orgId, Joi.string().required().error(new Error('orgId is required')));
+      Joi.assert(session, Joi.string().required().error(new Error('session is required')));
 
       // Get fields required, and set data default to create document
       const payloadToSend = self._formatDocument(params);
 
-      Joi.assert(payloadToSend.documentDate, Joi.string().allow(''));
-      Joi.assert(payloadToSend.content, Joi.string().allow(''));
-      Joi.assert(payloadToSend.description, Joi.string().allow(''));
-      Joi.assert(payloadToSend.category, Joi.string().allow(''));
-      Joi.assert(payloadToSend.tags, Joi.array());
-      Joi.assert(payloadToSend.hasPhisicalStorage, Joi.boolean());
-      Joi.assert(payloadToSend.boxId, Joi.string().allow(''));
-      Joi.assert(payloadToSend.storageStatus, Joi.string().allow(''));
-      Joi.assert(payloadToSend.ocrDocumentBackend, Joi.boolean());
-      Joi.assert(payloadToSend.docAreaPermission, Joi.object().allow({}));
-      Joi.assert(payloadToSend.docTypeFieldsData, Joi.object().allow({}));
-      Joi.assert(payloadToSend.urlType, Joi.string().allow(''));
-      Joi.assert(payloadToSend.addType, Joi.string().allow(''));
+      Joi.assert(payloadToSend.documentDate, Joi.string().allow('').error(new Error('documentData is required after formatting payload')));
+      Joi.assert(payloadToSend.content, Joi.string().allow('').error(new Error('content is required after formatting payload')));
+      Joi.assert(payloadToSend.description, Joi.string().allow('').error(new Error('description is required after formatting payload')));
+      Joi.assert(payloadToSend.category, Joi.string().allow('').error(new Error('catetory is required after formatting payload')));
+      Joi.assert(payloadToSend.tags, Joi.array().error(new Error('tags is required after formatting payload')));
+      Joi.assert(payloadToSend.hasPhisicalStorage, Joi.boolean().error(new Error('hasPhisicalStorage is required after formatting payload')));
+      Joi.assert(payloadToSend.boxId, Joi.string().allow('').error(new Error('boxId is required after formatting payload')));
+      Joi.assert(payloadToSend.storageStatus, Joi.string().allow('').error(new Error('storageStatus is required after formatting payload')));
+      Joi.assert(payloadToSend.ocrDocumentBackend, Joi.boolean().error(new Error('ocrDocumentBackend is required after formatting payload')));
+      Joi.assert(payloadToSend.docAreaPermission, Joi.object().allow({}).error(new Error('docAreaPermission is required after formatting payload')));
+      Joi.assert(payloadToSend.docTypeFieldsData, Joi.object().allow({}).error(new Error('docTypeFieldsData is required after formatting payload')));
+      Joi.assert(payloadToSend.urlType, Joi.string().allow('').error(new Error('urlType is required after formatting payload')));
+      Joi.assert(payloadToSend.addType, Joi.string().allow('').error(new Error('addType is required after formatting payload')));
 
       const {areaId, orgId} = params;
       const apiCall = self._client
@@ -386,7 +385,7 @@ class Documents {
    * const api = new API();
    * const params - {
    *  documents: [{ _id: '5dadd01dc4af3941d42f8c5c' }],
-   *  orgIdId: '5df7f19618430c89a41a19d2',
+   *  orgId: '5df7f19618430c89a41a19d2',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdsAndRemove(params, session);
@@ -627,6 +626,60 @@ class Documents {
         .put(signedUrl, content, reqOpts);
     self._returnData(await apiCall);
     return true;
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * Checks if a document can be added and it does not repeat its primary key
+   * @param params
+   * @param params.orgId {string} the organization id
+   * @param params.docTypeId {string} the id of the doc type
+   * @param params.docs {array<object>} an array of documents
+   * @param params.docs.id {string} an unique id representing the document
+   * @param params.docs.docTypeFields {object} thje docTypeFields of the document
+   * @param params.docs.docTypeFieldsData {object} thje docTypeFieldsData of the document
+   * @param session
+   * @return {Promise<array>} Return the array of the documents that are repeated. If not document is repeaded, then if returns an empty array.
+   * @return id {array<string>} the id of the repeated document
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const docTypeFields = [...];   // the doc type fields array
+   * const docTypeFieldsData = {...};   // the data of this fields
+   * const params - {
+   *  docs: [{ id: '5dadd01dc4af3941d42f8c5c', docTypeFields, docTypeFieldsData }],
+   *  orgId: '5df7f19618430c89a41a19d2',
+   *  docTypeId: '5df7f19618430c89a41a19d5',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retDocs = await api.user.document.findByIdsAndRemove(params, session);
+   *
+   */
+  async checkPrimaryKeys(params, session) {
+    Joi.assert(params, Joi.object().required().label('params'));
+    Joi.assert(params.orgId, Joi.string().required().label('orgId'));
+    Joi.assert(params.docTypeId, Joi.string().required().label('docTypeId'));
+    Joi.assert(params.docs, Joi.array().required().label('docs'));
+    Joi.assert(session, Joi.string().required().label('session'));
+
+    const { docs = [], orgId = '',  docTypeId = '' } = params;
+
+    if(docs.length === 0) return;
+
+    try {
+      const self = this;
+      const payloadToSend = {
+        docs,
+        docTypeId
+      };
+      const apiCall = self._client.post(`/organizations/${orgId}/documents/can/add`, payloadToSend, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
   }
 
 }
