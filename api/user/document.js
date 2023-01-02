@@ -655,7 +655,7 @@ class Documents {
    *  docTypeId: '5df7f19618430c89a41a19d5',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retDocs = await api.user.document.findByIdsAndRemove(params, session);
+   * const retDocs = await api.user.document.checkPrimaryKeys(params, session);
    *
    */
   async checkPrimaryKeys(params, session) {
