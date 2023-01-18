@@ -43,6 +43,9 @@
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
+<dt><a href="#Datasource">Datasource</a></dt>
+<dd><p>Class for user datasource access, to be used with documents</p>
+</dd>
 <dt><a href="#Documents">Documents</a></dt>
 <dd><p>Class for documents, permission user</p>
 </dd>
@@ -1189,6 +1192,45 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
+<a name="Datasource"></a>
+
+## Datasource
+Class for user datasource access, to be used with documents
+
+**Kind**: global class  
+<a name="Datasource+autocomplete"></a>
+
+### datasource.autocomplete(params, session) ⇒ <code>promise.&lt;array&gt;</code> \| <code>string</code> \| <code>object</code>
+Method to get autocomplete data from a datasource
+
+**Kind**: instance method of [<code>Datasource</code>](#Datasource)  
+**Returns**: <code>promise.&lt;array&gt;</code> - docs The returned documents field with autocomplete<code>string</code> - docs._id the _id of the document<code>object</code> - data.docTypeFieldsData the field values  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to add notification token |
+| params.orgId | <code>string</code> | The user organization _id |
+| params.dataSources | <code>array.&lt;object&gt;</code> | The document type data sources information |
+| params.dataSources._id | <code>string</code> | The document type data sources _id |
+| params.dataSources.fields | <code>array.&lt;object&gt;</code> | The document type data sources list of fields |
+| params.documents | <code>array.&lt;object&gt;</code> | The document list |
+| params.documents._id | <code>string</code> | The document _id |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ orgId: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+ dataSources: [{}],
+ documents: [{}]
+};
+const retData = await api.user.datasource.autocomplete(params, session);
+```
 <a name="Documents"></a>
 
 ## Documents
