@@ -44,7 +44,7 @@
 <dd><p>API request, user permission level</p>
 </dd>
 <dt><a href="#Datasource">Datasource</a></dt>
-<dd><p>Class for user datasource access, to be used with documents</p>
+<dd><p>Class for user datasource access, to be used with when creating new documents</p>
 </dd>
 <dt><a href="#Documents">Documents</a></dt>
 <dd><p>Class for documents, permission user</p>
@@ -1195,7 +1195,7 @@ API request, user permission level
 <a name="Datasource"></a>
 
 ## Datasource
-Class for user datasource access, to be used with documents
+Class for user datasource access, to be used with when creating new documents
 
 **Kind**: global class  
 <a name="Datasource+autocomplete"></a>

@@ -9110,7 +9110,7 @@ class Notification {
 }
 
 /**
- * Class for user datasource access, to be used with documents
+ * Class for user datasource access, to be used with when creating new documents
  * @class
  */
 class Datasource {
@@ -9191,7 +9191,7 @@ class Datasource {
     try {
       Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'The organization _id is required');
-      Joi__default["default"].assert(params.dataSources, Joi__default["default"].object().required(), 'Datasources is required');
+      Joi__default["default"].assert(params.dataSources, Joi__default["default"].array().required(), 'Datasources is required');
       Joi__default["default"].assert(params.documents, Joi__default["default"].array().required(), ' Documents is required');
 
       const {

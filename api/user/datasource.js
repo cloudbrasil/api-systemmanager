@@ -3,7 +3,7 @@ import Boom from '@hapi/boom';
 import Joi from 'joi';
 
 /**
- * Class for user datasource access, to be used with documents
+ * Class for user datasource access, to be used with when creating new documents
  * @class
  */
 class Datasource {
@@ -84,7 +84,7 @@ class Datasource {
     try {
       Joi.assert(params, Joi.object().required(), 'Params to get task');
       Joi.assert(params.orgId, Joi.string().required(), 'The organization _id is required');
-      Joi.assert(params.dataSources, Joi.object().required(), 'Datasources is required');
+      Joi.assert(params.dataSources, Joi.array().required(), 'Datasources is required');
       Joi.assert(params.documents, Joi.array().required(), ' Documents is required');
 
       const {
