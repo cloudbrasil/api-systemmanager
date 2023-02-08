@@ -9793,6 +9793,30 @@ class AdminNotification {
   }
 
   /**
+   * @description Send real time notification
+   * @param {object} params Params to send notification
+   * @param {string} params.userIds Users to send notification
+   * @param {object} params.message Object with data to send user
+   * @param {object} session Session, token JWT
+   * @returns {Promise<*>}
+   */
+  async realTime(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Object with params to add notifications');
+      Joi__default["default"].assert(params.userIds, Joi__default["default"].array().required(), 'OrgId of the user SU');
+      Joi__default["default"].assert(params.message, Joi__default["default"].object().required(), 'Object with data to send user');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session, token JWT');
+
+      const apiCall = self.client.post(`/admin/send/notifications`, params, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Create notification
    * @param {object} params Params to create notification
