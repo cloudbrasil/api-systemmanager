@@ -37,20 +37,14 @@
 <dt><a href="#AdminUser">AdminUser</a></dt>
 <dd><p>Admin Class for user, permission admin</p>
 </dd>
-<dt><a href="#Dispatch">Dispatch</a></dt>
-<dd><p>Api dispatch manager</p>
-</dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
 <dd><p>General Class for user, permission organization</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
-<dt><a href="#Login">Login</a></dt>
-<dd><p>Login manager</p>
-</dd>
-<dt><a href="#Session">Session</a></dt>
-<dd><p>Session manager of the API</p>
+<dt><a href="#Datasource">Datasource</a></dt>
+<dd><p>Class for user datasource access, to be used with when creating new documents</p>
 </dd>
 <dt><a href="#Documents">Documents</a></dt>
 <dd><p>Class for documents, permission user</p>
@@ -1011,6 +1005,10 @@ Get task by user Id
 | params | <code>object</code> |  | Params to get task |
 | params.userId | <code>string</code> |  | User id (_id database) |
 | [params.filter] | <code>string</code> | <code>&quot;NOT_DONE&quot;</code> | Filter type CLEAN | EXECUTED | PENDING | LATE | NOT_DONE | DONE |
+| params.project | <code>object</code> |  | Project to return |
+| params.project.returnProcessProperties | <code>boolean</code> |  | Return process properties |
+| params.project.returnInitParams | <code>boolean</code> |  | Return init params |
+| params.userId | <code>string</code> |  | User id (_id database) |
 | [params.includeOwner] | <code>boolean</code> | <code>false</code> | Include owner true | false |
 | session | <code>string</code> |  | Session, token JWT |
 
@@ -1133,52 +1131,6 @@ const payload = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
-<a name="Dispatch"></a>
-
-## Dispatch
-Api dispatch manager
-
-**Kind**: global class  
-
-* [Dispatch](#Dispatch)
-    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
-
-<a name="Dispatch+getContext"></a>
-
-### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
-Get the URL context
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
-**Access**: public  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | Full url |
-| session | <code>session</code> | <code></code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-```
-<a name="Dispatch+getClient"></a>
-
-### dispatch.getClient() ⇒ <code>promise</code>
-Get client Axios
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>promise</code> - return client axios  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-await api.dispatch.getClient();
-```
 <a name="GeoLocation"></a>
 
 ## GeoLocation
@@ -1240,202 +1192,44 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
-<a name="Login"></a>
+<a name="Datasource"></a>
 
-## Login
-Login manager
-
-**Kind**: global class  
-
-* [Login](#Login)
-    * [.facebook(params)](#Login+facebook) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.google(params)](#Login+google) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.apiKey(apikey)](#Login+apiKey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.userPass(params)](#Login+userPass) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.logout(session)](#Login+logout) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-    * [.recover(username)](#Login+recover) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-
-<a name="Login+facebook"></a>
-
-### login.facebook(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with social login Facebook
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to login Facebook |
-| params.accessToken | <code>string</code> | Access token of the system manager |
-| params.initialUserData | <code>object</code> | Object with roles default if sigin |
-| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
-const { auth, user } = await api.login.facebook(params);
-```
-<a name="Login+google"></a>
-
-### login.google(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with social login Google
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to login Google |
-| params.accessToken | <code>string</code> | Access token of the system manager |
-| params.initialUserData | <code>object</code> | Object with roles default if sigin |
-| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
-const { auth, user } = await api.login.google(accessToken);
-```
-<a name="Login+apiKey"></a>
-
-### login.apiKey(apikey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with apikey
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| apikey | <code>string</code> | Access key |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
-const { auth, user } = await api.login.apiKey(apiKey);
-```
-<a name="Login+userPass"></a>
-
-### login.userPass(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with user and password
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Object with user and password |
-| params.username | <code>string</code> | Username or email of the user |
-| params.password | <code>string</code> | Password of the user |
-| params.orgname | <code>string</code> | The organame of the user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance  
-const params = {...}
-const api = new API(params);
-const params = {
-  username: 'ana.silva@gmail.com',
-  password: '123456'
-};
-const { auth, user } = await api.login.userPass(params);
-```
-<a name="Login+logout"></a>
-
-### login.logout(session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-Logout user system manager
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const { success } = await api.login.logout(session);
-```
-<a name="Login+recover"></a>
-
-### login.recover(username) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-Recover the password
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| username | <code>string</code> | The username or email |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-
-// Params of the instance
-const params = {...}
-const api = new API(params);
-const { success } = await api.login.recover('myusername');
-```
-<a name="Session"></a>
-
-## Session
-Session manager of the API
+## Datasource
+Class for user datasource access, to be used with when creating new documents
 
 **Kind**: global class  
-<a name="Session+information"></a>
+<a name="Datasource+autocomplete"></a>
 
-### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
-Show information for session, thus validating the session (Valid token JWT)
+### datasource.autocomplete(params, session) ⇒ <code>promise.&lt;array&gt;</code> \| <code>string</code> \| <code>object</code>
+Method to get autocomplete data from a datasource
 
-**Kind**: instance method of [<code>Session</code>](#Session)  
+**Kind**: instance method of [<code>Datasource</code>](#Datasource)  
+**Returns**: <code>promise.&lt;array&gt;</code> - docs The returned documents field with autocomplete<code>string</code> - docs._id the _id of the document<code>object</code> - data.docTypeFieldsData the field values  
 **Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
 
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| sessionId | <code>string</code> |  | The user session (JWT Token) |
-| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to add notification token |
+| params.orgId | <code>string</code> | The user organization _id |
+| params.dataSources | <code>array.&lt;object&gt;</code> | The document type data sources information |
+| params.dataSources._id | <code>string</code> | The document type data sources _id |
+| params.dataSources.fields | <code>array.&lt;object&gt;</code> | The document type data sources list of fields |
+| params.documents | <code>array.&lt;object&gt;</code> | The document list |
+| params.documents._id | <code>string</code> | The document _id |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
 
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
-const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.session.information(sessionId, suSessionId);
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ orgId: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+ dataSources: [{}],
+ documents: [{}]
+};
+const retData = await api.user.datasource.autocomplete(params, session);
 ```
 <a name="Documents"></a>
 
@@ -1452,6 +1246,7 @@ Class for documents, permission user
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.signedUrls(params, session)](#Documents+signedUrls) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.uploadSignedDocument(params)](#Documents+uploadSignedDocument) ⇒ <code>Promise.&lt;boolean&gt;</code>
+    * [.checkPrimaryKeys(params, session)](#Documents+checkPrimaryKeys) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>array.&lt;string&gt;</code>
 
 <a name="Documents+add"></a>
 
@@ -1468,7 +1263,7 @@ Create new document
 | params.orgname | <code>string</code> |  | Organization name |
 | params.areaId | <code>string</code> |  | Doc area id (_id database) |
 | params.docId | <code>string</code> |  | Document id (_id database) |
-| [params.documentDate] | <code>string</code> | <code>&quot;new\\ Date()&quot;</code> | Date of document |
+| [params.documentDate] | <code>string</code> | <code>&quot;new Date()&quot;</code> | Date of document |
 | params.document | <code>string</code> |  | The path to the file. If S3, the key to S3, gotten after getting a signed URL |
 | params.filename | <code>string</code> |  | File name |
 | params.type | <code>string</code> |  | Mimetype of the document (image/png) |
@@ -1602,7 +1397,7 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params - {
  documents: [{ _id: '5dadd01dc4af3941d42f8c5c' }],
- orgIdId: '5df7f19618430c89a41a19d2',
+ orgId: '5df7f19618430c89a41a19d2',
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdsAndRemove(params, session);
@@ -1746,6 +1541,40 @@ onUploadProgress return the progressEvent
  - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
  - loaded: The number of bytes of the file that have been uploaded.
  - total: The total number of bytes in the file.
+```
+<a name="Documents+checkPrimaryKeys"></a>
+
+### documents.checkPrimaryKeys(params, session) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>array.&lt;string&gt;</code>
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - Return the array of the documents that are repeated. If not document is repeaded, then if returns an empty array.<code>array.&lt;string&gt;</code> - id  the id of the repeated document  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>
+Checks if a document can be added and it does not repeat its primary key  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params |  |  |
+| params.orgId | <code>string</code> | the organization id |
+| params.docTypeId | <code>string</code> | the id of the doc type |
+| params.docs | <code>array.&lt;object&gt;</code> | an array of documents |
+| params.docs.id | <code>string</code> | an unique id representing the document |
+| params.docs.docTypeFields | <code>object</code> | thje docTypeFields of the document |
+| params.docs.docTypeFieldsData | <code>object</code> | thje docTypeFieldsData of the document |
+| session |  |  |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const docTypeFields = [...];   // the doc type fields array
+const docTypeFieldsData = {...};   // the data of this fields
+const params - {
+ docs: [{ id: '5dadd01dc4af3941d42f8c5c', docTypeFields, docTypeFieldsData }],
+ orgId: '5df7f19618430c89a41a19d2',
+ docTypeId: '5df7f19618430c89a41a19d5',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retDocs = await api.user.document.checkPrimaryKeys(params, session);
 ```
 <a name="Users"></a>
 

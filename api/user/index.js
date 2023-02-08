@@ -8,6 +8,7 @@ import Task from './task';
 import User from './user';
 import Register from './register';
 import Notification from './notification';
+import Datasource from './datasource';
 
 /**
  * @class API request, user permission level
@@ -25,6 +26,7 @@ class Users {
 
     const self = this;
     self.document = new Document(options);
+    self.datasource = new Datasource(options);
     self.organization = new Organization(options);
     self.process = new Process(options);
     self.task = new Task(options);
