@@ -1765,7 +1765,7 @@ class TaskAvailable {
       Joi__default["default"].assert(params.orgname, Joi__default["default"].string().required(), 'The slug of the organization');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
-      const {query, orgId} = params;
+      const {taskId, orgname} = params;
       const apiCall = self._client
           .put(`/organizations/${orgname}/users/tasks/${taskId}/claim`, self._setHeader(session));
 
