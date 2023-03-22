@@ -1720,13 +1720,14 @@ class TaskAvailable {
 
     try {
       Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
-      Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), ' The query for the search');
+      Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
       const {query, orgId} = params;
+      const queryString = encodeURIComponent(JSON.stringify(query));
       const apiCall = self._client
-        .post(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${JSON.stringify(query)}`, self._setHeader(session));
+        .post(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${queryString}`, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
