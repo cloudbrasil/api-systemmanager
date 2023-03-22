@@ -67,6 +67,9 @@
 <dt><a href="#Task">Task</a></dt>
 <dd><p>Class for task, permission user</p>
 </dd>
+<dt><a href="#TaskAvailable">TaskAvailable</a></dt>
+<dd><p>Class for available tasks, permission user</p>
+</dd>
 <dt><a href="#User">User</a></dt>
 <dd><p>Class for user, permission user</p>
 </dd>
@@ -1846,6 +1849,7 @@ Class for process, permission user
 * [Process](#Process)
     * [.start(params, session)](#Process+start) ⇒ <code>Promise</code>
     * [.getProcessProperties(params, session)](#Process+getProcessProperties) ⇒ <code>Promise</code>
+    * [.getOrgProcessSearchInfo(params, session)](#Process+getOrgProcessSearchInfo) ⇒ <code>Promise</code> \| <code>string</code> \| <code>object</code> \| <code>object</code> \| <code>object</code> \| <code>string</code>
 
 <a name="Process+start"></a>
 
@@ -1902,6 +1906,35 @@ const params = {
 }
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.process.getProcessProperties(params, session);
+```
+<a name="Process+getOrgProcessSearchInfo"></a>
+
+### process.getOrgProcessSearchInfo(params, session) ⇒ <code>Promise</code> \| <code>string</code> \| <code>object</code> \| <code>object</code> \| <code>object</code> \| <code>string</code>
+Get the search info of a organization process
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>Promise</code> - the search info result<code>string</code> - name the name of the organization process<code>object</code> - processIndexFields the list of fields to index<code>object</code> - processParticipantsGroup the permissions in this organization process<code>object</code> - stepsProperties the organization process steps properties<code>string</code> - _id the same organization id
+@  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get search info |
+| params.orgProcessId | <code>string</code> | The id of an organization process (_id database); |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgProcessId: '5dadd01dc4af3941d42f8c67',
+  orgId: '5edd11c46b6ce9729c2c297c',
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearchInfo = await api.user.process.getOrgProcessSearchInfo(params, session);
 ```
 <a name="Register"></a>
 
@@ -2126,6 +2159,73 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.task.executeActionFinalize(params, session);
+```
+<a name="TaskAvailable"></a>
+
+## TaskAvailable
+Class for available tasks, permission user
+
+**Kind**: global class  
+
+* [TaskAvailable](#TaskAvailable)
+    * [.find(params, session)](#TaskAvailable+find) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+    * [.claim(params, session)](#TaskAvailable+claim) ⇒ <code>promise</code> \| <code>boolean</code>
+
+<a name="TaskAvailable+find"></a>
+
+### taskAvailable.find(params, session) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+Method to find available tasks for a user
+
+**Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
+**Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - page the page of the search (on pagination), zero indexed<code>number</code> - perPage how many items per page  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.query | <code>object</code> | Search process query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.task.available.find(params, session);
+```
+<a name="TaskAvailable+claim"></a>
+
+### taskAvailable.claim(params, session) ⇒ <code>promise</code> \| <code>boolean</code>
+Method for a user to claim an available task
+
+**Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
+**Returns**: <code>promise</code> - returned data from the method call<code>boolean</code> - success true|false if the method was successful  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.taskId | <code>object</code> | the task id to claim |
+| params.orgname | <code>object</code> | Organization slug (short name of the orgnization) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ taskId: '55e4a3bd6be6b45210833f67',
+ orgname: 'acme',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const success = await api.user.task.available.claim(params, session);
 ```
 <a name="User"></a>
 

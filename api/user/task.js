@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
+import TaskAvailable from './task_available';
 
 /**
  * Class for task, permission user
@@ -15,6 +16,7 @@ class Task {
     const self = this;
     self.parent = options.parent;
     self._client = self.parent.dispatch.getClient();
+    self.available = new TaskAvailable(options);
   }
 
   /**

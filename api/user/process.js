@@ -142,6 +142,50 @@ class Process {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Get the search info of a organization process
+   * @param {object} params Params to get search info
+   * @param {string} params.orgProcessId The id of an organization process (_id database);
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} session Session, token JWT
+   * @return {Promise} the search info result
+   * @return {string} name the name of the organization process
+   * @return {object} processIndexFields the list of fields to index
+   * @return {object} processParticipantsGroup the permissions in this organization process
+   * @return {object} stepsProperties the organization process steps properties
+   * @return {string} _id the same organization id
+   * @
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgProcessId: '5dadd01dc4af3941d42f8c67',
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   * }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearchInfo = await api.user.process.getOrgProcessSearchInfo(params, session);
+   */
+  async getOrgProcessSearchInfo(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.orgProcessId, Joi.string().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {orgProcessId, orgId} = params;
+      const apiCall = self._client.get(`/organizations/${orgId}/orgprocess/${orgProcessId}/search/info`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Process;
