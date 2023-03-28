@@ -717,8 +717,7 @@ class Documents {
 
       const {query, orgId} = params;
       const queryString = encodeURIComponent(JSON.stringify(query));
-      const apiCall = self._client
-        .get(`/organizations/${orgId}/documents/search?${queryString}`, self._setHeader(session));
+      const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${queryString}`, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
