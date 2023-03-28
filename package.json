@@ -51,7 +51,7 @@
     "glob": "~7.1.1",
     "license-checker": "^8.0.4",
     "lodash-es": "^4.17.21",
-    "mocha": "^3.2.0",
+    "mocha": "^10.2.0",
     "proxyquire": "^1.8.0",
     "rollup": "^2.59.0",
     "rollup-plugin-cleanup": "^3.2.1",
