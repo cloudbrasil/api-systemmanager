@@ -1,9 +1,10 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "1.0.87",
+  "version": "1.0.88",
   "scripts": {
     "doc": "rm -f  doc/api.md && jsdoc2md api/**/** > doc/api.md",
+    "doc:w": "rimraf doc/api.md && jsdoc2md api/**/** > doc/api.md",
     "build": "node bundleRollup.js"
   },
   "type": "module",
