@@ -1770,7 +1770,7 @@ class TaskAvailable {
       const {query, orgId} = params;
       const queryString = encodeURIComponent(JSON.stringify(query));
       const apiCall = self._client
-        .post(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${queryString}`, self._setHeader(session));
+        .get(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${queryString}`, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
