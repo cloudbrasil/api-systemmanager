@@ -1,7 +1,7 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "1.0.92",
+  "version": "1.0.93",
   "scripts": {
     "doc": "rm -f  doc/api.md && jsdoc2md api/**/** > doc/api.md",
     "doc:w": "rimraf doc/api.md && jsdoc2md api/**/** > doc/api.md",
@@ -46,12 +46,12 @@
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "axios-esm": "^1.0.0",
-    "chai": "^3.5.0",
+    "chai": "^4.3.7",
     "dayjs": "^1.10.7",
     "glob": "~7.1.1",
     "license-checker": "^8.0.4",
     "lodash-es": "^4.17.21",
-    "mocha": "^3.2.0",
+    "mocha": "^10.2.0",
     "proxyquire": "^1.8.0",
     "rollup": "^2.59.0",
     "rollup-plugin-cleanup": "^3.2.1",
