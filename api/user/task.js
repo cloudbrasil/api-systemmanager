@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
-import TaskAvailable from './task_available';
+import TaskAvailable from './task_available.js';
 
 /**
  * Class for task, permission user

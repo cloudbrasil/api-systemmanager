@@ -1,13 +1,13 @@
 import _ from 'lodash';
 import Joi from 'joi';
 
-import Dispatch from './api/dispatch';
-import Session from './api/session';
-import Login from './api/login';
+import Dispatch from './api/dispatch.js';
+import Session from './api/session.js';
+import Login from './api/login.js';
 
-import General from './api/general';
-import User from './api/user';
-import Admin from './api/admin';
+import General from './api/general/index.js';
+import User from './api/user/index.js';
+import Admin from './api/admin/index.js';
 
 /**
  * Class API

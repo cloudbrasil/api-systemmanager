@@ -1,5 +1,5 @@
 import Joi from 'joi';
-import Geo from './geoLocation';
+import Geo from './geoLocation.js';
 
 /**
  * @class API request, user permission level

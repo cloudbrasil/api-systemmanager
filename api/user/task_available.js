@@ -81,9 +81,9 @@ class TaskAvailable {
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {query, orgId} = params;
-      const queryString = encodeURIComponent(JSON.stringify(query));
+      const queryString = JSON.stringify(query);
       const apiCall = self._client
-        .post(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${queryString}`, self._setHeader(session));
+        .post(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${queryString}`, {}, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {

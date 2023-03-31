@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
-import Cypher from '../utils/cypher';
+import Cypher from '../utils/cypher.js';
 
 /**
  * Class for user registration in a user

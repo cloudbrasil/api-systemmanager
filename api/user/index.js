@@ -1,14 +1,14 @@
 import _ from 'lodash';
 import Joi from 'joi';
 
-import Document from './document';
-import Organization from './organization';
-import Process from './process';
-import Task from './task';
-import User from './user';
-import Register from './register';
-import Notification from './notification';
-import Datasource from './datasource';
+import Document from './document.js';
+import Organization from './organization.js';
+import Process from './process.js';
+import Task from './task.js';
+import User from './user.js';
+import Register from './register.js';
+import Notification from './notification.js';
+import Datasource from './datasource.js';
 
 /**
  * @class API request, user permission level

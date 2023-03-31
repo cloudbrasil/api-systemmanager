@@ -1,17 +1,17 @@
 import Joi from 'joi';
 
-import AdminDocument from './document';
-import AdminForm from './form';
-import AdminNotification from './notification';
-import AdminList from './list';
-import AdminPlugin from './plugin';
-import AdminPolicy from './policy';
-import AdminTask from './task';
-import AdminUser from './user';
-import AdminProcesses from './processes';
-import AdminMessage from './message';
-import AdminDocTypes from './doctypes';
-import AdminOrganizations from './organization';
+import AdminDocument from './document.js';
+import AdminForm from './form.js';
+import AdminNotification from './notification.js';
+import AdminList from './list.js';
+import AdminPlugin from './plugin.js';
+import AdminPolicy from './policy.js';
+import AdminTask from './task.js';
+import AdminUser from './user.js';
+import AdminProcesses from './processes.js';
+import AdminMessage from './message.js';
+import AdminDocTypes from './doctypes.js';
+import AdminOrganizations from './organization.js';
 
 /**
  * @class API request, admin permission level
