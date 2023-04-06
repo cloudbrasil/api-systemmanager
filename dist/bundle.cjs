@@ -1940,6 +1940,7 @@ class Task {
   async findByIdAndUpdate(params, session) {
     const self = this;
 
+
     try {
       Joi__default["default"].assert(params, Joi__default["default"].object().required());
       Joi__default["default"].assert(params.userId, Joi__default["default"].string().required(), 'User id (_id database)');
