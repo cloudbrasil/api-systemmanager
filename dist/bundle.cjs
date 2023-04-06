@@ -1803,8 +1803,8 @@ class TaskAvailable {
     const self = this;
 
     try {
-      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
-      Joi__default["default"].assert(params.taskId, Joi__default["default"].object().required(), 'The task id to claim');
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to claim the task');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required(), 'The task id to claim');
       Joi__default["default"].assert(params.orgname, Joi__default["default"].string().required(), 'The slug of the organization');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
