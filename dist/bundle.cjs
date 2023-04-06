@@ -1975,7 +1975,7 @@ class Task {
    * @param {!string} params.taskId - Task id (_id database)
    * @param {!string} params.actionGuid - GUID of the action
    * @param {!string} params.orgId - Organization id (_id database)
-   * @param {any} params.orgId={} - Payload to send in action
+   * @param {any} params.payload={} - Payload to send in action
    * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
@@ -1988,7 +1988,7 @@ class Task {
    *  taskId: '5df7f19618430c89a41a19d2',
    *  actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d'
    *  orgId: '5df7f19618430c89a41a1bc3',
-   *  body: {}',
+   *  payload: {}',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.executeActionFinalize(params, session);
