@@ -1965,12 +1965,12 @@ Find task by id and update
 | params.taskId | <code>string</code> |  | Task id (_id database) |
 | params.actionGuid | <code>string</code> |  | GUID of the action |
 | params.orgId | <code>string</code> |  | Organization id (_id database) |
-| params.orgId | <code>any</code> | <code>{}</code> | Payload to send in action |
+| params.payload | <code>any</code> | <code>{}</code> | Payload to send in action |
 | session | <code>string</code> |  | Session, token JWT |
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { taskId: '5df7f19618430c89a41a19d2', actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d' orgId: '5df7f19618430c89a41a1bc3', body: {}',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.executeActionFinalize(params, session);
+const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { taskId: '5df7f19618430c89a41a19d2', actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d' orgId: '5df7f19618430c89a41a1bc3', payload: {}',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.executeActionFinalize(params, session);
 ```
 <a name="User"></a>
 
