@@ -123,7 +123,7 @@ class TaskAvailable {
 
       const {taskId, orgname} = params;
       const apiCall = self._client
-          .put(`/organizations/${orgname}/users/tasks/${taskId}/claim`, self._setHeader(session));
+          .put(`/organizations/${orgname}/users/tasks/${taskId}/claim`, {}, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
