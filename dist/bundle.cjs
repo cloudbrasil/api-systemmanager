@@ -11579,6 +11579,87 @@ class Admin {
 }
 
 /**
+ * Class for documents, permission user
+ * @class
+ */
+class External {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      throw Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Create new document
+   * @param {object} params Object for add new document
+   * @param {string} params.id Organization form id
+   * @return {Promise<object>}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: 'cloundbrasil'
+   * };
+   * const retForm = await api.external.context(params);
+   */
+  async context(params) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required().error(new Error('organization form id is required')));
+
+      const { id } = params;
+      const apiCall = self._client
+          .get(`/component/external/forms/${id}`);
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+}
+
+/**
  * Class API
  */
 class API {
@@ -11648,6 +11729,7 @@ class API {
     self.general = new Users$1({parent: self});
     self.user = new Users({parent: self});
     self.admin = new Admin({parent: self});
+    self.external = new External({parent: self});
   }
 }
 

@@ -8,6 +8,7 @@ import Login from './api/login.js';
 import General from './api/general/index.js';
 import User from './api/user/index.js';
 import Admin from './api/admin/index.js';
+import External from './api/external.js';
 
 /**
  * Class API
@@ -79,6 +80,7 @@ class API {
     self.general = new General({parent: self});
     self.user = new User({parent: self});
     self.admin = new Admin({parent: self});
+    self.external = new External({parent: self});
   }
 }
 
