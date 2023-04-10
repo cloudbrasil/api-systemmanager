@@ -52,7 +52,12 @@ class External {
    * @description Create new document
    * @param {object} params Object for add new document
    * @param {string} params.id Organization form id
-   * @return {Promise<object>}
+   * @return {Promise<object>} data
+   * @return {string} _id the id of the form
+   * @return {string} orgId the organization id of the form
+   * @return {string} responseToken the unique token registered internally by the system for all the next calls to the external form APIs
+   *      The responseToken is unique and is ONLY valid for this session.
+   * @return {array<object>} groups the form groups to render
    * @public
    * @async
    * @example
