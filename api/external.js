@@ -65,7 +65,7 @@ class External {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const params = {
-   *  id: 'cloundbrasil'
+   *  id: '611e679741cc63168c26d7ee'
    * };
    * const retForm = await api.external.context(params);
    */
