@@ -186,6 +186,50 @@ class Process {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to search processes
+   * @param {object} params Params to search processes
+   * @param {object} params.query Search process query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the search
+   * @returns {number} count the count of items searched
+   * @returns {array<object>} items the items returned from search
+   * @returns {number} page the page of the search (on pagination), zero indexed
+   * @returns {number} perPage how many items per page
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.process.find(params, session);
+   */
+  async find(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to search processes');
+      Joi.assert(params.query, Joi.object().required(), 'The query for the search');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const {query, orgId} = params;
+      const queryString = JSON.stringify(query);
+      const apiCall = self._client
+        .post(`/organizations/${orgId}/process/advsearch?query=${queryString}`, {}, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Process;

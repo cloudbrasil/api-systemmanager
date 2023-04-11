@@ -124,6 +124,7 @@ class Task {
   async findByIdAndUpdate(params, session) {
     const self = this;
 
+
     try {
       Joi.assert(params, Joi.object().required());
       Joi.assert(params.userId, Joi.string().required(), 'User id (_id database)');

@@ -51,7 +51,7 @@ class TaskAvailable {
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Method to find available tasks for a user
    * @param {object} params Params to get task
-   * @param {object} params.query Search process query
+   * @param {object} params.query Search available tasks query
    * @param {object} params.orgId Organization id (_id database)
    * @param {string} session Session, token JWT
    * @returns {promise} returned data from the search
