@@ -11615,10 +11615,10 @@ class External {
    * @return {object} header with new session
    * @private
    */
-  _setHeader(session) {
+  _setHeader(authorization) {
     return {
       headers: {
-        authorization: session,
+        authorization,
       }
     };
   }
@@ -11631,8 +11631,8 @@ class External {
    * @return {Promise<object>} data
    * @return {string} _id the id of the form
    * @return {string} orgId the organization id of the form
-   * @return {string} responseToken the unique token registered internally by the system for all the next calls to the external form APIs
-   *      The responseToken is unique and is ONLY valid for this session.
+   * @return {string} authorization the unique token registered internally by the system for all the next calls to the external form APIs
+   *      The authorization is unique and is ONLY valid for this session.
    * @return {array<object>} groups the form groups to render
    * @public
    * @async
@@ -11655,6 +11655,90 @@ class External {
       const { id } = params;
       const apiCall = self._client
           .get(`/component/external/forms/${id}`);
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Get an upload signed url, so it will be possible to upload documents temporarily during the use of the external form
+   * @param {string} mime the mime type of the document
+   * @param {string} authorization a legal authorization
+   * @returns {Promise<object>} doc
+   * @returns {string}  doc.mime the original mime type of the document
+   * @returns {string} doc.signedUrl the signed url to upload the document
+   * @returns {string} doc.filename  the filename of the uploaded file
+   * @returns {string} doc.extension  the extension of the filename, obtained from the mime type
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const doc = {
+   *  mime: 'application/pdf'
+   * };
+   * const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization);
+   */
+  async getUploadDocumentSignedUrl(mime, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(mime, Joi__default["default"].string().required().error(new Error('mime type is required')));
+      Joi__default["default"].assert(authorization, Joi__default["default"].string().required().error(new Error('authorization is required')));
+
+      const apiCall = self._client
+          .get(`/external/forms/upload/signedurl?mime=${encodeURIComponent(mime)}`, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Handles the execution of an external form
+   * @param {string} authorization a legal authorization
+   * @param {object} params the parameters to handle the execution of an external form
+   * @param {array<object>} params.payload the payload of the external form. It should represent the form groups of the external form
+   * @param {string} params.payload.name the name of the group
+   * @param {array<object>} params.payload.fields the fields that belong to each group
+   * @param {*|{}} params.payload.fields.value besides all the data inside a field, it should have the value of the the field
+   * @returns {Promise<boolean>} true|false if success
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *  payload: [
+   *      {
+   *          name: 'My Group One',
+   *          fields: [
+   *              {}
+   *          ]
+   *      }
+   *  ]
+   * };
+   * const success = await api.external.handle(params, authorization);
+   */
+  async handle(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.payload, Joi__default["default"].array().required().error(new Error('form payload is required')));
+      Joi__default["default"].assert(authorization, Joi__default["default"].string().required().error(new Error('authorization is required')));
+
+      const apiCall = self._client
+          .put('/external/forms', params, self._setHeader(authorization));
 
       return self._returnData(await apiCall);
     } catch (ex) {
