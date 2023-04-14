@@ -3,8 +3,8 @@
   "description": "Module API System Manager",
   "version": "1.0.107",
   "scripts": {
-    "htmldoc": "rm -rf doc && jsdoc api/** -d doc -t ./node_modules/better-docs",
-    "doc": "rm -rf  doc/api.md && jsdoc2md api/**/* api/* > doc/api.md",
+    "htmldoc": "rm -rf docs && jsdoc api/** -d docs -t ./node_modules/better-docs",
+    "doc": "rm -rf doc && mkdir doc && jsdoc2md api/**/* api/* > doc/api.md",
     "doc:w": "rimraf doc/api.md && jsdoc2md api/**/* > doc/api.md",
     "build": "node bundleRollup.js"
   },

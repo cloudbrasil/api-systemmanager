@@ -1,0 +1,311 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> admin/message.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>admin/message.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
+
+/**
+ * Admin Class for user, permission admin
+ * @class
+ */
+class AdminMessage {
+
+  constructor(options) {
+    Joi.assert(options, Joi.object().required());
+    Joi.assert(options.parent, Joi.object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self.client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
+    } else {
+      return _.get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @description Pagination SMS texts
+   * @param {!object} params - Params to pagintion SMS
+   * @param {!string} params.message - Message to pagination
+   * @param {!number} params.limitSize=130 - Limit of the start pagination
+   * @param {!number} params.continueText=continua... - Text to continue other SMS
+   */
+  _paginationOfTheSMS(params) {
+    const self = this;
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to paginate SMS');
+      Joi.assert(params.message, Joi.string(), 'Message to pagination');
+      Joi.assert(params.limitSize, Joi.number(), 'Limit of the start pagination');
+      Joi.assert(params.continueText, Joi.string(), 'Text to continue other SMS');
+
+      const defaultSize = 130;
+      const defaultContinue = 'continua...';
+      const { message, limitSize = defaultSize, continueText = defaultContinue } = params;
+
+      const size = limitSize - continueText.length;
+      const regex = new RegExp(`.{1,${size}}`, 'g');
+      const smsData = message.match(regex).map(item => item.trim());
+      const smsDataWithContinue = smsData.map((message, index, arr) => {
+        return index !== (arr.length - 1)
+          ? `${message} ${continueText}`
+          : message;
+      });
+
+      return smsDataWithContinue;
+
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @description Validation struct to send email
+   * @param {!object} params - Params to send email
+   * @param {!string} params.subject - Subject of the email
+   * @param {!string} params.message - Body of the email
+   * @param {!string} params.to - Destination email
+   * @param {?string} params.from - Source email
+   */
+  _validItemToSendEmail(params) {
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to send email');
+      Joi.assert(params.subject, Joi.string().required(), 'Subject of the email');
+      Joi.assert(params.message, Joi.string().required(), 'Body of the email');
+      Joi.assert(params.to, Joi.string().required(), 'Destination email');
+      Joi.assert(params.from, Joi.string(), 'Source email');
+
+      return true;
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @description Send an SMS message
+   * @param {!object} params - Params to send SMS
+   * @param {!string} params.apiKey - Organization API key
+   * @param {!string} params.message - The text message to send
+   * @param {!string} params.recipient - The telephone number without with only numbers
+   * @param {?number} params.limitSize=130 - Size limit to send SMS
+   * @return {Promise&lt;{}>}
+   */
+  async sendSMS(params) {
+    const self = this;
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to send SMS');
+      Joi.assert(params.apiKey, Joi.string().required(), 'Organization API key');
+      Joi.assert(params.message, Joi.string().required(), 'The text message to send');
+      Joi.assert(params.recipient, Joi.string().required(), 'The telephone number without with only numbers');
+      Joi.assert(params.limitSize, Joi.number(), 'Size limit to send SMS');
+
+      const defaultSize = 130;
+      const { apiKey, message, recipient, limitSize = defaultSize } = params;
+
+      const paramsOfThePagination = { message, limitSize };
+      const smsData = self._paginationOfTheSMS(paramsOfThePagination);
+
+      for await (const smsText of smsData) {
+        const payload = { apiKey, data: { message: smsText }, recipient };
+        await self.client.post('/sms/send', payload);
+      }
+
+      return { success: true, send: smsData.length };
+
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @description Send email, array with email list or send one email
+   * @param {!object} params - Params to send email
+   * @param {!string} params.subject - Subject of the email
+   * @param {!string} params.message - Body of the email
+   * @param {!string} params.to - Destination email
+   * @param {?string} params.from - Source email
+   * @param {string} session - Session, token JWT
+   * @return {Promise&lt;{success: boolean, sent: object[]}>} - Success and email sent
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  subject: 'Test email',
+   *  message: '&lt;h1>Hi!&lt;/h1>',
+   *  to: 'destination@gmail.com'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.message.sendEmail(params, session);
+   */
+  async sendEmail(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
+
+      let emailList = [];
+      const emailSent = [];
+
+      if (Array.isArray(params)) {
+        params.forEach(element => self._validItemToSendEmail(element));
+        emailList = [...params];
+      } else {
+        self._validItemToSendEmail(params);
+        emailList = [params];
+      }
+
+      for await (const email of emailList) {
+        await self.client.post('/admin/email', email, self._setHeader(session));
+        emailSent.push(email);
+      }
+
+      return { success: true, sent: emailSent };
+
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+export default AdminMessage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 4.0.2</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>
