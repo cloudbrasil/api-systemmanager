@@ -19,5 +19,5 @@ const api = new APISystemManager();
 ```
 
 ### API
-* [API Documentation](https://github.com/cloudbrasil/api-systemmanager/blob/develop/doc/index.html)
+* [API Documentation](https://cdn.rawgit.com/cloudbrasil/api-systemmanager/blob/develop/doc/index.html)
 * [API Examples](https://github.com/cloudbrasil/api-systemmanager/wiki)
