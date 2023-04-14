@@ -528,7 +528,7 @@ const retForm = await api.external.context(params);</code></pre>
         
         <span class="code-name">
             
-                getUploadDocumentSignedUrl<span class="signature">(mime, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|string|string|string|string}</span>
+                getUploadDocumentSignedUrl<span class="signature">(docs, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;array>|string|string|string|string}</span>
             
         </span>
     </h4>
@@ -537,7 +537,7 @@ const retForm = await api.external.context(params);</code></pre>
     
     
     <div class="description">
-        Get an upload signed url, so it will be possible to upload documents temporarily during the use of the external form
+        Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
     </div>
     
 
@@ -575,6 +575,30 @@ const retForm = await api.external.context(params);</code></pre>
             
 <tr class="deep-level-0">
   
+      <td class="name"><code>docs</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;object></code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">the list of documents</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
       <td class="name"><code>mime</code></td>
   
 
@@ -593,6 +617,8 @@ const retForm = await api.external.context(params);</code></pre>
 
   <td class="description last">the mime type of the document</td>
 </tr>
+
+  
 
 
         
@@ -671,7 +697,7 @@ const retForm = await api.external.context(params);</code></pre>
         <p class="tag-source">
             <a href="external.js.html" class="button">View Source</a>
             <span>
-                <a href="external.js.html">external.js</a>, <a href="external.js.html#line111">line 111</a>
+                <a href="external.js.html">external.js</a>, <a href="external.js.html#line152">line 152</a>
             </span>
         </p>
     
@@ -702,13 +728,13 @@ const retForm = await api.external.context(params);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>doc</div>
+    <div class='param-desc column is-7'>docs</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise.&lt;object></code>
+<code class="param-type">Promise.&lt;array></code>
 
 
     </div>
@@ -720,25 +746,7 @@ const retForm = await api.external.context(params);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>doc.mime the original mime type of the document</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">string</code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc.signedUrl the signed url to upload the document</div>
+    <div class='param-desc column is-7'>docs.mime the original mime type of the document</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -756,7 +764,7 @@ const retForm = await api.external.context(params);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>doc.filename  the filename of the uploaded file</div>
+    <div class='param-desc column is-7'>docs.signedUrl the signed url to upload the document</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -774,7 +782,25 @@ const retForm = await api.external.context(params);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>doc.extension  the extension of the filename, obtained from the mime type</div>
+    <div class='param-desc column is-7'>docs.filename  the filename of the uploaded file</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>docs.extension  the extension of the filename, obtained from the mime type</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -800,10 +826,12 @@ const retForm = await api.external.context(params);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const authorization = '...';
-const doc = {
- mime: 'application/pdf'
-};
-const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization);</code></pre>
+const docs = [
+   {
+     mime: 'application/pdf'
+   }
+];
+const retDocs = await api.external.getUploadDocumentsSignedUrl(docs, authorization);</code></pre>
     
 
 
@@ -1063,7 +1091,7 @@ const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization)
         <p class="tag-source">
             <a href="external.js.html" class="button">View Source</a>
             <span>
-                <a href="external.js.html">external.js</a>, <a href="external.js.html#line156">line 156</a>
+                <a href="external.js.html">external.js</a>, <a href="external.js.html#line197">line 197</a>
             </span>
         </p>
     

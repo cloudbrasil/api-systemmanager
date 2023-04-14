@@ -213,6 +213,47 @@ class External {
 
   /**
    * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
+   * @param {array&lt;object>} docs the list of documents
+   * @param {string} docs.mime the mime type of the document
+   * @param {string} authorization a legal authorization
+   * @returns {Promise&lt;array>} docs
+   * @returns {string}  docs.mime the original mime type of the document
+   * @returns {string} docs.signedUrl the signed url to upload the document
+   * @returns {string} docs.filename  the filename of the uploaded file
+   * @returns {string} docs.extension  the extension of the filename, obtained from the mime type
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const docs = [
+   *    {
+   *      mime: 'application/pdf'
+   *    }
+   * ];
+   * const retDocs = await api.external.getUploadDocumentsSignedUrl(docs, authorization);
+   */
+  async getUploadDocumentSignedUrl(docs, authorization) {
+    const self = this;
+
+    try {
+      Joi.assert(docs, Joi.string().array().error(new Error('docs is required')));
+      Joi.assert(authorization, Joi.string().required().error(new Error('authorization is required')));
+
+      const apiCall = self._client
+          .post(`/external/forms/upload/signedurls`, docs, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
    * @description Handles the execution of an external form
    * @param {string} authorization a legal authorization
    * @param {object} params the parameters to handle the execution of an external form

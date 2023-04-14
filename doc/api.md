@@ -2548,6 +2548,7 @@ Class for documents, permission user
 * [External](#External)
     * [.context(params)](#External+context) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>array.&lt;object&gt;</code>
     * [.getUploadDocumentSignedUrl(mime, authorization)](#External+getUploadDocumentSignedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.getUploadDocumentSignedUrl(docs, authorization)](#External+getUploadDocumentSignedUrl) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.handle(authorization, params)](#External+handle) ⇒ <code>Promise.&lt;boolean&gt;</code>
 
 <a name="External+context"></a>
@@ -2599,6 +2600,34 @@ const doc = {
  mime: 'application/pdf'
 };
 const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization);
+```
+<a name="External+getUploadDocumentSignedUrl"></a>
+
+### external.getUploadDocumentSignedUrl(docs, authorization) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
+
+**Kind**: instance method of [<code>External</code>](#External)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - docs<code>string</code> - docs.mime the original mime type of the document<code>string</code> - docs.signedUrl the signed url to upload the document<code>string</code> - docs.filename  the filename of the uploaded file<code>string</code> - docs.extension  the extension of the filename, obtained from the mime type  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| docs | <code>array.&lt;object&gt;</code> | the list of documents |
+| docs.mime | <code>string</code> | the mime type of the document |
+| authorization | <code>string</code> | a legal authorization |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const docs = [
+   {
+     mime: 'application/pdf'
+   }
+];
+const retDocs = await api.external.getUploadDocumentsSignedUrl(docs, authorization);
 ```
 <a name="External+handle"></a>
 
