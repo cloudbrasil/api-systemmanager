@@ -2548,7 +2548,7 @@ Class for documents, permission user
 * [External](#External)
     * [.context(params)](#External+context) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>array.&lt;object&gt;</code>
     * [.getUploadDocumentSignedUrl(mime, authorization)](#External+getUploadDocumentSignedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
-    * [.getUploadDocumentSignedUrl(docs, authorization)](#External+getUploadDocumentSignedUrl) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.getUploadDocumentsSignedUrl(docs, authorization)](#External+getUploadDocumentsSignedUrl) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.handle(authorization, params)](#External+handle) ⇒ <code>Promise.&lt;boolean&gt;</code>
 
 <a name="External+context"></a>
@@ -2601,9 +2601,9 @@ const doc = {
 };
 const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization);
 ```
-<a name="External+getUploadDocumentSignedUrl"></a>
+<a name="External+getUploadDocumentsSignedUrl"></a>
 
-### external.getUploadDocumentSignedUrl(docs, authorization) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+### external.getUploadDocumentsSignedUrl(docs, authorization) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
 Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
 
 **Kind**: instance method of [<code>External</code>](#External)  

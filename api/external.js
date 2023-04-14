@@ -149,11 +149,11 @@ class External {
    * ];
    * const retDocs = await api.external.getUploadDocumentsSignedUrl(docs, authorization);
    */
-  async getUploadDocumentSignedUrl(docs, authorization) {
+  async getUploadDocumentsSignedUrl(docs, authorization) {
     const self = this;
 
     try {
-      Joi.assert(docs, Joi.string().array().error(new Error('docs is required')));
+      Joi.assert(docs, Joi.array().required().error(new Error('docs is required')));
       Joi.assert(authorization, Joi.string().required().error(new Error('authorization is required')));
 
       const apiCall = self._client
