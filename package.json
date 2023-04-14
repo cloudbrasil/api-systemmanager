@@ -1,7 +1,7 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "1.0.107",
+  "version": "1.0.108",
   "scripts": {
     "htmldoc": "rm -rf docs && jsdoc api/** -d docs -t ./node_modules/better-docs",
     "doc": "rm -rf doc && mkdir doc && jsdoc2md api/**/* api/* > doc/api.md",
@@ -41,17 +41,17 @@
     "npm": "^6.14.6"
   },
   "devDependencies": {
-    "jsdoc-to-markdown": "^6.0.1",
-    "jsdoc": "^4.0.2",
-    "better-docs": "^2.7.2",
     "@rollup/plugin-alias": "^3.1.8",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "axios-esm": "^1.0.0",
+    "better-docs": "^2.7.2",
     "chai": "^4.3.7",
     "dayjs": "^1.10.7",
     "glob": "~7.1.1",
+    "jsdoc": "^4.0.2",
+    "jsdoc-to-markdown": "^6.0.1",
     "license-checker": "^8.0.4",
     "lodash-es": "^4.17.21",
     "mocha": "^10.2.0",
