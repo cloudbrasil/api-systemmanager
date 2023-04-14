@@ -3,8 +3,8 @@
   "description": "Module API System Manager",
   "version": "1.0.107",
   "scripts": {
-    "doc": "rm -f  doc/api.md && jsdoc2md api/** > doc/api.md",
-    "doc:w": "rimraf doc/api.md && jsdoc2md api/**/** > doc/api.md",
+    "doc": "rm -f  doc/api.md && jsdoc2md api/**/* > doc/api.md",
+    "doc:w": "rimraf doc/api.md && jsdoc2md api/**/* > doc/api.md",
     "build": "node bundleRollup.js"
   },
   "type": "module",
