@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> user/user.js</title>
+
+  <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script src="./build/entry.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <link href="https://fonts.googleapis.com/css?family=Roboto:100,400,700|Inconsolata,700" rel="stylesheet">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
+  <link type="text/css" rel="stylesheet" href="https://jmblog.github.io/color-themes-for-google-code-prettify/themes/tomorrow-night.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/app.min.css">
+  <link type="text/css" rel="stylesheet" href="styles/iframe.css">
+  <link type="text/css" rel="stylesheet" href="">
+  <script async defer src="https://buttons.github.io/buttons.js"></script>
+
+  
+</head>
+
+
+
+<body class="layout small-header">
+    <div id="stickyNavbarOverlay"></div>
+    
+
+<div class="top-nav">
+    <div class="inner">
+        <a id="hamburger" role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </a>
+        <div class="logo">
+            
+            
+        </div>
+        <div class="menu">
+            
+            <div class="navigation">
+                <a
+                    href="index.html"
+                    class="link"
+                >
+                    Documentation
+                </a>
+                
+                
+                
+            </div>
+        </div>
+    </div>
+</div>
+    <div id="main">
+        <div
+            class="sidebar "
+            id="sidebarNav"
+        >
+            
+            <nav>
+                
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                
+            </nav>
+        </div>
+        <div class="core" id="main-content-wrapper">
+            <div class="content">
+                <header class="page-title">
+                    <p>Source</p>
+                    <h1>user/user.js</h1>
+                </header>
+                
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import _ from 'lodash';
+import Boom from '@hapi/boom';
+import Joi from 'joi';
+
+/**
+ * Class for user, permission user
+ * @class
+ */
+class User {
+
+  constructor(options) {
+    Joi.assert(options, Joi.object().required());
+    Joi.assert(options.parent, Joi.object().required());
+
+    const self = this;
+    self._parent = options.parent;
+    self._client = self._parent.dispatch.getClient();
+    self.gender = {
+      male: 1,
+      female: 2,
+      nonBinary: 3
+    };
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
+    } else {
+      return _.get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Update avatar of user by session of user not allow session user SU
+   * @param {object} params Params to update avatar
+   * @param {string} params.avatar Image in base64 to update
+   * @param {string} params.type mimeType (image/png)
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  avatar: '55e4a3bd6be6b45210833fae',
+   *  type: '123456',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.updateAvatar(params, session);
+   */
+  async updateAvatar(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.avatar, Joi.string().required());
+      Joi.assert(params.type, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {avatar, type} = params;
+      const payload = {avatar, type};
+
+      const apiCall = self._client.post(`/users/avatar`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Remove avatar of user by session of user not allow session user SU
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.removeAvatar(session);
+   */
+  async removeAvatar(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.delete(`/users/avatar`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Remove the signature of user by session
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.removeSignature(session);
+   */
+  async removeSignature(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.delete(`/users/signature`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Sava a new signature of user by session
+   * @param {object} data The signature data to save
+   * @param {string} data.type CURSIVE or HANDWRITE
+   * @param {string} data.file CURSIVE the &lt;fontname>:&lt;name used on the signature>
+   *                      HANDWRITE the base 64 image (w/o the mime a base prefix)
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const data = {
+   *    type: 'CURSIVE',
+   *    file: 'allura:Mary John Heart'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.saveSignature(data, session);
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const data = {
+   *    type: 'HANDWRITE',
+   *    file: 'iVBORw0KGgoAAAANSUhEUgAAAj...'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.saveSignature(session);
+   */
+  async saveSignature(data, session) {
+    const self = this;
+
+    try {
+      Joi.assert(data, Joi.object().required());
+      Joi.assert(data.type, Joi.string().required());
+      Joi.assert(data.file, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.put(`/users/signature`, data, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Update a user profile by id
+   * @param {object} params Params to update task
+   * @param {string} params.name The name of the user
+   * @param {string} params.site The site of the user
+   * @param {string} params.faceboook The faceboook of the user
+   * @param {string} params.linkedin The linkedin of the user
+   * @param {date} params.dob The date of birth of the user
+   * @param {number&lt;UserGender>} params.gender The gender of of the user self.gender
+   * @param {string} params.phone The phone
+   * @param {string} params.phone2 The phone 2
+   * @param {string} params.phone3 The phone 3
+   * @param {string} params.password The password to change
+   * @param {string} params.secQuestion The security question
+   * @param {string} params.secAnswer The security answer
+   * @param {string} params.timezone The timezone
+   * @param {string} params.userLanguage The user language
+   * @param {string} params.changePassword (required) If we need to change the status and we changed the password
+   * @param {string} params.acceptTermsOfUse If the user has accepted the terms of change
+   * @param {string} session Session, token JWT
+   * @return {Promise&lt;void>}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  name: 'New Name'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.profile.findByIdAndUpdate(params, session);
+   */
+  async findByIdAndUpdate(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.changePassword, Joi.boolean().required());
+
+      if(_.isEmpty(params)) return;
+
+      const { changePassword = false, password = '' } = params;
+
+      if(changePassword &amp;&amp; password === '') {
+        throw new Error('It is required to change the password')
+      } else {
+        params.changePassword = false;
+      }
+
+      const url = 'users';
+      const apiCall = self._client.put(url, params, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Change a user's organization
+   * @param {string} id Organization id
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const id = '616eccaaa9360a05293b10fe';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.changeOrganization.updateAvatar(id, session);
+   */
+  async changeOrganization(id, session) {
+    const self = this;
+
+    try {
+      Joi.assert(id, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.put(`/organizations/${id}/change`, null, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+export default User;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+            </div>
+            
+            <footer class="footer">
+                <div class="content has-text-centered">
+                    <p>Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.7</a></p>
+                    <p class="sidebar-created-by">
+                        <a href="https://github.com/SoftwareBrothers/better-docs" target="_blank">BetterDocs theme</a> provided with <i class="fas fa-heart"></i> by
+                        <a href="http://softwarebrothers.co" target="_blank">SoftwareBrothers - JavaScript Development Agency</a>
+                    </p>
+                </div>
+            </footer>
+            
+        </div>
+        <div id="side-nav" class="side-nav">
+        </div>
+    </div>
+<script src="scripts/app.min.js"></script>
+<script>PR.prettyPrint();</script>
+<script src="scripts/linenumber.js"> </script>
+
+
+</body>
+</html>

@@ -3,7 +3,8 @@
   "description": "Module API System Manager",
   "version": "1.0.107",
   "scripts": {
-    "doc": "rm -f  doc/api.md && jsdoc2md api/**/* api/* > doc/api.md",
+    "htmldoc": "rm -rf doc && jsdoc api/** -d doc -t ./node_modules/better-docs",
+    "doc": "rm -rf  doc/api.md && jsdoc2md api/**/* api/* > doc/api.md",
     "doc:w": "rimraf doc/api.md && jsdoc2md api/**/* > doc/api.md",
     "build": "node bundleRollup.js"
   },
@@ -35,12 +36,14 @@
     "crypto-js": "^4.1.1",
     "i": "^0.3.7",
     "joi": "^17.4.2",
-    "jsdoc-to-markdown": "^6.0.1",
     "lodash": "^4.17.21",
     "moment": "^2.27.0",
     "npm": "^6.14.6"
   },
   "devDependencies": {
+    "jsdoc-to-markdown": "^6.0.1",
+    "jsdoc": "^4.0.2",
+    "better-docs": "^2.7.2",
     "@rollup/plugin-alias": "^3.1.8",
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-json": "^4.1.0",
