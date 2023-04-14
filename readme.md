@@ -1,15 +1,14 @@
 ### README
-<p>Requisitos para uso da API System Manager e ter os acessos para super usuário para chamadas e saber o endereço URI do servidor</p>
-<p>Verifique sua versão do nodejs esperamos que tenha a versão v14+ </p>
+<p>Requirements for using the System Manager API and having super user access for calls and knowing the server's URI address.</p>
 
-### Instalando
+### Installing
 
-#### Pelo npm
+#### NPM
 ```
  npm i @docbrasil/api-systemmanager
 ```
 
-#### Pelo yarn
+#### Yarn
 ```
  yarn add @docbrasil/api-systemmanager
 ```
@@ -18,8 +17,7 @@
 const APISystemManager = require('@docbrasil/api-systemmanager');
 const api = new APISystemManager();
 ```
-<p>Feito agora você já pode chamar os methos e fazer a interação com system manager</p>
 
 ### API
-* Link para documentação da API: [CLIQUE AQUI!](https://github.com/cloudbrasil/api-systemmanager/blob/develop/doc/api.md)
-* Exemplos de uso da API:: [CLIQUE AQUI!](https://github.com/cloudbrasil/api-systemmanager/wiki)
+* [API Documentation](https://github.com/cloudbrasil/api-systemmanager/blob/develop/doc/index.html)
+* [API Examples](https://github.com/cloudbrasil/api-systemmanager/wiki)
