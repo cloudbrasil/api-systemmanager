@@ -1297,7 +1297,7 @@ await api.user.process.getProcessProperties(params, session);</code></pre>
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>processId</code></td>
+      <td class="name"><code>orgProcessId</code></td>
   
 
   <td class="type">
@@ -1325,7 +1325,7 @@ await api.user.process.getProcessProperties(params, session);</code></pre>
       </td>
   
 
-  <td class="description last">Process id (_id database);</td>
+  <td class="description last">The organization process id (_id database);</td>
 </tr>
 
   
@@ -1548,7 +1548,7 @@ await api.user.process.getProcessProperties(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-  processId: '5dadd01dc4af3941d42f8c5c',
+  orgProcessId: '5dadd01dc4af3941d42f8c5c',
   orgId: '5edd11c46b6ce9729c2c297c',
   payload: {}
 }

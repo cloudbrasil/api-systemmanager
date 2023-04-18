@@ -155,7 +155,7 @@ class Process {
    * @author CloudBrasil &lt;abernardo.br@gmail.com>
    * @description Start process
    * @param {object} params Params to start process
-   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.orgProcessId The organization process id (_id database);
    * @param {string} params.orgId Organization id (_id database);
    * @param {object} [params.payload={}] Start process with data
    * @param {string} session Session, token JWT
@@ -167,7 +167,7 @@ class Process {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const params = {
-   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   orgProcessId: '5dadd01dc4af3941d42f8c5c',
    *   orgId: '5edd11c46b6ce9729c2c297c',
    *   payload: {}
    * }
@@ -179,13 +179,13 @@ class Process {
 
     try {
       Joi.assert(params, Joi.object().required());
-      Joi.assert(params.processId, Joi.string().required());
+      Joi.assert(params.orgProcessId, Joi.string().required());
       Joi.assert(params.orgId, Joi.string().required());
       Joi.assert(params.payload, Joi.object());
       Joi.assert(session, Joi.string().required());
 
-      const {processId, orgId, payload = {}} = params;
-      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}`, payload, self._setMaxContentHeader(session));
+      const {orgProcessId, orgId, payload = {}} = params;
+      const apiCall = self._client.put(`/organizations/${orgId}/process/${orgProcessId}`, payload, self._setMaxContentHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;

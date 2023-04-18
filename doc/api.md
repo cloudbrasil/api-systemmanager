@@ -1920,7 +1920,7 @@ Start process
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
 | params | <code>object</code> |  | Params to start process |
-| params.processId | <code>string</code> |  | Process id (_id database); |
+| params.orgProcessId | <code>string</code> |  | The organization process id (_id database); |
 | params.orgId | <code>string</code> |  | Organization id (_id database); |
 | [params.payload] | <code>object</code> | <code>{}</code> | Start process with data |
 | session | <code>string</code> |  | Session, token JWT |
@@ -1930,7 +1930,7 @@ Start process
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-  processId: '5dadd01dc4af3941d42f8c5c',
+  orgProcessId: '5dadd01dc4af3941d42f8c5c',
   orgId: '5edd11c46b6ce9729c2c297c',
   payload: {}
 }
