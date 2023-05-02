@@ -1907,6 +1907,9 @@ Class for process, permission user
     * [.getProcessProperties(params, session)](#Process+getProcessProperties) ⇒ <code>Promise</code>
     * [.getOrgProcessSearchInfo(params, session)](#Process+getOrgProcessSearchInfo) ⇒ <code>Promise</code> \| <code>string</code> \| <code>object</code> \| <code>object</code> \| <code>object</code> \| <code>string</code>
     * [.find(params, session)](#Process+find) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+    * [.remove(params, session)](#Process+remove)
+    * [.exportStatusData(params, session)](#Process+exportStatusData)
+    * [.exportProcessData(params, session)](#Process+exportProcessData)
 
 <a name="Process+start"></a>
 
@@ -2020,6 +2023,87 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.process.find(params, session);
+```
+<a name="Process+remove"></a>
+
+### process.remove(params, session)
+Method to remove process
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to remove process |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| params.processId | <code>object</code> | Process id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+ processId: '55e4a3bd6be6b45210833fae'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.remove(params, session);
+```
+<a name="Process+exportStatusData"></a>
+
+### process.exportStatusData(params, session)
+Method to export status data
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to export status data |
+| params.query | <code>object</code> | Search process query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.exportStatusData(params, session);
+```
+<a name="Process+exportProcessData"></a>
+
+### process.exportProcessData(params, session)
+Method to export process data
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to export process data |
+| params.query | <code>object</code> | Search process query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.exportProcessData(params, session);
 ```
 <a name="Register"></a>
 

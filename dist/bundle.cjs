@@ -1569,7 +1569,7 @@ class Process {
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Start process
    * @param {object} params Params to start process
-   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.orgProcessId The organization process id (_id database);
    * @param {string} params.orgId Organization id (_id database);
    * @param {object} [params.payload={}] Start process with data
    * @param {string} session Session, token JWT
@@ -1581,7 +1581,7 @@ class Process {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const params = {
-   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   orgProcessId: '5dadd01dc4af3941d42f8c5c',
    *   orgId: '5edd11c46b6ce9729c2c297c',
    *   payload: {}
    * }
@@ -1593,13 +1593,13 @@ class Process {
 
     try {
       Joi__default["default"].assert(params, Joi__default["default"].object().required());
-      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.orgProcessId, Joi__default["default"].string().required());
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
       Joi__default["default"].assert(params.payload, Joi__default["default"].object());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const {processId, orgId, payload = {}} = params;
-      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}`, payload, self._setMaxContentHeader(session));
+      const {orgProcessId, orgId, payload = {}} = params;
+      const apiCall = self._client.put(`/organizations/${orgId}/process/${orgProcessId}`, payload, self._setMaxContentHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -1731,6 +1731,121 @@ class Process {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to remove process
+   * @param {object} params Params to remove process
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {object} params.processId Process id (_id database)
+   * @param {string} session Session, token JWT
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   *  processId: '55e4a3bd6be6b45210833fae'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.process.remove(params, session);
+   */
+  async remove(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to remove the process');
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {processId, orgId} = params;
+
+      const apiCall = self._client.delete(`/organizations/${orgId}/process/${processId}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+    /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to export status data
+   * @param {object} params Params to export status data
+   * @param {object} params.query Search process query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.process.exportStatusData(params, session);
+   */
+    async exportStatusData(params, session) {
+      const self = this;
+  
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export status data');
+        Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
+        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+        Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+  
+        const {query, orgId} = params;
+        const queryString = JSON.stringify(query);
+        const apiCall = self._client
+          .get(`/organizations/${orgId}/process/export/status/data?query=${queryString}`, self._setHeader(session));
+  
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
+
+    /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to export process data
+   * @param {object} params Params to export process data
+   * @param {object} params.query Search process query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.process.exportProcessData(params, session);
+   */
+    async exportProcessData(params, session) {
+      const self = this;
+  
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export process data');
+        Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
+        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+        Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+  
+        const {query, orgId} = params;
+        const queryString = JSON.stringify(query);
+        const apiCall = self._client
+          .get(`/organizations/${orgId}/process/export/collect/data?query=${queryString}`, self._setHeader(session));
+  
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
 }
 
 /**
