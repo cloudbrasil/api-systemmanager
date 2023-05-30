@@ -10809,7 +10809,7 @@ class AdminUser {
    */
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
-      return Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+      return Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'));
     } else {
       return ___default["default"].get(retData, 'data', def);
     }
@@ -10894,7 +10894,7 @@ class AdminUser {
       Joi__default["default"].assert(params.newPassword, Joi__default["default"].string().required());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const {userId, ...payload} = params;
+      const { userId, ...payload } = params;
       const apiCall = self.client.put(`/admin/users/${userId}/password`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -10924,7 +10924,7 @@ class AdminUser {
       Joi__default["default"].assert(email, Joi__default["default"].string().email().required());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const payload = {email};
+      const payload = { email };
       const apiCall = self.client.post(`/admin/users/email/exist`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -10958,6 +10958,68 @@ class AdminUser {
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session user admin');
 
       const apiCall = self.client.put(`/admin/users/${userId}`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @description Request GUID to change the password
+   * @param {string} email - User email
+   * @returns {Promise<*>}
+   * @async
+   * @public
+   * @example
+   *
+   * const payload = {
+   *   email: 'maria@gmail.com'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   */
+  async getChangePasswordGuid(email, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(email, Joi__default["default"].string().required(), 'User email');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session user admin');
+
+      const payload = { email };
+      const apiCall = self.client.post('/admin/users/change/password', payload, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @description Change password guid
+   * @param {object} Payload - Payload to change password
+   * @param {string} Payload.guid - GUID
+   * @param {string} Payload.newPassword - New password
+   * @returns {Promise<*>}
+   * @async
+   * @public
+   * @example
+   *
+   * const payload = {
+   *   guid: '5b3c049c-4861-4353-a423-5e3f14242642',
+   *   newPassword: '123456789'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   */
+  async changePasswordGuid(payload, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(payload, Joi__default["default"].object().required(), 'Payload to change password');
+      Joi__default["default"].assert(payload.guid, Joi__default["default"].string().required(), 'GUID');
+      Joi__default["default"].assert(payload.newPassword, Joi__default["default"].string().required(), 'New password');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session user admin');
+
+      const apiCall = self.client.put('/admin/users/change/password', payload, self._setHeader(session));
+
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
