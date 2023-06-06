@@ -345,6 +345,47 @@ class Process {
         throw ex;
       }
     }
+
+   /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to get Process Docs
+   * @param {object} params Params to get process docs
+   * @param {string} params.orgProcessId Organization Process Id
+   * @param {string} params.processId Process Id
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the get process docs
+   * @returns {array<object>} Docs returned from process
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgProcessId: '55e4a3bd6be6b45210833fae',
+   *  processId: '55e4a3bd6be6b45210833fae',
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.process.processDocs(params, session);
+   */
+  async processDocs(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get process docs');
+      Joi.assert(params.orgProcessId, Joi.string().required(), 'Organization Process Id');
+      Joi.assert(params.processId, Joi.string().required(), 'Process Id');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const {orgProcessId, processId, orgId} = params;
+      const apiCall = self._client.get(`/organizations/${orgId}/orgprocess/${orgProcessId}/process/${processId}/documents`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Process;
