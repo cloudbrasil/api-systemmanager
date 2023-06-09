@@ -386,6 +386,59 @@ class Process {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to download the process documents
+   * @param {object} params Params to download the process documents
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.type Document Type
+   * @param {array} params.docIds Documents Ids
+   * @param {string} params.footer Documents Footer
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the search
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   *  type: 'Docs',
+   *  docIds: ['55e4a3bd6be6b45210833fae'],
+   *  footer: 'Documento - {page} de {pages}'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const result = await api.user.process.downloadDocs(params, session);
+   */
+  async downloadDocs(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to download the process documents');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(params.type, Joi.string().required(), 'Document Type');
+      Joi.assert(params.docIds, Joi.array().required(), 'Document Ids');
+      Joi.assert(params.footer, Joi.string(), 'Documents Footer');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const {orgId, type, docIds, footer} = params;
+      const data = {
+        docIds
+      };
+
+      if (footer) {
+        data.footer = footer
+      }
+
+      const apiCall = self._client
+        .post(`/organizations/${orgId}/documents/download/${type}`, data, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Process;
