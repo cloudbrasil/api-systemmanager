@@ -1846,6 +1846,100 @@ class Process {
         throw ex;
       }
     }
+
+   /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to get Process Docs
+   * @param {object} params Params to get process docs
+   * @param {string} params.orgProcessId Organization Process Id
+   * @param {string} params.processId Process Id
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the get process docs
+   * @returns {array<object>} Docs returned from process
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgProcessId: '55e4a3bd6be6b45210833fae',
+   *  processId: '55e4a3bd6be6b45210833fae',
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.process.processDocs(params, session);
+   */
+  async processDocs(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get process docs');
+      Joi__default["default"].assert(params.orgProcessId, Joi__default["default"].string().required(), 'Organization Process Id');
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process Id');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {orgProcessId, processId, orgId} = params;
+      const apiCall = self._client.get(`/organizations/${orgId}/orgprocess/${orgProcessId}/process/${processId}/documents`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to download the process documents
+   * @param {object} params Params to download the process documents
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.type Document Type
+   * @param {array} params.docIds Documents Ids
+   * @param {string} params.footer Documents Footer
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the search
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   *  type: 'Docs',
+   *  docIds: ['55e4a3bd6be6b45210833fae'],
+   *  footer: 'Documento - {page} de {pages}'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const result = await api.user.process.downloadDocs(params, session);
+   */
+  async downloadDocs(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to download the process documents');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), 'Document Type');
+      Joi__default["default"].assert(params.docIds, Joi__default["default"].array().required(), 'Document Ids');
+      Joi__default["default"].assert(params.footer, Joi__default["default"].string(), 'Documents Footer');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {orgId, type, docIds, footer} = params;
+      const data = {
+        docIds
+      };
+
+      if (footer) {
+        data.footer = footer;
+      }
+
+      const apiCall = self._client
+        .post(`/organizations/${orgId}/documents/download/${type}`, data, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**

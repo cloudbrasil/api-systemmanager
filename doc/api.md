@@ -1064,6 +1064,8 @@ Admin Class for user, permission admin
     * [.findByIdAndUpdatePassword(params, session)](#AdminUser+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
     * [.emailExist(email, session)](#AdminUser+emailExist)
     * [.findByIdAndUpdate(userId, payload, session)](#AdminUser+findByIdAndUpdate) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [.getChangePasswordGuid(email)](#AdminUser+getChangePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [.changePasswordGuid(Payload)](#AdminUser+changePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
 
 <a name="AdminUser+findById"></a>
 
@@ -1158,6 +1160,47 @@ const userId = '55e4a3bd6be6b45210833fae';
 const payload = {
   name: 'Maria joaquina',
   email: 'maria@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+```
+<a name="AdminUser+getChangePasswordGuid"></a>
+
+### adminUser.getChangePasswordGuid(email) ⇒ <code>Promise.&lt;\*&gt;</code>
+Request GUID to change the password
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| email | <code>string</code> | User email |
+
+**Example**  
+```js
+const payload = {
+  email: 'maria@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+```
+<a name="AdminUser+changePasswordGuid"></a>
+
+### adminUser.changePasswordGuid(Payload) ⇒ <code>Promise.&lt;\*&gt;</code>
+Change password guid
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| Payload | <code>object</code> | Payload to change password |
+| Payload.guid | <code>string</code> | GUID |
+| Payload.newPassword | <code>string</code> | New password |
+
+**Example**  
+```js
+const payload = {
+  guid: '5b3c049c-4861-4353-a423-5e3f14242642',
+  newPassword: '123456789'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
@@ -1910,6 +1953,8 @@ Class for process, permission user
     * [.remove(params, session)](#Process+remove)
     * [.exportStatusData(params, session)](#Process+exportStatusData)
     * [.exportProcessData(params, session)](#Process+exportProcessData)
+    * [.processDocs(params, session)](#Process+processDocs) ⇒ <code>promise</code> \| <code>array.&lt;object&gt;</code>
+    * [.downloadDocs(params, session)](#Process+downloadDocs) ⇒ <code>promise</code>
 
 <a name="Process+start"></a>
 
@@ -2104,6 +2149,68 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.process.exportProcessData(params, session);
+```
+<a name="Process+processDocs"></a>
+
+### process.processDocs(params, session) ⇒ <code>promise</code> \| <code>array.&lt;object&gt;</code>
+Method to get Process Docs
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>promise</code> - returned data from the get process docs<code>array.&lt;object&gt;</code> - Docs returned from process  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get process docs |
+| params.orgProcessId | <code>string</code> | Organization Process Id |
+| params.processId | <code>string</code> | Process Id |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgProcessId: '55e4a3bd6be6b45210833fae',
+ processId: '55e4a3bd6be6b45210833fae',
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.processDocs(params, session);
+```
+<a name="Process+downloadDocs"></a>
+
+### process.downloadDocs(params, session) ⇒ <code>promise</code>
+Method to download the process documents
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>promise</code> - returned data from the search  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to download the process documents |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.type | <code>string</code> | Document Type |
+| params.docIds | <code>array</code> | Documents Ids |
+| params.footer | <code>string</code> | Documents Footer |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+ type: 'Docs',
+ docIds: ['55e4a3bd6be6b45210833fae'],
+ footer: 'Documento - {page} de {pages}'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.process.downloadDocs(params, session);
 ```
 <a name="Register"></a>
 
