@@ -1920,7 +1920,6 @@ class Process {
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
       Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), 'Document Type');
       Joi__default["default"].assert(params.docIds, Joi__default["default"].array().required(), 'Document Ids');
-      Joi__default["default"].assert(params.footer, Joi__default["default"].string(), 'Documents Footer');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
       const {orgId, type, docIds, footer} = params;

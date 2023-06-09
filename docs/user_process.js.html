@@ -506,7 +506,6 @@ class Process {
       Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
       Joi.assert(params.type, Joi.string().required(), 'Document Type');
       Joi.assert(params.docIds, Joi.array().required(), 'Document Ids');
-      Joi.assert(params.footer, Joi.string(), 'Documents Footer');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {orgId, type, docIds, footer} = params;
