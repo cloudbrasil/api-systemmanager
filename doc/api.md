@@ -1718,6 +1718,10 @@ Class for user registration in a user
 * [Notification](#Notification)
     * [.tokenTypes](#Notification+tokenTypes) ⇒ <code>Object</code>
     * [.addToken(params, session)](#Notification+addToken) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+    * [.getNew(session)](#Notification+getNew)
+    * [.getOld(session)](#Notification+getOld)
+    * [.setRead(params, session)](#Notification+setRead) ⇒ <code>Promise</code>
+    * [.setUnread(params, session)](#Notification+setUnread) ⇒ <code>Promise</code>
 
 <a name="Notification+tokenTypes"></a>
 
@@ -1752,6 +1756,96 @@ const params = {
  type: 'FCM_WEB'
 };
 const retData = await api.user.notification.addToken(params, session);
+```
+<a name="Notification+getNew"></a>
+
+### notification.getNew(session)
+get new notifications
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | JWT token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.getNew(session);
+```
+<a name="Notification+getOld"></a>
+
+### notification.getOld(session)
+get old notifications
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | JWT token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.getOld(session);
+```
+<a name="Notification+setRead"></a>
+
+### notification.setRead(params, session) ⇒ <code>Promise</code>
+Set notification as readed
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update the notification |
+| params.id | <code>string</code> | Notification Id |
+| session | <code>string</code> | JWT Token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '34c344c43c34c344c43c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.setRead(params, session);
+```
+<a name="Notification+setUnread"></a>
+
+### notification.setUnread(params, session) ⇒ <code>Promise</code>
+Set notification as unreaded
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to update the notification |
+| params.id | <code>string</code> | Notification Id |
+| session | <code>string</code> | JWT Token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '34c344c43c34c344c43c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.setUnread(params, session);
 ```
 <a name="Organization"></a>
 

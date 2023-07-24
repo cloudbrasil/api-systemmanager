@@ -9578,6 +9578,130 @@ class Notification {
       throw ex;
     }
   }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description get new notifications
+   * @param {string} session JWT token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.getNew(session);
+   */
+  async getNew(session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'SM session (JWT) to call API');
+
+      const apiCall = self._client.get('/organizations/notifications/new', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description get old notifications
+   * @param {string} session JWT token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.getOld(session);
+   */
+  async getOld(session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'SM session (JWT) to call API');
+
+      const apiCall = self._client.get('/organizations/notifications/old', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+   /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set notification as readed
+   * @param {object} params Params to update the notification
+   * @param {string} params.id Notification Id
+   * @param {string} session JWT Token
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '34c344c43c34c344c43c'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.setRead(params, session);
+   */
+    async setRead(params = {}, session) {
+      const self = this;
+  
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required());
+        Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+  
+        const {id} = params;
+  
+        const apiCall = self._client.put(`/organizations/notifications/${id}/read`, {}, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
+
+    /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set notification as unreaded
+   * @param {object} params Params to update the notification
+   * @param {string} params.id Notification Id
+   * @param {string} session JWT Token
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '34c344c43c34c344c43c'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.setUnread(params, session);
+   */
+    async setUnread(params = {}, session) {
+      const self = this;
+  
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required());
+        Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+  
+        const {id} = params;
+  
+        const apiCall = self._client.put(`/organizations/notifications/${id}/unread`, {}, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
 }
 
 /**
