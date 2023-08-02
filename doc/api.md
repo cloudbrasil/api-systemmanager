@@ -70,6 +70,9 @@
 <dt><a href="#TaskAvailable">TaskAvailable</a></dt>
 <dd><p>Class for available tasks, permission user</p>
 </dd>
+<dt><a href="#Updates">Updates</a></dt>
+<dd><p>Class for user registration in a user</p>
+</dd>
 <dt><a href="#User">User</a></dt>
 <dd><p>Class for user, permission user</p>
 </dd>
@@ -2596,6 +2599,32 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const success = await api.user.task.available.claim(params, session);
+```
+<a name="Updates"></a>
+
+## Updates
+Class for user registration in a user
+
+**Kind**: global class  
+<a name="Updates+get"></a>
+
+### updates.get(session)
+get updates
+
+**Kind**: instance method of [<code>Updates</code>](#Updates)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | JWT token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.updates.get(session);
 ```
 <a name="User"></a>
 

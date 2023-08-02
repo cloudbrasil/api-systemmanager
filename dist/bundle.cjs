@@ -9488,7 +9488,7 @@ class Register {
  * Class for user registration in a user
  * @class
  */
-class Notification {
+class Notification$1 {
 
   constructor(options) {
     Joi__default["default"].assert(options, Joi__default["default"].object().required());
@@ -9704,6 +9704,8 @@ class Notification {
     }
 }
 
+var Updates = Notification;
+
 /**
  * Class for user datasource access, to be used with when creating new documents
  * @class
@@ -9865,7 +9867,8 @@ class Users {
     self.task = new Task(options);
     self.user = self.profile = new User(options);
     self.register = new Register(options);
-    self.notification = new Notification(options);
+    self.notification = new Notification$1(options);
+    self.updates = new Updates(options);
   }
 }
 
