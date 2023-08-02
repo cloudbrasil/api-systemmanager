@@ -75,4 +75,4 @@ class Updates {
 
 }
 
-export default Notification;
+export default Updates;
