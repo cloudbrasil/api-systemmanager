@@ -8,6 +8,7 @@ import Task from './task.js';
 import User from './user.js';
 import Register from './register.js';
 import Notification from './notification.js';
+import Updates from './updates.js';
 import Datasource from './datasource.js';
 
 /**
@@ -33,6 +34,7 @@ class Users {
     self.user = self.profile = new User(options);
     self.register = new Register(options);
     self.notification = new Notification(options);
+    self.updates = new Updates(options);
   }
 }
 
