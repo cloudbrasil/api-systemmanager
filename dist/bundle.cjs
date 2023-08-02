@@ -9488,7 +9488,7 @@ class Register {
  * Class for user registration in a user
  * @class
  */
-class Notification$1 {
+class Notification {
 
   constructor(options) {
     Joi__default["default"].assert(options, Joi__default["default"].object().required());
@@ -9704,7 +9704,78 @@ class Notification$1 {
     }
 }
 
-var Updates = Notification;
+/**
+ * Class for user registration in a user
+ * @class
+ */
+class Updates {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description get updates
+   * @param {string} session JWT token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.updates.get(session);
+   */
+  async get(session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'SM session (JWT) to call API');
+
+      const apiCall = self._client.get('/updates', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+}
 
 /**
  * Class for user datasource access, to be used with when creating new documents
@@ -9867,7 +9938,7 @@ class Users {
     self.task = new Task(options);
     self.user = self.profile = new User(options);
     self.register = new Register(options);
-    self.notification = new Notification$1(options);
+    self.notification = new Notification(options);
     self.updates = new Updates(options);
   }
 }
