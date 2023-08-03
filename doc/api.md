@@ -49,6 +49,9 @@
 <dt><a href="#Documents">Documents</a></dt>
 <dd><p>Class for documents, permission user</p>
 </dd>
+<dt><a href="#Help">Help</a></dt>
+<dd><p>Class for user registration in a user</p>
+</dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
@@ -1680,6 +1683,62 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.document.searchDocuments(params, session);
+```
+<a name="Help"></a>
+
+## Help
+Class for user registration in a user
+
+**Kind**: global class  
+
+* [Help](#Help)
+    * [.getTopics(session)](#Help+getTopics)
+    * [.get(params, session)](#Help+get) ⇒ <code>promise</code>
+
+<a name="Help+getTopics"></a>
+
+### help.getTopics(session)
+get heps topics
+
+**Kind**: instance method of [<code>Help</code>](#Help)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | JWT token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.help.getTopics(session);
+```
+<a name="Help+get"></a>
+
+### help.get(params, session) ⇒ <code>promise</code>
+Method to find helps from a topic
+
+**Kind**: instance method of [<code>Help</code>](#Help)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get helps from topic |
+| params.id | <code>object</code> | Topic id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '5dadd01dc4af3941d42f8c5c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.help.get(params, session);
 ```
 <a name="Users"></a>
 
