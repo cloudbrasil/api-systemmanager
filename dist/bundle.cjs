@@ -9778,6 +9778,114 @@ class Updates {
 }
 
 /**
+ * Class for user registration in a user
+ * @class
+ */
+class Help {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description get heps topics
+   * @param {string} session JWT token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.help.getTopics(session);
+   */
+  async getTopics(session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'SM session (JWT) to call API');
+
+      const apiCall = self._client.get('/help/topics', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to find helps from a topic
+   * @param {object} params Params to get helps from topic
+   * @param {object} params.id Topic id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.help.get(params, session);
+   */
+  async get(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to helps from a topic');
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required(), 'Topic id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {id} = params;
+      const apiCall = self._client.get(`/help/topic/${id}`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+}
+
+/**
  * Class for user datasource access, to be used with when creating new documents
  * @class
  */
@@ -9940,6 +10048,7 @@ class Users {
     self.register = new Register(options);
     self.notification = new Notification(options);
     self.updates = new Updates(options);
+    self.help = new Help(options);
   }
 }
 
