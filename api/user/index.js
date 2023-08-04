@@ -9,6 +9,7 @@ import User from './user.js';
 import Register from './register.js';
 import Notification from './notification.js';
 import Updates from './updates.js';
+import Help from './help.js';
 import Datasource from './datasource.js';
 
 /**
@@ -35,6 +36,7 @@ class Users {
     self.register = new Register(options);
     self.notification = new Notification(options);
     self.updates = new Updates(options);
+    self.help = new Help(options);
   }
 }
 
