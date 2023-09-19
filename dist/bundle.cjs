@@ -11263,6 +11263,36 @@ class AdminUser {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Request profile by userId
+   * @param {string} userIds Users identifier (_id database)
+   * @param {string} apiKey Api to use to search users
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const userIds = ['55e4a3bd6be6b45210833fae', '55e4a3bd6be6b45210833fae'];
+   * const apiKey = 'c9bbd652-d112-454e-8595-f1669f49dde0';
+   * await api.admin.user.findByIds(userIds, apiKey);
+   */
+  async findByIds(userIds, apiKey) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(userIds, Joi__default["default"].array().items(Joi__default["default"].string()).required(), 'Users identifier (_id database)');
+      Joi__default["default"].assert(apiKey, Joi__default["default"].string().required(), 'Api to use to search users');
+
+      const apiCall = self.client.post(`/api/users?apiKey=${apiKey}`, { userIds });
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Update password by userId
    * @param {object} params Params to update password
    * @param {string} params.userId Id of the user
