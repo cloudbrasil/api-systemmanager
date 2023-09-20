@@ -101,7 +101,7 @@ class AdminUser {
       Joi.assert(userIds, Joi.array().items(Joi.string()).required(), 'Users identifier (_id database)');
       Joi.assert(apiKey, Joi.string().required(), 'Api to use to search users');
 
-      const apiCall = self.client.post(`/api/users?apiKey=${apiKey}`, { userIds });
+      const apiCall = self.client.post(`/api/admin/users?apiKey=${apiKey}`, { userIds });
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
