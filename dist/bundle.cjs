@@ -10049,6 +10049,7 @@ class Users {
     self.notification = new Notification(options);
     self.updates = new Updates(options);
     self.help = new Help(options);
+    self.application = new Notification(options);
   }
 }
 

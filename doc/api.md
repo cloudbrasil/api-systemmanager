@@ -43,6 +43,9 @@
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
+<dt><a href="#Application">Application</a></dt>
+<dd><p>Class for Applications, permission user</p>
+</dd>
 <dt><a href="#Datasource">Datasource</a></dt>
 <dd><p>Class for user datasource access, to be used with when creating new documents</p>
 </dd>
@@ -60,6 +63,9 @@
 </dd>
 <dt><a href="#Organization">Organization</a></dt>
 <dd><p>Class for organizations, permission user</p>
+</dd>
+<dt><a href="#Page">Page</a></dt>
+<dd><p>Class for Pages, permission user</p>
 </dd>
 <dt><a href="#Process">Process</a></dt>
 <dd><p>Class for process, permission user</p>
@@ -1067,6 +1073,7 @@ Admin Class for user, permission admin
 
 * [AdminUser](#AdminUser)
     * [.findById(userId, session)](#AdminUser+findById) ⇒ <code>Promise</code>
+    * [.findByIds(userIds, apiKey)](#AdminUser+findByIds) ⇒ <code>Promise</code>
     * [.findByIdAndUpdatePassword(params, session)](#AdminUser+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
     * [.emailExist(email, session)](#AdminUser+emailExist)
     * [.findByIdAndUpdate(userId, payload, session)](#AdminUser+findByIdAndUpdate) ⇒ <code>Promise.&lt;\*&gt;</code>
@@ -1094,6 +1101,28 @@ const api = new API();
 const userId = '55e4a3bd6be6b45210833fae';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.findById(userId, session);
+```
+<a name="AdminUser+findByIds"></a>
+
+### adminUser.findByIds(userIds, apiKey) ⇒ <code>Promise</code>
+Request profile by userId
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userIds | <code>string</code> | Users identifier (_id database) |
+| apiKey | <code>string</code> | Api to use to search users |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userIds = ['55e4a3bd6be6b45210833fae', '55e4a3bd6be6b45210833fae'];
+const apiKey = 'c9bbd652-d112-454e-8595-f1669f49dde0';
+await api.admin.user.findByIds(userIds, apiKey);
 ```
 <a name="AdminUser+findByIdAndUpdatePassword"></a>
 
@@ -1271,6 +1300,37 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
+<a name="Application"></a>
+
+## Application
+Class for Applications, permission user
+
+**Kind**: global class  
+<a name="Application+list"></a>
+
+### application.list(params, session) ⇒ <code>promise</code>
+Get the available applications for this user in this organizations
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.application.list(params, session);
+```
 <a name="Datasource"></a>
 
 ## Datasource
@@ -2093,6 +2153,41 @@ const params = {
   method: 'POST'
 }
 await api.user.organization.callFetchs(params, session);
+```
+<a name="Page"></a>
+
+## Page
+Class for Pages, permission user
+
+**Kind**: global class  
+<a name="Page+get"></a>
+
+### page.get(params, session) ⇒ <code>promise</code>
+Get the available page for an application inside an organization
+
+**Kind**: instance method of [<code>Page</code>](#Page)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| params.appId | <code>object</code> | application id (_id database) |
+| params.pageId | <code>object</code> | page id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+ appId: '57e4a3bd6be6b45210833fa7',
+ pageId: '57e4a3bd6be6b45210833fab'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.application.page.get(params, session);
 ```
 <a name="Process"></a>
 

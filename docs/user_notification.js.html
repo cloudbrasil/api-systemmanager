@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -183,6 +183,130 @@ class Notification {
       throw ex;
     }
   }
+
+  /**
+   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
+   * @description get new notifications
+   * @param {string} session JWT token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.getNew(session);
+   */
+  async getNew(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
+
+      const apiCall = self._client.get('/organizations/notifications/new', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
+   * @description get old notifications
+   * @param {string} session JWT token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.getOld(session);
+   */
+  async getOld(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required(), 'SM session (JWT) to call API');
+
+      const apiCall = self._client.get('/organizations/notifications/old', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+   /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Set notification as readed
+   * @param {object} params Params to update the notification
+   * @param {string} params.id Notification Id
+   * @param {string} session JWT Token
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '34c344c43c34c344c43c'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.setRead(params, session);
+   */
+    async setRead(params = {}, session) {
+      const self = this;
+  
+      try {
+        Joi.assert(params, Joi.object().required());
+        Joi.assert(params.id, Joi.string().required());
+        Joi.assert(session, Joi.string().required());
+  
+        const {id} = params;
+  
+        const apiCall = self._client.put(`/organizations/notifications/${id}/read`, {}, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
+
+    /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Set notification as unreaded
+   * @param {object} params Params to update the notification
+   * @param {string} params.id Notification Id
+   * @param {string} session JWT Token
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '34c344c43c34c344c43c'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.setUnread(params, session);
+   */
+    async setUnread(params = {}, session) {
+      const self = this;
+  
+      try {
+        Joi.assert(params, Joi.object().required());
+        Joi.assert(params.id, Joi.string().required());
+        Joi.assert(session, Joi.string().required());
+  
+        const {id} = params;
+  
+        const apiCall = self._client.put(`/organizations/notifications/${id}/unread`, {}, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
 }
 
 export default Notification;

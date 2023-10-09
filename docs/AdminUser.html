@@ -66,7 +66,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -393,7 +393,7 @@
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line229">line 229</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line259">line 259</a>
             </span>
         </p>
     
@@ -611,7 +611,7 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line137">line 137</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line167">line 167</a>
             </span>
         </p>
     
@@ -1042,7 +1042,7 @@ await api.admin.user.findById(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line169">line 169</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line199">line 199</a>
             </span>
         </p>
     
@@ -1333,7 +1333,7 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line104">line 104</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line134">line 134</a>
             </span>
         </p>
     
@@ -1394,6 +1394,224 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.findByIdAndUpdatePassword(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="findByIds">
+        <a class="href-link" href="#findByIds">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                findByIds<span class="signature">(userIds, apiKey)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Request profile by userId
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>userIds</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Users identifier (_id database)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>apiKey</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Api to use to search users</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:abernardo.br@gmail.com">CloudBrasil</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line97">line 97</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userIds = ['55e4a3bd6be6b45210833fae', '55e4a3bd6be6b45210833fae'];
+const apiKey = 'c9bbd652-d112-454e-8595-f1669f49dde0';
+await api.admin.user.findByIds(userIds, apiKey);</code></pre>
     
 
 
@@ -1523,7 +1741,7 @@ await api.admin.user.findByIdAndUpdatePassword(params, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line197">line 197</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line227">line 227</a>
             </span>
         </p>
     

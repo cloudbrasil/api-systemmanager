@@ -11,6 +11,7 @@ import Notification from './notification.js';
 import Updates from './updates.js';
 import Help from './help.js';
 import Datasource from './datasource.js';
+import Application from './notification.js';
 
 /**
  * @class API request, user permission level
@@ -37,6 +38,7 @@ class Users {
     self.notification = new Notification(options);
     self.updates = new Updates(options);
     self.help = new Help(options);
+    self.application = new Application(options);
   }
 }
 
