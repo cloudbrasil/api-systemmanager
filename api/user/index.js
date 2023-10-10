@@ -11,7 +11,7 @@ import Notification from './notification.js';
 import Updates from './updates.js';
 import Help from './help.js';
 import Datasource from './datasource.js';
-import Application from './notification.js';
+import Application from './application.js';
 
 /**
  * @class API request, user permission level

@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
+import Page from './page.js';
 
 /**
  * Class for Applications, permission user
@@ -15,6 +16,7 @@ class Application {
     const self = this;
     self.parent = options.parent;
     self._client = self.parent.dispatch.getClient();
+    self.page = new Page(options);
   }
 
   /**
