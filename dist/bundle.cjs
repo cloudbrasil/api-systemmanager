@@ -2072,6 +2072,96 @@ class TaskAvailable {
 }
 
 /**
+ * Class for my tasks, permission user
+ * @class
+ */
+class MyTasks {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to find my tasks for a user
+   * @param {object} params Params to get tasks
+   * @param {object} params.query Search my tasks query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the search
+   * @returns {number} count the count of items searched
+   * @returns {array<object>} items the items returned from search
+   * @returns {number} page the page of the search (on pagination), zero indexed
+   * @returns {number} perPage how many items per page
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.task.mytasks.find(params, session);
+   */
+  async find(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get my tasks');
+      Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {query, orgId} = params;
+      const queryString = JSON.stringify(query);
+      const apiCall = self._client
+        .post(`/organizations/${orgId}/users/tasks/advsearch?query=${queryString}`, {}, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+/**
  * Class for task, permission user
  * @class
  */
@@ -2085,6 +2175,7 @@ class Task {
     self.parent = options.parent;
     self._client = self.parent.dispatch.getClient();
     self.available = new TaskAvailable(options);
+    self.mytasks = new MyTasks(options);
   }
 
   /**
