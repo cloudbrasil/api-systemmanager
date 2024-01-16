@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> admin/organization.js</title>
+  <title> user/my_tasks.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>admin/organization.js</h1>
+                    <h1>user/my_tasks.js</h1>
                 </header>
                 
 
@@ -90,10 +90,10 @@ import Boom from '@hapi/boom';
 import Joi from 'joi';
 
 /**
- * Class for organizations, permission user
+ * Class for my tasks, permission user
  * @class
  */
-class Organization {
+class MyTasks {
 
   constructor(options) {
     Joi.assert(options, Joi.object().required());
@@ -113,7 +113,7 @@ class Organization {
    */
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
-      throw Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
+      return Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
     } else {
       return _.get(retData, 'data', def);
     }
@@ -136,71 +136,42 @@ class Organization {
 
   /**
    * @author CloudBrasil &lt;abernardo.br@gmail.com>
-   * @description Update avatar of organization by session of user not allow session user SU
-   * @param {object} params Params to update avatar
-   * @param {string} params.orgId - Organization id
-   * @param {string} params.avatar - Image in base64 to update
-   * @param {string} params.type - MimeType (image/png)
-   * @param {string} session - Is token JWT of user SU
-   * @return {Promise}
+   * @description Method to find my tasks for a user
+   * @param {object} params Params to get tasks
+   * @param {object} params.query Search my tasks query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the search
+   * @returns {number} count the count of items searched
+   * @returns {array&lt;object>} items the items returned from search
+   * @returns {number} page the page of the search (on pagination), zero indexed
+   * @returns {number} perPage how many items per page
    * @public
-   * @async
    * @example
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const params = {
-   *  orgId: '5dadd01dc4af3941d42f8c5c',
-   *  avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
-   *  type: 'image/png',
+   *  query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+   *  orgId: '55e4a3bd6be6b45210833fae',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.admin.organizations.upsertAvatar(params, session);
+   * const retSearch = await api.user.task.mytasks.find(params, session);
    */
-  async upsertAvatar(params = {}, session) {
+  async find(params, session) {
     const self = this;
 
     try {
-      Joi.assert(params, Joi.object().required());
-      Joi.assert(params.orgId, Joi.string().required(), 'Organization id');
-      Joi.assert(params.avatar, Joi.string().required(), 'Image in base64 to update');
-      Joi.assert(params.type, Joi.string().required(), 'MimeType (image/png)');
-      Joi.assert(session, Joi.string().required(), 'Is token JWT of user SU');
+      Joi.assert(params, Joi.object().required(), 'Params to get my tasks');
+      Joi.assert(params.query, Joi.object().required(), 'The query for the search');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
-      const {orgId, avatar, type} = params;
-      const payload = {avatar, type};
+      const {query, orgId} = params;
+      const queryString = JSON.stringify(query);
+      const apiCall = self._client
+        .post(`/organizations/${orgId}/users/tasks/advsearch?query=${queryString}`, {}, self._setHeader(session));
 
-      const apiCall = self._client.put(`/admin/organizations/${orgId}/logo`, payload, self._setHeader(session));
-      return self._returnData(await apiCall);
-    } catch (ex) {
-      throw ex;
-    }
-  }
-
-  /**
-   * @author CloudBrasil &lt;abernardo.br@gmail.com>
-   * @description Remove avatar of user by session of user not allow session user SU
-   * @param {string} params.orgId - Organization id
-   * @param {string} session - Is token JWT of user SU
-   * @return {Promise}
-   * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const orgId = '5dadd01dc4af3941d42f8c5c';
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.admin.organizations.removeAvatar(orgId, session);
-   */
-  async removeAvatar(orgId, session) {
-    const self = this;
-
-    try {
-      Joi.assert(orgId, Joi.string().required(), 'Organization id');
-      Joi.assert(session, Joi.string().required(), 'Is token JWT of user SU');
-
-      const apiCall = self._client.delete(`/admin/organizations/${orgId}/logo`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -208,7 +179,7 @@ class Organization {
   }
 }
 
-export default Organization;
+export default MyTasks;
 </code></pre>
         </article>
     </section>

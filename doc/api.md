@@ -37,23 +37,11 @@
 <dt><a href="#AdminUser">AdminUser</a></dt>
 <dd><p>Admin Class for user, permission admin</p>
 </dd>
-<dt><a href="#Dispatch">Dispatch</a></dt>
-<dd><p>Api dispatch manager</p>
-</dd>
-<dt><a href="#External">External</a></dt>
-<dd><p>Class for documents, permission user</p>
-</dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
 <dd><p>General Class for user, permission organization</p>
 </dd>
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
-</dd>
-<dt><a href="#Login">Login</a></dt>
-<dd><p>Login manager</p>
-</dd>
-<dt><a href="#Session">Session</a></dt>
-<dd><p>Session manager of the API</p>
 </dd>
 <dt><a href="#Application">Application</a></dt>
 <dd><p>Class for Applications, permission user</p>
@@ -88,17 +76,29 @@
 <dt><a href="#Register">Register</a></dt>
 <dd><p>Class for user registration in a user</p>
 </dd>
-<dt><a href="#TaskAvailable">TaskAvailable</a></dt>
-<dd><p>Class for available tasks, permission user</p>
-</dd>
 <dt><a href="#Task">Task</a></dt>
 <dd><p>Class for task, permission user</p>
+</dd>
+<dt><a href="#TaskAvailable">TaskAvailable</a></dt>
+<dd><p>Class for available tasks, permission user</p>
 </dd>
 <dt><a href="#Updates">Updates</a></dt>
 <dd><p>Class for user registration in a user</p>
 </dd>
 <dt><a href="#User">User</a></dt>
 <dd><p>Class for user, permission user</p>
+</dd>
+<dt><a href="#Dispatch">Dispatch</a></dt>
+<dd><p>Api dispatch manager</p>
+</dd>
+<dt><a href="#External">External</a></dt>
+<dd><p>Class for documents, permission user</p>
+</dd>
+<dt><a href="#Login">Login</a></dt>
+<dd><p>Login manager</p>
+</dd>
+<dt><a href="#Session">Session</a></dt>
+<dd><p>Session manager of the API</p>
 </dd>
 </dl>
 
@@ -135,7 +135,33 @@ Advanced search of document in elastic search ussing system manager
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  docId: '5edd11c46b6ce9729c2c297c',  query: {     "query": {       "bool": {         "minimum_should_match": 1,         "should": [           {             "match": {               "locationText.keyword": {                 "query": "sao pau"               }             }           },           {             "wildcard": {               "locationText.normalized": "*sao pau*"             }           }         ]       }     }   }const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.document.advancedSearch(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  docId: '5edd11c46b6ce9729c2c297c',
+  query: {
+     "query": {
+       "bool": {
+         "minimum_should_match": 1,
+         "should": [
+           {
+             "match": {
+               "locationText.keyword": {
+                 "query": "sao pau"
+               }
+             }
+           },
+           {
+             "wildcard": {
+               "locationText.normalized": "*sao pau*"
+             }
+           }
+         ]
+       }
+     }
+   }
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.document.advancedSearch(params, session);
 ```
 <a name="AdminDocuments+findById"></a>
 
@@ -155,7 +181,14 @@ Get document by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { docId: '5edd11c46b6ce9729c2c297c', orgId: '55e4a3bd6be6b45210833fae'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.document.findById(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ docId: '5edd11c46b6ce9729c2c297c',
+ orgId: '55e4a3bd6be6b45210833fae'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.document.findById(params, session);
 ```
 <a name="AdminDocuments+signedUrl"></a>
 
@@ -176,11 +209,25 @@ Request signed url url to put or get
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { methodType: 'put', docId: '5dadd01dc4af3941d42f8c5c'};const apiKey: '...';const { docId, name, areaId, type, signedUrl } = await api.admin.document.signedUrl(params, apiKey);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'put',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+const { docId, name, areaId, type, signedUrl } = await api.admin.document.signedUrl(params, apiKey);
 ```
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { methodType: 'get', docId: '5dadd01dc4af3941d42f8c5c'};const apiKey: '...';const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiKey);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'get',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiKey);
 ```
 <a name="AdminDocuments+updateContent"></a>
 
@@ -201,7 +248,14 @@ Update a document content
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { content: 'some text...', docId: '5dadd01dc4af3941d42f8c5c'};const apiKey: '...';await api.admin.document.updateContent(params, apiKey);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ content: 'some text...',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.updateContent(params, apiKey);
 ```
 <a name="AdminDocuments+updateAI"></a>
 
@@ -228,7 +282,14 @@ Update a document content
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { content: 'some text...', docId: '5dadd01dc4af3941d42f8c5c'};const apiKey: '...';await api.admin.document.updateContent(params, apiKey);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ content: 'some text...',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.updateContent(params, apiKey);
 ```
 <a name="AdminDocuments+getContent"></a>
 
@@ -249,7 +310,14 @@ Get the content of a document
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { page: '0', docId: '5dadd01dc4af3941d42f8c5c'};const apiKey: '...';await api.admin.document.getContent(params, apiKey);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ page: '0',
+ docId: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.getContent(params, apiKey);
 ```
 <a name="AdminForm"></a>
 
@@ -280,7 +348,14 @@ Get advance form by ID
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { id: '55e4a3bd6be6b45210833fae', orgId: '5edd11c46b6ce9729c2c297c',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.form.findById(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '55e4a3bd6be6b45210833fae',
+ orgId: '5edd11c46b6ce9729c2c297c',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.form.findById(params, session);
 ```
 <a name="AdminForm+getFormList"></a>
 
@@ -304,7 +379,13 @@ Request signed url url to put or get
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { orgId: '5dadd01dc4af3941d42f8c5c',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.form.getFormList(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ orgId: '5dadd01dc4af3941d42f8c5c',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.form.getFormList(params, session);
 ```
 <a name="Admin"></a>
 
@@ -351,7 +432,14 @@ Get list by ID
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { id: '55e4a3bd6be6b45210833fae', orgId: '5edd11c46b6ce9729c2c297c',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.list.findById(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '55e4a3bd6be6b45210833fae',
+ orgId: '5edd11c46b6ce9729c2c297c',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.list.findById(params, session);
 ```
 <a name="AdminLists+find"></a>
 
@@ -372,7 +460,13 @@ Get all lists
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '55e4a3bd6be6b45210833fae'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.list.find(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.list.find(params, session);
 ```
 <a name="AdminMessage"></a>
 
@@ -450,7 +544,15 @@ Send email, array with email list or send one email
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { subject: 'Test email', message: '<h1>Hi!</h1>', to: 'destination@gmail.com'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.message.sendEmail(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ subject: 'Test email',
+ message: '<h1>Hi!</h1>',
+ to: 'destination@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.message.sendEmail(params, session);
 ```
 <a name="AdminNotification"></a>
 
@@ -499,7 +601,15 @@ Create notification
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5edd11c46b6ce9729c2c297c', userId: '55e4a3bd6be6b45210833fae', message: 'Olá como vai tudo bem?'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.notifications.add(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5edd11c46b6ce9729c2c297c',
+ userId: '55e4a3bd6be6b45210833fae',
+ message: 'Olá como vai tudo bem?'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.notifications.add(params, session);
 ```
 <a name="AdminNotification+findById"></a>
 
@@ -519,7 +629,14 @@ Search notification using (notificationId or userId)
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.notifications.findById(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5edd11c46b6ce9729c2c297c',
+ id: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.notifications.findById(params, session);
 ```
 <a name="AdminNotification+findByIdAndUpdate"></a>
 
@@ -540,7 +657,15 @@ Update notification using (notificationId or userId)
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae', read: true};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.notifications.findByIdAndUpdate(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5edd11c46b6ce9729c2c297c',
+ id: '55e4a3bd6be6b45210833fae',
+ read: true
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.notifications.findByIdAndUpdate(params, session);
 ```
 <a name="AdminNotification+findByIdAndRemove"></a>
 
@@ -560,7 +685,14 @@ Delete notification using (notificationId or userId)
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.notifications.findByIdAndDelete(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5edd11c46b6ce9729c2c297c',
+ id: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.notifications.findByIdAndDelete(params, session);
 ```
 <a name="Organization"></a>
 
@@ -597,7 +729,15 @@ Update avatar of organization by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5dadd01dc4af3941d42f8c5c', avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=', type: 'image/png',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.organizations.upsertAvatar(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5dadd01dc4af3941d42f8c5c',
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.upsertAvatar(params, session);
 ```
 <a name="Organization+removeAvatar"></a>
 
@@ -615,7 +755,11 @@ Remove avatar of user by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const orgId = '5dadd01dc4af3941d42f8c5c';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.organizations.removeAvatar(orgId, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '5dadd01dc4af3941d42f8c5c';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.removeAvatar(orgId, session);
 ```
 <a name="Organization+findById"></a>
 
@@ -633,7 +777,11 @@ Find organization by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const orgId = '80443245000122';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.organization.findById(idCard, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.findById(idCard, session);
 ```
 <a name="Organization+idCardExist"></a>
 
@@ -651,7 +799,11 @@ Check if id card exist
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const idCard = '80443245000122';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.organization.idCardExist(idCard, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const idCard = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.idCardExist(idCard, session);
 ```
 <a name="Organization+upsertAvatar"></a>
 
@@ -671,7 +823,14 @@ Update avatar of organization by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=', type: 'image/png',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.updateAvatar(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.updateAvatar(params, session);
 ```
 <a name="Organization+removeAvatar"></a>
 
@@ -688,7 +847,10 @@ Remove avatar of user by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.removeAvatar(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.removeAvatar(session);
 ```
 <a name="Organization+callFetch"></a>
 
@@ -708,7 +870,14 @@ Call URL internal, need auth JWT (session)
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  url: 'http://localhost:8080/organizations/..../process/..../task/candidateAccepted/end/....',  method: 'POST'}await api.user.organization.callFetchs(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+
+const params = {
+  url: 'http://localhost:8080/organizations/..../process/..../task/candidateAccepted/end/....',
+  method: 'POST'
+}
+await api.user.organization.callFetchs(params, session);
 ```
 <a name="AdminPlugin"></a>
 
@@ -738,7 +907,11 @@ Find plugins
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {page: 1, perPage: 200};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.organization.findById(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {page: 1, perPage: 200};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.findById(params, session);
 ```
 <a name="AdminPlugin+findById"></a>
 
@@ -756,7 +929,11 @@ Get plugin by ID
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const id ='55e4a3bd6be6b45210833fae',const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.plugin.findById(id, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const id ='55e4a3bd6be6b45210833fae',
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.plugin.findById(id, session);
 ```
 <a name="AdminPolicy"></a>
 
@@ -779,7 +956,10 @@ Find all policies
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.policy.find(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.policy.find(session);
 ```
 <a name="AdminProcesses"></a>
 
@@ -803,7 +983,16 @@ Advanced search of processes, check documentation, to verify all params, pass to
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5edd11c46b6ce9729c2c297c', ... ... ...};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.processes.search(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5edd11c46b6ce9729c2c297c',
+ ...
+ ...
+ ...
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.processes.search(params, session);
 ```
 <a name="AdminProcesses+advancedSearch"></a>
 
@@ -823,7 +1012,23 @@ Advanced search of process in elastic search ussing system manager
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  orgProcessId: '5edd11c46b6ce9729c2c297c',  query: {     "_source": "processData.properties.processProperties",     "query": {       "term": {         "initParams.email.keyword": {           "value": "clintes001@gmail.com"         }       }     }  }}const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.processes.advancedSearch(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgProcessId: '5edd11c46b6ce9729c2c297c',
+  query: {
+     "_source": "processData.properties.processProperties",
+     "query": {
+       "term": {
+         "initParams.email.keyword": {
+           "value": "clintes001@gmail.com"
+         }
+       }
+     }
+  }
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.processes.advancedSearch(params, session);
 ```
 <a name="AdminTask"></a>
 
@@ -854,7 +1059,13 @@ Get task by user Id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { userId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.task.find(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ userId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.task.find(params, session);
 ```
 <a name="AdminUser"></a>
 
@@ -888,7 +1099,11 @@ Request profile by userId
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const userId = '55e4a3bd6be6b45210833fae';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.user.findById(userId, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.findById(userId, session);
 ```
 <a name="AdminUser+findByIds"></a>
 
@@ -906,7 +1121,11 @@ Request profile by userId
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const userIds = ['55e4a3bd6be6b45210833fae', '55e4a3bd6be6b45210833fae'];const apiKey = 'c9bbd652-d112-454e-8595-f1669f49dde0';await api.admin.user.findByIds(userIds, apiKey);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userIds = ['55e4a3bd6be6b45210833fae', '55e4a3bd6be6b45210833fae'];
+const apiKey = 'c9bbd652-d112-454e-8595-f1669f49dde0';
+await api.admin.user.findByIds(userIds, apiKey);
 ```
 <a name="AdminUser+findByIdAndUpdatePassword"></a>
 
@@ -927,7 +1146,15 @@ Update password by userId
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { userId: '55e4a3bd6be6b45210833fae', oldPassword: '123456', newPassword: '123456789'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.user.findByIdAndUpdatePassword(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ userId: '55e4a3bd6be6b45210833fae',
+ oldPassword: '123456',
+ newPassword: '123456789'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.findByIdAndUpdatePassword(params, session);
 ```
 <a name="AdminUser+emailExist"></a>
 
@@ -945,7 +1172,11 @@ Check if email is unique
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const email = 'ana.silva@gmail.com';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.user.emailExist(email, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const email = 'ana.silva@gmail.com';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.emailExist(email, session);
 ```
 <a name="AdminUser+findByIdAndUpdate"></a>
 
@@ -963,7 +1194,12 @@ update userData by userSMId
 
 **Example**  
 ```js
-const userId = '55e4a3bd6be6b45210833fae';const payload = {  name: 'Maria joaquina',  email: 'maria@gmail.com'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const userId = '55e4a3bd6be6b45210833fae';
+const payload = {
+  name: 'Maria joaquina',
+  email: 'maria@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
 <a name="AdminUser+getChangePasswordGuid"></a>
 
@@ -979,7 +1215,10 @@ Request GUID to change the password
 
 **Example**  
 ```js
-const payload = {  email: 'maria@gmail.com'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const payload = {
+  email: 'maria@gmail.com'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
 <a name="AdminUser+changePasswordGuid"></a>
 
@@ -997,143 +1236,11 @@ Change password guid
 
 **Example**  
 ```js
-const payload = {  guid: '5b3c049c-4861-4353-a423-5e3f14242642',  newPassword: '123456789'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-```
-<a name="Dispatch"></a>
-
-## Dispatch
-Api dispatch manager
-
-**Kind**: global class  
-
-* [Dispatch](#Dispatch)
-    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
-
-<a name="Dispatch+getContext"></a>
-
-### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
-Get the URL context
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
-**Access**: public  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| url | <code>string</code> |  | Full url |
-| session | <code>session</code> | <code></code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-```
-<a name="Dispatch+getClient"></a>
-
-### dispatch.getClient() ⇒ <code>promise</code>
-Get client Axios
-
-**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>promise</code> - return client axios  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();await api.dispatch.getClient();
-```
-<a name="External"></a>
-
-## External
-Class for documents, permission user
-
-**Kind**: global class  
-
-* [External](#External)
-    * [.context(params)](#External+context) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>array.&lt;object&gt;</code>
-    * [.getUploadDocumentSignedUrl(mime, authorization)](#External+getUploadDocumentSignedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
-    * [.getUploadDocumentsSignedUrl(docs, authorization)](#External+getUploadDocumentsSignedUrl) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
-    * [.handle(authorization, params)](#External+handle) ⇒ <code>Promise.&lt;boolean&gt;</code>
-
-<a name="External+context"></a>
-
-### external.context(params) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>array.&lt;object&gt;</code>
-Create new document
-
-**Kind**: instance method of [<code>External</code>](#External)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - data<code>string</code> - _id the id of the form<code>string</code> - orgId the organization id of the form<code>string</code> - authorization the unique token registered internally by the system for all the next calls to the external form APIs     The authorization is unique and is ONLY valid for this session.<code>array.&lt;object&gt;</code> - groups the form groups to render  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Object for add new document |
-| params.id | <code>string</code> | Organization form id |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { id: '611e679741cc63168c26d7ee'};const retForm = await api.external.context(params);
-```
-<a name="External+getUploadDocumentSignedUrl"></a>
-
-### external.getUploadDocumentSignedUrl(mime, authorization) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
-Get an upload signed url, so it will be possible to upload documents temporarily during the use of the external form
-
-**Kind**: instance method of [<code>External</code>](#External)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - doc<code>string</code> - doc.mime the original mime type of the document<code>string</code> - doc.signedUrl the signed url to upload the document<code>string</code> - doc.filename  the filename of the uploaded file<code>string</code> - doc.extension  the extension of the filename, obtained from the mime type  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| mime | <code>string</code> | the mime type of the document |
-| authorization | <code>string</code> | a legal authorization |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const authorization = '...';const doc = { mime: 'application/pdf'};const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization);
-```
-<a name="External+getUploadDocumentsSignedUrl"></a>
-
-### external.getUploadDocumentsSignedUrl(docs, authorization) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
-Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
-
-**Kind**: instance method of [<code>External</code>](#External)  
-**Returns**: <code>Promise.&lt;array&gt;</code> - docs<code>string</code> - docs.mime the original mime type of the document<code>string</code> - docs.signedUrl the signed url to upload the document<code>string</code> - docs.filename  the filename of the uploaded file<code>string</code> - docs.extension  the extension of the filename, obtained from the mime type  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| docs | <code>array.&lt;object&gt;</code> | the list of documents |
-| docs.mime | <code>string</code> | the mime type of the document |
-| authorization | <code>string</code> | a legal authorization |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const authorization = '...';const docs = [   {     mime: 'application/pdf'   }];const retDocs = await api.external.getUploadDocumentsSignedUrl(docs, authorization);
-```
-<a name="External+handle"></a>
-
-### external.handle(authorization, params) ⇒ <code>Promise.&lt;boolean&gt;</code>
-Handles the execution of an external form
-
-**Kind**: instance method of [<code>External</code>](#External)  
-**Returns**: <code>Promise.&lt;boolean&gt;</code> - true|false if success  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| authorization | <code>string</code> | a legal authorization |
-| params | <code>object</code> | the parameters to handle the execution of an external form |
-| params.payload | <code>array.&lt;object&gt;</code> | the payload of the external form. It should represent the form groups of the external form |
-| params.payload.name | <code>string</code> | the name of the group |
-| params.payload.fields | <code>array.&lt;object&gt;</code> | the fields that belong to each group |
-| params.payload.fields.value | <code>\*</code> \| <code>Object</code> | besides all the data inside a field, it should have the value of the the field |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const authorization = '...';const params = { payload: [     {         name: 'My Group One',         fields: [             {}         ]     } ]};const success = await api.external.handle(params, authorization);
+const payload = {
+  guid: '5b3c049c-4861-4353-a423-5e3f14242642',
+  newPassword: '123456789'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
 <a name="GeoLocation"></a>
 
@@ -1158,7 +1265,13 @@ Get geo location of the address
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { address: 'Rua Sud Menucci, 615 - Vila Camilopolis, Santo André - SP', apiKey: 'AIzaSyC7gJFOkuT-Mel3WZbX5uKuJ1USqLVkGnY',};await api.general.geo.location(params);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ address: 'Rua Sud Menucci, 615 - Vila Camilopolis, Santo André - SP',
+ apiKey: 'AIzaSyC7gJFOkuT-Mel3WZbX5uKuJ1USqLVkGnY',
+};
+await api.general.geo.location(params);
 ```
 <a name="Users"></a>
 
@@ -1190,161 +1303,6 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
-<a name="Login"></a>
-
-## Login
-Login manager
-
-**Kind**: global class  
-
-* [Login](#Login)
-    * [.facebook(params)](#Login+facebook) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.google(params)](#Login+google) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.apiKey(apikey)](#Login+apiKey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.userPass(params)](#Login+userPass) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-    * [.logout(session)](#Login+logout) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-    * [.recover(username)](#Login+recover) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-
-<a name="Login+facebook"></a>
-
-### login.facebook(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with social login Facebook
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to login Facebook |
-| params.accessToken | <code>string</code> | Access token of the system manager |
-| params.initialUserData | <code>object</code> | Object with roles default if sigin |
-| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');// Params of the instanceconst params = {...}const api = new API(params);const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };const { auth, user } = await api.login.facebook(params);
-```
-<a name="Login+google"></a>
-
-### login.google(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with social login Google
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to login Google |
-| params.accessToken | <code>string</code> | Access token of the system manager |
-| params.initialUserData | <code>object</code> | Object with roles default if sigin |
-| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');// Params of the instanceconst params = {...}const api = new API(params);const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';const { auth, user } = await api.login.google(accessToken);
-```
-<a name="Login+apiKey"></a>
-
-### login.apiKey(apikey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with apikey
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| apikey | <code>string</code> | Access key |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');// Params of the instanceconst params = {...}const api = new API(params);const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';const { auth, user } = await api.login.apiKey(apiKey);
-```
-<a name="Login+userPass"></a>
-
-### login.userPass(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
-Login with user and password
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Object with user and password |
-| params.username | <code>string</code> | Username or email of the user |
-| params.password | <code>string</code> | Password of the user |
-| params.orgname | <code>string</code> | The organame of the user |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');// Params of the instance  const params = {...}const api = new API(params);const params = {  username: 'ana.silva@gmail.com',  password: '123456'};const { auth, user } = await api.login.userPass(params);
-```
-<a name="Login+logout"></a>
-
-### login.logout(session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-Logout user system manager
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');// Params of the instanceconst params = {...}const api = new API(params);const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const { success } = await api.login.logout(session);
-```
-<a name="Login+recover"></a>
-
-### login.recover(username) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
-Recover the password
-
-**Kind**: instance method of [<code>Login</code>](#Login)  
-**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| username | <code>string</code> | The username or email |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');// Params of the instanceconst params = {...}const api = new API(params);const { success } = await api.login.recover('myusername');
-```
-<a name="Session"></a>
-
-## Session
-Session manager of the API
-
-**Kind**: global class  
-<a name="Session+information"></a>
-
-### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
-Show information for session, thus validating the session (Valid token JWT)
-
-**Kind**: instance method of [<code>Session</code>](#Session)  
-**Access**: public  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| sessionId | <code>string</code> |  | The user session (JWT Token) |
-| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.session.information(sessionId, suSessionId);
-```
 <a name="Application"></a>
 
 ## Application
@@ -1368,7 +1326,13 @@ Get the available applications for this user in this organizations
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.application.list(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.application.list(params, session);
 ```
 <a name="Datasource"></a>
 
@@ -1399,7 +1363,15 @@ Method to get autocomplete data from a datasource
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const params = { orgId: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9', dataSources: [{}], documents: [{}]};const retData = await api.user.datasource.autocomplete(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ orgId: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9',
+ dataSources: [{}],
+ documents: [{}]
+};
+const retData = await api.user.datasource.autocomplete(params, session);
 ```
 <a name="Documents"></a>
 
@@ -1459,7 +1431,23 @@ Create new document
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgname: 'cloundbrasil', areaId: '5edf9f8ee896b817e45b8dac', docId: '5edf86fbe896b817e45b8da6', fileName: 'foto', type: 'image/png', name: 'Fotografia', docTypeId = '5edf9f8ee896b817e45b8dac', bytes: 12345, signedUrl: 'https://s3.amazonaws.com...' docTypeFieldsData: {extraUser: '12349f8ee896b817e45b8dac'}, orgId: '5df7f19618430c89a41a19d2',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.document.add(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgname: 'cloundbrasil',
+ areaId: '5edf9f8ee896b817e45b8dac',
+ docId: '5edf86fbe896b817e45b8da6',
+ fileName: 'foto',
+ type: 'image/png',
+ name: 'Fotografia',
+ docTypeId = '5edf9f8ee896b817e45b8dac',
+ bytes: 12345,
+ signedUrl: 'https://s3.amazonaws.com...'
+ docTypeFieldsData: {extraUser: '12349f8ee896b817e45b8dac'},
+ orgId: '5df7f19618430c89a41a19d2',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.add(params, session);
 ```
 <a name="Documents+find"></a>
 
@@ -1487,7 +1475,18 @@ const API = require('@docbrasil/api-systemmanager');const api = new API();cons
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { index: 'extraCity', txtToSearch: 'São', docId: '5df7f19618430c89a41a19d2', docAreaId: '5edd11c46b6ce9729c2c297c', tag: 'Nome da cidade', orgId: '1234d01dc4af3941d42f8c5c'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.document.findByIdAndRemove(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ index: 'extraCity',
+ txtToSearch: 'São',
+ docId: '5df7f19618430c89a41a19d2',
+ docAreaId: '5edd11c46b6ce9729c2c297c',
+ tag: 'Nome da cidade',
+ orgId: '1234d01dc4af3941d42f8c5c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdAndRemove(params, session);
 ```
 <a name="Documents+findByIdAndRemove"></a>
 
@@ -1508,7 +1507,14 @@ Remove document by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { docId: '5dadd01dc4af3941d42f8c5c', orgIdId: '5df7f19618430c89a41a19d2',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.document.findByIdAndRemove(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ docId: '5dadd01dc4af3941d42f8c5c',
+ orgIdId: '5df7f19618430c89a41a19d2',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdAndRemove(params, session);
 ```
 <a name="Documents+findByIdsAndRemove"></a>
 
@@ -1530,7 +1536,14 @@ Remove documents
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { documents: [{ _id: '5dadd01dc4af3941d42f8c5c' }], orgId: '5df7f19618430c89a41a19d2',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.document.findByIdsAndRemove(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ documents: [{ _id: '5dadd01dc4af3941d42f8c5c' }],
+ orgId: '5df7f19618430c89a41a19d2',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdsAndRemove(params, session);
 ```
 <a name="Documents+signedUrl"></a>
 
@@ -1556,11 +1569,30 @@ Request signed url url to put or get
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { methodType: 'put', docId: '5dadd01dc4af3941d42f8c5c', docAreaId: '5df7f19618430c89a41a19d2', fileName: 'Foto', type: 'image/png' orgId: '5df7f19618430c89a41a19f8'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';// each doc: { docId, name, areaId, type, signedUrl }const { docs } = await api.user.document.signedUrl(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'put',
+ docId: '5dadd01dc4af3941d42f8c5c',
+ docAreaId: '5df7f19618430c89a41a19d2',
+ fileName: 'Foto',
+ type: 'image/png'
+ orgId: '5df7f19618430c89a41a19f8'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+// each doc: { docId, name, areaId, type, signedUrl }
+const { docs } = await api.user.document.signedUrl(params, session);
 ```
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { methodType: 'get', document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const base64Data = await api.user.document.signedUrl(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'get',
+ document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const base64Data = await api.user.document.signedUrl(params, session);
 ```
 <a name="Documents+signedUrls"></a>
 
@@ -1587,11 +1619,36 @@ Request signed url url to put or get
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { methodType: 'put', orgId: '5df7f19618430c89a41a19f8' docs: [     {       docId: '5dadd01dc4af3941d42f8c5c',       areaId: '5df7f19618430c89a41a19d2',       name: 'Foto.png',       type: 'image/png'     } ]};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';// each doc: { docId, name, areaId, type, signedUrl }const { docs } = await api.user.document.signedUrls(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'put',
+ orgId: '5df7f19618430c89a41a19f8'
+ docs: [
+     {
+       docId: '5dadd01dc4af3941d42f8c5c',
+       areaId: '5df7f19618430c89a41a19d2',
+       name: 'Foto.png',
+       type: 'image/png'
+     }
+ ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+// each doc: { docId, name, areaId, type, signedUrl }
+const { docs } = await api.user.document.signedUrls(params, session);
 ```
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { methodType: 'get', docs: [     { document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf' } ],};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const base64Data = await api.user.document.signedUrls(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ methodType: 'get',
+ docs: [
+     { document: 'pinkandthebrain/5df7f19618430c89a41a19d2/5dadd01dc4af3941d42f8c5c/9dadd01dc4af3941d42f6dd4.pdf' }
+ ],
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const base64Data = await api.user.document.signedUrls(params, session);
 ```
 <a name="Documents+uploadSignedDocument"></a>
 
@@ -1612,7 +1669,21 @@ Uploads the file
 
 **Example**  
 ```js
-const FS = require('fs');const Path = require('path');const API = require('@docbrasil/api-systemmanager');const api = new API();const params - { content: FS.readFileSync(Path.join(__dirname, '.mypdf.pdf')), signedUrl: 'https://signedurl.com/token...', type: 'application/pdf'};const retData = await api.user.document.uploadSignedDocument(params);onUploadProgress return the progressEvent - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known. - loaded: The number of bytes of the file that have been uploaded. - total: The total number of bytes in the file.
+const FS = require('fs');
+const Path = require('path');
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ content: FS.readFileSync(Path.join(__dirname, '.mypdf.pdf')),
+ signedUrl: 'https://signedurl.com/token...',
+ type: 'application/pdf'
+};
+const retData = await api.user.document.uploadSignedDocument(params);
+
+onUploadProgress return the progressEvent
+ - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
+ - loaded: The number of bytes of the file that have been uploaded.
+ - total: The total number of bytes in the file.
 ```
 <a name="Documents+checkPrimaryKeys"></a>
 
@@ -1620,7 +1691,8 @@ const FS = require('fs');const Path = require('path');const API = require('@do
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>Promise.&lt;array&gt;</code> - Return the array of the documents that are repeated. If not document is repeaded, then if returns an empty array.<code>array.&lt;string&gt;</code> - id  the id of the repeated document  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>Checks if a document can be added and it does not repeat its primary key  
+**Author**: CloudBrasil <abernardo.br@gmail.com>
+Checks if a document can be added and it does not repeat its primary key  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1635,7 +1707,17 @@ const FS = require('fs');const Path = require('path');const API = require('@do
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const docTypeFields = [...];   // the doc type fields arrayconst docTypeFieldsData = {...};   // the data of this fieldsconst params - { docs: [{ id: '5dadd01dc4af3941d42f8c5c', docTypeFields, docTypeFieldsData }], orgId: '5df7f19618430c89a41a19d2', docTypeId: '5df7f19618430c89a41a19d5',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retDocs = await api.user.document.checkPrimaryKeys(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const docTypeFields = [...];   // the doc type fields array
+const docTypeFieldsData = {...};   // the data of this fields
+const params - {
+ docs: [{ id: '5dadd01dc4af3941d42f8c5c', docTypeFields, docTypeFieldsData }],
+ orgId: '5df7f19618430c89a41a19d2',
+ docTypeId: '5df7f19618430c89a41a19d5',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retDocs = await api.user.document.checkPrimaryKeys(params, session);
 ```
 <a name="Documents+searchDocuments"></a>
 
@@ -1656,7 +1738,14 @@ Method to search documents for
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'}, orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.document.searchDocuments(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.document.searchDocuments(params, session);
 ```
 <a name="Help"></a>
 
@@ -1684,7 +1773,10 @@ get heps topics
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.help.getTopics(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.help.getTopics(session);
 ```
 <a name="Help+get"></a>
 
@@ -1703,7 +1795,13 @@ Method to find helps from a topic
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { id: '5dadd01dc4af3941d42f8c5c'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.help.get(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '5dadd01dc4af3941d42f8c5c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.help.get(params, session);
 ```
 <a name="Users"></a>
 
@@ -1760,7 +1858,14 @@ Method to find my tasks for a user
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20}, orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.task.mytasks.find(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.task.mytasks.find(params, session);
 ```
 <a name="Notification"></a>
 
@@ -1802,7 +1907,14 @@ Method to add a notification token
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const params = { token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2', type: 'FCM_WEB'};const retData = await api.user.notification.addToken(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+ type: 'FCM_WEB'
+};
+const retData = await api.user.notification.addToken(params, session);
 ```
 <a name="Notification+getNew"></a>
 
@@ -1819,7 +1931,10 @@ get new notifications
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.notification.getNew(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.getNew(session);
 ```
 <a name="Notification+getOld"></a>
 
@@ -1836,7 +1951,10 @@ get old notifications
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.notification.getOld(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.getOld(session);
 ```
 <a name="Notification+setRead"></a>
 
@@ -1855,7 +1973,13 @@ Set notification as readed
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { id: '34c344c43c34c344c43c'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.notification.setRead(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '34c344c43c34c344c43c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.setRead(params, session);
 ```
 <a name="Notification+setUnread"></a>
 
@@ -1874,7 +1998,13 @@ Set notification as unreaded
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { id: '34c344c43c34c344c43c'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.notification.setUnread(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '34c344c43c34c344c43c'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.setUnread(params, session);
 ```
 <a name="Organization"></a>
 
@@ -1911,7 +2041,15 @@ Update avatar of organization by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '5dadd01dc4af3941d42f8c5c', avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=', type: 'image/png',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.organizations.upsertAvatar(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '5dadd01dc4af3941d42f8c5c',
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.upsertAvatar(params, session);
 ```
 <a name="Organization+removeAvatar"></a>
 
@@ -1929,7 +2067,11 @@ Remove avatar of user by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const orgId = '5dadd01dc4af3941d42f8c5c';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.admin.organizations.removeAvatar(orgId, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '5dadd01dc4af3941d42f8c5c';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.organizations.removeAvatar(orgId, session);
 ```
 <a name="Organization+findById"></a>
 
@@ -1947,7 +2089,11 @@ Find organization by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const orgId = '80443245000122';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.organization.findById(idCard, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.findById(idCard, session);
 ```
 <a name="Organization+idCardExist"></a>
 
@@ -1965,7 +2111,11 @@ Check if id card exist
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const idCard = '80443245000122';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.organization.idCardExist(idCard, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const idCard = '80443245000122';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.organization.idCardExist(idCard, session);
 ```
 <a name="Organization+upsertAvatar"></a>
 
@@ -1985,7 +2135,14 @@ Update avatar of organization by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=', type: 'image/png',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.updateAvatar(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ avatar: 'iVBORw0KGgoAAAANSUhEUgAAAasAAAHnCAYAAAAGi3J6AAA9BElEQVR...He3/kk/m7kl35S8AAAAASUVORK5CYII=',
+ type: 'image/png',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.updateAvatar(params, session);
 ```
 <a name="Organization+removeAvatar"></a>
 
@@ -2002,7 +2159,10 @@ Remove avatar of user by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.removeAvatar(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.removeAvatar(session);
 ```
 <a name="Organization+callFetch"></a>
 
@@ -2022,7 +2182,14 @@ Call URL internal, need auth JWT (session)
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  url: 'http://localhost:8080/organizations/..../process/..../task/candidateAccepted/end/....',  method: 'POST'}await api.user.organization.callFetchs(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+
+const params = {
+  url: 'http://localhost:8080/organizations/..../process/..../task/candidateAccepted/end/....',
+  method: 'POST'
+}
+await api.user.organization.callFetchs(params, session);
 ```
 <a name="Page"></a>
 
@@ -2049,7 +2216,15 @@ Get the available page for an application inside an organization
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '55e4a3bd6be6b45210833fae', appId: '57e4a3bd6be6b45210833fa7', pageId: '57e4a3bd6be6b45210833fab'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.application.page.get(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+ appId: '57e4a3bd6be6b45210833fa7',
+ pageId: '57e4a3bd6be6b45210833fab'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.application.page.get(params, session);
 ```
 <a name="Process"></a>
 
@@ -2088,7 +2263,15 @@ Start process
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  orgProcessId: '5dadd01dc4af3941d42f8c5c',  orgId: '5edd11c46b6ce9729c2c297c',  payload: {}}const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.process.start(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgProcessId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  payload: {}
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.start(params, session);
 ```
 <a name="Process+getProcessProperties"></a>
 
@@ -2108,7 +2291,14 @@ Get process properties of process
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  processId: '5dadd01dc4af3941d42f8c5c',  orgId: '5edd11c46b6ce9729c2c297c',}const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.process.getProcessProperties(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.getProcessProperties(params, session);
 ```
 <a name="Process+getOrgProcessSearchInfo"></a>
 
@@ -2116,7 +2306,8 @@ const API = require('@docbrasil/api-systemmanager');const api = new API();cons
 Get the search info of a organization process
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
-**Returns**: <code>Promise</code> - the search info result<code>string</code> - name the name of the organization process<code>object</code> - processIndexFields the list of fields to index<code>object</code> - processParticipantsGroup the permissions in this organization process<code>object</code> - stepsProperties the organization process steps properties<code>string</code> - _id the same organization id@  
+**Returns**: <code>Promise</code> - the search info result<code>string</code> - name the name of the organization process<code>object</code> - processIndexFields the list of fields to index<code>object</code> - processParticipantsGroup the permissions in this organization process<code>object</code> - stepsProperties the organization process steps properties<code>string</code> - _id the same organization id
+@  
 **Access**: public  
 **Author**: CloudBrasil <abernardo.br@gmail.com>  
 
@@ -2129,7 +2320,14 @@ Get the search info of a organization process
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {  orgProcessId: '5dadd01dc4af3941d42f8c67',  orgId: '5edd11c46b6ce9729c2c297c',}const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearchInfo = await api.user.process.getOrgProcessSearchInfo(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgProcessId: '5dadd01dc4af3941d42f8c67',
+  orgId: '5edd11c46b6ce9729c2c297c',
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearchInfo = await api.user.process.getOrgProcessSearchInfo(params, session);
 ```
 <a name="Process+find"></a>
 
@@ -2150,7 +2348,14 @@ Method to search processes
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20}, orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.process.find(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.find(params, session);
 ```
 <a name="Process+remove"></a>
 
@@ -2170,7 +2375,14 @@ Method to remove process
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '55e4a3bd6be6b45210833fae', processId: '55e4a3bd6be6b45210833fae'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.process.remove(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+ processId: '55e4a3bd6be6b45210833fae'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.remove(params, session);
 ```
 <a name="Process+exportStatusData"></a>
 
@@ -2190,7 +2402,14 @@ Method to export status data
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20}, orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.process.exportStatusData(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.exportStatusData(params, session);
 ```
 <a name="Process+exportProcessData"></a>
 
@@ -2210,7 +2429,14 @@ Method to export process data
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20}, orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.process.exportProcessData(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.exportProcessData(params, session);
 ```
 <a name="Process+processDocs"></a>
 
@@ -2232,7 +2458,15 @@ Method to get Process Docs
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgProcessId: '55e4a3bd6be6b45210833fae', processId: '55e4a3bd6be6b45210833fae', orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.process.processDocs(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgProcessId: '55e4a3bd6be6b45210833fae',
+ processId: '55e4a3bd6be6b45210833fae',
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.process.processDocs(params, session);
 ```
 <a name="Process+downloadDocs"></a>
 
@@ -2255,7 +2489,16 @@ Method to download the process documents
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { orgId: '55e4a3bd6be6b45210833fae', type: 'Docs', docIds: ['55e4a3bd6be6b45210833fae'], footer: 'Documento - {page} de {pages}'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const result = await api.user.process.downloadDocs(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833fae',
+ type: 'Docs',
+ docIds: ['55e4a3bd6be6b45210833fae'],
+ footer: 'Documento - {page} de {pages}'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.process.downloadDocs(params, session);
 ```
 <a name="Register"></a>
 
@@ -2283,7 +2526,12 @@ Class for user registration in a user
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { registerId: 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...'};const orgname = await api.user.register.getOrgname(params);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ registerId: 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...'
+};
+const orgname = await api.user.register.getOrgname(params);
 ```
 <a name="Register+validateEmail"></a>
 
@@ -2303,7 +2551,13 @@ Method to find task by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { registerId: 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...', email: 'myemail@company.com'};const retData = await api.user.register.validateEmail(params);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ registerId: 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',
+ email: 'myemail@company.com'
+};
+const retData = await api.user.register.validateEmail(params);
 ```
 <a name="Register+execute"></a>
 
@@ -2337,60 +2591,30 @@ Method to register a user
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params ={    "registerId": 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',    "type": 'sign',    "login": false,    "emailInfo": {      "code": "5974",      "email": "cbtoto_1@mailinator.com"    },    "registerData": {      "name": "Augusto Totlo",      "registerEmail": "cbtoto_1@mailinator.com",      "phone": "",      "idcard": "",      "dob": "1978-01-12T03:00:00.000Z",      "registerPassword": "123456",      "emailValidationCode": "5974",      "phoneValidationCode": "",      "language": "en-US",      "timezone": "Europe/Dublin"    }  };const retData = await api.user.register.execute(params);
-```
-<a name="TaskAvailable"></a>
-
-## TaskAvailable
-Class for available tasks, permission user
-
-**Kind**: global class  
-
-* [TaskAvailable](#TaskAvailable)
-    * [.find(params, session)](#TaskAvailable+find) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
-    * [.claim(params, session)](#TaskAvailable+claim) ⇒ <code>promise</code> \| <code>boolean</code>
-
-<a name="TaskAvailable+find"></a>
-
-### taskAvailable.find(params, session) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
-Method to find available tasks for a user
-
-**Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
-**Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - page the page of the search (on pagination), zero indexed<code>number</code> - perPage how many items per page  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to get task |
-| params.query | <code>object</code> | Search available tasks query |
-| params.orgId | <code>object</code> | Organization id (_id database) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20}, orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const retSearch = await api.user.task.available.find(params, session);
-```
-<a name="TaskAvailable+claim"></a>
-
-### taskAvailable.claim(params, session) ⇒ <code>promise</code> \| <code>boolean</code>
-Method for a user to claim an available task
-
-**Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
-**Returns**: <code>promise</code> - returned data from the method call<code>boolean</code> - success true|false if the method was successful  
-**Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
-
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Params to get task |
-| params.taskId | <code>object</code> | the task id to claim |
-| params.orgname | <code>object</code> | Organization slug (short name of the orgnization) |
-| session | <code>string</code> | Session, token JWT |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { taskId: '55e4a3bd6be6b45210833f67', orgname: 'acme',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';const success = await api.user.task.available.claim(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params ={
+    "registerId": 'U2FsdGVkX1+xEq+sV6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz24O5koH+rGmdl/DjqfyWfENe5NFuQ+6xXhuOSN24Z+Topo87+e+CrRO8ox...',
+    "type": 'sign',
+    "login": false,
+    "emailInfo": {
+      "code": "5974",
+      "email": "cbtoto_1@mailinator.com"
+    },
+    "registerData": {
+      "name": "Augusto Totlo",
+      "registerEmail": "cbtoto_1@mailinator.com",
+      "phone": "",
+      "idcard": "",
+      "dob": "1978-01-12T03:00:00.000Z",
+      "registerPassword": "123456",
+      "emailValidationCode": "5974",
+      "phoneValidationCode": "",
+      "language": "en-US",
+      "timezone": "Europe/Dublin"
+    }
+  };
+const retData = await api.user.register.execute(params);
 ```
 <a name="Task"></a>
 
@@ -2423,7 +2647,15 @@ Method to find task by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { processId: '5dadd01dc4af3941d42f8c5c', taskId: '5df7f19618430c89a41a19d2', orgId: '55e4a3bd6be6b45210833fae',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.findById(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ processId: '5dadd01dc4af3941d42f8c5c',
+ taskId: '5df7f19618430c89a41a19d2',
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.findById(params, session);
 ```
 <a name="Task+findByIdAndUpdate"></a>
 
@@ -2449,7 +2681,17 @@ Find task by id and update
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { userId: '5739d4c6ccb0ebc61f2a9557', processId: '5dadd01dc4af3941d42f8c5c', taskId: '5df7f19618430c89a41a19d2', action: 1, formData: {name: 'CloudBrasil'},};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.findByIdAndUpdate(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ userId: '5739d4c6ccb0ebc61f2a9557',
+ processId: '5dadd01dc4af3941d42f8c5c',
+ taskId: '5df7f19618430c89a41a19d2',
+ action: 1,
+ formData: {name: 'CloudBrasil'},
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.findByIdAndUpdate(params, session);
 ```
 <a name="Task+executeActionFinalize"></a>
 
@@ -2471,7 +2713,83 @@ Find task by id and update
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { taskId: '5df7f19618430c89a41a19d2', actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d' orgId: '5df7f19618430c89a41a1bc3', payload: {}',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.executeActionFinalize(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ taskId: '5df7f19618430c89a41a19d2',
+ actionGuid: 'b3823a2ae52c7a05bfb9590fe427038d'
+ orgId: '5df7f19618430c89a41a1bc3',
+ payload: {}',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.executeActionFinalize(params, session);
+```
+<a name="TaskAvailable"></a>
+
+## TaskAvailable
+Class for available tasks, permission user
+
+**Kind**: global class  
+
+* [TaskAvailable](#TaskAvailable)
+    * [.find(params, session)](#TaskAvailable+find) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+    * [.claim(params, session)](#TaskAvailable+claim) ⇒ <code>promise</code> \| <code>boolean</code>
+
+<a name="TaskAvailable+find"></a>
+
+### taskAvailable.find(params, session) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+Method to find available tasks for a user
+
+**Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
+**Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - page the page of the search (on pagination), zero indexed<code>number</code> - perPage how many items per page  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.query | <code>object</code> | Search available tasks query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.task.available.find(params, session);
+```
+<a name="TaskAvailable+claim"></a>
+
+### taskAvailable.claim(params, session) ⇒ <code>promise</code> \| <code>boolean</code>
+Method for a user to claim an available task
+
+**Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
+**Returns**: <code>promise</code> - returned data from the method call<code>boolean</code> - success true|false if the method was successful  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.taskId | <code>object</code> | the task id to claim |
+| params.orgname | <code>object</code> | Organization slug (short name of the orgnization) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ taskId: '55e4a3bd6be6b45210833f67',
+ orgname: 'acme',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const success = await api.user.task.available.claim(params, session);
 ```
 <a name="Updates"></a>
 
@@ -2494,7 +2812,10 @@ get updates
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.updates.get(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.updates.get(session);
 ```
 <a name="User"></a>
 
@@ -2529,7 +2850,14 @@ Update avatar of user by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { avatar: '55e4a3bd6be6b45210833fae', type: '123456',};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.updateAvatar(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ avatar: '55e4a3bd6be6b45210833fae',
+ type: '123456',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.updateAvatar(params, session);
 ```
 <a name="User+removeAvatar"></a>
 
@@ -2546,7 +2874,10 @@ Remove avatar of user by session of user not allow session user SU
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.removeAvatar(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.removeAvatar(session);
 ```
 <a name="User+removeSignature"></a>
 
@@ -2563,7 +2894,10 @@ Remove the signature of user by session
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.removeSignature(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.removeSignature(session);
 ```
 <a name="User+saveSignature"></a>
 
@@ -2583,7 +2917,23 @@ Sava a new signature of user by session
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const data = {   type: 'CURSIVE',   file: 'allura:Mary John Heart'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.saveSignature(data, session);const API = require('@docbrasil/api-systemmanager');const api = new API();const data = {   type: 'HANDWRITE',   file: 'iVBORw0KGgoAAAANSUhEUgAAAj...'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.saveSignature(session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const data = {
+   type: 'CURSIVE',
+   file: 'allura:Mary John Heart'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.saveSignature(data, session);
+
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const data = {
+   type: 'HANDWRITE',
+   file: 'iVBORw0KGgoAAAANSUhEUgAAAj...'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.saveSignature(session);
 ```
 <a name="User+findByIdAndUpdate"></a>
 
@@ -2617,7 +2967,13 @@ Update a user profile by id
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const params = { name: 'New Name'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.profile.findByIdAndUpdate(params, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ name: 'New Name'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.profile.findByIdAndUpdate(params, session);
 ```
 <a name="User+changeOrganization"></a>
 
@@ -2635,5 +2991,379 @@ Change a user's organization
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const id = '616eccaaa9360a05293b10fe';const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.changeOrganization.updateAvatar(id, session);
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const id = '616eccaaa9360a05293b10fe';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.changeOrganization.updateAvatar(id, session);
+```
+<a name="Dispatch"></a>
+
+## Dispatch
+Api dispatch manager
+
+**Kind**: global class  
+
+* [Dispatch](#Dispatch)
+    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+
+<a name="Dispatch+getContext"></a>
+
+### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the URL context
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| url | <code>string</code> |  | Full url |
+| session | <code>session</code> | <code></code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
+```
+<a name="Dispatch+getClient"></a>
+
+### dispatch.getClient() ⇒ <code>promise</code>
+Get client Axios
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>promise</code> - return client axios  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+await api.dispatch.getClient();
+```
+<a name="External"></a>
+
+## External
+Class for documents, permission user
+
+**Kind**: global class  
+
+* [External](#External)
+    * [.context(params)](#External+context) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>array.&lt;object&gt;</code>
+    * [.getUploadDocumentSignedUrl(mime, authorization)](#External+getUploadDocumentSignedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.getUploadDocumentsSignedUrl(docs, authorization)](#External+getUploadDocumentsSignedUrl) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+    * [.handle(authorization, params)](#External+handle) ⇒ <code>Promise.&lt;boolean&gt;</code>
+
+<a name="External+context"></a>
+
+### external.context(params) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>array.&lt;object&gt;</code>
+Create new document
+
+**Kind**: instance method of [<code>External</code>](#External)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data<code>string</code> - _id the id of the form<code>string</code> - orgId the organization id of the form<code>string</code> - authorization the unique token registered internally by the system for all the next calls to the external form APIs
+     The authorization is unique and is ONLY valid for this session.<code>array.&lt;object&gt;</code> - groups the form groups to render  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Object for add new document |
+| params.id | <code>string</code> | Organization form id |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '611e679741cc63168c26d7ee'
+};
+const retForm = await api.external.context(params);
+```
+<a name="External+getUploadDocumentSignedUrl"></a>
+
+### external.getUploadDocumentSignedUrl(mime, authorization) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+Get an upload signed url, so it will be possible to upload documents temporarily during the use of the external form
+
+**Kind**: instance method of [<code>External</code>](#External)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - doc<code>string</code> - doc.mime the original mime type of the document<code>string</code> - doc.signedUrl the signed url to upload the document<code>string</code> - doc.filename  the filename of the uploaded file<code>string</code> - doc.extension  the extension of the filename, obtained from the mime type  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| mime | <code>string</code> | the mime type of the document |
+| authorization | <code>string</code> | a legal authorization |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const doc = {
+ mime: 'application/pdf'
+};
+const retDoc = await api.external.getUploadDocumentSignedUrl(doc, authorization);
+```
+<a name="External+getUploadDocumentsSignedUrl"></a>
+
+### external.getUploadDocumentsSignedUrl(docs, authorization) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
+Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
+
+**Kind**: instance method of [<code>External</code>](#External)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - docs<code>string</code> - docs.mime the original mime type of the document<code>string</code> - docs.signedUrl the signed url to upload the document<code>string</code> - docs.filename  the filename of the uploaded file<code>string</code> - docs.extension  the extension of the filename, obtained from the mime type  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| docs | <code>array.&lt;object&gt;</code> | the list of documents |
+| docs.mime | <code>string</code> | the mime type of the document |
+| authorization | <code>string</code> | a legal authorization |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const docs = [
+   {
+     mime: 'application/pdf'
+   }
+];
+const retDocs = await api.external.getUploadDocumentsSignedUrl(docs, authorization);
+```
+<a name="External+handle"></a>
+
+### external.handle(authorization, params) ⇒ <code>Promise.&lt;boolean&gt;</code>
+Handles the execution of an external form
+
+**Kind**: instance method of [<code>External</code>](#External)  
+**Returns**: <code>Promise.&lt;boolean&gt;</code> - true|false if success  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| authorization | <code>string</code> | a legal authorization |
+| params | <code>object</code> | the parameters to handle the execution of an external form |
+| params.payload | <code>array.&lt;object&gt;</code> | the payload of the external form. It should represent the form groups of the external form |
+| params.payload.name | <code>string</code> | the name of the group |
+| params.payload.fields | <code>array.&lt;object&gt;</code> | the fields that belong to each group |
+| params.payload.fields.value | <code>\*</code> \| <code>Object</code> | besides all the data inside a field, it should have the value of the the field |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+ payload: [
+     {
+         name: 'My Group One',
+         fields: [
+             {}
+         ]
+     }
+ ]
+};
+const success = await api.external.handle(params, authorization);
+```
+<a name="Login"></a>
+
+## Login
+Login manager
+
+**Kind**: global class  
+
+* [Login](#Login)
+    * [.facebook(params)](#Login+facebook) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.google(params)](#Login+google) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.apiKey(apikey)](#Login+apiKey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.userPass(params)](#Login+userPass) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.logout(session)](#Login+logout) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+    * [.recover(username)](#Login+recover) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+
+<a name="Login+facebook"></a>
+
+### login.facebook(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with social login Facebook
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to login Facebook |
+| params.accessToken | <code>string</code> | Access token of the system manager |
+| params.initialUserData | <code>object</code> | Object with roles default if sigin |
+| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const params = { accessToken: 'eyJhbGciOiJIUzI1NiIsInR5cC...' };
+const { auth, user } = await api.login.facebook(params);
+```
+<a name="Login+google"></a>
+
+### login.google(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with social login Google
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to login Google |
+| params.accessToken | <code>string</code> | Access token of the system manager |
+| params.initialUserData | <code>object</code> | Object with roles default if sigin |
+| params.initialUserData.externalRoles | <code>array</code> | Array with permission of user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const accessToken = 'eyJhbGciOiJIUzI1NiIsInR5cC...';
+const { auth, user } = await api.login.google(accessToken);
+```
+<a name="Login+apiKey"></a>
+
+### login.apiKey(apikey) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with apikey
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| apikey | <code>string</code> | Access key |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const apiKey = '043a0eb2-f5c3-4900-b781-7f229d00d092';
+const { auth, user } = await api.login.apiKey(apiKey);
+```
+<a name="Login+userPass"></a>
+
+### login.userPass(params) ⇒ <code>promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Login with user and password
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Object with user and password |
+| params.username | <code>string</code> | Username or email of the user |
+| params.password | <code>string</code> | Password of the user |
+| params.orgname | <code>string</code> | The organame of the user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance  
+const params = {...}
+const api = new API(params);
+const params = {
+  username: 'ana.silva@gmail.com',
+  password: '123456'
+};
+const { auth, user } = await api.login.userPass(params);
+```
+<a name="Login+logout"></a>
+
+### login.logout(session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+Logout user system manager
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const { success } = await api.login.logout(session);
+```
+<a name="Login+recover"></a>
+
+### login.recover(username) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+Recover the password
+
+**Kind**: instance method of [<code>Login</code>](#Login)  
+**Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| username | <code>string</code> | The username or email |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+
+// Params of the instance
+const params = {...}
+const api = new API(params);
+const { success } = await api.login.recover('myusername');
+```
+<a name="Session"></a>
+
+## Session
+Session manager of the API
+
+**Kind**: global class  
+<a name="Session+information"></a>
+
+### session.information(sessionId, suSessionId) ⇒ <code>Promise</code>
+Show information for session, thus validating the session (Valid token JWT)
+
+**Kind**: instance method of [<code>Session</code>](#Session)  
+**Access**: public  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| sessionId | <code>string</code> |  | The user session (JWT Token) |
+| suSessionId | <code>string</code> | <code>&quot;sessionId&quot;</code> | Given a JWT Token of a SU (SuperAdmin), allow to check session for another user. |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const sessionId = 'eyJhbFVBBiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const suSessionId = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.session.information(sessionId, suSessionId);
 ```

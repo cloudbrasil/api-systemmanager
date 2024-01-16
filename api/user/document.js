@@ -79,12 +79,15 @@ class Documents {
    */
   _formatDocument(params) {
     try {
+      const document = _.get(params, 'document');
+      const urlType = _.isEmpty(document) ? '' : _.get(params, 'urlType', 'S3');
+      const addType = _.isEmpty(document) ? '' : _.get(params, 'addType', 'S3_SIGNED');
       return {
         orgname: _.get(params, 'orgname'),
         areaId: _.get(params, 'areaId'),
         docId: _.get(params, 'docId'),
         documentDate: _.get(params, 'documentDate', Moment().format()),
-        document: _.get(params, 'document'),
+        document,
         type: _.get(params, 'type'),
         name: _.get(params, 'name'),
         content: _.get(params, 'content', ''),
@@ -101,8 +104,8 @@ class Documents {
         docTypeFields: _.get(params, 'docTypeFields', []), // {"extraId": userId},
         docTypeFieldsData: _.get(params, 'docTypeFieldsData', {}), // {"extraId": userId},
         signedUrl: _.get(params, 'signedUrl', ''),
-        urlType: _.get(params, 'urlType', 'S3'),
-        addType: _.get(params, 'addType', 'S3_SIGNED'),
+        urlType,
+        addType
       };
     } catch (ex) {
       throw ex;
@@ -187,17 +190,12 @@ class Documents {
    */
   async add(params, session) {
     const self = this;
-
     try {
       Joi.assert(params, Joi.object().required().error(new Error('params is required')));
-      Joi.assert(params.orgname, Joi.string().required().error(new Error('orgname is required')));
-      Joi.assert(params.areaId, Joi.string().required().error(new Error('areaId is required')));
-      Joi.assert(params.docId, Joi.string().required().error(new Error('docId is required')));
-      Joi.assert(params.type, Joi.string().required().error(new Error('type is required')));
-      Joi.assert(params.name, Joi.string().required().error(new Error('name is required')));
-      Joi.assert(params.docTypeId, Joi.string().required().error(new Error('docTypeId is required')));
-      Joi.assert(params.bytes, Joi.number().required().error(new Error('bytes is required')));
       Joi.assert(params.orgId, Joi.string().required().error(new Error('orgId is required')));
+      Joi.assert(params.areaId, Joi.string().required().error(new Error('areaId is required')));
+      Joi.assert(params.orgname, Joi.string().required().error(new Error('orgname is required')));
+      Joi.assert(params.docTypeId, Joi.string().required().error(new Error('docTypeId is required')));
       Joi.assert(session, Joi.string().required().error(new Error('session is required')));
 
       // Get fields required, and set data default to create document

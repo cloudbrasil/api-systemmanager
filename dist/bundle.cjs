@@ -631,12 +631,15 @@ class Documents {
    */
   _formatDocument(params) {
     try {
+      const document = ___default["default"].get(params, 'document');
+      const urlType = ___default["default"].isEmpty(document) ? '' : ___default["default"].get(params, 'urlType', 'S3');
+      const addType = ___default["default"].isEmpty(document) ? '' : ___default["default"].get(params, 'addType', 'S3_SIGNED');
       return {
         orgname: ___default["default"].get(params, 'orgname'),
         areaId: ___default["default"].get(params, 'areaId'),
         docId: ___default["default"].get(params, 'docId'),
         documentDate: ___default["default"].get(params, 'documentDate', Moment__default["default"]().format()),
-        document: ___default["default"].get(params, 'document'),
+        document,
         type: ___default["default"].get(params, 'type'),
         name: ___default["default"].get(params, 'name'),
         content: ___default["default"].get(params, 'content', ''),
@@ -653,8 +656,8 @@ class Documents {
         docTypeFields: ___default["default"].get(params, 'docTypeFields', []), // {"extraId": userId},
         docTypeFieldsData: ___default["default"].get(params, 'docTypeFieldsData', {}), // {"extraId": userId},
         signedUrl: ___default["default"].get(params, 'signedUrl', ''),
-        urlType: ___default["default"].get(params, 'urlType', 'S3'),
-        addType: ___default["default"].get(params, 'addType', 'S3_SIGNED'),
+        urlType,
+        addType
       };
     } catch (ex) {
       throw ex;
@@ -739,17 +742,12 @@ class Documents {
    */
   async add(params, session) {
     const self = this;
-
     try {
       Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
-      Joi__default["default"].assert(params.orgname, Joi__default["default"].string().required().error(new Error('orgname is required')));
-      Joi__default["default"].assert(params.areaId, Joi__default["default"].string().required().error(new Error('areaId is required')));
-      Joi__default["default"].assert(params.docId, Joi__default["default"].string().required().error(new Error('docId is required')));
-      Joi__default["default"].assert(params.type, Joi__default["default"].string().required().error(new Error('type is required')));
-      Joi__default["default"].assert(params.name, Joi__default["default"].string().required().error(new Error('name is required')));
-      Joi__default["default"].assert(params.docTypeId, Joi__default["default"].string().required().error(new Error('docTypeId is required')));
-      Joi__default["default"].assert(params.bytes, Joi__default["default"].number().required().error(new Error('bytes is required')));
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required().error(new Error('orgId is required')));
+      Joi__default["default"].assert(params.areaId, Joi__default["default"].string().required().error(new Error('areaId is required')));
+      Joi__default["default"].assert(params.orgname, Joi__default["default"].string().required().error(new Error('orgname is required')));
+      Joi__default["default"].assert(params.docTypeId, Joi__default["default"].string().required().error(new Error('docTypeId is required')));
       Joi__default["default"].assert(session, Joi__default["default"].string().required().error(new Error('session is required')));
 
       // Get fields required, and set data default to create document

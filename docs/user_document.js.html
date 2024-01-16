@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Login.html">Login</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -166,12 +166,15 @@ class Documents {
    */
   _formatDocument(params) {
     try {
+      const document = _.get(params, 'document');
+      const urlType = _.isEmpty(document) ? '' : _.get(params, 'urlType', 'S3');
+      const addType = _.isEmpty(document) ? '' : _.get(params, 'addType', 'S3_SIGNED');
       return {
         orgname: _.get(params, 'orgname'),
         areaId: _.get(params, 'areaId'),
         docId: _.get(params, 'docId'),
         documentDate: _.get(params, 'documentDate', Moment().format()),
-        document: _.get(params, 'document'),
+        document,
         type: _.get(params, 'type'),
         name: _.get(params, 'name'),
         content: _.get(params, 'content', ''),
@@ -188,8 +191,8 @@ class Documents {
         docTypeFields: _.get(params, 'docTypeFields', []), // {"extraId": userId},
         docTypeFieldsData: _.get(params, 'docTypeFieldsData', {}), // {"extraId": userId},
         signedUrl: _.get(params, 'signedUrl', ''),
-        urlType: _.get(params, 'urlType', 'S3'),
-        addType: _.get(params, 'addType', 'S3_SIGNED'),
+        urlType,
+        addType
       };
     } catch (ex) {
       throw ex;
@@ -274,17 +277,12 @@ class Documents {
    */
   async add(params, session) {
     const self = this;
-
     try {
       Joi.assert(params, Joi.object().required().error(new Error('params is required')));
-      Joi.assert(params.orgname, Joi.string().required().error(new Error('orgname is required')));
-      Joi.assert(params.areaId, Joi.string().required().error(new Error('areaId is required')));
-      Joi.assert(params.docId, Joi.string().required().error(new Error('docId is required')));
-      Joi.assert(params.type, Joi.string().required().error(new Error('type is required')));
-      Joi.assert(params.name, Joi.string().required().error(new Error('name is required')));
-      Joi.assert(params.docTypeId, Joi.string().required().error(new Error('docTypeId is required')));
-      Joi.assert(params.bytes, Joi.number().required().error(new Error('bytes is required')));
       Joi.assert(params.orgId, Joi.string().required().error(new Error('orgId is required')));
+      Joi.assert(params.areaId, Joi.string().required().error(new Error('areaId is required')));
+      Joi.assert(params.orgname, Joi.string().required().error(new Error('orgname is required')));
+      Joi.assert(params.docTypeId, Joi.string().required().error(new Error('docTypeId is required')));
       Joi.assert(session, Joi.string().required().error(new Error('session is required')));
 
       // Get fields required, and set data default to create document
