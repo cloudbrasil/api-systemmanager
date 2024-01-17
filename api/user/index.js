@@ -12,6 +12,7 @@ import Updates from './updates.js';
 import Help from './help.js';
 import Datasource from './datasource.js';
 import Application from './application.js';
+import Settings from './settings.js';
 
 /**
  * @class API request, user permission level
@@ -34,6 +35,7 @@ class Users {
     self.process = new Process(options);
     self.task = new Task(options);
     self.user = self.profile = new User(options);
+    self.settings = new Settings(options);
     self.register = new Register(options);
     self.notification = new Notification(options);
     self.updates = new Updates(options);

@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> user/task_available.js</title>
+  <title> user/settings.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>user/task_available.js</h1>
+                    <h1>user/settings.js</h1>
                 </header>
                 
 
@@ -90,22 +90,27 @@ import Boom from '@hapi/boom';
 import Joi from 'joi';
 
 /**
- * Class for available tasks, permission user
+ * Class for user settings
  * @class
  */
-class TaskAvailable {
+class Settings {
 
   constructor(options) {
     Joi.assert(options, Joi.object().required());
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
-    self.parent = options.parent;
-    self._client = self.parent.dispatch.getClient();
+    self._parent = options.parent;
+    self._client = self._parent.dispatch.getClient();
+    self.gender = {
+      male: 1,
+      female: 2,
+      nonBinary: 3
+    };
   }
 
   /**
-   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -136,42 +141,30 @@ class TaskAvailable {
 
   /**
    * @author CloudBrasil &lt;abernardo.br@gmail.com>
-   * @description Method to find available tasks for a user
-   * @param {object} params Params to get task
-   * @param {object} params.query Search available tasks query
-   * @param {object} params.orgId Organization id (_id database)
-   * @param {string} session Session, token JWT
-   * @returns {promise} returned data from the search
-   * @returns {number} count the count of items searched
-   * @returns {array&lt;object>} items the items returned from search
-   * @returns {number} page the page of the search (on pagination), zero indexed
-   * @returns {number} perPage how many items per page
+   * @description Adds/updates a user settings
+   * @param {object} settings Full user settings
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
    * @public
+   * @async
    * @example
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
-   * const params = {
-   *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
-   *  orgId: '55e4a3bd6be6b45210833fae',
+   * const settings = {
+   *  areaId: '55e4a3bd6be6b45210833fae'
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retSearch = await api.user.task.available.find(params, session);
+   * await api.user.settings.upsert(settings, session);
    */
-  async find(params, session) {
+  async upsert(settings, session) {
     const self = this;
 
     try {
-      Joi.assert(params, Joi.object().required(), 'Params to get task');
-      Joi.assert(params.query, Joi.object().required(), 'The query for the search');
-      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
-      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+      Joi.assert(settings, Joi.object().required());
+      Joi.assert(session, Joi.string().required());
 
-      const {query, orgId} = params;
-      const queryString = JSON.stringify(query);
-      const apiCall = self._client
-        .post(`/organizations/${orgId}/users/tasks/groups/advsearch?query=${queryString}`, {}, self._setHeader(session));
-
+      const apiCall = self._client.put(`/users/settings`, settings, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -180,38 +173,54 @@ class TaskAvailable {
 
   /**
    * @author CloudBrasil &lt;abernardo.br@gmail.com>
-   * @description Method for a user to claim an available task
-   * @param {object} params Params to get task
-   * @param {object} params.taskId the task id to claim
-   * @param {object} params.orgname Organization slug (short name of the orgnization)
-   * @param {string} session Session, token JWT
-   * @returns {promise} returned data from the method call
-   * @returns {boolean} success true|false if the method was successful
+   * @description Gets the user settings
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
    * @public
+   * @async
    * @example
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
-   * const params = {
-   *  taskId: '55e4a3bd6be6b45210833f67',
-   *  orgname: 'acme',
-   * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const success = await api.user.task.available.claim(params, session);
+   * await api.user.settings.get(session);
    */
-  async claim(params, session) {
+  async get(session) {
     const self = this;
 
     try {
-      Joi.assert(params, Joi.object().required(), 'Params to claim the task');
-      Joi.assert(params.taskId, Joi.string().required(), 'The task id to claim');
-      Joi.assert(params.orgname, Joi.string().required(), 'The slug of the organization');
-      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+      Joi.assert(settings, Joi.object().required());
+      Joi.assert(session, Joi.string().required());
 
-      const {taskId, orgname} = params;
-      const apiCall = self._client
-          .put(`/organizations/${orgname}/users/tasks/${taskId}/claim`, {}, self._setHeader(session));
+      const apiCall = self._client.get(`/users/settings`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 
+  /**
+   * @author CloudBrasil &lt;abernardo.br@gmail.com>
+   * @description Removes the user settings
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.settings.remove(session);
+   */
+  async remove(session) {
+    const self = this;
+
+    try {
+      Joi.assert(settings, Joi.object().required());
+      Joi.assert(session, Joi.string().required());
+
+      const apiCall = self._client.del(`/users/settings`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -219,7 +228,7 @@ class TaskAvailable {
   }
 }
 
-export default TaskAvailable;
+export default Settings;
 </code></pre>
         </article>
     </section>

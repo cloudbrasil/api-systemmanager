@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Dispatch</title>
+  <title> Settings</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>Dispatch</h1>
+                    <h1>Settings</h1>
                 </header>
                 
 
@@ -85,9 +85,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Dispatch<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Settings<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Api dispatch manager</div>
+            <div class="class-description">Class for user settings</div>
         
     
 </header>
@@ -106,12 +106,12 @@
 
 
     
-    <h4 class="name" id="Dispatch">
-        <a class="href-link" href="#Dispatch">#</a>
+    <h4 class="name" id="Settings">
+        <a class="href-link" href="#Settings">#</a>
         
         <span class="code-name">
             
-                new Dispatch<span class="signature">()</span><span class="type-signature"></span>
+                new Settings<span class="signature">()</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -165,9 +165,9 @@
 
     
         <p class="tag-source">
-            <a href="dispatch.js.html" class="button">View Source</a>
+            <a href="user_settings.js.html" class="button">View Source</a>
             <span>
-                <a href="dispatch.js.html">dispatch.js</a>, <a href="dispatch.js.html#line8">line 8</a>
+                <a href="user_settings.js.html">user/settings.js</a>, <a href="user_settings.js.html#line9">line 9</a>
             </span>
         </p>
     
@@ -224,8 +224,8 @@
 
 
     
-    <h4 class="name" id="getClient">
-        <a class="href-link" href="#getClient">#</a>
+    <h4 class="name" id="get">
+        <a class="href-link" href="#get">#</a>
         
             
                 <span class='tag'>async</span>
@@ -233,7 +233,7 @@
         
         <span class="code-name">
             
-                getClient<span class="signature">()</span><span class="type-signature"> &rarr; {promise}</span>
+                get<span class="signature">(session)</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -242,7 +242,7 @@
     
     
     <div class="description">
-        Get client Axios
+        Gets the user settings
     </div>
     
 
@@ -253,6 +253,57 @@
 
 
 
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Is token JWT of user NOT allow SU</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
 
 
 
@@ -298,9 +349,9 @@
 
     
         <p class="tag-source">
-            <a href="dispatch.js.html" class="button">View Source</a>
+            <a href="user_settings.js.html" class="button">View Source</a>
             <span>
-                <a href="dispatch.js.html">dispatch.js</a>, <a href="dispatch.js.html#line91">line 91</a>
+                <a href="user_settings.js.html">user/settings.js</a>, <a href="user_settings.js.html#line101">line 101</a>
             </span>
         </p>
     
@@ -331,13 +382,11 @@
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>return client axios</div>
-    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">promise</code>
+<code class="param-type">Promise</code>
 
 
     </div>
@@ -356,7 +405,8 @@
     
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
-await api.dispatch.getClient();</code></pre>
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.settings.get(session);</code></pre>
     
 
 
@@ -366,8 +416,8 @@ await api.dispatch.getClient();</code></pre>
 
 
     
-    <h4 class="name" id="getContext">
-        <a class="href-link" href="#getContext">#</a>
+    <h4 class="name" id="remove">
+        <a class="href-link" href="#remove">#</a>
         
             
                 <span class='tag'>async</span>
@@ -375,7 +425,7 @@ await api.dispatch.getClient();</code></pre>
         
         <span class="code-name">
             
-                getContext<span class="signature">(url, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+                remove<span class="signature">(session)</span><span class="type-signature"> &rarr; {Promise}</span>
             
         </span>
     </h4>
@@ -384,7 +434,7 @@ await api.dispatch.getClient();</code></pre>
     
     
     <div class="description">
-        Get the URL context
+        Removes the user settings
     </div>
     
 
@@ -411,8 +461,6 @@ await api.dispatch.getClient();</code></pre>
             
 
             
-            <th>Default</th>
-            
 
             <th class="last">Description</th>
         </tr>
@@ -424,7 +472,7 @@ await api.dispatch.getClient();</code></pre>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>url</code></td>
+      <td class="name"><code>session</code></td>
   
 
   <td class="type">
@@ -439,43 +487,8 @@ await api.dispatch.getClient();</code></pre>
   
 
   
-      <td class="default">
-      
-      </td>
-  
 
-  <td class="description last">Full url</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">session</code>
-
-
-  
-  </td>
-
-  
-
-  
-      <td class="default">
-      
-          null
-      
-      </td>
-  
-
-  <td class="description last">Session, token JWT</td>
+  <td class="description last">Is token JWT of user NOT allow SU</td>
 </tr>
 
 
@@ -507,6 +520,13 @@ await api.dispatch.getClient();</code></pre>
     
 
     
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:abernardo.br@gmail.com">CloudBrasil</a></li>
+        </ul>
+    </dd>
+    
 
     
 
@@ -521,9 +541,9 @@ await api.dispatch.getClient();</code></pre>
 
     
         <p class="tag-source">
-            <a href="dispatch.js.html" class="button">View Source</a>
+            <a href="user_settings.js.html" class="button">View Source</a>
             <span>
-                <a href="dispatch.js.html">dispatch.js</a>, <a href="dispatch.js.html#line64">line 64</a>
+                <a href="user_settings.js.html">user/settings.js</a>, <a href="user_settings.js.html#line129">line 129</a>
             </span>
         </p>
     
@@ -554,13 +574,11 @@ await api.dispatch.getClient();</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>The full data context of the URL</div>
-    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise.&lt;object></code>
+<code class="param-type">Promise</code>
 
 
     </div>
@@ -579,7 +597,228 @@ await api.dispatch.getClient();</code></pre>
     
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
-const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);</code></pre>
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.settings.remove(session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="upsert">
+        <a class="href-link" href="#upsert">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                upsert<span class="signature">(settings, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Adds/updates a user settings
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>settings</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Full user settings</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Is token JWT of user NOT allow SU</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:abernardo.br@gmail.com">CloudBrasil</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_settings.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_settings.js.html">user/settings.js</a>, <a href="user_settings.js.html#line73">line 73</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const settings = {
+ areaId: '55e4a3bd6be6b45210833fae'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.settings.upsert(settings, session);</code></pre>
     
 
 

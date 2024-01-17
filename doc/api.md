@@ -76,6 +76,9 @@
 <dt><a href="#Register">Register</a></dt>
 <dd><p>Class for user registration in a user</p>
 </dd>
+<dt><a href="#Settings">Settings</a></dt>
+<dd><p>Class for user settings</p>
+</dd>
 <dt><a href="#Task">Task</a></dt>
 <dd><p>Class for task, permission user</p>
 </dd>
@@ -2662,6 +2665,82 @@ const params ={
     }
   };
 const retData = await api.user.register.execute(params);
+```
+<a name="Settings"></a>
+
+## Settings
+Class for user settings
+
+**Kind**: global class  
+
+* [Settings](#Settings)
+    * [.upsert(settings, session)](#Settings+upsert) ⇒ <code>Promise</code>
+    * [.get(session)](#Settings+get) ⇒ <code>Promise</code>
+    * [.remove(session)](#Settings+remove) ⇒ <code>Promise</code>
+
+<a name="Settings+upsert"></a>
+
+### settings.upsert(settings, session) ⇒ <code>Promise</code>
+Adds/updates a user settings
+
+**Kind**: instance method of [<code>Settings</code>](#Settings)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| settings | <code>object</code> | Full user settings |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const settings = {
+ areaId: '55e4a3bd6be6b45210833fae'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.settings.upsert(settings, session);
+```
+<a name="Settings+get"></a>
+
+### settings.get(session) ⇒ <code>Promise</code>
+Gets the user settings
+
+**Kind**: instance method of [<code>Settings</code>](#Settings)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.settings.get(session);
+```
+<a name="Settings+remove"></a>
+
+### settings.remove(session) ⇒ <code>Promise</code>
+Removes the user settings
+
+**Kind**: instance method of [<code>Settings</code>](#Settings)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.settings.remove(session);
 ```
 <a name="Task"></a>
 
