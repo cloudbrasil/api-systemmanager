@@ -1382,6 +1382,8 @@ Class for documents, permission user
 
 * [Documents](#Documents)
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
+    * [.findByIdAndUpdate(id, params, session)](#Documents+findByIdAndUpdate) ⇒ <code>Promise</code>
+    * [.findById(id, session)](#Documents+findById) ⇒ <code>Promise</code>
     * [.find(params, session)](#Documents+find) ⇒ <code>Promise</code>
     * [.findByIdAndRemove(params, session)](#Documents+findByIdAndRemove) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.findByIdsAndRemove(params, session)](#Documents+findByIdsAndRemove) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
@@ -1448,6 +1450,51 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.add(params, session);
+```
+<a name="Documents+findByIdAndUpdate"></a>
+
+### documents.findByIdAndUpdate(id, params, session) ⇒ <code>Promise</code>
+Updates a document
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Document _id |
+| params | <code>object</code> | Object for document payload to update. It has to be the FULL document data, that you can get with findById |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { ... };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdAndUpdate('5edf9f8ee896b817e45b8dad', params, session);
+```
+<a name="Documents+findById"></a>
+
+### documents.findById(id, session) ⇒ <code>Promise</code>
+Updates a document.
+ IMPORTANT: if your document has a content, it will NOT bring the content.
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| id | <code>string</code> | Document _id |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);
 ```
 <a name="Documents+find"></a>
 

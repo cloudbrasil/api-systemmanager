@@ -555,6 +555,19 @@ class Users$1 {
   }
 }
 
+const Random = {
+  S4: function () {
+    return (((1 + Math.random()) * 0x10000) | 0).toString(16).substring(1);
+  },
+  guid: function (separator) {
+    var separator = (___default["default"].isUndefined(separator) ? "" : separator);
+    return (this.S4() + this.S4() + separator + this.S4() + separator + this.S4() + separator + this.S4() + separator + this.S4() + this.S4() + this.S4());
+  },
+  code: function () {
+    return this.S4().toUpperCase() + '-' + this.S4().toUpperCase() + '-' + this.S4().toUpperCase();
+  }
+};
+
 /**
  * Class for documents, permission user
  * @class
@@ -631,13 +644,13 @@ class Documents {
    */
   _formatDocument(params) {
     try {
-      const document = ___default["default"].get(params, 'document');
+      const document = ___default["default"].get(params, 'document', '');
       const urlType = ___default["default"].isEmpty(document) ? '' : ___default["default"].get(params, 'urlType', 'S3');
       const addType = ___default["default"].isEmpty(document) ? '' : ___default["default"].get(params, 'addType', 'S3_SIGNED');
       return {
         orgname: ___default["default"].get(params, 'orgname'),
         areaId: ___default["default"].get(params, 'areaId'),
-        docId: ___default["default"].get(params, 'docId'),
+        docId: ___default["default"].get(params, 'docId', Random.code()),
         documentDate: ___default["default"].get(params, 'documentDate', Moment__default["default"]().format()),
         document,
         type: ___default["default"].get(params, 'type'),
@@ -770,6 +783,71 @@ class Documents {
       const {areaId, orgId} = params;
       const apiCall = self._client
         .put(`/organizations/${orgId}/areas/${areaId}/documents`, payloadToSend, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Updates a document
+   * @param {string} id Document _id
+   * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { ... };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.document.findByIdAndUpdate('5edf9f8ee896b817e45b8dad', params, session);
+   */
+  async findByIdAndUpdate(id, params, session) {
+    const self = this;
+    try {
+      Joi__default["default"].assert(params._id, Joi__default["default"].string().required().error(new Error('_id is required')));
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(session, Joi__default["default"].string().required().error(new Error('session is required')));
+      const {areaId, orgId} = params;
+      const apiCall = self._client
+          .put(`/organizations/${orgId}/areas/${areaId}/documents/${id}`, params, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Updates a document.
+   *  IMPORTANT: if your document has a content, it will NOT bring the content.
+   * @param {string} id Document _id
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);
+   */
+  async findById(id, session) {
+    const self = this;
+    try {
+      Joi__default["default"].assert(params._id, Joi__default["default"].string().required().error(new Error('_id is required')));
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(session, Joi__default["default"].string().required().error(new Error('session is required')));
+      const {areaId, orgId} = params;
+      const apiCall = self._client
+          .get(`/organizations/${orgId}/documents/${id}/data/DOC`, params, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -1274,7 +1352,6 @@ class Documents {
       throw ex;
     }
   }
-
 }
 
 /**

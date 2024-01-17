@@ -1657,7 +1657,7 @@ Checks if a document can be added and it does not repeat its primary key</li>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line659">line 659</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line724">line 724</a>
             </span>
         </p>
     
@@ -2368,7 +2368,7 @@ const retDocs = await api.user.document.checkPrimaryKeys(params, session);</code
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line262">line 262</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line327">line 327</a>
             </span>
         </p>
     
@@ -2432,6 +2432,224 @@ const params - {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdAndRemove(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="findById">
+        <a class="href-link" href="#findById">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                findById<span class="signature">(id, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates a document.
+ IMPORTANT: if your document has a content, it will NOT bring the content.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>id</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Document _id</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:abernardo.br@gmail.com">CloudBrasil</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_document.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line277">line 277</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);</code></pre>
     
 
 
@@ -2642,7 +2860,7 @@ await api.user.document.findByIdAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line346">line 346</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line411">line 411</a>
             </span>
         </p>
     
@@ -2794,6 +3012,249 @@ const params - {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdAndRemove(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="findByIdAndUpdate">
+        <a class="href-link" href="#findByIdAndUpdate">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                findByIdAndUpdate<span class="signature">(id, params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates a document
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>id</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Document _id</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Object for document payload to update. It has to be the FULL document data, that you can get with findById</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:abernardo.br@gmail.com">CloudBrasil</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_document.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line245">line 245</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { ... };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdAndUpdate('5edf9f8ee896b817e45b8dad', params, session);</code></pre>
     
 
 
@@ -3027,7 +3488,7 @@ await api.user.document.findByIdAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line391">line 391</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line456">line 456</a>
             </span>
         </p>
     
@@ -3389,7 +3850,7 @@ await api.user.document.findByIdsAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line707">line 707</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line772">line 772</a>
             </span>
         </p>
     
@@ -3848,7 +4309,7 @@ const retSearch = await api.user.document.searchDocuments(params, session);</cod
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line457">line 457</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line522">line 522</a>
             </span>
         </p>
     
@@ -4364,7 +4825,7 @@ const base64Data = await api.user.document.signedUrl(params, session);</code></p
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line553">line 553</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line618">line 618</a>
             </span>
         </p>
     
@@ -4762,7 +5223,7 @@ const base64Data = await api.user.document.signedUrls(params, session);</code></
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line601">line 601</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line666">line 666</a>
             </span>
         </p>
     
