@@ -86,7 +86,7 @@ class Settings {
 
   /**
    * @author CloudBrasil <abernardo.br@gmail.com>
-   * @description Gets the user settings
+   * @description Gets the user settings. Returns an array of settings.
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
    * @public
@@ -96,13 +96,12 @@ class Settings {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.settings.get(session);
+   * ret settings = await api.user.settings.get(session);
    */
   async get(session) {
     const self = this;
 
     try {
-      Joi.assert(settings, Joi.object().required());
       Joi.assert(session, Joi.string().required());
 
       const apiCall = self._client.get(`/users/settings`, self._setHeader(session));
@@ -130,7 +129,6 @@ class Settings {
     const self = this;
 
     try {
-      Joi.assert(settings, Joi.object().required());
       Joi.assert(session, Joi.string().required());
 
       const apiCall = self._client.del(`/users/settings`, self._setHeader(session));

@@ -2705,7 +2705,7 @@ await api.user.settings.upsert(settings, session);
 <a name="Settings+get"></a>
 
 ### settings.get(session) ⇒ <code>Promise</code>
-Gets the user settings
+Gets the user settings. Returns an array of settings.
 
 **Kind**: instance method of [<code>Settings</code>](#Settings)  
 **Access**: public  
@@ -2720,7 +2720,7 @@ Gets the user settings
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.settings.get(session);
+ret settings = await api.user.settings.get(session);
 ```
 <a name="Settings+remove"></a>
 
