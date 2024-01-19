@@ -90,6 +90,86 @@ class MyTasks {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update task dueDate
+   * @param {object} data The Date to save
+   * @param {string} data.dueDate DueDate
+   * @param {string} data.orgId Organization id
+   * @param {string} data.taskId Task Id
+   * @param {string} session Is token JWT of user
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const data = {
+   *    dueDate: '2011-10-05T14:48:00.000Z',
+   *    orgId: '646386c9583e04a131adc894',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.saveDueDate(data, session);
+   */
+  async saveDueDate(data, session) {
+    const self = this;
+
+    try {
+      Joi.assert(data, Joi.object().required());
+      Joi.assert(data.dueDate, Joi.string().required());
+      Joi.assert(data.orgId, Joi.string().required());
+      Joi.assert(data.taskId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {taskId, orgId} = params;
+
+      const apiCall = self._client.put(`/organizations/${orgId}/users/tasks/${taskId}/duedate`, data, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Update task dueDate
+   * @param {string} data.orgId Organization id
+   * @param {string} data.taskId Task Id
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const data = {
+   *    orgId: '646386c9583e04a131adc894',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.removeDueDate(data, session);
+   */
+  async removeDueDate(data, session) {
+    const self = this;
+
+    try {
+      Joi.assert(data, Joi.object().required());
+      Joi.assert(data.orgId, Joi.string().required());
+      Joi.assert(data.taskId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {taskId, orgId} = params;
+
+      const apiCall = self._client.delete(`/organizations/${orgId}/users/tasks/${taskId}/duedate`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default MyTasks;
