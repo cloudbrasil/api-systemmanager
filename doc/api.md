@@ -1786,7 +1786,7 @@ Class for my tasks, permission user
 
 * [MyTasks](#MyTasks)
     * [.find(params, session)](#MyTasks+find) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
-    * [.saveDueDate(data, session)](#MyTasks+saveDueDate) ⇒ <code>Promise</code>
+    * [.saveDueDate(params, session)](#MyTasks+saveDueDate) ⇒ <code>Promise</code>
     * [.removeDueDate(session)](#MyTasks+removeDueDate) ⇒ <code>Promise</code>
 
 <a name="MyTasks+find"></a>
@@ -1812,7 +1812,7 @@ const API = require('@docbrasil/api-systemmanager');const api = new API();cons
 ```
 <a name="MyTasks+saveDueDate"></a>
 
-### myTasks.saveDueDate(data, session) ⇒ <code>Promise</code>
+### myTasks.saveDueDate(params, session) ⇒ <code>Promise</code>
 Update task dueDate
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
@@ -1821,15 +1821,15 @@ Update task dueDate
 
 | Param | Type | Description |
 | --- | --- | --- |
-| data | <code>object</code> | The Date to save |
-| data.dueDate | <code>string</code> | DueDate |
-| data.orgId | <code>string</code> | Organization id |
-| data.taskId | <code>string</code> | Task Id |
+| params | <code>object</code> | The Date to save |
+| params.dueDate | <code>string</code> | DueDate |
+| params.orgId | <code>string</code> | Organization id |
+| params.taskId | <code>string</code> | Task Id |
 | session | <code>string</code> | Is token JWT of user |
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const data = {   dueDate: '2011-10-05T14:48:00.000Z',   orgId: '646386c9583e04a131adc894',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.saveDueDate(data, session);
+const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {   dueDate: '2011-10-05T14:48:00.000Z',   orgId: '646386c9583e04a131adc894',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.saveDueDate(params, session);
 ```
 <a name="MyTasks+removeDueDate"></a>
 
@@ -1848,7 +1848,7 @@ Update task dueDate
 
 **Example**  
 ```js
-const API = require('@docbrasil/api-systemmanager');const api = new API();const data = {   orgId: '646386c9583e04a131adc894',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.removeDueDate(data, session);
+const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {   orgId: '646386c9583e04a131adc894',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.removeDueDate(params, session);
 ```
 <a name="Notification"></a>
 
