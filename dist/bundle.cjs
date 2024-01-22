@@ -2314,6 +2314,129 @@ class MyTasks {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to get task multi users
+   * @param {object} params Params to get task
+   * @param {object} params.taskId Task id (_id database)
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  taskId: '5df7f19618430c89a41a19d2',
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.getTaskMultiUsers(params, session);
+   */
+  async getTaskMultiUsers(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task multi users');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required(), ' Task id (_id database)');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {taskId, orgId} = params;
+      const apiCall = self._client
+        .get(`/organizations/${orgId}/users/tasks/${taskId}/multi/assign`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description remove multi task user
+   * @param {object} params Params of the user to be removed 
+   * @param {string} params.userId User id
+   * @param {string} params.orgId Organization id
+   * @param {string} params.taskId Task Id
+   * @param {string} session Is token JWT of user
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *    userId: '646386c9583e04a131adc896',
+   *    orgId: '646386c9583e04a131adc894',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.removeMultiTaskUser(params, session);
+   */
+  async removeMultiTaskUser(params, session) {
+      const self = this;
+  
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required());
+        Joi__default["default"].assert(params.userId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+  
+        const {taskId, orgId, userId} = params;
+  
+        const apiCall = self._client.delete(`/organizations/${orgId}/tasks/${taskId}/users/${userId}`, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+  }
+
+    /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Add Multi Task User
+   * @param {object} params Params for adding multi task user
+   * @param {string} params.userId User id
+   * @param {string} params.orgId Organization id
+   * @param {string} params.taskId Task Id
+   * @param {string} session Is token JWT of user
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *    userId: '646386c9583e04a131adc8946',
+   *    orgId: '646386c9583e04a131adc894',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.addMultiTaskUser(params, session);
+   */
+    async addMultiTaskUser(params, session) {
+      const self = this;
+  
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required());
+        Joi__default["default"].assert(params.userId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+  
+        const {taskId, orgId, userId} = params;
+  
+        const apiCall = self._client.put(`/organizations/${orgId}/tasks/${taskId}/users`, { userIdToAdd: userId }, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
 }
 
 /**
