@@ -252,7 +252,7 @@ class MyTasks {
       }
   }
 
-    /**
+  /**
    * @author CloudBrasil <abernardo.br@gmail.com>
    * @description Add Multi Task User
    * @param {object} params Params for adding multi task user
@@ -275,7 +275,7 @@ class MyTasks {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.mytasks.addMultiTaskUser(params, session);
    */
-    async addMultiTaskUser(params, session) {
+  async addMultiTaskUser(params, session) {
       const self = this;
   
       try {
@@ -292,7 +292,88 @@ class MyTasks {
       } catch (ex) {
         throw ex;
       }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Method to get assign task users
+   * @param {object} params Params to get task
+   * @param {object} params.taskId Task id (_id database)
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  taskId: '5df7f19618430c89a41a19d2',
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.getAssignTaskUsers(params, session);
+   */
+  async getAssignTaskUsers(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get task multi users');
+      Joi.assert(params.taskId, Joi.string().required(), ' Task id (_id database)');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const {taskId, orgId} = params;
+      const apiCall = self._client
+        .get(`/organizations/${orgId}/users/tasks/${taskId}/assign`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
     }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Assign Task user
+   * @param {object} params The params to assign task to user
+   * @param {string} params.orgName Organization Name
+   * @param {string} params.userId User id that will be assigned the task
+   * @param {string} params.taskId Task Id
+   * @param {string} session Is token JWT of user
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *    orgName: 'pinkbrain',
+   *    userId: '646386c9583e04a131adc894',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.assignTaskUser(params, session);
+   */
+  async assignTaskUsers(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.dueDate, Joi.string().required());
+      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(params.taskId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {taskId, userId, orgName} = params;
+
+      const apiCall = self._client.put(`/organizations/${orgName}/users/tasks/${taskId}/assign/${userId}`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default MyTasks;
