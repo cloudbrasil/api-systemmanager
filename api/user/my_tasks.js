@@ -318,7 +318,7 @@ class MyTasks {
     const self = this;
 
     try {
-      Joi.assert(params, Joi.object().required(), 'Params to get task multi users');
+      Joi.assert(params, Joi.object().required(), 'Params to get assign task users');
       Joi.assert(params.taskId, Joi.string().required(), ' Task id (_id database)');
       Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
@@ -361,8 +361,8 @@ class MyTasks {
 
     try {
       Joi.assert(params, Joi.object().required());
-      Joi.assert(params.dueDate, Joi.string().required());
-      Joi.assert(params.orgId, Joi.string().required());
+      Joi.assert(params.orgName, Joi.string().required());
+      Joi.assert(params.userId, Joi.string().required());
       Joi.assert(params.taskId, Joi.string().required());
       Joi.assert(session, Joi.string().required());
 
