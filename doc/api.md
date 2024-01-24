@@ -1793,6 +1793,8 @@ Class for my tasks, permission user
     * [.addMultiTaskUser(params, session)](#MyTasks+addMultiTaskUser) ⇒ <code>Promise</code>
     * [.getAssignTaskUsers(params, session)](#MyTasks+getAssignTaskUsers) ⇒ <code>promise</code>
     * [.assignTaskUsers(params, session)](#MyTasks+assignTaskUsers) ⇒ <code>Promise</code>
+    * [.unclaim(params, session)](#MyTasks+unclaim) ⇒ <code>Promise</code>
+    * [.escalate(params, session)](#MyTasks+escalate) ⇒ <code>Promise</code>
 
 <a name="MyTasks+find"></a>
 
@@ -1957,6 +1959,46 @@ Assign Task user
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {   orgName: 'pinkbrain',   userId: '646386c9583e04a131adc894',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.assignTaskUser(params, session);
+```
+<a name="MyTasks+unclaim"></a>
+
+### myTasks.unclaim(params, session) ⇒ <code>Promise</code>
+Unclaim task
+
+**Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | The params to unclaim task |
+| params.orgName | <code>string</code> | Organization Name |
+| params.taskId | <code>string</code> | Task Id |
+| session | <code>string</code> | Is token JWT of user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {   orgName: 'pinkbrain',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.unclaim(params, session);
+```
+<a name="MyTasks+escalate"></a>
+
+### myTasks.escalate(params, session) ⇒ <code>Promise</code>
+Escalate task
+
+**Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
+**Access**: public  
+**Author**: CloudBrasil <abernardo.br@gmail.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | The params to escalate task |
+| params.orgName | <code>string</code> | Organization Name |
+| params.taskId | <code>string</code> | Task Id |
+| session | <code>string</code> | Is token JWT of user |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');const api = new API();const params = {   orgName: 'pinkbrain',   taskId: '646386c9583e04a131adc895'};const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';await api.user.task.mytasks.escalate(params, session);
 ```
 <a name="Notification"></a>
 

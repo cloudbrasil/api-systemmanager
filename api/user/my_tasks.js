@@ -374,6 +374,84 @@ class MyTasks {
       throw ex;
     }
   }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Unclaim task
+   * @param {object} params The params to unclaim task
+   * @param {string} params.orgName Organization Name
+   * @param {string} params.taskId Task Id
+   * @param {string} session Is token JWT of user
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *    orgName: 'pinkbrain',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.unclaim(params, session);
+   */
+  async unclaim(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.orgName, Joi.string().required());
+      Joi.assert(params.taskId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {taskId, orgName} = params;
+
+      const apiCall = self._client.put(`/organizations/${orgName}/users/tasks/${taskId}/unclaim`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @description Escalate task
+   * @param {object} params The params to escalate task
+   * @param {string} params.orgName Organization Name
+   * @param {string} params.taskId Task Id
+   * @param {string} session Is token JWT of user
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *    orgName: 'pinkbrain',
+   *    taskId: '646386c9583e04a131adc895'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.mytasks.escalate(params, session);
+   */
+  async escalate(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.orgName, Joi.string().required());
+      Joi.assert(params.taskId, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {taskId, orgName} = params;
+
+      const apiCall = self._client.put(`/organizations/${orgName}/users/tasks/${taskId}/escalate`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default MyTasks;
