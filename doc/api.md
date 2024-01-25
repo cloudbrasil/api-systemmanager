@@ -1561,7 +1561,7 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params - {
  docId: '5dadd01dc4af3941d42f8c5c',
- orgIdId: '5df7f19618430c89a41a19d2',
+ orgId '5df7f19618430c89a41a19d2',
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdAndRemove(params, session);

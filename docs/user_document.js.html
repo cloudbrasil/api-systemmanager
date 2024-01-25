@@ -374,13 +374,14 @@ class Documents {
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);
    */
-  async findById(id, session) {
+  async findById(params, session) {
     const self = this;
     try {
-      Joi.assert(params._id, Joi.string().required().error(new Error('_id is required')));
       Joi.assert(params, Joi.object().required().error(new Error('params is required')));
+      Joi.assert(params.id, Joi.string().required().error(new Error('id is required')));
+      Joi.assert(params.orgId, Joi.string().required().error(new Error('orgId is required')));
       Joi.assert(session, Joi.string().required().error(new Error('session is required')));
-      const {areaId, orgId} = params;
+      const {id, orgId} = params;
       const apiCall = self._client
           .get(`/organizations/${orgId}/documents/${id}/data/DOC`, params, self._setHeader(session));
 
@@ -503,7 +504,7 @@ class Documents {
    * const api = new API();
    * const params - {
    *  docId: '5dadd01dc4af3941d42f8c5c',
-   *  orgIdId: '5df7f19618430c89a41a19d2',
+   *  orgId '5df7f19618430c89a41a19d2',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdAndRemove(params, session);
@@ -879,7 +880,8 @@ class Documents {
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {query, orgId} = params;
-      const queryString = encodeURIComponent(JSON.stringify(query));
+      const params = new URLSearchParams(query);
+      const queryString = params.toString();
       const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${queryString}`, self._setHeader(session));
 
       return self._returnData(await apiCall);
