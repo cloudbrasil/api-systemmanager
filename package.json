@@ -1,7 +1,7 @@
 {
   "name": "@docbrasil/api-systemmanager",
   "description": "Module API System Manager",
-  "version": "1.1.16",
+  "version": "1.1.17",
   "scripts": {
     "htmldoc": "rm -rf docs && jsdoc api/** -d docs -t ./node_modules/better-docs",
     "doc": "rm -rf doc && mkdir doc && jsdoc2md api/**/* api/* > doc/api.md",
