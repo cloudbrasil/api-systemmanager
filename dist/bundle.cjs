@@ -1345,8 +1345,8 @@ class Documents {
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
       const {query, orgId} = params;
-      const params = new URLSearchParams(query);
-      const queryString = params.toString();
+      const searchParams = new URLSearchParams(query);
+      const queryString = searchParams.toString();
       const apiCall = self._client.get(`/organizations/${orgId}/documents/search?${queryString}`, self._setHeader(session));
 
       return self._returnData(await apiCall);
