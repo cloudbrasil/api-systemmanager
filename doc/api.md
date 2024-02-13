@@ -1805,13 +1805,13 @@ Class for user registration in a user
 **Kind**: global class  
 
 * [Help](#Help)
-    * [.getTopics(session)](#Help+getTopics)
+    * [.getTopics(filter, session)](#Help+getTopics)
     * [.get(params, session)](#Help+get) ⇒ <code>promise</code>
 
 <a name="Help+getTopics"></a>
 
-### help.getTopics(session)
-get heps topics
+### help.getTopics(filter, session)
+get help topics for a user. Either by organizaiton product or by supplied filter. But always only the user language.
 
 **Kind**: instance method of [<code>Help</code>](#Help)  
 **Access**: public  
@@ -1819,6 +1819,7 @@ get heps topics
 
 | Param | Type | Description |
 | --- | --- | --- |
+| filter | <code>object</code> | a filter to apply. if empty, null or undefined, than we will bring the help topics by organizaiton product. |
 | session | <code>string</code> | JWT token |
 
 **Example**  
@@ -1826,7 +1827,7 @@ get heps topics
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.help.getTopics(session);
+await api.user.help.getTopics({}, session);
 ```
 <a name="Help+get"></a>
 

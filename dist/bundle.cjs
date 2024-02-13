@@ -10354,7 +10354,8 @@ class Help {
 
   /**
    * @author Augusto Pissarra <abernardo.br@gmail.com>
-   * @description get heps topics
+   * @description get help topics for a user. Either by organizaiton product or by supplied filter. But always only the user language.
+   * @param {object} filter a filter to apply. if empty, null or undefined, than we will bring the help topics by organizaiton product.
    * @param {string} session JWT token
    * @public
    * @async
@@ -10363,15 +10364,19 @@ class Help {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.help.getTopics(session);
+   * await api.user.help.getTopics({}, session);
    */
-  async getTopics(session) {
+  async getTopics(filter = {}, session) {
     const self = this;
 
     try {
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'SM session (JWT) to call API');
-
-      const apiCall = self._client.get('/help/topics', self._setHeader(session));
+      let query = '';
+      if(!___default["default"].isEmpty(filter)) {
+        const queryFilter = JSON.stringify(filter);
+        query = `?filter=${queryFilter.toString('base64')}`;
+      }
+      const apiCall = self._client.get(`/help/topics${query}`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;

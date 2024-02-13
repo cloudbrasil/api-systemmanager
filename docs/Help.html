@@ -402,7 +402,7 @@
         <p class="tag-source">
             <a href="user_help.js.html" class="button">View Source</a>
             <span>
-                <a href="user_help.js.html">user/help.js</a>, <a href="user_help.js.html#line94">line 94</a>
+                <a href="user_help.js.html">user/help.js</a>, <a href="user_help.js.html#line99">line 99</a>
             </span>
         </p>
     
@@ -479,7 +479,7 @@ await api.user.help.get(params, session);</code></pre>
         
         <span class="code-name">
             
-                getTopics<span class="signature">(session)</span><span class="type-signature"></span>
+                getTopics<span class="signature">(filter, session)</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -488,7 +488,7 @@ await api.user.help.get(params, session);</code></pre>
     
     
     <div class="description">
-        get heps topics
+        get help topics for a user. Either by organizaiton product or by supplied filter. But always only the user language.
     </div>
     
 
@@ -521,6 +521,31 @@ await api.user.help.get(params, session);</code></pre>
         </thead>
 
         <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>filter</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">a filter to apply. if empty, null or undefined, than we will bring the help topics by organizaiton product.</td>
+</tr>
+
+
         
 
             
@@ -597,7 +622,7 @@ await api.user.help.get(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_help.js.html" class="button">View Source</a>
             <span>
-                <a href="user_help.js.html">user/help.js</a>, <a href="user_help.js.html#line63">line 63</a>
+                <a href="user_help.js.html">user/help.js</a>, <a href="user_help.js.html#line64">line 64</a>
             </span>
         </p>
     
@@ -629,7 +654,7 @@ await api.user.help.get(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.help.getTopics(session);</code></pre>
+await api.user.help.getTopics({}, session);</code></pre>
     
 
 
