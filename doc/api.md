@@ -1925,7 +1925,7 @@ Method to find my tasks for a user
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
- query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+ query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20, filter: {checklistsTags:['checklist']}},
  orgId: '55e4a3bd6be6b45210833fae',
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
