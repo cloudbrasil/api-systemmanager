@@ -18,7 +18,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -33,7 +33,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Find all policies
    * @param {string} session Session, token JWT
    * @return {Promise}

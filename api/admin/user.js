@@ -18,7 +18,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -33,7 +33,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request profile by userId
    * @param {string} userId User identifier (_id database)
    * @param {string} session Is token JWT
@@ -79,7 +79,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request profile by userId
    * @param {string} userIds Users identifier (_id database)
    * @param {string} apiKey Api to use to search users
@@ -109,7 +109,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update password by userId
    * @param {object} params Params to update password
    * @param {string} params.userId Id of the user
@@ -150,7 +150,7 @@ class AdminUser {
   }
 
   /**
-   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Check if email is unique
    * @param {string} email Check if email is unique
    * @param {string} session Is token JWT

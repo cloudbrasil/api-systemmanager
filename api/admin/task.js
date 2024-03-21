@@ -33,7 +33,7 @@ class AdminTask {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class AdminTask {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get filter to search tasks
    * @param {string} filter Filter type
    * @return {*}
@@ -67,7 +67,7 @@ class AdminTask {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get task by user Id
    * @param {object} params Params to get task
    * @param {string} params.userId User id (_id database)

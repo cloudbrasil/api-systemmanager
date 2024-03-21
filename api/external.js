@@ -33,7 +33,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create new document
    * @param {object} params Object for add new document
    * @param {string} params.id Organization form id
@@ -87,7 +87,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get an upload signed url, so it will be possible to upload documents temporarily during the use of the external form
    * @param {string} mime the mime type of the document
    * @param {string} authorization a legal authorization
@@ -125,7 +125,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
    * @param {array<object>} docs the list of documents
    * @param {string} docs.mime the mime type of the document
@@ -166,7 +166,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Handles the execution of an external form
    * @param {string} authorization a legal authorization
    * @param {object} params the parameters to handle the execution of an external form

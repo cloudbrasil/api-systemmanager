@@ -33,7 +33,7 @@ class AdminLists {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class AdminLists {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get list by ID
    * @param {object} params Params to find list by id
    * @param {string} params.id List Id (_id database)
@@ -86,7 +86,7 @@ class AdminLists {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get all lists
    * @param {object} params={} Params to pagination and orgId
    * @param {number} [params.page=0] Current page to pagination

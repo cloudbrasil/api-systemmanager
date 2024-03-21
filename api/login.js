@@ -32,7 +32,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -47,7 +47,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with social login Facebook
    * @param {object} params Params to login Facebook
    * @param {string} params.accessToken Access token of the system manager
@@ -87,7 +87,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with social login Google
    * @param {object} params Params to login Google
    * @param {string} params.accessToken Access token of the system manager
@@ -127,7 +127,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with apikey
    * @param {string} apikey Access key
    * @return {promise<object>} data
@@ -158,7 +158,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with user and password
    * @param {object} params Object with user and password
    * @param {string} params.username Username or email of the user
@@ -202,7 +202,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Logout user system manager
    * @param {string} session Session, token JWT
    * @return {promise<object>}} data
@@ -233,7 +233,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Recover the password
    * @param {string} username The username or email
    * @return {promise<object>}} data

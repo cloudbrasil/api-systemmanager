@@ -35,7 +35,7 @@ class Application {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -50,7 +50,7 @@ class Application {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the available applications for this user in this organizations
    * @param {object} params Params to get task
    * @param {object} params.orgId Organization id (_id database)

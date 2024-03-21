@@ -33,7 +33,7 @@ class Organization {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class Organization {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update avatar of organization by session of user not allow session user SU
    * @param {object} params Params to update avatar
    * @param {string} params.orgId - Organization id
@@ -91,7 +91,7 @@ class Organization {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove avatar of user by session of user not allow session user SU
    * @param {string} params.orgId - Organization id
    * @param {string} session - Is token JWT of user SU

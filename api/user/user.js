@@ -23,7 +23,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -38,7 +38,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -53,7 +53,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update avatar of user by session of user not allow session user SU
    * @param {object} params Params to update avatar
    * @param {string} params.avatar Image in base64 to update
@@ -93,7 +93,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove avatar of user by session of user not allow session user SU
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -120,7 +120,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove the signature of user by session
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -147,7 +147,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Sava a new signature of user by session
    * @param {object} data The signature data to save
    * @param {string} data.type CURSIVE or HANDWRITE
@@ -194,7 +194,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update a user profile by id
    * @param {object} params Params to update task
    * @param {string} params.name The name of the user
@@ -254,7 +254,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Change a user's organization
    * @param {string} id Organization id
    * @param {string} session Is token JWT of user NOT allow SU

@@ -45,7 +45,7 @@ class Dispatch {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -89,7 +89,7 @@ class Dispatch {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get client Axios
    * @return {promise} return client axios
    * @public
@@ -143,7 +143,7 @@ class Session {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -221,7 +221,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -236,7 +236,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with social login Facebook
    * @param {object} params Params to login Facebook
    * @param {string} params.accessToken Access token of the system manager
@@ -276,7 +276,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with social login Google
    * @param {object} params Params to login Google
    * @param {string} params.accessToken Access token of the system manager
@@ -316,7 +316,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with apikey
    * @param {string} apikey Access key
    * @return {promise<object>} data
@@ -347,7 +347,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Login with user and password
    * @param {object} params Object with user and password
    * @param {string} params.username Username or email of the user
@@ -391,7 +391,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Logout user system manager
    * @param {string} session Session, token JWT
    * @return {promise<object>}} data
@@ -422,7 +422,7 @@ class Login {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Recover the password
    * @param {string} username The username or email
    * @return {promise<object>}} data
@@ -469,7 +469,7 @@ class GeoLocation {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -484,7 +484,7 @@ class GeoLocation {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -499,7 +499,7 @@ class GeoLocation {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get geo location of the address
    * @param {!object} params - Params to get geo location
    * @param {!string} params.address - The address to get the location for
@@ -541,7 +541,7 @@ class GeoLocation {
  */
 class Users$1 {
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @constructor
    * @param {object} options Params of the constructor
    * @param {object} options.parent This of the pararent
@@ -599,7 +599,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -614,7 +614,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create document with informed data
    * @param {object} params Object for add new document
    * @param {string} params.orgname Organization name
@@ -678,7 +678,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Transform objtect query in query string
    * @param {object} searchQuery object wicth query
    * @return {string} Retutn string query
@@ -702,7 +702,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create new document
    * @param {object} params Object for add new document
    * @param {string} params.orgname Organization name
@@ -791,7 +791,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document
    * @param {string} id Document _id
    * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
@@ -824,7 +824,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document.
    *  IMPORTANT: if your document has a content, it will NOT bring the content.
    * @param {string} id Document _id
@@ -857,7 +857,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @param {object} params Object with params
    * @param {string} params.index Field to search
    * @param {string} params.txtToSearch Text to search
@@ -949,7 +949,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove document by id
    * @param {object} params Params to remove document
    * @param {string} params.docId Document Id (_id database)
@@ -993,7 +993,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove documents
    * @param {object} params Params to remove document
    * @param {array<string>} params.documents An array ids of documents (_id database)
@@ -1039,7 +1039,7 @@ class Documents {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params Params to request signed url
    * @param {string} params.methodType Method type HTTP get or put
@@ -1128,7 +1128,7 @@ class Documents {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params Params to request signed url
    * @param {array} params.docs the list of documents to get the signed urls
@@ -1258,7 +1258,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * Checks if a document can be added and it does not repeat its primary key
    * @param params
    * @param params.orgId {string} the organization id
@@ -1312,7 +1312,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to search documents for
    * @param {object} params Params to search the documents
    * @param {object} params.query Search documents query
@@ -1387,7 +1387,7 @@ class Organization$1 {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -1460,7 +1460,7 @@ class Organization$1 {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update avatar of organization by session of user not allow session user SU
    * @param {object} params Params to update avatar
    * @param {string} params.avatar Image in base64 to update
@@ -1500,7 +1500,7 @@ class Organization$1 {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove avatar of user by session of user not allow session user SU
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -1527,7 +1527,7 @@ class Organization$1 {
   }
 
   /**
-   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Call URL internal, need auth JWT (session)
    * @param {!object} params Params to call fectch (URL internal)
    * @param {!string} params.url URL to call
@@ -1596,7 +1596,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -1611,7 +1611,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -1626,7 +1626,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header for a bigger payload
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -1643,7 +1643,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Start process
    * @param {object} params Params to start process
    * @param {string} params.orgProcessId The organization process id (_id database);
@@ -1684,7 +1684,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get process properties of process
    * @param {object} params Params to get process properties
    * @param {string} params.processId Process id (_id database);
@@ -1722,7 +1722,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the search info of a organization process
    * @param {object} params Params to get search info
    * @param {string} params.orgProcessId The id of an organization process (_id database);
@@ -1766,7 +1766,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to search processes
    * @param {object} params Params to search processes
    * @param {object} params.query Search process query
@@ -1810,7 +1810,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to remove process
    * @param {object} params Params to remove process
    * @param {object} params.orgId Organization id (_id database)
@@ -1847,7 +1847,7 @@ class Process {
   }
 
     /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to export status data
    * @param {object} params Params to export status data
    * @param {object} params.query Search process query
@@ -1886,7 +1886,7 @@ class Process {
     }
 
     /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to export process data
    * @param {object} params Params to export process data
    * @param {object} params.query Search process query
@@ -1925,7 +1925,7 @@ class Process {
     }
 
    /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get Process Docs
    * @param {object} params Params to get process docs
    * @param {string} params.orgProcessId Organization Process Id
@@ -1966,7 +1966,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to download the process documents
    * @param {object} params Params to download the process documents
    * @param {string} params.orgId Organization id (_id database)
@@ -2049,7 +2049,7 @@ class TaskAvailable {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -2064,7 +2064,7 @@ class TaskAvailable {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find available tasks for a user
    * @param {object} params Params to get task
    * @param {object} params.query Search available tasks query
@@ -2108,7 +2108,7 @@ class TaskAvailable {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method for a user to claim an available task
    * @param {object} params Params to get task
    * @param {object} params.taskId the task id to claim
@@ -2179,7 +2179,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -2194,7 +2194,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find my tasks for a user
    * @param {object} params Params to get tasks
    * @param {object} params.query Search my tasks query
@@ -2238,7 +2238,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update task dueDate
    * @param {object} params The Date to save
    * @param {string} params.dueDate DueDate
@@ -2280,7 +2280,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update task dueDate
    * @param {string} data.orgId Organization id
    * @param {string} data.taskId Task Id
@@ -2318,7 +2318,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get task multi users
    * @param {object} params Params to get task
    * @param {object} params.taskId Task id (_id database)
@@ -2357,7 +2357,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description remove multi task user
    * @param {object} params Params of the user to be removed 
    * @param {string} params.userId User id
@@ -2399,7 +2399,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Add Multi Task User
    * @param {object} params Params for adding multi task user
    * @param {string} params.userId User id
@@ -2441,7 +2441,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get assign task users
    * @param {object} params Params to get task
    * @param {object} params.taskId Task id (_id database)
@@ -2480,7 +2480,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Assign Task user
    * @param {object} params The params to assign task to user
    * @param {string} params.orgName Organization Name
@@ -2522,7 +2522,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Unclaim task
    * @param {object} params The params to unclaim task
    * @param {string} params.orgName Organization Name
@@ -2561,7 +2561,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Escalate task
    * @param {object} params The params to escalate task
    * @param {string} params.orgName Organization Name
@@ -2633,7 +2633,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -2648,7 +2648,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find task by id
    * @param {object} params Params to get task
    * @param {object} params.processId Proccess id (_id database)
@@ -2690,7 +2690,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Find task by id and update
    * @param {object} params Params to update task
    * @param {object} params.userId User id (_id database)
@@ -2752,7 +2752,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Find task by id and update
    * @param {!object} params Params - to update task
    * @param {!string} params.taskId - Task id (_id database)
@@ -2795,6 +2795,43 @@ class Task {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the tasks and available tasks summary (totals) for specific tags
+   * @param {object} params Params - to update task
+   * @param {array<string>} params.tags - The tags to get task summaries
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} data
+   * @return {Promise<object>} data.tasks - the total tasks
+   * @return {Promise<object>} data.availableTasks - the total available tasks
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  tags: ['INCIDENTS']
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.getSummaryByTags(params, session);
+   */
+  async getSummaryByTags(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.tags, Joi__default["default"].array().required(), 'Tags is required');
+
+      const url = `/organizations/tasks/summary`;
+      const apiCall = self._client.post(url, params, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**
@@ -2818,7 +2855,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -2833,7 +2870,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -2848,7 +2885,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update avatar of user by session of user not allow session user SU
    * @param {object} params Params to update avatar
    * @param {string} params.avatar Image in base64 to update
@@ -2888,7 +2925,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove avatar of user by session of user not allow session user SU
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -2915,7 +2952,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove the signature of user by session
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -2942,7 +2979,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Sava a new signature of user by session
    * @param {object} data The signature data to save
    * @param {string} data.type CURSIVE or HANDWRITE
@@ -2989,7 +3026,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update a user profile by id
    * @param {object} params Params to update task
    * @param {string} params.name The name of the user
@@ -3049,7 +3086,7 @@ class User {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Change a user's organization
    * @param {string} id Organization id
    * @param {string} session Is token JWT of user NOT allow SU
@@ -9846,7 +9883,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -9861,7 +9898,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @param {object} params.registerId The registerId that comes with the registration page context
    * @return {string} orgname The orgname of the organization in the registerId
    * @public
@@ -9880,7 +9917,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find task by id
    * @param {object} params Params to get task
    * @param {string} params.registerId The registerId that comes with the registration page context
@@ -9931,7 +9968,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to register a user
    * @param {object} params Params to get task
    * @param {string} params.registerId The registerId that comes with the registration page context
@@ -10045,7 +10082,7 @@ class Notification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10071,7 +10108,7 @@ class Notification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to add a notification token
    * @param {object} params Params to add notification token
    * @param {string} params.token The token
@@ -10162,7 +10199,7 @@ class Notification {
   }
 
    /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set notification as readed
    * @param {object} params Params to update the notification
    * @param {string} params.id Notification Id
@@ -10198,7 +10235,7 @@ class Notification {
     }
 
     /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set notification as unreaded
    * @param {object} params Params to update the notification
    * @param {string} params.id Notification Id
@@ -10265,7 +10302,7 @@ class Updates {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10338,7 +10375,7 @@ class Help {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10384,7 +10421,7 @@ class Help {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find helps from a topic
    * @param {object} params Params to get helps from topic
    * @param {object} params.id Topic id (_id database)
@@ -10451,7 +10488,7 @@ class Datasource {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10470,7 +10507,7 @@ class Datasource {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get autocomplete data from a datasource
    * @param {object} params Params to add notification token
    * @param {string} params.orgId The user organization _id
@@ -10590,7 +10627,7 @@ class Page {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10605,7 +10642,7 @@ class Page {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the available page for an application inside an organization
    * @param {object} params Params to get task
    * @param {object} params.orgId Organization id (_id database)
@@ -10679,7 +10716,7 @@ class Application {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10694,7 +10731,7 @@ class Application {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the available applications for this user in this organizations
    * @param {object} params Params to get task
    * @param {object} params.orgId Organization id (_id database)
@@ -10751,7 +10788,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -10766,7 +10803,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10781,7 +10818,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Adds/updates a user settings
    * @param {object} settings Full user settings
    * @param {string} session Is token JWT of user NOT allow SU
@@ -10813,7 +10850,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Gets the user settings. Returns an array of settings.
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -10840,7 +10877,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Removes the user settings
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -10872,7 +10909,7 @@ class Settings {
  */
 class Users {
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @constructor
    * @param {object} options Params of the constructor
    * @param {object} options.parent This of the pararent
@@ -10928,7 +10965,7 @@ class AdminDocuments {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -10943,7 +10980,7 @@ class AdminDocuments {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Advanced search of document in elastic search ussing system manager
    * @param {!object} params - Params to search document
    * @param {!string} params.docId - Document id (_id database)
@@ -11002,7 +11039,7 @@ class AdminDocuments {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get document by id
    * @param {object} params - Params to get document by id
    * @param {string} params.docId - Document id (_id database)
@@ -11041,7 +11078,7 @@ class AdminDocuments {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params Params to request signed url
    * @param {string} params.methodType Method type HTTP get or put
@@ -11095,7 +11132,7 @@ class AdminDocuments {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update a document content
    * @param {object} params Params to request signed url
    * @param {string} params.content The content text
@@ -11136,7 +11173,7 @@ class AdminDocuments {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update a document content
    * @param {object} params Params to request signed url
    * @param {string} params.content The content text
@@ -11182,7 +11219,7 @@ class AdminDocuments {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the content of a document
    * @param {object} params Params to request signed url
    * @param {string} params.docId The unique id of the document
@@ -11255,7 +11292,7 @@ class AdminForm {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -11270,7 +11307,7 @@ class AdminForm {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get advance form by ID
    * @param {object} params Params to find form by id
    * @param {string} params.id Formulary Id (_id database)
@@ -11308,7 +11345,7 @@ class AdminForm {
   }
 
    /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params - Params to get form list
    * @param {string} params.orgId - Organization id (_id database)
@@ -11401,7 +11438,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -11440,7 +11477,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create notification
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -11481,7 +11518,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Search notification using (notificationId or userId)
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -11519,7 +11556,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update notification using (notificationId or userId)
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -11560,7 +11597,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Delete notification using (notificationId or userId)
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -11629,7 +11666,7 @@ class AdminLists {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -11644,7 +11681,7 @@ class AdminLists {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get list by ID
    * @param {object} params Params to find list by id
    * @param {string} params.id List Id (_id database)
@@ -11682,7 +11719,7 @@ class AdminLists {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get all lists
    * @param {object} params={} Params to pagination and orgId
    * @param {number} [params.page=0] Current page to pagination
@@ -11757,7 +11794,7 @@ class AdminPlugin {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -11807,7 +11844,7 @@ class AdminPlugin {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get plugin by ID
    * @param {string} id Plugin Id (_id database)
    * @param {string} session Session, token JWT
@@ -11853,7 +11890,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -11868,7 +11905,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -11883,7 +11920,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Find all policies
    * @param {string} session Session, token JWT
    * @return {Promise}
@@ -11941,7 +11978,7 @@ class AdminTask {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -11956,7 +11993,7 @@ class AdminTask {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get filter to search tasks
    * @param {string} filter Filter type
    * @return {*}
@@ -11975,7 +12012,7 @@ class AdminTask {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get task by user Id
    * @param {object} params Params to get task
    * @param {string} params.userId User id (_id database)
@@ -12046,7 +12083,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -12061,7 +12098,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -12076,7 +12113,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request profile by userId
    * @param {string} userId User identifier (_id database)
    * @param {string} session Is token JWT
@@ -12107,7 +12144,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request profile by userId
    * @param {string} userIds Users identifier (_id database)
    * @param {string} apiKey Api to use to search users
@@ -12137,7 +12174,7 @@ class AdminUser {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update password by userId
    * @param {object} params Params to update password
    * @param {string} params.userId Id of the user
@@ -12178,7 +12215,7 @@ class AdminUser {
   }
 
   /**
-   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Check if email is unique
    * @param {string} email Check if email is unique
    * @param {string} session Is token JWT
@@ -12506,7 +12543,7 @@ class AdminProcesses {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -12521,7 +12558,7 @@ class AdminProcesses {
   }
 
   /**
-   * @author Thiago Anselmo <thiagoo.anselmoo@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Mount query string to send in URL
    * @param {object} params Params to mount query string
    * @private
@@ -12556,7 +12593,7 @@ class AdminProcesses {
 
   /**
    * @see https://confluence.external-share.com/content/7450b014-52c6-4d9e-b30e-a062b57453b5/17104899/17694721/532545537
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Advanced search of processes, check documentation, to verify all params, pass to method search
    * @return {Promise}
    * @public
@@ -12618,7 +12655,7 @@ class AdminProcesses {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Advanced search of process in elastic search ussing system manager
    * @param {!object} params - Params to search document
    * @param {!string} params.orgProcessId - Document id (_id database) of the process
@@ -12683,7 +12720,7 @@ class AdminMessage {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -12698,7 +12735,7 @@ class AdminMessage {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -12866,7 +12903,7 @@ class AdminDocTypes {
     }
 
     /**
-     * @author CloudBrasil <abernardo.br@gmail.com>
+     * @author Myndware <augusto.pissarra@myndware.com>
      * @description Get the return data and check for errors
      * @param {object} retData Response HTTP
      * @return {*}
@@ -12881,7 +12918,7 @@ class AdminDocTypes {
     }
 
     /**
-     * @author CloudBrasil <abernardo.br@gmail.com>
+     * @author Myndware <augusto.pissarra@myndware.com>
      * @description Set header with new session
      * @param {string} session Session, token JWT
      * @return {object} header with new session
@@ -12896,7 +12933,7 @@ class AdminDocTypes {
     }
 
     /**
-     * @author CloudBrasil <abernardo.br@gmail.com>
+     * @author Myndware <augusto.pissarra@myndware.com>
      * @description Request profile by userId
      * @param {object} params The params
      * @param {string} params.id The organization document type id (_id database)
@@ -12957,7 +12994,7 @@ class Organization {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -12972,7 +13009,7 @@ class Organization {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update avatar of organization by session of user not allow session user SU
    * @param {object} params Params to update avatar
    * @param {string} params.orgId - Organization id
@@ -13015,7 +13052,7 @@ class Organization {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove avatar of user by session of user not allow session user SU
    * @param {string} params.orgId - Organization id
    * @param {string} session - Is token JWT of user SU
@@ -13050,7 +13087,7 @@ class Organization {
  */
 class Admin {
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @constructor
    * @param {object} options Params of the constructor
    * @param {object} options.parent This of the pararent
@@ -13106,7 +13143,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -13121,7 +13158,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create new document
    * @param {object} params Object for add new document
    * @param {string} params.id Organization form id
@@ -13160,7 +13197,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get an upload signed url, so it will be possible to upload documents temporarily during the use of the external form
    * @param {string} mime the mime type of the document
    * @param {string} authorization a legal authorization
@@ -13198,7 +13235,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get an upload signed url, for many documents. So it will be possible to upload documents temporarily during the use of the external form
    * @param {array<object>} docs the list of documents
    * @param {string} docs.mime the mime type of the document
@@ -13239,7 +13276,7 @@ class External {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Handles the execution of an external form
    * @param {string} authorization a legal authorization
    * @param {object} params the parameters to handle the execution of an external form

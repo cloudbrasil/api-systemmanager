@@ -33,7 +33,7 @@ class Datasource {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -52,7 +52,7 @@ class Datasource {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get autocomplete data from a datasource
    * @param {object} params Params to add notification token
    * @param {string} params.orgId The user organization _id

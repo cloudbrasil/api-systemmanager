@@ -47,7 +47,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -62,7 +62,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create document with informed data
    * @param {object} params Object for add new document
    * @param {string} params.orgname Organization name
@@ -126,7 +126,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Transform objtect query in query string
    * @param {object} searchQuery object wicth query
    * @return {string} Retutn string query
@@ -150,7 +150,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create new document
    * @param {object} params Object for add new document
    * @param {string} params.orgname Organization name
@@ -239,7 +239,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document
    * @param {string} id Document _id
    * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
@@ -272,7 +272,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document.
    *  IMPORTANT: if your document has a content, it will NOT bring the content.
    * @param {string} id Document _id
@@ -305,7 +305,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @param {object} params Object with params
    * @param {string} params.index Field to search
    * @param {string} params.txtToSearch Text to search
@@ -397,7 +397,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove document by id
    * @param {object} params Params to remove document
    * @param {string} params.docId Document Id (_id database)
@@ -441,7 +441,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Remove documents
    * @param {object} params Params to remove document
    * @param {array<string>} params.documents An array ids of documents (_id database)
@@ -487,7 +487,7 @@ class Documents {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params Params to request signed url
    * @param {string} params.methodType Method type HTTP get or put
@@ -576,7 +576,7 @@ class Documents {
 
   /**
    *
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params Params to request signed url
    * @param {array} params.docs the list of documents to get the signed urls
@@ -706,7 +706,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * Checks if a document can be added and it does not repeat its primary key
    * @param params
    * @param params.orgId {string} the organization id
@@ -760,7 +760,7 @@ class Documents {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to search documents for
    * @param {object} params Params to search the documents
    * @param {object} params.query Search documents query

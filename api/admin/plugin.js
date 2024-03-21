@@ -33,7 +33,7 @@ class AdminPlugin {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -83,7 +83,7 @@ class AdminPlugin {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get plugin by ID
    * @param {string} id Plugin Id (_id database)
    * @param {string} session Session, token JWT

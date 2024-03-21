@@ -34,7 +34,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -49,7 +49,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @param {object} params.registerId The registerId that comes with the registration page context
    * @return {string} orgname The orgname of the organization in the registerId
    * @public
@@ -68,7 +68,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find task by id
    * @param {object} params Params to get task
    * @param {string} params.registerId The registerId that comes with the registration page context
@@ -119,7 +119,7 @@ class Register {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to register a user
    * @param {object} params Params to get task
    * @param {string} params.registerId The registerId that comes with the registration page context

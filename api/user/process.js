@@ -18,7 +18,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -33,7 +33,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header for a bigger payload
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -65,7 +65,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Start process
    * @param {object} params Params to start process
    * @param {string} params.orgProcessId The organization process id (_id database);
@@ -106,7 +106,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get process properties of process
    * @param {object} params Params to get process properties
    * @param {string} params.processId Process id (_id database);
@@ -144,7 +144,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the search info of a organization process
    * @param {object} params Params to get search info
    * @param {string} params.orgProcessId The id of an organization process (_id database);
@@ -188,7 +188,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to search processes
    * @param {object} params Params to search processes
    * @param {object} params.query Search process query
@@ -232,7 +232,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to remove process
    * @param {object} params Params to remove process
    * @param {object} params.orgId Organization id (_id database)
@@ -269,7 +269,7 @@ class Process {
   }
 
     /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to export status data
    * @param {object} params Params to export status data
    * @param {object} params.query Search process query
@@ -308,7 +308,7 @@ class Process {
     }
 
     /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to export process data
    * @param {object} params Params to export process data
    * @param {object} params.query Search process query
@@ -347,7 +347,7 @@ class Process {
     }
 
    /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get Process Docs
    * @param {object} params Params to get process docs
    * @param {string} params.orgProcessId Organization Process Id
@@ -388,7 +388,7 @@ class Process {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to download the process documents
    * @param {object} params Params to download the process documents
    * @param {string} params.orgId Organization id (_id database)

@@ -33,7 +33,7 @@ class AdminForm {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class AdminForm {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get advance form by ID
    * @param {object} params Params to find form by id
    * @param {string} params.id Formulary Id (_id database)
@@ -86,7 +86,7 @@ class AdminForm {
   }
 
    /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Request signed url url to put or get
    * @param {object} params - Params to get form list
    * @param {string} params.orgId - Organization id (_id database)

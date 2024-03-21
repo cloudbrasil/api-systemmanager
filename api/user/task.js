@@ -37,7 +37,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -52,7 +52,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find task by id
    * @param {object} params Params to get task
    * @param {object} params.processId Proccess id (_id database)
@@ -94,7 +94,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Find task by id and update
    * @param {object} params Params to update task
    * @param {object} params.userId User id (_id database)
@@ -156,7 +156,7 @@ class Task {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Find task by id and update
    * @param {!object} params Params - to update task
    * @param {!string} params.taskId - Task id (_id database)
@@ -193,6 +193,43 @@ class Task {
       const {taskId, actionGuid, orgId, payload = {}} = params;
       const url = `organizations/${orgId}/users/tasks/${taskId}/action/${actionGuid}`;
       const apiCall = self._client.put(url, payload, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the tasks and available tasks summary (totals) for specific tags
+   * @param {object} params Params - to update task
+   * @param {array<string>} params.tags - The tags to get task summaries
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} data
+   * @return {Promise<object>} data.tasks - the total tasks
+   * @return {Promise<object>} data.availableTasks - the total available tasks
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  tags: ['INCIDENTS']
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.getSummaryByTags(params, session);
+   */
+  async getSummaryByTags(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.tags, Joi.array().required(), 'Tags is required');
+
+      const url = `/organizations/tasks/summary`;
+      const apiCall = self._client.post(url, params, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {

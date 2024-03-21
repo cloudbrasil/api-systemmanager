@@ -23,7 +23,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -38,7 +38,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -53,7 +53,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Adds/updates a user settings
    * @param {object} settings Full user settings
    * @param {string} session Is token JWT of user NOT allow SU
@@ -85,7 +85,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Gets the user settings. Returns an array of settings.
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}
@@ -112,7 +112,7 @@ class Settings {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Removes the user settings
    * @param {string} session Is token JWT of user NOT allow SU
    * @return {Promise}

@@ -33,7 +33,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -48,7 +48,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find my tasks for a user
    * @param {object} params Params to get tasks
    * @param {object} params.query Search my tasks query
@@ -92,7 +92,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update task dueDate
    * @param {object} params The Date to save
    * @param {string} params.dueDate DueDate
@@ -134,7 +134,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update task dueDate
    * @param {string} data.orgId Organization id
    * @param {string} data.taskId Task Id
@@ -172,7 +172,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get task multi users
    * @param {object} params Params to get task
    * @param {object} params.taskId Task id (_id database)
@@ -211,7 +211,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description remove multi task user
    * @param {object} params Params of the user to be removed 
    * @param {string} params.userId User id
@@ -253,7 +253,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Add Multi Task User
    * @param {object} params Params for adding multi task user
    * @param {string} params.userId User id
@@ -295,7 +295,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to get assign task users
    * @param {object} params Params to get task
    * @param {object} params.taskId Task id (_id database)
@@ -334,7 +334,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Assign Task user
    * @param {object} params The params to assign task to user
    * @param {string} params.orgName Organization Name
@@ -376,7 +376,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Unclaim task
    * @param {object} params The params to unclaim task
    * @param {string} params.orgName Organization Name
@@ -415,7 +415,7 @@ class MyTasks {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Escalate task
    * @param {object} params The params to escalate task
    * @param {string} params.orgName Organization Name

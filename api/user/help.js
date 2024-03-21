@@ -33,7 +33,7 @@ class Help {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -79,7 +79,7 @@ class Help {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to find helps from a topic
    * @param {object} params Params to get helps from topic
    * @param {object} params.id Topic id (_id database)

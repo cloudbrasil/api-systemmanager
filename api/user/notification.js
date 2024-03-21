@@ -33,7 +33,7 @@ class Notification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -59,7 +59,7 @@ class Notification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to add a notification token
    * @param {object} params Params to add notification token
    * @param {string} params.token The token
@@ -150,7 +150,7 @@ class Notification {
   }
 
    /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set notification as readed
    * @param {object} params Params to update the notification
    * @param {string} params.id Notification Id
@@ -186,7 +186,7 @@ class Notification {
     }
 
     /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set notification as unreaded
    * @param {object} params Params to update the notification
    * @param {string} params.id Notification Id

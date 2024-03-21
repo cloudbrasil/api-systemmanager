@@ -33,7 +33,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Set header with new session
    * @param {string} session Session, token JWT
    * @return {object} header with new session
@@ -72,7 +72,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Create notification
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -113,7 +113,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Search notification using (notificationId or userId)
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -151,7 +151,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Update notification using (notificationId or userId)
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU
@@ -192,7 +192,7 @@ class AdminNotification {
   }
 
   /**
-   * @author CloudBrasil <abernardo.br@gmail.com>
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Delete notification using (notificationId or userId)
    * @param {object} params Params to create notification
    * @param {string} params.orgId OrgId of the user SU

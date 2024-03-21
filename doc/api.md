@@ -127,7 +127,7 @@ Advanced search of document in elastic search ussing system manager
 
 **Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -173,7 +173,7 @@ Get document by id
 
 **Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -201,7 +201,7 @@ Request signed url url to put or get
 **Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url<code>string</code> - doc.docId Document id<code>string</code> - doc.name The name of the document, which is the fileName<code>string</code> - doc.areaId docAreaId of the document<code>string</code> - doc.type the document mimi type<code>string</code> - doc.signedUrl the signed URL to upload  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -240,7 +240,7 @@ Update a document content
 **Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -268,7 +268,7 @@ Update a document content
 **Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -302,7 +302,7 @@ Get the content of a document
 **Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - data the document content<code>string</code> - data._id the _id of the document<code>string</code> - data.content all the pages or if asked by page, just one page, the one requested<code>string</code> - data.content.TextOverlay the overlay text if requested<code>string</code> - data.content.ParsedText the page text content<code>number</code> - data.total the total number of pages  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -340,7 +340,7 @@ Get advance form by ID
 
 **Kind**: instance method of [<code>AdminForm</code>](#AdminForm)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -367,7 +367,7 @@ Request signed url url to put or get
 
 **Kind**: instance method of [<code>AdminForm</code>](#AdminForm)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -396,7 +396,7 @@ await api.user.form.getFormList(params, session);
 API request, admin permission level
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 <a name="new_Admin_new"></a>
 
 ### new Admin(options)
@@ -424,7 +424,7 @@ Get list by ID
 
 **Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -451,7 +451,7 @@ Get all lists
 
 **Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -592,7 +592,7 @@ Create notification
 
 **Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -621,7 +621,7 @@ Search notification using (notificationId or userId)
 
 **Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -648,7 +648,7 @@ Update notification using (notificationId or userId)
 
 **Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -677,7 +677,7 @@ Delete notification using (notificationId or userId)
 
 **Kind**: instance method of [<code>AdminNotification</code>](#AdminNotification)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -720,7 +720,7 @@ Update avatar of organization by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -749,7 +749,7 @@ Remove avatar of user by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -815,7 +815,7 @@ Update avatar of organization by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -842,7 +842,7 @@ Remove avatar of user by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -862,7 +862,7 @@ Call URL internal, need auth JWT (session)
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -923,7 +923,7 @@ Get plugin by ID
 
 **Kind**: instance method of [<code>AdminPlugin</code>](#AdminPlugin)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -951,7 +951,7 @@ Find all policies
 
 **Kind**: instance method of [<code>AdminPolicy</code>](#AdminPolicy)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -983,7 +983,7 @@ Advanced search of processes, check documentation, to verify all params, pass to
 **Kind**: instance method of [<code>AdminProcesses</code>](#AdminProcesses)  
 **Access**: public  
 **See**: https://confluence.external-share.com/content/7450b014-52c6-4d9e-b30e-a062b57453b5/17104899/17694721/532545537  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');
@@ -1004,7 +1004,7 @@ Advanced search of process in elastic search ussing system manager
 
 **Kind**: instance method of [<code>AdminProcesses</code>](#AdminProcesses)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1046,7 +1046,7 @@ Get task by user Id
 
 **Kind**: instance method of [<code>AdminTask</code>](#AdminTask)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1093,7 +1093,7 @@ Request profile by userId
 
 **Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1115,7 +1115,7 @@ Request profile by userId
 
 **Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1137,7 +1137,7 @@ Update password by userId
 
 **Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1166,7 +1166,7 @@ Check if email is unique
 
 **Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
 **Access**: public  
-**Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1258,7 +1258,7 @@ Get geo location of the address
 
 **Kind**: instance method of [<code>GeoLocation</code>](#GeoLocation)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1282,7 +1282,7 @@ await api.general.geo.location(params);
 API request, user permission level
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 * [Users](#Users)
     * [new Users(options)](#new_Users_new)
@@ -1319,7 +1319,7 @@ Get the available applications for this user in this organizations
 
 **Kind**: instance method of [<code>Application</code>](#Application)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1351,7 +1351,7 @@ Method to get autocomplete data from a datasource
 **Kind**: instance method of [<code>Datasource</code>](#Datasource)  
 **Returns**: <code>promise.&lt;array&gt;</code> - docs The returned documents field with autocomplete<code>string</code> - docs._id the _id of the document<code>object</code> - data.docTypeFieldsData the field values  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1403,7 +1403,7 @@ Create new document
 
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1461,7 +1461,7 @@ Updates a document
 
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1485,7 +1485,7 @@ Updates a document.
 
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1504,7 +1504,7 @@ await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);
 ### documents.find(params, session) ⇒ <code>Promise</code>
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -1546,7 +1546,7 @@ Remove document by id
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - data The returned data<code>number</code> - data.removed The quantity of removed documents<code>array.&lt;object&gt;</code> - data.errors Array of errors<code>string</code> - data.errors.id Id of the document that had an error<code>string</code> - data.errors.code Error code<code>string</code> - data.errors.message Error message  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1574,7 +1574,7 @@ Remove documents
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - data The returned data<code>number</code> - data.removed The quantity of removed documents<code>array.&lt;object&gt;</code> - data.errors Array of errors<code>string</code> - data.errors.id Id of the document that had an error<code>string</code> - data.errors.code Error code<code>string</code> - data.errors.message Error message  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1603,7 +1603,7 @@ Request signed url url to put or get
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url<code>string</code> - doc.docId Document id<code>string</code> - doc.name The name of the document, which is the fileName<code>string</code> - doc.areaId docAreaId of the document<code>string</code> - doc.type the document mimi type<code>string</code> - doc.signedUrl the signed URL to upload  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1652,7 +1652,7 @@ Request signed url url to put or get
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - doc Returned document data with the signed url<code>string</code> - doc.docId Document id<code>string</code> - doc.name The name of the document, which is the fileName<code>string</code> - doc.areaId docAreaId of the document<code>string</code> - doc.type the document mimi type<code>string</code> - doc.signedUrl the signed URL to upload  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1741,7 +1741,7 @@ onUploadProgress return the progressEvent
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>Promise.&lt;array&gt;</code> - Return the array of the documents that are repeated. If not document is repeaded, then if returns an empty array.<code>array.&lt;string&gt;</code> - id  the id of the repeated document  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>
+**Author**: Myndware <augusto.pissarra@myndware.com>
 Checks if a document can be added and it does not repeat its primary key  
 
 | Param | Type | Description |
@@ -1777,7 +1777,7 @@ Method to search documents for
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
 **Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - took the number of documents taken<code>number</code> - totalCount the total count of all documents  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1836,7 +1836,7 @@ Method to find helps from a topic
 
 **Kind**: instance method of [<code>Help</code>](#Help)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1860,7 +1860,7 @@ await api.user.help.get(params, session);
 API request, user permission level
 
 **Kind**: global class  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 * [Users](#Users)
     * [new Users(options)](#new_Users_new)
@@ -1911,7 +1911,7 @@ Method to find my tasks for a user
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - page the page of the search (on pagination), zero indexed<code>number</code> - perPage how many items per page  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1938,7 +1938,7 @@ Update task dueDate
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1967,7 +1967,7 @@ Update task dueDate
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -1993,7 +1993,7 @@ Method to get task multi users
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2020,7 +2020,7 @@ remove multi task user
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2049,7 +2049,7 @@ Add Multi Task User
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2078,7 +2078,7 @@ Method to get assign task users
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2105,7 +2105,7 @@ Assign Task user
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2134,7 +2134,7 @@ Unclaim task
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2161,7 +2161,7 @@ Escalate task
 
 **Kind**: instance method of [<code>MyTasks</code>](#MyTasks)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2210,7 +2210,7 @@ Method to add a notification token
 **Kind**: instance method of [<code>Notification</code>](#Notification)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data._id the id of the added token  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2277,7 +2277,7 @@ Set notification as readed
 
 **Kind**: instance method of [<code>Notification</code>](#Notification)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2302,7 +2302,7 @@ Set notification as unreaded
 
 **Kind**: instance method of [<code>Notification</code>](#Notification)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2343,7 +2343,7 @@ Update avatar of organization by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2372,7 +2372,7 @@ Remove avatar of user by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2438,7 +2438,7 @@ Update avatar of organization by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2465,7 +2465,7 @@ Remove avatar of user by session of user not allow session user SU
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2485,7 +2485,7 @@ Call URL internal, need auth JWT (session)
 
 **Kind**: instance method of [<code>Organization</code>](#Organization)  
 **Access**: public  
-**Author**: Thiago Anselmo <thiagoo.anselmoo@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -2518,7 +2518,7 @@ Get the available page for an application inside an organization
 
 **Kind**: instance method of [<code>Page</code>](#Page)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2565,7 +2565,7 @@ Start process
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -2594,7 +2594,7 @@ Get process properties of process
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2623,7 +2623,7 @@ Get the search info of a organization process
 **Returns**: <code>Promise</code> - the search info result<code>string</code> - name the name of the organization process<code>object</code> - processIndexFields the list of fields to index<code>object</code> - processParticipantsGroup the permissions in this organization process<code>object</code> - stepsProperties the organization process steps properties<code>string</code> - _id the same organization id
 @  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2651,7 +2651,7 @@ Method to search processes
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - page the page of the search (on pagination), zero indexed<code>number</code> - perPage how many items per page  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2678,7 +2678,7 @@ Method to remove process
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2705,7 +2705,7 @@ Method to export status data
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2732,7 +2732,7 @@ Method to export process data
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2760,7 +2760,7 @@ Method to get Process Docs
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Returns**: <code>promise</code> - returned data from the get process docs<code>array.&lt;object&gt;</code> - Docs returned from process  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2790,7 +2790,7 @@ Method to download the process documents
 **Kind**: instance method of [<code>Process</code>](#Process)  
 **Returns**: <code>promise</code> - returned data from the search  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2832,7 +2832,7 @@ Class for user registration in a user
 **Kind**: instance method of [<code>Register</code>](#Register)  
 **Returns**: <code>string</code> - orgname The orgname of the organization in the registerId  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2855,7 +2855,7 @@ Method to find task by id
 **Kind**: instance method of [<code>Register</code>](#Register)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success If the operation was successfully done (true|false)<code>boolean</code> - data.userAlreadyExists If the user already exists (true|false), if true, then the other information is not returned<code>string</code> - data.registrationEmailInfoRaw The fully cryptographed registration information<code>object</code> - data.registrationEmailInfo The registration information<code>string</code> - data.registrationEmailInfo.orgname The orgname<code>string</code> - data.registrationEmailInfo.orgId The orgId of the organization<code>string</code> - data.registrationEmailInfo.guid The unique id for the registration<code>object</code> - data.registrationEmailInfo.emailValidation The email validation information<code>string</code> - data.registrationEmailInfo.emailValidation.email The email that the code was sent to<code>string</code> - data.registrationEmailInfo.emailValidation.code The 4 digit code to validate the email  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2881,7 +2881,7 @@ Method to register a user
 **Kind**: instance method of [<code>Register</code>](#Register)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success If the operation was successfully done (true|false)<code>boolean</code> - data.userAlreadyExists If the user already exists (true|false), if true, then the other information is not returned<code>object</code> - auth The full authentication data with session, if login is true.<code>string</code> - auth.redirectUrl The url to redirect.  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -2949,7 +2949,7 @@ Adds/updates a user settings
 
 **Kind**: instance method of [<code>Settings</code>](#Settings)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2973,7 +2973,7 @@ Gets the user settings. Returns an array of settings.
 
 **Kind**: instance method of [<code>Settings</code>](#Settings)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -2993,7 +2993,7 @@ Removes the user settings
 
 **Kind**: instance method of [<code>Settings</code>](#Settings)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3017,6 +3017,7 @@ Class for task, permission user
     * [.findById(params, session)](#Task+findById) ⇒ <code>promise</code>
     * [.findByIdAndUpdate(params, session)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
     * [.executeActionFinalize(params, session)](#Task+executeActionFinalize) ⇒ <code>Promise</code>
+    * [.getSummaryByTags(params, session)](#Task+getSummaryByTags) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code>
 
 <a name="Task+findById"></a>
 
@@ -3025,7 +3026,7 @@ Method to find task by id
 
 **Kind**: instance method of [<code>Task</code>](#Task)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3054,7 +3055,7 @@ Find task by id and update
 
 **Kind**: instance method of [<code>Task</code>](#Task)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3090,7 +3091,7 @@ Find task by id and update
 
 **Kind**: instance method of [<code>Task</code>](#Task)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
@@ -3114,6 +3115,32 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.task.executeActionFinalize(params, session);
 ```
+<a name="Task+getSummaryByTags"></a>
+
+### task.getSummaryByTags(params, session) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code>
+Get the tasks and available tasks summary (totals) for specific tags
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data<code>Promise.&lt;object&gt;</code> - data.tasks - the total tasks<code>Promise.&lt;object&gt;</code> - data.availableTasks - the total available tasks  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params - to update task |
+| params.tags | <code>array.&lt;string&gt;</code> | The tags to get task summaries |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ tags: ['INCIDENTS']
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.getSummaryByTags(params, session);
+```
 <a name="TaskAvailable"></a>
 
 ## TaskAvailable
@@ -3133,7 +3160,7 @@ Method to find available tasks for a user
 **Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
 **Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - page the page of the search (on pagination), zero indexed<code>number</code> - perPage how many items per page  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3161,7 +3188,7 @@ Method for a user to claim an available task
 **Kind**: instance method of [<code>TaskAvailable</code>](#TaskAvailable)  
 **Returns**: <code>promise</code> - returned data from the method call<code>boolean</code> - success true|false if the method was successful  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3229,7 +3256,7 @@ Update avatar of user by session of user not allow session user SU
 
 **Kind**: instance method of [<code>User</code>](#User)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3256,7 +3283,7 @@ Remove avatar of user by session of user not allow session user SU
 
 **Kind**: instance method of [<code>User</code>](#User)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3276,7 +3303,7 @@ Remove the signature of user by session
 
 **Kind**: instance method of [<code>User</code>](#User)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3296,7 +3323,7 @@ Sava a new signature of user by session
 
 **Kind**: instance method of [<code>User</code>](#User)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3332,7 +3359,7 @@ Update a user profile by id
 
 **Kind**: instance method of [<code>User</code>](#User)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3372,7 +3399,7 @@ Change a user's organization
 
 **Kind**: instance method of [<code>User</code>](#User)  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3426,7 +3453,7 @@ Get client Axios
 **Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
 **Returns**: <code>promise</code> - return client axios  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');
@@ -3455,7 +3482,7 @@ Create new document
 **Returns**: <code>Promise.&lt;object&gt;</code> - data<code>string</code> - _id the id of the form<code>string</code> - orgId the organization id of the form<code>string</code> - authorization the unique token registered internally by the system for all the next calls to the external form APIs
      The authorization is unique and is ONLY valid for this session.<code>array.&lt;object&gt;</code> - groups the form groups to render  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3479,7 +3506,7 @@ Get an upload signed url, so it will be possible to upload documents temporarily
 **Kind**: instance method of [<code>External</code>](#External)  
 **Returns**: <code>Promise.&lt;object&gt;</code> - doc<code>string</code> - doc.mime the original mime type of the document<code>string</code> - doc.signedUrl the signed url to upload the document<code>string</code> - doc.filename  the filename of the uploaded file<code>string</code> - doc.extension  the extension of the filename, obtained from the mime type  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3504,7 +3531,7 @@ Get an upload signed url, for many documents. So it will be possible to upload d
 **Kind**: instance method of [<code>External</code>](#External)  
 **Returns**: <code>Promise.&lt;array&gt;</code> - docs<code>string</code> - docs.mime the original mime type of the document<code>string</code> - docs.signedUrl the signed url to upload the document<code>string</code> - docs.filename  the filename of the uploaded file<code>string</code> - docs.extension  the extension of the filename, obtained from the mime type  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3532,7 +3559,7 @@ Handles the execution of an external form
 **Kind**: instance method of [<code>External</code>](#External)  
 **Returns**: <code>Promise.&lt;boolean&gt;</code> - true|false if success  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3583,7 +3610,7 @@ Login with social login Facebook
 **Kind**: instance method of [<code>Login</code>](#Login)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3610,7 +3637,7 @@ Login with social login Google
 **Kind**: instance method of [<code>Login</code>](#Login)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3637,7 +3664,7 @@ Login with apikey
 **Kind**: instance method of [<code>Login</code>](#Login)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3661,7 +3688,7 @@ Login with user and password
 **Kind**: instance method of [<code>Login</code>](#Login)  
 **Returns**: <code>promise.&lt;object&gt;</code> - data<code>object</code> - data.auth true or false if we have the user authenticaited correctly<code>object</code> - data.user the logged user  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3691,7 +3718,7 @@ Logout user system manager
 **Kind**: instance method of [<code>Login</code>](#Login)  
 **Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
@@ -3715,7 +3742,7 @@ Recover the password
 **Kind**: instance method of [<code>Login</code>](#Login)  
 **Returns**: <code>promise.&lt;object&gt;</code> - } data<code>boolean</code> - data.success true|false  
 **Access**: public  
-**Author**: CloudBrasil <abernardo.br@gmail.com>  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
