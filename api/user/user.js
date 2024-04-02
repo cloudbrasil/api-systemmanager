@@ -267,7 +267,7 @@ class User {
    * const api = new API();
    * const id = '616eccaaa9360a05293b10fe';
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.changeOrganization.updateAvatar(id, session);
+   * await api.user.changeOrganization(id, session);
    */
   async changeOrganization(id, session) {
     const self = this;
@@ -282,6 +282,105 @@ class User {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the Atlas Chart JWT Token, so we can access authorized the created charts
+   * @param {object} query={} The query, if any, to add to the JWT token
+   * @param {array<string>} query.orgIds An array of orgIds that we want to filter by
+   * @param {array<string>} query.orgProcessIds An array of orgProcessId that we want to filter by
+   * @param {array<string>} query.tags An array of org processes tags that we want to filter by
+   * @param {date} query.startDate The start date in ISO format that we want to filter by
+   * @param {date} query.endDate The start date in ISO format that we want to filter by
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise<string>} JWT Token
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const query = { orgIds: ['616eccaaa9360a05293b10fe'] };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const jwtToken = await api.user.changeOrganization.getChartJWT(query, session);
+   */
+  async getChartJWT(query = {}, session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+      const url = `/users/charts/info?query=${JSON.stringify(query)}`;
+
+      const apiCall = self._client.get(url, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the user organizations to run dashboard filtering
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @return {array<object>} Array of organizations
+   * @return {array<object>} id The id of the organization
+   * @return {array<object>} text The name of the organization
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const organizations = await api.user.changeOrganization.getChartOrganizations(session);
+   */
+  async getChartOrganizations(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+      const apiCall = self._client.get('/users/charts/organizations', self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Given orgIds, return all the tags and org processes ids that can be used to filter dashboards
+   * @param {array<string>} orgIds=[] An array of orgIds
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @return {Promise}
+   * @return {array<object>} The array of each org process and tags associated with them
+   * @return {srting} id The id of the org process
+   * @return {srting} name The name of the org process
+   * @return {array<srting>} tags The array of tags of the org process
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const orgIds: ['616eccaaa9360a05293b10fe'];
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const jwtToken = await api.user.changeOrganization.getChartTags(orgIds, session);
+   */
+  async getChartTags(orgIds = [], session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required());
+      const url = `/users/charts/tags?orgIds=${JSON.stringify(orgIds)}`;
+
+      const apiCall = self._client.get(url, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
 }
 
 export default User;

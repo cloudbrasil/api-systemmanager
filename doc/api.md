@@ -3248,6 +3248,9 @@ Class for user, permission user
     * [.saveSignature(data, session)](#User+saveSignature) ⇒ <code>Promise</code>
     * [.findByIdAndUpdate(params, session)](#User+findByIdAndUpdate) ⇒ <code>Promise.&lt;void&gt;</code>
     * [.changeOrganization(id, session)](#User+changeOrganization) ⇒ <code>Promise</code>
+    * [.getChartJWT(query, session)](#User+getChartJWT) ⇒ <code>Promise.&lt;string&gt;</code>
+    * [.getChartOrganizations(session)](#User+getChartOrganizations) ⇒ <code>Promise</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code>
+    * [.getChartTags(orgIds, session)](#User+getChartTags) ⇒ <code>Promise</code> \| <code>array.&lt;object&gt;</code> \| <code>srting</code> \| <code>srting</code> \| <code>array.&lt;srting&gt;</code>
 
 <a name="User+updateAvatar"></a>
 
@@ -3412,7 +3415,77 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const id = '616eccaaa9360a05293b10fe';
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.changeOrganization.updateAvatar(id, session);
+await api.user.changeOrganization(id, session);
+```
+<a name="User+getChartJWT"></a>
+
+### user.getChartJWT(query, session) ⇒ <code>Promise.&lt;string&gt;</code>
+Get the Atlas Chart JWT Token, so we can access authorized the created charts
+
+**Kind**: instance method of [<code>User</code>](#User)  
+**Returns**: <code>Promise.&lt;string&gt;</code> - JWT Token  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| query | <code>object</code> | <code>{}</code> | The query, if any, to add to the JWT token |
+| query.orgIds | <code>array.&lt;string&gt;</code> |  | An array of orgIds that we want to filter by |
+| query.orgProcessIds | <code>array.&lt;string&gt;</code> |  | An array of orgProcessId that we want to filter by |
+| query.tags | <code>array.&lt;string&gt;</code> |  | An array of org processes tags that we want to filter by |
+| query.startDate | <code>date</code> |  | The start date in ISO format that we want to filter by |
+| query.endDate | <code>date</code> |  | The start date in ISO format that we want to filter by |
+| session | <code>string</code> |  | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const query = { orgIds: ['616eccaaa9360a05293b10fe'] };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const jwtToken = await api.user.changeOrganization.getChartJWT(query, session);
+```
+<a name="User+getChartOrganizations"></a>
+
+### user.getChartOrganizations(session) ⇒ <code>Promise</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code>
+Get the user organizations to run dashboard filtering
+
+**Kind**: instance method of [<code>User</code>](#User)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const organizations = await api.user.changeOrganization.getChartOrganizations(session);
+```
+<a name="User+getChartTags"></a>
+
+### user.getChartTags(orgIds, session) ⇒ <code>Promise</code> \| <code>array.&lt;object&gt;</code> \| <code>srting</code> \| <code>srting</code> \| <code>array.&lt;srting&gt;</code>
+Given orgIds, return all the tags and org processes ids that can be used to filter dashboards
+
+**Kind**: instance method of [<code>User</code>](#User)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| orgIds | <code>array.&lt;string&gt;</code> | <code>[</code> | An array of orgIds |
+| session | <code>string</code> |  | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgIds: ['616eccaaa9360a05293b10fe'];
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const jwtToken = await api.user.changeOrganization.getChartTags(orgIds, session);
 ```
 <a name="Dispatch"></a>
 
