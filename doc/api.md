@@ -3443,7 +3443,7 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const query = { orgIds: ['616eccaaa9360a05293b10fe'] };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const jwtToken = await api.user.changeOrganization.getChartJWT(query, session);
+const jwtToken = await api.user.getChartJWT(query, session);
 ```
 <a name="User+getChartOrganizations"></a>
 
@@ -3463,7 +3463,7 @@ Get the user organizations to run dashboard filtering
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const organizations = await api.user.changeOrganization.getChartOrganizations(session);
+const organizations = await api.user.getChartOrganizations(session);
 ```
 <a name="User+getChartTags"></a>
 
@@ -3485,7 +3485,7 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const orgIds: ['616eccaaa9360a05293b10fe'];
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const jwtToken = await api.user.changeOrganization.getChartTags(orgIds, session);
+const jwtToken = await api.user.getChartTags(orgIds, session);
 ```
 <a name="Dispatch"></a>
 

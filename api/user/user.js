@@ -302,7 +302,7 @@ class User {
    * const api = new API();
    * const query = { orgIds: ['616eccaaa9360a05293b10fe'] };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const jwtToken = await api.user.changeOrganization.getChartJWT(query, session);
+   * const jwtToken = await api.user.getChartJWT(query, session);
    */
   async getChartJWT(query = {}, session) {
     const self = this;
@@ -333,7 +333,7 @@ class User {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const organizations = await api.user.changeOrganization.getChartOrganizations(session);
+   * const organizations = await api.user.getChartOrganizations(session);
    */
   async getChartOrganizations(session) {
     const self = this;
@@ -365,7 +365,7 @@ class User {
    * const api = new API();
    * const orgIds: ['616eccaaa9360a05293b10fe'];
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const jwtToken = await api.user.changeOrganization.getChartTags(orgIds, session);
+   * const jwtToken = await api.user.getChartTags(orgIds, session);
    */
   async getChartTags(orgIds = [], session) {
     const self = this;
