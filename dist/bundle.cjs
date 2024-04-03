@@ -3121,7 +3121,6 @@ class User {
    * @param {object} query={} The query, if any, to add to the JWT token
    * @param {array<string>} query.orgIds An array of orgIds that we want to filter by
    * @param {array<string>} query.orgProcessIds An array of orgProcessId that we want to filter by
-   * @param {array<string>} query.tags An array of org processes tags that we want to filter by
    * @param {date} query.startDate The start date in ISO format that we want to filter by
    * @param {date} query.endDate The start date in ISO format that we want to filter by
    * @param {string} session Is token JWT of user NOT allow SU
@@ -11405,6 +11404,32 @@ class AdminForm {
     };
   }
 
+   /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the types for forms
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '55e4a3bd6be6b45210833fae',
+   *  orgId: '5edd11c46b6ce9729c2c297c',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.form.findById(params, session);
+   */
+   get types() {
+    return {
+       BUSINESS: 1,
+       ADVANCED: 2,
+       CHECKLIST: 3,
+       EXTERNAL: 4
+    };
+   }
+
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get advance form by ID
@@ -11480,7 +11505,6 @@ class AdminForm {
       Joi__default["default"].assert(params.sort, Joi__default["default"].object(), 'Sort fields for');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session, token JWT');
 
-      const FORM_ADVANCED = 2;
       const PROJECTION_DEFAULT = {_id: 1, name: 1};
       const SORT_DEFAULT = {name: 1};
 
@@ -11488,7 +11512,7 @@ class AdminForm {
         orgId,
         page = 1,
         perPage = 200,
-        type = FORM_ADVANCED,
+        type = self.types.ADVANCED,
         project = PROJECTION_DEFAULT,
         sort = SORT_DEFAULT
       } = params;
@@ -12432,6 +12456,61 @@ class AdminUser {
       const apiCall = self.client.put('/admin/users/change/password', payload, self._setHeader(session));
 
       return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Request signed url url to put or get
+   * @param {object} params - Params to get form list
+   * @param {number} params.page=1 - Page of pagination
+   * @param {number} params.perPage=200 - Items per page
+   * @param {object} params.project={_id: 1, name: 1} - Fields to project
+   * @param {object} params.sort={name: 1} - Sort fields
+   * @param {string} session - Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  project: {_id: 1, name: 1, orgId: 1, orgIds: 1},
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.form.getUserList(params, session);
+   */
+  async getUserList(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get form list');
+      Joi__default["default"].assert(params.page, Joi__default["default"].number(), 'Page of pagination');
+      Joi__default["default"].assert(params.perPage, Joi__default["default"].number(), 'Items per page');
+      Joi__default["default"].assert(params.project, Joi__default["default"].object(), 'Fields to project');
+      Joi__default["default"].assert(params.sort, Joi__default["default"].object(), 'Sort fields for');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session, token JWT');
+
+      const PROJECTION_DEFAULT = {_id: 1, name: 1};
+      const SORT_DEFAULT = {name: 1};
+
+      const {
+        page = 1,
+        perPage = 200,
+        project = PROJECTION_DEFAULT,
+        sort = SORT_DEFAULT
+      } = params;
+
+      const payloadToSend = {$project: project, sort};
+
+      const apiCall = self._client
+          .post(`/admin/users?page=${page}&perPage=${perPage}`, payloadToSend, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+
     } catch (ex) {
       throw ex;
     }

@@ -47,6 +47,32 @@ class AdminForm {
     };
   }
 
+   /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the types for forms
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  id: '55e4a3bd6be6b45210833fae',
+   *  orgId: '5edd11c46b6ce9729c2c297c',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.form.findById(params, session);
+   */
+   get types() {
+    return {
+       BUSINESS: 1,
+       ADVANCED: 2,
+       CHECKLIST: 3,
+       EXTERNAL: 4
+    };
+   }
+
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get advance form by ID
@@ -122,7 +148,6 @@ class AdminForm {
       Joi.assert(params.sort, Joi.object(), 'Sort fields for');
       Joi.assert(session, Joi.string().required(), 'Session, token JWT');
 
-      const FORM_ADVANCED = 2;
       const PROJECTION_DEFAULT = {_id: 1, name: 1};
       const SORT_DEFAULT = {name: 1};
 
@@ -130,7 +155,7 @@ class AdminForm {
         orgId,
         page = 1,
         perPage = 200,
-        type = FORM_ADVANCED,
+        type = self.types.ADVANCED,
         project = PROJECTION_DEFAULT,
         sort = SORT_DEFAULT
       } = params;

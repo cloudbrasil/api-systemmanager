@@ -330,9 +330,29 @@ Admin Class for forms, permission admin
 **Kind**: global class  
 
 * [AdminForm](#AdminForm)
+    * [.types](#AdminForm+types) ⇒ <code>Promise</code>
     * [.findById(params, session)](#AdminForm+findById) ⇒ <code>Promise</code>
     * [.getFormList(params, session)](#AdminForm+getFormList) ⇒ <code>Promise</code>
 
+<a name="AdminForm+types"></a>
+
+### adminForm.types ⇒ <code>Promise</code>
+Get the types for forms
+
+**Kind**: instance property of [<code>AdminForm</code>](#AdminForm)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ id: '55e4a3bd6be6b45210833fae',
+ orgId: '5edd11c46b6ce9729c2c297c',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.form.findById(params, session);
+```
 <a name="AdminForm+findById"></a>
 
 ### adminForm.findById(params, session) ⇒ <code>Promise</code>
@@ -1085,6 +1105,7 @@ Admin Class for user, permission admin
     * [.findByIdAndUpdate(userId, payload, session)](#AdminUser+findByIdAndUpdate) ⇒ <code>Promise.&lt;\*&gt;</code>
     * [.getChangePasswordGuid(email)](#AdminUser+getChangePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
     * [.changePasswordGuid(Payload)](#AdminUser+changePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [.getUserList(params, session)](#AdminUser+getUserList) ⇒ <code>Promise</code>
 
 <a name="AdminUser+findById"></a>
 
@@ -1244,6 +1265,34 @@ const payload = {
   newPassword: '123456789'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+```
+<a name="AdminUser+getUserList"></a>
+
+### adminUser.getUserList(params, session) ⇒ <code>Promise</code>
+Request signed url url to put or get
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Params to get form list |
+| params.page | <code>number</code> | <code>1</code> | Page of pagination |
+| params.perPage | <code>number</code> | <code>200</code> | Items per page |
+| params.project | <code>object</code> | <code>{_id:</code> | 1, name: 1} - Fields to project |
+| params.sort | <code>object</code> | <code>{name:</code> | 1} - Sort fields |
+| session | <code>string</code> |  | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ project: {_id: 1, name: 1, orgId: 1, orgIds: 1},
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.form.getUserList(params, session);
 ```
 <a name="GeoLocation"></a>
 
@@ -3432,7 +3481,6 @@ Get the Atlas Chart JWT Token, so we can access authorized the created charts
 | query | <code>object</code> | <code>{}</code> | The query, if any, to add to the JWT token |
 | query.orgIds | <code>array.&lt;string&gt;</code> |  | An array of orgIds that we want to filter by |
 | query.orgProcessIds | <code>array.&lt;string&gt;</code> |  | An array of orgProcessId that we want to filter by |
-| query.tags | <code>array.&lt;string&gt;</code> |  | An array of org processes tags that we want to filter by |
 | query.startDate | <code>date</code> |  | The start date in ISO format that we want to filter by |
 | query.endDate | <code>date</code> |  | The start date in ISO format that we want to filter by |
 | session | <code>string</code> |  | Is token JWT of user NOT allow SU |

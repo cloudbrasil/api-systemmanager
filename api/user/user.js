@@ -289,7 +289,6 @@ class User {
    * @param {object} query={} The query, if any, to add to the JWT token
    * @param {array<string>} query.orgIds An array of orgIds that we want to filter by
    * @param {array<string>} query.orgProcessIds An array of orgProcessId that we want to filter by
-   * @param {array<string>} query.tags An array of org processes tags that we want to filter by
    * @param {date} query.startDate The start date in ISO format that we want to filter by
    * @param {date} query.endDate The start date in ISO format that we want to filter by
    * @param {string} session Is token JWT of user NOT allow SU

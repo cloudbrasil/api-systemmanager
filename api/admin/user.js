@@ -272,6 +272,61 @@ class AdminUser {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Request signed url url to put or get
+   * @param {object} params - Params to get form list
+   * @param {number} params.page=1 - Page of pagination
+   * @param {number} params.perPage=200 - Items per page
+   * @param {object} params.project={_id: 1, name: 1} - Fields to project
+   * @param {object} params.sort={name: 1} - Sort fields
+   * @param {string} session - Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  project: {_id: 1, name: 1, orgId: 1, orgIds: 1},
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.form.getUserList(params, session);
+   */
+  async getUserList(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get form list');
+      Joi.assert(params.page, Joi.number(), 'Page of pagination');
+      Joi.assert(params.perPage, Joi.number(), 'Items per page');
+      Joi.assert(params.project, Joi.object(), 'Fields to project');
+      Joi.assert(params.sort, Joi.object(), 'Sort fields for');
+      Joi.assert(session, Joi.string().required(), 'Session, token JWT');
+
+      const PROJECTION_DEFAULT = {_id: 1, name: 1};
+      const SORT_DEFAULT = {name: 1};
+
+      const {
+        page = 1,
+        perPage = 200,
+        project = PROJECTION_DEFAULT,
+        sort = SORT_DEFAULT
+      } = params;
+
+      const payloadToSend = {$project: project, sort};
+
+      const apiCall = self._client
+          .post(`/admin/users?page=${page}&perPage=${perPage}`, payloadToSend, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default AdminUser;
