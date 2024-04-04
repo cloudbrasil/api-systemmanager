@@ -46,6 +46,12 @@
 <dt><a href="#Application">Application</a></dt>
 <dd><p>Class for Applications, permission user</p>
 </dd>
+<dt><a href="#Chart">Chart</a></dt>
+<dd><p>Class user access to charts</p>
+</dd>
+<dt><a href="#Dashboard">Dashboard</a></dt>
+<dd><p>Class user access to dashboards</p>
+</dd>
 <dt><a href="#Datasource">Datasource</a></dt>
 <dd><p>Class for user datasource access, to be used with when creating new documents</p>
 </dd>
@@ -1385,6 +1391,59 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.application.list(params, session);
+```
+<a name="Chart"></a>
+
+## Chart
+Class user access to charts
+
+**Kind**: global class  
+<a name="Chart+getData"></a>
+
+### chart.getData(params, session) ⇒ <code>promise</code>
+Get the data for a chart
+
+**Kind**: instance method of [<code>Chart</code>](#Chart)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get helps from topic |
+| params.type | <code>object</code> | Type of the chart data |
+| params.query | <code>object</code> | The query if any |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ type: 'heatmap_data'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.dashboard.chart.getData(params, session);
+```
+<a name="Dashboard"></a>
+
+## Dashboard
+Class user access to dashboards
+
+**Kind**: global class  
+<a name="Dashboard+chart"></a>
+
+### dashboard.chart
+return the chart
+
+**Kind**: instance property of [<code>Dashboard</code>](#Dashboard)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.help.getTopics({}, session);
 ```
 <a name="Datasource"></a>
 

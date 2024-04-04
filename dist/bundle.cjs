@@ -10446,7 +10446,7 @@ class Updates {
  * Class for user registration in a user
  * @class
  */
-class Help {
+class Help$1 {
 
   constructor(options) {
     Joi__default["default"].assert(options, Joi__default["default"].object().required());
@@ -11002,6 +11002,8 @@ class Settings {
   }
 }
 
+var Dashboard = Help;
+
 /**
  * @class API request, user permission level
  */
@@ -11027,8 +11029,9 @@ class Users {
     self.register = new Register(options);
     self.notification = new Notification(options);
     self.updates = new Updates(options);
-    self.help = new Help(options);
+    self.help = new Help$1(options);
     self.application = new Application(options);
+    self.dashboard = new Dashboard(options);
   }
 }
 

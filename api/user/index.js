@@ -13,6 +13,7 @@ import Help from './help.js';
 import Datasource from './datasource.js';
 import Application from './application.js';
 import Settings from './settings.js';
+import Dashboard from './dashboard.js';
 
 /**
  * @class API request, user permission level
@@ -41,6 +42,7 @@ class Users {
     self.updates = new Updates(options);
     self.help = new Help(options);
     self.application = new Application(options);
+    self.dashboard = new Dashboard(options);
   }
 }
 
