@@ -147,4 +147,4 @@ class Dashboard {
   }
 }
 
-export default Help;
+export default Dashboard;
