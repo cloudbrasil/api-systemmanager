@@ -1503,6 +1503,9 @@ Class for documents, permission user
     * [.uploadSignedDocument(params)](#Documents+uploadSignedDocument) ⇒ <code>Promise.&lt;boolean&gt;</code>
     * [.checkPrimaryKeys(params, session)](#Documents+checkPrimaryKeys) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>array.&lt;string&gt;</code>
     * [.searchDocuments(params, session)](#Documents+searchDocuments) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+    * [.exportExcelForAllPages(params, session)](#Documents+exportExcelForAllPages) ⇒ <code>promise</code>
+    * [.exportWmsExcelForAllPages(params, session)](#Documents+exportWmsExcelForAllPages) ⇒ <code>promise</code>
+    * [.performDownloadComplete(params, session)](#Documents+performDownloadComplete) ⇒ <code>promise</code>
 
 <a name="Documents+add"></a>
 
@@ -1904,6 +1907,100 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.document.searchDocuments(params, session);
+```
+<a name="Documents+exportExcelForAllPages"></a>
+
+### documents.exportExcelForAllPages(params, session) ⇒ <code>promise</code>
+Method to export excel for all pages
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>promise</code> - returned data from the export excel for all pages  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to export excel for all pages |
+| params.query | <code>object</code> | Export excel for all pages query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.document.exportExcelForAllPages(params, session);
+```
+<a name="Documents+exportWmsExcelForAllPages"></a>
+
+### documents.exportWmsExcelForAllPages(params, session) ⇒ <code>promise</code>
+Method to export Wms Excel for all pages
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>promise</code> - returned data from the export Wms Excel for all pages  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to export Wms Excel for all pages |
+| params.query | <code>object</code> | export Wms Excel for all pages query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.document.exportWmsExcelForAllPages(params, session);
+```
+<a name="Documents+performDownloadComplete"></a>
+
+### documents.performDownloadComplete(params, session) ⇒ <code>promise</code>
+Method to perform download complete for all pages
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>promise</code> - returned data from the perform download complete for all pages  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to perform download complete for all pages |
+| params.data | <code>object</code> | data to be send to download |
+| params.query | <code>object</code> | perform download complete for all pages query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+ orgId: '55e4a3bd6be6b45210833fae',
+ data: {
+   destAws = {
+            destAwsKey: '',
+            destAwsSecret: '',
+            destAwsBucket: '',
+            destAwsRegion: ''
+        },
+        maxFileSize: ''
+ }
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.document.performDownloadComplete(params, session);
 ```
 <a name="Help"></a>
 
