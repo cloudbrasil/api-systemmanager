@@ -802,6 +802,137 @@ class Documents {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Method to export excel for all pages
+   * @param {object} params Params to export excel for all pages
+   * @param {object} params.query Export excel for all pages query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the export excel for all pages
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.document.exportExcelForAllPages(params, session);
+   */
+  async exportExcelForAllPages(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to export excel for all pages');
+      Joi.assert(params.query, Joi.object().required(), 'The query for the export excel for all pages');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const {query, orgId} = params;
+      const searchParams = new URLSearchParams(query);
+      const queryString = searchParams.toString();
+      const apiCall = self._client.get(`/organizations/${orgId}/documents/export/excel?${queryString}`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Method to export Wms Excel for all pages
+   * @param {object} params Params to export Wms Excel for all pages
+   * @param {object} params.query export Wms Excel for all pages query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the export Wms Excel for all pages
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.document.exportWmsExcelForAllPages(params, session);
+   */
+    async exportWmsExcelForAllPages(params, session) {
+      const self = this;
+  
+      try {
+        Joi.assert(params, Joi.object().required(), 'Params to export Wms Excel for all pages');
+        Joi.assert(params.query, Joi.object().required(), 'The query for the export Wms Excel for all pages');
+        Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+        Joi.assert(session, Joi.string().required(), 'Session token JWT');
+  
+        const {query, orgId} = params;
+        const searchParams = new URLSearchParams(query);
+        const queryString = searchParams.toString();
+        const apiCall = self._client.get(`/organizations/${orgId}/documents/wms/export/excel?${queryString}`, self._setHeader(session));
+  
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Method to perform download complete for all pages
+   * @param {object} params Params to perform download complete for all pages
+   * @param {object} params.data data to be send to download
+   * @param {object} params.query perform download complete for all pages query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the perform download complete for all pages
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   *  data: {
+   *    destAws = {
+            destAwsKey: '',
+            destAwsSecret: '',
+            destAwsBucket: '',
+            destAwsRegion: ''
+        },
+        maxFileSize: ''
+   *  }
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.document.performDownloadComplete(params, session);
+   */
+  async performDownloadComplete(params, session) {
+    const self = this;
+
+    Joi.assert(params, Joi.object().required(), 'Params to perform download complete for all pages');
+    Joi.assert(params.data, Joi.object().required(), 'The data for the perform download complete for all pages');
+    Joi.assert(params.query, Joi.object().required(), 'The query for the perform download complete for all pages');
+    Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+    Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+    try {
+      const {query, orgId, data} = params;
+      const searchParams = new URLSearchParams(query);
+      const queryString = searchParams.toString();
+      
+      const apiCall = self._client.post(`/organizations/${orgId}/documents/download/attachments?${queryString}`, data, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Documents;
