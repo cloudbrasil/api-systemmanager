@@ -1398,6 +1398,11 @@ await api.user.application.list(params, session);
 Class user access to charts
 
 **Kind**: global class  
+
+* [Chart](#Chart)
+    * [.getData(params, session)](#Chart+getData) ⇒ <code>promise</code>
+    * [.getQuestion(params, session)](#Chart+getQuestion) ⇒ <code>promise</code>
+
 <a name="Chart+getData"></a>
 
 ### chart.getData(params, session) ⇒ <code>promise</code>
@@ -1423,6 +1428,36 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.dashboard.chart.getData(params, session);
+```
+<a name="Chart+getQuestion"></a>
+
+### chart.getQuestion(params, session) ⇒ <code>promise</code>
+Get the question data from a chart data
+
+**Kind**: instance method of [<code>Chart</code>](#Chart)  
+**Returns**: <code>promise</code> - data the question data  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get helps from topic |
+| params.orgId | <code>object</code> | The organization id of the question |
+| params.processId | <code>object</code> | The process id of the question |
+| params.path | <code>object</code> | The path of the question so we can retrieve it |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '637e7523f555fabdfb1ed7b6',
+ processId: '123e7523f555fabdfb1ed7c6',
+ path: 'Checklist.Group Name.Field Name'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.dashboard.chart.getQuestion(params, session);
 ```
 <a name="Dashboard"></a>
 

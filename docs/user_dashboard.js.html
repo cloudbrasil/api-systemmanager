@@ -168,6 +168,46 @@ class Chart {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Get the question data from a chart data
+   * @param {object} params Params to get helps from topic
+   * @param {object} params.orgId The organization id of the question
+   * @param {object} params.processId The process id of the question
+   * @param {object} params.path The path of the question so we can retrieve it
+   * @param {string} session Session, token JWT
+   * @returns {promise} data the question data
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '637e7523f555fabdfb1ed7b6',
+   *  processId: '123e7523f555fabdfb1ed7c6',
+   *  path: 'Checklist.Group Name.Field Name'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.dashboard.chart.getQuestion(params, session);
+   */
+  async getQuestion(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to helps from a topic');
+      Joi.assert(params.orgId, Joi.string().required(), 'The organization id of the question');
+      Joi.assert(params.processId, Joi.string().required(), 'The process id of the question');
+      Joi.assert(params.path, Joi.string().required(), 'The path of the field of the question');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const apiCall = self._client.post(`/organizations/dashboard/chart/question/data`, params, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**
@@ -234,7 +274,7 @@ class Dashboard {
   }
 }
 
-export default Help;
+export default Dashboard;
 </code></pre>
         </article>
     </section>
