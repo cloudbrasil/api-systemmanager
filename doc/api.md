@@ -1541,6 +1541,7 @@ Class for documents, permission user
     * [.exportExcelForAllPages(params, session)](#Documents+exportExcelForAllPages) ⇒ <code>promise</code>
     * [.exportWmsExcelForAllPages(params, session)](#Documents+exportWmsExcelForAllPages) ⇒ <code>promise</code>
     * [.performDownloadComplete(params, session)](#Documents+performDownloadComplete) ⇒ <code>promise</code>
+    * [.searchDocumentsMongo(params, session)](#Documents+searchDocumentsMongo) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
 
 <a name="Documents+add"></a>
 
@@ -2036,6 +2037,34 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.document.performDownloadComplete(params, session);
+```
+<a name="Documents+searchDocumentsMongo"></a>
+
+### documents.searchDocumentsMongo(params, session) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+Method to search documents direct on MongoDB (use carefully and only in cases you need to access direct data
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>promise</code> - returned data from the search<code>number</code> - count the count of items searched<code>array.&lt;object&gt;</code> - items the items returned from search<code>number</code> - took the number of documents taken<code>number</code> - totalCount the total count of all documents  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to search the documents |
+| params.query | <code>object</code> | Search documents query |
+| params.orgId | <code>object</code> | Organization id (_id database) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+ orgId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const retSearch = await api.user.document.searchDocumentsMongo(params, session);
 ```
 <a name="Help"></a>
 

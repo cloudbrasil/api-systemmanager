@@ -1417,18 +1417,18 @@ class Documents {
    */
     async exportWmsExcelForAllPages(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export Wms Excel for all pages');
         Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the export Wms Excel for all pages');
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
         Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
-  
+
         const {query, orgId} = params;
         const searchParams = new URLSearchParams(query);
         const queryString = searchParams.toString();
         const apiCall = self._client.get(`/organizations/${orgId}/documents/wms/export/excel?${queryString}`, self._setHeader(session));
-  
+
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
@@ -1478,8 +1478,52 @@ class Documents {
       const {query, orgId, data} = params;
       const searchParams = new URLSearchParams(query);
       const queryString = searchParams.toString();
-      
+
       const apiCall = self._client.post(`/organizations/${orgId}/documents/download/attachments?${queryString}`, data, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Method to search documents direct on MongoDB (use carefully and only in cases you need to access direct data
+   * @param {object} params Params to search the documents
+   * @param {object} params.query Search documents query
+   * @param {object} params.orgId Organization id (_id database)
+   * @param {string} session Session, token JWT
+   * @returns {promise} returned data from the search
+   * @returns {number} count the count of items searched
+   * @returns {array<object>} items the items returned from search
+   * @returns {number} took the number of documents taken
+   * @returns {number} totalCount the total count of all documents
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  query: {p: 20, i: 1, s: 'Mais recentes', as: '', m: 'w', ai: '57e6a3bd6be6b45210833fae'},
+   *  orgId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const retSearch = await api.user.document.searchDocumentsMongo(params, session);
+   */
+  async searchDocumentsMongo(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to search the documents');
+      Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search documents');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {query, orgId} = params;
+      const searchParams = new URLSearchParams(query);
+      const queryString = searchParams.toString();
+      const apiCall = self._client.get(`/organizations/${orgId}/documents/search/direct?${queryString}`, self._setHeader(session));
+
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
