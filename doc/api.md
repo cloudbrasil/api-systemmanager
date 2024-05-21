@@ -1541,7 +1541,7 @@ Class for documents, permission user
     * [.exportExcelForAllPages(params, session)](#Documents+exportExcelForAllPages) ⇒ <code>promise</code>
     * [.exportWmsExcelForAllPages(params, session)](#Documents+exportWmsExcelForAllPages) ⇒ <code>promise</code>
     * [.performDownloadComplete(params, session)](#Documents+performDownloadComplete) ⇒ <code>promise</code>
-    * [.searchDocumentsMongo(params, session)](#Documents+searchDocumentsMongo) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+    * [.searchDocumentsDirect(params, session)](#Documents+searchDocumentsDirect) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
 
 <a name="Documents+add"></a>
 
@@ -2038,9 +2038,9 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.document.performDownloadComplete(params, session);
 ```
-<a name="Documents+searchDocumentsMongo"></a>
+<a name="Documents+searchDocumentsDirect"></a>
 
-### documents.searchDocumentsMongo(params, session) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
+### documents.searchDocumentsDirect(params, session) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
 Method to search documents direct on MongoDB (use carefully and only in cases you need to access direct data
 
 **Kind**: instance method of [<code>Documents</code>](#Documents)  
@@ -2064,7 +2064,7 @@ const params = {
  orgId: '55e4a3bd6be6b45210833fae',
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const retSearch = await api.user.document.searchDocumentsMongo(params, session);
+const retSearch = await api.user.document.searchDocumentsDirect(params, session);
 ```
 <a name="Help"></a>
 

@@ -1043,9 +1043,9 @@ class Documents {
    *  orgId: '55e4a3bd6be6b45210833fae',
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retSearch = await api.user.document.searchDocumentsMongo(params, session);
+   * const retSearch = await api.user.document.searchDocumentsDirect(params, session);
    */
-  async searchDocumentsMongo(params, session) {
+  async searchDocumentsDirect(params, session) {
     const self = this;
 
     try {
