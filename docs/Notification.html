@@ -946,7 +946,7 @@ await api.user.notification.getOld(session);</code></pre>
     
     
     <div class="description">
-        Set notification as readed
+        Set notification as read
     </div>
     
 
@@ -1174,6 +1174,198 @@ await api.user.notification.setRead(params, session);</code></pre>
 
 
     
+    <h4 class="name" id="setReadAll">
+        <a class="href-link" href="#setReadAll">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                setReadAll<span class="signature">(session)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Set all notification of the logged user as read
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT Token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_notification.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line202">line 202</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.setReadAll(session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
     <h4 class="name" id="setUnread">
         <a class="href-link" href="#setUnread">#</a>
         
@@ -1352,7 +1544,7 @@ await api.user.notification.setRead(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line207">line 207</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line238">line 238</a>
             </span>
         </p>
     

@@ -171,6 +171,42 @@ class Application {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Changes the application for a user in an organization
+   * @param {object} params Params to get task
+   * @param {object} params.applicationId The application id to change to
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  applicationId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.application.changeApplication(params, session);
+   */
+  async changeApplication(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get task');
+      Joi.assert(params.applicationId, Joi.string().required(), 'The application id');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const { orgId} = params;
+      const apiCall = self._client
+          .put('/organizations/applications/change', { applicationId: params.applicationId  }, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Application;

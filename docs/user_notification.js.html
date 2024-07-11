@@ -238,7 +238,7 @@ class Notification {
 
    /**
    * @author Myndware &lt;augusto.pissarra@myndware.com>
-   * @description Set notification as readed
+   * @description Set notification as read
    * @param {object} params Params to update the notification
    * @param {string} params.id Notification Id
    * @param {string} session JWT Token
@@ -257,20 +257,51 @@ class Notification {
    */
     async setRead(params = {}, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.id, Joi.string().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {id} = params;
-  
+
         const apiCall = self._client.put(`/organizations/notifications/${id}/read`, {}, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
       }
     }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Set all notification of the logged user as read
+   * @param {string} session JWT Token
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.setReadAll(session);
+   */
+  async setReadAll(session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required());
+      Joi.assert(params.id, Joi.string().required());
+      Joi.assert(session, Joi.string().required());
+
+      const {id} = params;
+
+      const apiCall = self._client.put(`/organizations/notifications/read/all`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 
     /**
    * @author Myndware &lt;augusto.pissarra@myndware.com>
@@ -293,14 +324,14 @@ class Notification {
    */
     async setUnread(params = {}, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.id, Joi.string().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {id} = params;
-  
+
         const apiCall = self._client.put(`/organizations/notifications/${id}/unread`, {}, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {

@@ -10473,7 +10473,7 @@ class Notification {
 
    /**
    * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Set notification as readed
+   * @description Set notification as read
    * @param {object} params Params to update the notification
    * @param {string} params.id Notification Id
    * @param {string} session JWT Token
@@ -10492,20 +10492,51 @@ class Notification {
    */
     async setRead(params = {}, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {id} = params;
-  
+
         const apiCall = self._client.put(`/organizations/notifications/${id}/read`, {}, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
       }
     }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Set all notification of the logged user as read
+   * @param {string} session JWT Token
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.notification.setReadAll(session);
+   */
+  async setReadAll(session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const {id} = params;
+
+      const apiCall = self._client.put(`/organizations/notifications/read/all`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 
     /**
    * @author Myndware <augusto.pissarra@myndware.com>
@@ -10528,14 +10559,14 @@ class Notification {
    */
     async setUnread(params = {}, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {id} = params;
-  
+
         const apiCall = self._client.put(`/organizations/notifications/${id}/unread`, {}, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
@@ -11032,6 +11063,42 @@ class Application {
       const { orgId} = params;
       const apiCall = self._client
         .get(`/organizations/${orgId}/applications`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Changes the application for a user in an organization
+   * @param {object} params Params to get task
+   * @param {object} params.applicationId The application id to change to
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  applicationId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.application.changeApplication(params, session);
+   */
+  async changeApplication(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
+      Joi__default["default"].assert(params.applicationId, Joi__default["default"].string().required(), 'The application id');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { orgId} = params;
+      const apiCall = self._client
+          .put('/organizations/applications/change', { applicationId: params.applicationId  }, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
