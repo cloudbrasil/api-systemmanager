@@ -1367,6 +1367,11 @@ API request, user permission level
 Class for Applications, permission user
 
 **Kind**: global class  
+
+* [Application](#Application)
+    * [.list(params, session)](#Application+list) ⇒ <code>promise</code>
+    * [.changeApplication(params, session)](#Application+changeApplication) ⇒ <code>promise</code>
+
 <a name="Application+list"></a>
 
 ### application.list(params, session) ⇒ <code>promise</code>
@@ -1391,6 +1396,31 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.application.list(params, session);
+```
+<a name="Application+changeApplication"></a>
+
+### application.changeApplication(params, session) ⇒ <code>promise</code>
+Changes the application for a user in an organization
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get task |
+| params.applicationId | <code>object</code> | The application id to change to |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ applicationId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.application.changeApplication(params, session);
 ```
 <a name="Chart"></a>
 
@@ -2463,6 +2493,7 @@ Class for user registration in a user
     * [.getNew(session)](#Notification+getNew)
     * [.getOld(session)](#Notification+getOld)
     * [.setRead(params, session)](#Notification+setRead) ⇒ <code>Promise</code>
+    * [.setReadAll(session)](#Notification+setReadAll) ⇒ <code>Promise</code>
     * [.setUnread(params, session)](#Notification+setUnread) ⇒ <code>Promise</code>
 
 <a name="Notification+tokenTypes"></a>
@@ -2542,7 +2573,7 @@ await api.user.notification.getOld(session);
 <a name="Notification+setRead"></a>
 
 ### notification.setRead(params, session) ⇒ <code>Promise</code>
-Set notification as readed
+Set notification as read
 
 **Kind**: instance method of [<code>Notification</code>](#Notification)  
 **Access**: public  
@@ -2563,6 +2594,26 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.notification.setRead(params, session);
+```
+<a name="Notification+setReadAll"></a>
+
+### notification.setReadAll(session) ⇒ <code>Promise</code>
+Set all notification of the logged user as read
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | JWT Token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.notification.setReadAll(session);
 ```
 <a name="Notification+setUnread"></a>
 
