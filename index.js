@@ -9,6 +9,7 @@ import General from './api/general/index.js';
 import User from './api/user/index.js';
 import Admin from './api/admin/index.js';
 import External from './api/external.js';
+import MyndAI from './api/ai.js';
 
 /**
  * Class API
@@ -81,6 +82,7 @@ class API {
     self.user = new User({parent: self});
     self.admin = new Admin({parent: self});
     self.external = new External({parent: self});
+    self.ai = new MyndAI({parent: self});
   }
 }
 

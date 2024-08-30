@@ -13930,6 +13930,98 @@ class External {
 }
 
 /**
+ * Class using AI
+ * @class
+ */
+class MyndAI {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      throw Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    } else {
+      return ___default["default"].get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(authorization) {
+    return {
+      headers: {
+        authorization,
+      }
+    };
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Create new document
+   * @param {object} params Object for add new document
+   * @param {string} params.model The model to use for the explain
+   * @param {object} params.context The context to apply to a prompt
+   * @param {string} params.text The text to add to the prompt
+   * @param {array<base64>} params.medias Medias to add to the case in base64 (PDF, Image, Video, Audio)
+   * @param {string} params.propmpt The actual prompt with context and text to apply to
+   * @return {Promise<object>} data
+   * @return {boolean} data.success true|false for success
+   * @return {object} data.result the result of the AI call
+   * @return {string} data.result.response The actual text response according the prompt
+   * @return {number} data.result.tokens The quantity of token used in this request
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *  model: 'model-name',
+   *  context: { name: 'Some name' },
+   *  text: 'Say hello to the world',
+   *  medias: ['...'],
+   *  prompt: 'Write a story about {{name}} with the following theme: {{text}}',
+   * };
+   * const retData = await api.ai.explain(params, authorization);
+   */
+  async explain(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.propmpt, Joi__default["default"].string().required().error(new Error('Provide a prompt')));
+
+      const apiCall = self._client
+          .post('/agents/explain', params, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+/**
  * Class API
  */
 class API {
@@ -14000,6 +14092,7 @@ class API {
     self.user = new Users({parent: self});
     self.admin = new Admin({parent: self});
     self.external = new External({parent: self});
+    self.ai = new MyndAI({parent: self});
   }
 }
 
