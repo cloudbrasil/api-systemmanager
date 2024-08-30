@@ -7,7 +7,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> admin/policy.js</title>
+  <title> ai.js</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -76,7 +76,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Source</p>
-                    <h1>admin/policy.js</h1>
+                    <h1>ai.js</h1>
                 </header>
                 
 
@@ -90,10 +90,10 @@ import Boom from '@hapi/boom';
 import Joi from 'joi';
 
 /**
- * Admin Class for policy, permission admin
+ * Class using AI
  * @class
  */
-class AdminPolicy {
+class MyndAI {
 
   constructor(options) {
     Joi.assert(options, Joi.object().required());
@@ -105,7 +105,7 @@ class AdminPolicy {
   }
 
   /**
-   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
    * @description Get the return data and check for errors
    * @param {object} retData Response HTTP
    * @return {*}
@@ -113,7 +113,7 @@ class AdminPolicy {
    */
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
-      return Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
+      throw Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
     } else {
       return _.get(retData, 'data', def);
     }
@@ -126,35 +126,54 @@ class AdminPolicy {
    * @return {object} header with new session
    * @private
    */
-  _setHeader(session) {
+  _setHeader(authorization) {
     return {
       headers: {
-        authorization: session,
+        authorization,
       }
     };
   }
 
   /**
    * @author Myndware &lt;augusto.pissarra@myndware.com>
-   * @description Find all policies
-   * @param {string} session Session, token JWT
-   * @return {Promise}
+   * @description Create new document
+   * @param {object} params Object for add new document
+   * @param {string} params.model The model to use for the explain
+   * @param {object} params.context The context to apply to a prompt
+   * @param {string} params.text The text to add to the prompt
+   * @param {array&lt;base64>} params.medias Medias to add to the case in base64 (PDF, Image, Video, Audio)
+   * @param {string} params.propmpt The actual prompt with context and text to apply to
+   * @return {Promise&lt;object>} data
+   * @return {boolean} data.success true|false for success
+   * @return {object} data.result the result of the AI call
+   * @return {string} data.result.response The actual text response according the prompt
+   * @return {number} data.result.tokens The quantity of token used in this request
    * @public
    * @async
    * @example
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.admin.policy.find(session);
+   * const authorization = '...';
+   * const params = {
+   *  model: 'model-name',
+   *  context: { name: 'Some name' },
+   *  text: 'Say hello to the world',
+   *  medias: ['...'],
+   *  prompt: 'Write a story about {{name}} with the following theme: {{text}}',
+   * };
+   * const retData = await api.ai.explain(params, authorization);
    */
-  async find(session) {
+  async explain(params, authorization) {
     const self = this;
 
     try {
-      Joi.assert(session, Joi.string().required());
+      Joi.assert(params, Joi.object().required().error(new Error('params is required')));
+      Joi.assert(params.propmpt, Joi.string().required().error(new Error('Provide a prompt')));
 
-      const apiCall = self._client.get('/admin/policies', self._setHeader(session));
+      const apiCall = self._client
+          .post('/agents/explain', params, self._setHeader(authorization));
+
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -162,7 +181,7 @@ class AdminPolicy {
   }
 }
 
-export default AdminPolicy;
+export default MyndAI;
 </code></pre>
         </article>
     </section>

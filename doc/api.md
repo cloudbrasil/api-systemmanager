@@ -97,6 +97,9 @@
 <dt><a href="#User">User</a></dt>
 <dd><p>Class for user, permission user</p>
 </dd>
+<dt><a href="#MyndAI">MyndAI</a></dt>
+<dd><p>Class using AI</p>
+</dd>
 <dt><a href="#Dispatch">Dispatch</a></dt>
 <dd><p>Api dispatch manager</p>
 </dd>
@@ -3805,6 +3808,45 @@ const api = new API();
 const orgIds: ['616eccaaa9360a05293b10fe'];
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const jwtToken = await api.user.getChartTags(orgIds, session);
+```
+<a name="MyndAI"></a>
+
+## MyndAI
+Class using AI
+
+**Kind**: global class  
+<a name="MyndAI+explain"></a>
+
+### myndAI.explain(params) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>object</code> \| <code>string</code> \| <code>number</code>
+Create new document
+
+**Kind**: instance method of [<code>MyndAI</code>](#MyndAI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success true|false for success<code>object</code> - data.result the result of the AI call<code>string</code> - data.result.response The actual text response according the prompt<code>number</code> - data.result.tokens The quantity of token used in this request  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Object for add new document |
+| params.model | <code>string</code> | The model to use for the explain |
+| params.context | <code>object</code> | The context to apply to a prompt |
+| params.text | <code>string</code> | The text to add to the prompt |
+| params.medias | <code>array.&lt;base64&gt;</code> | Medias to add to the case in base64 (PDF, Image, Video, Audio) |
+| params.propmpt | <code>string</code> | The actual prompt with context and text to apply to |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+ model: 'model-name',
+ context: { name: 'Some name' },
+ text: 'Say hello to the world',
+ medias: ['...'],
+ prompt: 'Write a story about {{name}} with the following theme: {{text}}',
+};
+const retData = await api.ai.explain(params, authorization);
 ```
 <a name="Dispatch"></a>
 

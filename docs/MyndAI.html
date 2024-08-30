@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> Application</title>
+  <title> MyndAI</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>Application</h1>
+                    <h1>MyndAI</h1>
                 </header>
                 
 
@@ -85,9 +85,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>Application<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>MyndAI<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class for Applications, permission user</div>
+            <div class="class-description">Class using AI</div>
         
     
 </header>
@@ -106,12 +106,12 @@
 
 
     
-    <h4 class="name" id="Application">
-        <a class="href-link" href="#Application">#</a>
+    <h4 class="name" id="MyndAI">
+        <a class="href-link" href="#MyndAI">#</a>
         
         <span class="code-name">
             
-                new Application<span class="signature">()</span><span class="type-signature"></span>
+                new MyndAI<span class="signature">()</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -165,9 +165,9 @@
 
     
         <p class="tag-source">
-            <a href="user_application.js.html" class="button">View Source</a>
+            <a href="ai.js.html" class="button">View Source</a>
             <span>
-                <a href="user_application.js.html">user/application.js</a>, <a href="user_application.js.html#line10">line 10</a>
+                <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line9">line 9</a>
             </span>
         </p>
     
@@ -224,8 +224,8 @@
 
 
     
-    <h4 class="name" id="changeApplication">
-        <a class="href-link" href="#changeApplication">#</a>
+    <h4 class="name" id="explain">
+        <a class="href-link" href="#explain">#</a>
         
             
                 <span class='tag'>async</span>
@@ -233,7 +233,7 @@
         
         <span class="code-name">
             
-                changeApplication<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise}</span>
+                explain<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|boolean|object|string|number}</span>
             
         </span>
     </h4>
@@ -242,7 +242,7 @@
     
     
     <div class="description">
-        Changes the application for a user in an organization
+        Create new document
     </div>
     
 
@@ -296,7 +296,7 @@
 
   
 
-  <td class="description last">Params to get task</td>
+  <td class="description last">Object for add new document</td>
 </tr>
 
   
@@ -304,34 +304,7 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>applicationId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The application id to change to</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
+      <td class="name"><code>model</code></td>
   
 
   <td class="type">
@@ -347,8 +320,102 @@
 
   
 
-  <td class="description last">Session, token JWT</td>
+  <td class="description last">The model to use for the explain</td>
 </tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>context</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The context to apply to a prompt</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>text</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The text to add to the prompt</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>medias</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;base64></code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Medias to add to the case in base64 (PDF, Image, Video, Audio)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>propmpt</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The actual prompt with context and text to apply to</td>
+</tr>
+
+  
 
 
         
@@ -400,9 +467,9 @@
 
     
         <p class="tag-source">
-            <a href="user_application.js.html" class="button">View Source</a>
+            <a href="ai.js.html" class="button">View Source</a>
             <span>
-                <a href="user_application.js.html">user/application.js</a>, <a href="user_application.js.html#line106">line 106</a>
+                <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line80">line 80</a>
             </span>
         </p>
     
@@ -433,11 +500,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>data</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">promise</code>
+<code class="param-type">Promise.&lt;object></code>
 
 
     </div>
@@ -445,245 +514,71 @@
 </div>
 
                 
-        </div>
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.success true|false for success</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
     </div>
-
-
-
-
-    <h5>Example</h5>
     
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- applicationId: '55e4a3bd6be6b45210833fae',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.application.changeApplication(params, session);</code></pre>
-    
-
-
 </div>
-            
-                <div class="member">
 
+                
+                    
 
+<div class="columns">
     
-    <h4 class="name" id="list">
-        <a class="href-link" href="#list">#</a>
+    <div class='param-desc column is-7'>data.result the result of the AI call</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                list<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise}</span>
-            
-        </span>
-    </h4>
-    
+<code class="param-type">object</code>
 
-    
-    
-    <div class="description">
-        Get the available applications for this user in this organizations
+
     </div>
     
+</div>
 
+                
+                    
 
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
+<div class="columns">
     
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to get task</td>
-</tr>
-
-  
-  
+    <div class='param-desc column is-7'>data.result.response The actual text response according the prompt</div>
     
-<tr class="deep-level-1">
-  
-      <td class="name"><code>orgId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization id (_id database)</td>
-</tr>
-
-  
-
-
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
         
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
 <code class="param-type">string</code>
 
 
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Session, token JWT</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
+    </div>
+    
 </div>
 
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="user_application.js.html" class="button">View Source</a>
-            <span>
-                <a href="user_application.js.html">user/application.js</a>, <a href="user_application.js.html#line70">line 70</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
+                
                     
 
 <div class="columns">
+    
+    <div class='param-desc column is-7'>data.result.tokens The quantity of token used in this request</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">promise</code>
+<code class="param-type">number</code>
 
 
     </div>
@@ -702,11 +597,15 @@ await api.user.application.changeApplication(params, session);</code></pre>
     
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
+const authorization = '...';
 const params = {
- orgId: '55e4a3bd6be6b45210833fae',
+ model: 'model-name',
+ context: { name: 'Some name' },
+ text: 'Say hello to the world',
+ medias: ['...'],
+ prompt: 'Write a story about {{name}} with the following theme: {{text}}',
 };
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.application.list(params, session);</code></pre>
+const retData = await api.ai.explain(params, authorization);</code></pre>
     
 
 
