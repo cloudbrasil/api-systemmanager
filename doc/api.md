@@ -2493,6 +2493,7 @@ Class for user registration in a user
 * [Notification](#Notification)
     * [.tokenTypes](#Notification+tokenTypes) ⇒ <code>Object</code>
     * [.addToken(params, session)](#Notification+addToken) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+    * [.removeToken(params, session)](#Notification+removeToken) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
     * [.getNew(session)](#Notification+getNew)
     * [.getOld(session)](#Notification+getOld)
     * [.setRead(params, session)](#Notification+setRead) ⇒ <code>Promise</code>
@@ -2518,8 +2519,10 @@ Method to add a notification token
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Params to add notification token |
-| params.token | <code>string</code> | The token |
-| params.type | <code>object</code> | The token type |
+| params.token | <code>obhect</code> | The token |
+| params.token.value | <code>object</code> | The token value |
+| params.token.type | <code>object</code> | The token type |
+| params.token.data | <code>object</code> | The extra data of a token, if there is. |
 | session | <code>string</code> | Is token JWT of user NOT allow SU |
 
 **Example**  
@@ -2528,10 +2531,38 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const params = {
- token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
- type: 'FCM_WEB'
+ token: {
+   value: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+   type: 'FCM_CAPACITOR'
+   }
 };
 const retData = await api.user.notification.addToken(params, session);
+```
+<a name="Notification+removeToken"></a>
+
+### notification.removeToken(params, session) ⇒ <code>promise.&lt;object&gt;</code> \| <code>boolean</code>
+Method to remove a notification token
+
+**Kind**: instance method of [<code>Notification</code>](#Notification)  
+**Returns**: <code>promise.&lt;object&gt;</code> - data<code>boolean</code> - data._id the id of the added token  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to add notification token |
+| params.token | <code>obhect</code> | The token value |
+| session | <code>string</code> | Is token JWT of user NOT allow SU |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ token:'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2'
+};
+const retData = await api.user.notification.removeToken(params, session);
 ```
 <a name="Notification+getNew"></a>
 

@@ -386,7 +386,7 @@
   <td class="type">
   
       
-<code class="param-type">string</code>
+<code class="param-type">obhect</code>
 
 
   
@@ -403,7 +403,30 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>type</code></td>
+      <td class="name"><code>token.value</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The token value</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>token.type</code></td>
   
 
   <td class="type">
@@ -420,6 +443,29 @@
   
 
   <td class="description last">The token type</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>token.data</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The extra data of a token, if there is.</td>
 </tr>
 
   
@@ -501,7 +547,7 @@
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line82">line 82</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line86">line 86</a>
             </span>
         </p>
     
@@ -577,8 +623,10 @@
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const params = {
- token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
- type: 'FCM_WEB'
+ token: {
+   value: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+   type: 'FCM_CAPACITOR'
+   }
 };
 const retData = await api.user.notification.addToken(params, session);</code></pre>
     
@@ -717,7 +765,7 @@ const retData = await api.user.notification.addToken(params, session);</code></p
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line113">line 113</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line154">line 154</a>
             </span>
         </p>
     
@@ -886,7 +934,7 @@ await api.user.notification.getNew(session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line139">line 139</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line180">line 180</a>
             </span>
         </p>
     
@@ -919,6 +967,272 @@ await api.user.notification.getNew(session);</code></pre>
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.notification.getOld(session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="removeToken">
+        <a class="href-link" href="#removeToken">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                removeToken<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise.&lt;object>|boolean}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Method to remove a notification token
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Params to add notification token</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>token</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">obhect</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The token value</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Is token JWT of user NOT allow SU</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_notification.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line124">line 124</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data._id the id of the added token</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const params = {
+ token:'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2'
+};
+const retData = await api.user.notification.removeToken(params, session);</code></pre>
     
 
 
@@ -1106,7 +1420,7 @@ await api.user.notification.getOld(session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line171">line 171</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line212">line 212</a>
             </span>
         </p>
     
@@ -1301,7 +1615,7 @@ await api.user.notification.setRead(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line202">line 202</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line243">line 243</a>
             </span>
         </p>
     
@@ -1544,7 +1858,7 @@ await api.user.notification.setReadAll(session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line238">line 238</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line279">line 279</a>
             </span>
         </p>
     

@@ -62,8 +62,10 @@ class Notification {
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to add a notification token
    * @param {object} params Params to add notification token
-   * @param {string} params.token The token
-   * @param {object} params.type The token type
+   * @param {obhect} params.token The token
+   * @param {object} params.token.value The token value
+   * @param {object} params.token.type The token type
+   * @param {object} params.token.data The extra data of a token, if there is.
    * @param {string} session Is token JWT of user NOT allow SU
    * @returns {promise<object>} data
    * @returns {boolean} data._id the id of the added token
@@ -74,8 +76,10 @@ class Notification {
    * const api = new API();
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * const params = {
-   *  token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
-   *  type: 'FCM_WEB'
+   *  token: {
+   *    value: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+   *    type: 'FCM_CAPACITOR'
+ *    }
    * };
    * const retData = await api.user.notification.addToken(params, session);
    */
@@ -84,11 +88,48 @@ class Notification {
 
     try {
       Joi.assert(params, Joi.object().required(), 'Params to get task');
-      Joi.assert(params.token, Joi.string().required(), 'Token is required');
-      Joi.assert(params.type, Joi.string().required(), ' The token type');
+      Joi.assert(params.token, Joi.object().required(), 'Token information to add');
+      Joi.assert(params.token.value, Joi.string().required(), 'Token token value');
+      Joi.assert(params.token.type, Joi.string().required(), 'The type of the token');
 
       const apiCall = self._client
-        .put(`/users/notifications/token`, params, self._setHeader(session));
+        .put(`/notifications/token`, params, self._setHeader(session));
+
+      const retData = self._returnData(await apiCall);
+      return retData;
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Method to remove a notification token
+   * @param {object} params Params to add notification token
+   * @param {obhect} params.token The token value
+   * @param {string} session Is token JWT of user NOT allow SU
+   * @returns {promise<object>} data
+   * @returns {boolean} data._id the id of the added token
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const params = {
+   *  token:'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2'
+   * };
+   * const retData = await api.user.notification.removeToken(params, session);
+   */
+  async removeToken(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get task');
+      Joi.assert(params.token, Joi.string().required(), 'Token is required');
+
+      const apiCall = self._client
+          .delete(`/notifications/token/${params.token}`, self._setHeader(session));
 
       const retData = self._returnData(await apiCall);
       return retData;
