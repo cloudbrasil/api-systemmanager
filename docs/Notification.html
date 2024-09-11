@@ -396,29 +396,6 @@
 
   
 
-  <td class="description last">The token</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>token.value</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
   <td class="description last">The token value</td>
 </tr>
 
@@ -426,7 +403,7 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>token.type</code></td>
+      <td class="name"><code>type</code></td>
   
 
   <td class="type">
@@ -443,29 +420,6 @@
   
 
   <td class="description last">The token type</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>token.data</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The extra data of a token, if there is.</td>
 </tr>
 
   
@@ -547,7 +501,7 @@
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line86">line 86</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line82">line 82</a>
             </span>
         </p>
     
@@ -623,10 +577,8 @@
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const params = {
- token: {
-   value: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
-   type: 'FCM_CAPACITOR'
-   }
+ token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+ type: 'FCM_CAPACITOR'
 };
 const retData = await api.user.notification.addToken(params, session);</code></pre>
     
@@ -765,7 +717,7 @@ const retData = await api.user.notification.addToken(params, session);</code></p
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line154">line 154</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line149">line 149</a>
             </span>
         </p>
     
@@ -934,7 +886,7 @@ await api.user.notification.getNew(session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line180">line 180</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line175">line 175</a>
             </span>
         </p>
     
@@ -1154,7 +1106,7 @@ await api.user.notification.getOld(session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line124">line 124</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line119">line 119</a>
             </span>
         </p>
     
@@ -1420,7 +1372,7 @@ const retData = await api.user.notification.removeToken(params, session);</code>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line212">line 212</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line207">line 207</a>
             </span>
         </p>
     
@@ -1615,7 +1567,7 @@ await api.user.notification.setRead(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line243">line 243</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line238">line 238</a>
             </span>
         </p>
     
@@ -1858,7 +1810,7 @@ await api.user.notification.setReadAll(session);</code></pre>
         <p class="tag-source">
             <a href="user_notification.js.html" class="button">View Source</a>
             <span>
-                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line279">line 279</a>
+                <a href="user_notification.js.html">user/notification.js</a>, <a href="user_notification.js.html#line274">line 274</a>
             </span>
         </p>
     

@@ -2519,10 +2519,8 @@ Method to add a notification token
 | Param | Type | Description |
 | --- | --- | --- |
 | params | <code>object</code> | Params to add notification token |
-| params.token | <code>obhect</code> | The token |
-| params.token.value | <code>object</code> | The token value |
-| params.token.type | <code>object</code> | The token type |
-| params.token.data | <code>object</code> | The extra data of a token, if there is. |
+| params.token | <code>obhect</code> | The token value |
+| params.type | <code>object</code> | The token type |
 | session | <code>string</code> | Is token JWT of user NOT allow SU |
 
 **Example**  
@@ -2531,10 +2529,8 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const params = {
- token: {
-   value: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
-   type: 'FCM_CAPACITOR'
-   }
+ token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+ type: 'FCM_CAPACITOR'
 };
 const retData = await api.user.notification.addToken(params, session);
 ```

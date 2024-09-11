@@ -84,7 +84,7 @@ class Notification {
 
     try {
       Joi.assert(params, Joi.object().required(), 'Params to get task');
-      Joi.assert(params.token, Joi.string().required(), 'Token token value');
+      Joi.assert(params.token, Joi.string().required(), 'Token value');
       Joi.assert(params.type, Joi.string().required(), 'The type of the token');
 
       const apiCall = self._client

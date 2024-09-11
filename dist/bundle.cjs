@@ -10384,10 +10384,8 @@ class Notification {
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Method to add a notification token
    * @param {object} params Params to add notification token
-   * @param {obhect} params.token The token
-   * @param {object} params.token.value The token value
-   * @param {object} params.token.type The token type
-   * @param {object} params.token.data The extra data of a token, if there is.
+   * @param {obhect} params.token The token value
+   * @param {object} params.type The token type
    * @param {string} session Is token JWT of user NOT allow SU
    * @returns {promise<object>} data
    * @returns {boolean} data._id the id of the added token
@@ -10398,10 +10396,8 @@ class Notification {
    * const api = new API();
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * const params = {
-   *  token: {
-   *    value: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
-   *    type: 'FCM_CAPACITOR'
- *    }
+   *  token: 'V6OSBr4aEVoiE9H1b4xzLe+vqmXB+ShVNc/FvJGxnIz4tZv6jBJkk4aQzz2',
+   *  type: 'FCM_CAPACITOR'
    * };
    * const retData = await api.user.notification.addToken(params, session);
    */
@@ -10410,9 +10406,8 @@ class Notification {
 
     try {
       Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
-      Joi__default["default"].assert(params.token, Joi__default["default"].object().required(), 'Token information to add');
-      Joi__default["default"].assert(params.token.value, Joi__default["default"].string().required(), 'Token token value');
-      Joi__default["default"].assert(params.token.type, Joi__default["default"].string().required(), 'The type of the token');
+      Joi__default["default"].assert(params.token, Joi__default["default"].string().required(), 'Token value');
+      Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), 'The type of the token');
 
       const apiCall = self._client
         .put(`/notifications/token`, params, self._setHeader(session));
