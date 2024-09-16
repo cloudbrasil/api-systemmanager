@@ -55,7 +55,7 @@ class MyndAI {
    * @param {object} params.context The context to apply to a prompt
    * @param {string} params.text The text to add to the prompt
    * @param {array<base64>} params.medias Medias to add to the case in base64 (PDF, Image, Video, Audio)
-   * @param {string} params.propmpt The actual prompt with context and text to apply to
+   * @param {string} params.prompt The actual prompt with context and text to apply to
    * @return {Promise<object>} data
    * @return {boolean} data.success true|false for success
    * @return {object} data.result the result of the AI call
@@ -82,7 +82,7 @@ class MyndAI {
 
     try {
       Joi.assert(params, Joi.object().required().error(new Error('params is required')));
-      Joi.assert(params.propmpt, Joi.string().required().error(new Error('Provide a prompt')));
+      Joi.assert(params.prompt, Joi.string().required().error(new Error('Provide a prompt')));
 
       const apiCall = self._client
           .post('/agents/explain', params, self._setHeader(authorization));

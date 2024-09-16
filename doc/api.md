@@ -3859,7 +3859,7 @@ Create new document
 | params.context | <code>object</code> | The context to apply to a prompt |
 | params.text | <code>string</code> | The text to add to the prompt |
 | params.medias | <code>array.&lt;base64&gt;</code> | Medias to add to the case in base64 (PDF, Image, Video, Audio) |
-| params.propmpt | <code>string</code> | The actual prompt with context and text to apply to |
+| params.prompt | <code>string</code> | The actual prompt with context and text to apply to |
 
 **Example**  
 ```js
