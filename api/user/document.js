@@ -706,6 +706,61 @@ class Documents {
   }
 
   /**
+   * Uploads the file
+   * @param {object} params Params to upload document S3
+   * @param {buffer} params.data The data of the file
+   * @param {string} params.areaId The docAreaId
+   * @param {string} params.orgId The orgId
+   * @param {string} params.onUploadProgress A callback for the upload progress. It will return a progressEvent.
+   * @return {Promise<boolean>} True if success
+   *
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  data: {},
+   *  areaId: '5dadd01dc4af3941d42f8c5c',
+   *  orgId: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const retData = await api.user.document.uploadDocumentS3(params);
+   *
+   * onUploadProgress return the progressEvent
+   *  - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
+   *  - loaded: The number of bytes of the file that have been uploaded.
+   *  - total: The total number of bytes in the file.
+   */
+  async uploadDocumentS3(params= {}) {
+    const { data, areaId, orgId } = params;
+    Joi.assert(params, Joi.object().required());
+    Joi.assert(params.data, Joi.required());
+    Joi.assert(params.areaId, Joi.string().required());
+    Joi.assert(params.orgId, Joi.string().required());
+
+    const self = this;
+    const reqOpts = {
+      headers: {
+        'Content-Type': data.type
+      },
+      maxContentLength: Infinity,
+      maxBodyLength: Infinity
+    };
+
+    const onUploadProgress = params.onUploadProgress;
+
+    if(onUploadProgress) {
+      reqOpts.onUploadProgress = onUploadProgress;
+    }
+
+    const apiCall = self._client
+        .put(`/organizations/${orgId}/areas/${areaId}/documents`, data, reqOpts);
+    self._returnData(await apiCall);
+    return true;
+  }
+
+  /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * Checks if a document can be added and it does not repeat its primary key
    * @param params
