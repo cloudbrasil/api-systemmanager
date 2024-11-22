@@ -1569,6 +1569,7 @@ Class for documents, permission user
     * [.signedUrl(params, session)](#Documents+signedUrl) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.signedUrls(params, session)](#Documents+signedUrls) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code>
     * [.uploadSignedDocument(params)](#Documents+uploadSignedDocument) ⇒ <code>Promise.&lt;boolean&gt;</code>
+    * [.uploadDocumentS3(params)](#Documents+uploadDocumentS3) ⇒ <code>Promise.&lt;boolean&gt;</code>
     * [.checkPrimaryKeys(params, session)](#Documents+checkPrimaryKeys) ⇒ <code>Promise.&lt;array&gt;</code> \| <code>array.&lt;string&gt;</code>
     * [.searchDocuments(params, session)](#Documents+searchDocuments) ⇒ <code>promise</code> \| <code>number</code> \| <code>array.&lt;object&gt;</code> \| <code>number</code> \| <code>number</code>
     * [.exportExcelForAllPages(params, session)](#Documents+exportExcelForAllPages) ⇒ <code>promise</code>
@@ -1909,6 +1910,39 @@ const params - {
  type: 'application/pdf'
 };
 const retData = await api.user.document.uploadSignedDocument(params);
+
+onUploadProgress return the progressEvent
+ - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
+ - loaded: The number of bytes of the file that have been uploaded.
+ - total: The total number of bytes in the file.
+```
+<a name="Documents+uploadDocumentS3"></a>
+
+### documents.uploadDocumentS3(params) ⇒ <code>Promise.&lt;boolean&gt;</code>
+Uploads the file
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;boolean&gt;</code> - True if success  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to upload document S3 |
+| params.data | <code>buffer</code> | The data of the file |
+| params.areaId | <code>string</code> | The docAreaId |
+| params.orgId | <code>string</code> | The orgId |
+| params.onUploadProgress | <code>string</code> | A callback for the upload progress. It will return a progressEvent. |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ data: {},
+ areaId: '5dadd01dc4af3941d42f8c5c',
+ orgId: '5dadd01dc4af3941d42f8c5c'
+};
+const retData = await api.user.document.uploadDocumentS3(params);
 
 onUploadProgress return the progressEvent
  - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
@@ -2907,6 +2941,7 @@ Class for process, permission user
     * [.exportProcessData(params, session)](#Process+exportProcessData)
     * [.processDocs(params, session)](#Process+processDocs) ⇒ <code>promise</code> \| <code>array.&lt;object&gt;</code>
     * [.downloadDocs(params, session)](#Process+downloadDocs) ⇒ <code>promise</code>
+    * [.getOrgDocTypes(params, session)](#Process+getOrgDocTypes) ⇒ <code>Promise</code>
 
 <a name="Process+start"></a>
 
@@ -3163,6 +3198,33 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const result = await api.user.process.downloadDocs(params, session);
+```
+<a name="Process+getOrgDocTypes"></a>
+
+### process.getOrgDocTypes(params, session) ⇒ <code>Promise</code>
+Get DocType properties of process
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get document DocType |
+| params.docTypeId | <code>string</code> | Document DocTypeId id (_id database); |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  docTypeId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.getOrgDocTypes(params, session);
 ```
 <a name="Register"></a>
 

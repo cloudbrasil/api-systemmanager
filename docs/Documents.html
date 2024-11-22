@@ -1657,7 +1657,7 @@ Checks if a document can be added and it does not repeat its primary key</li>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line738">line 738</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line793">line 793</a>
             </span>
         </p>
     
@@ -1950,7 +1950,7 @@ const retDocs = await api.user.document.checkPrimaryKeys(params, session);</code
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line826">line 826</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line881">line 881</a>
             </span>
         </p>
     
@@ -2222,7 +2222,7 @@ const retSearch = await api.user.document.exportExcelForAllPages(params, session
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line866">line 866</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line921">line 921</a>
             </span>
         </p>
     
@@ -4417,7 +4417,7 @@ await api.user.document.findByIdsAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line916">line 916</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line971">line 971</a>
             </span>
         </p>
     
@@ -4698,7 +4698,7 @@ const retSearch = await api.user.document.performDownloadComplete(params, sessio
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line786">line 786</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line841">line 841</a>
             </span>
         </p>
     
@@ -5042,7 +5042,7 @@ const retSearch = await api.user.document.searchDocuments(params, session);</cod
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line961">line 961</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1016">line 1016</a>
             </span>
         </p>
     
@@ -6191,6 +6191,297 @@ const params - {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const base64Data = await api.user.document.signedUrls(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="uploadDocumentS3">
+        <a class="href-link" href="#uploadDocumentS3">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                uploadDocumentS3<span class="signature">(params)</span><span class="type-signature"> &rarr; {Promise.&lt;boolean>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Uploads the file
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Params to upload document S3</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>data</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">buffer</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The data of the file</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>areaId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The docAreaId</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The orgId</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>onUploadProgress</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A callback for the upload progress. It will return a progressEvent.</td>
+</tr>
+
+  
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_document.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line735">line 735</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>True if success</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;boolean></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ data: {},
+ areaId: '5dadd01dc4af3941d42f8c5c',
+ orgId: '5dadd01dc4af3941d42f8c5c'
+};
+const retData = await api.user.document.uploadDocumentS3(params);
+
+onUploadProgress return the progressEvent
+ - lengthComputable: A Boolean that indicates whether or not the total number of bytes is known.
+ - loaded: The number of bytes of the file that have been uploaded.
+ - total: The total number of bytes in the file.</code></pre>
     
 
 
