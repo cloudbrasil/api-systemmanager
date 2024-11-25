@@ -3914,14 +3914,16 @@ Create new document
 **Access**: public  
 **Author**: Myndware <augusto.pissarra@myndware.com>  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>object</code> | Object for add new document |
-| params.model | <code>string</code> | The model to use for the explain |
-| params.context | <code>object</code> | The context to apply to a prompt |
-| params.text | <code>string</code> | The text to add to the prompt |
-| params.medias | <code>array.&lt;base64&gt;</code> | Medias to add to the case in base64 (PDF, Image, Video, Audio) |
-| params.prompt | <code>string</code> | The actual prompt with context and text to apply to |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Object for add new document |
+| params.model | <code>string</code> |  | The model to use for the explain |
+| params.context | <code>object</code> |  | The context to apply to a prompt |
+| params.text | <code>string</code> |  | The text to add to the prompt |
+| params.medias | <code>array.&lt;base64&gt;</code> |  | Medias to add to the case in base64 (PDF, Image, Video, Audio) |
+| params.mediaIds | <code>array.&lt;string&gt;</code> |  | Media Ids to add - id of an internal document (PDF, Image, Video, Audio) |
+| params.prompt | <code>string</code> |  | The actual prompt with context and text to apply to |
+| params.json | <code>boolean</code> | <code>false</code> | If we return in json format or not |
 
 **Example**  
 ```js
