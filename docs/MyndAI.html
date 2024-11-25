@@ -397,7 +397,7 @@
   <td class="type">
   
       
-<code class="param-type">array.&lt;base64></code>
+<code class="param-type">array.&lt;object></code>
 
 
   
@@ -411,20 +411,20 @@
       </td>
   
 
-  <td class="description last">Medias to add to the case in base64 (PDF, Image, Video, Audio)</td>
+  <td class="description last">Medias to add (PDF, Image, Video, Audio)</td>
 </tr>
 
   
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>mediaIds</code></td>
+      <td class="name"><code>medias.type</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">array.&lt;string></code>
+<code class="param-type">string</code>
 
 
   
@@ -438,7 +438,88 @@
       </td>
   
 
-  <td class="description last">Media Ids to add - id of an internal document (PDF, Image, Video, Audio)</td>
+  <td class="description last">can be base64 | document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>medias.mime</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">the mime type of the media</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>medias.base64</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">the base64 of the image (in the case the type is base64)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>medias.document</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">the document path for the image (in the case the type is document)</td>
 </tr>
 
   
@@ -551,7 +632,7 @@
         <p class="tag-source">
             <a href="ai.js.html" class="button">View Source</a>
             <span>
-                <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line82">line 82</a>
+                <a href="ai.js.html">ai.js</a>, <a href="ai.js.html#line85">line 85</a>
             </span>
         </p>
     

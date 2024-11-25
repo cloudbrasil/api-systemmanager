@@ -3920,8 +3920,11 @@ Create new document
 | params.model | <code>string</code> |  | The model to use for the explain |
 | params.context | <code>object</code> |  | The context to apply to a prompt |
 | params.text | <code>string</code> |  | The text to add to the prompt |
-| params.medias | <code>array.&lt;base64&gt;</code> |  | Medias to add to the case in base64 (PDF, Image, Video, Audio) |
-| params.mediaIds | <code>array.&lt;string&gt;</code> |  | Media Ids to add - id of an internal document (PDF, Image, Video, Audio) |
+| params.medias | <code>array.&lt;object&gt;</code> |  | Medias to add (PDF, Image, Video, Audio) |
+| params.medias.type | <code>string</code> |  | can be base64 | document |
+| params.medias.mime | <code>string</code> |  | the mime type of the media |
+| params.medias.base64 | <code>string</code> |  | the base64 of the image (in the case the type is base64) |
+| params.medias.document | <code>string</code> |  | the document path for the image (in the case the type is document) |
 | params.prompt | <code>string</code> |  | The actual prompt with context and text to apply to |
 | params.json | <code>boolean</code> | <code>false</code> | If we return in json format or not |
 

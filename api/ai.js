@@ -54,8 +54,11 @@ class MyndAI {
    * @param {string} params.model The model to use for the explain
    * @param {object} params.context The context to apply to a prompt
    * @param {string} params.text The text to add to the prompt
-   * @param {array<base64>} params.medias Medias to add to the case in base64 (PDF, Image, Video, Audio)
-   * @param {array<string>} params.mediaIds Media Ids to add - id of an internal document (PDF, Image, Video, Audio)
+   * @param {array<object>} params.medias Medias to add (PDF, Image, Video, Audio)
+   * @param {string} params.medias.type can be base64 | document
+   * @param {string} params.medias.mime the mime type of the media
+   * @param {string} params.medias.base64 the base64 of the image (in the case the type is base64)
+   * @param {string} params.medias.document the document path for the image (in the case the type is document)
    * @param {string} params.prompt The actual prompt with context and text to apply to
    * @param {boolean} params.json=false If we return in json format or not
    * @return {Promise<object>} data
