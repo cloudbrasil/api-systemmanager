@@ -438,6 +438,44 @@ class Process {
       throw ex;
     }
   }
+
+    /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get DocType properties of process
+   * @param {object} params Params to get document DocType
+   * @param {string} params.docTypeId Document DocTypeId id (_id database);
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   docTypeId: '5dadd01dc4af3941d42f8c5c',
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   * }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.process.getOrgDocTypes(params, session);
+   */
+    async getOrgDocTypes(params, session) {
+      const self = this;
+  
+      try {
+        Joi.assert(params, Joi.object().required());
+        Joi.assert(params.docTypeId, Joi.string().required());
+        Joi.assert(params.orgId, Joi.string().required());
+        Joi.assert(session, Joi.string().required());
+  
+        const {docTypeId, orgId} = params;
+        const apiCall = self._client.get(`/organizations/${orgId}/doctype/${docTypeId}`, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
 }
 
 export default Process;
