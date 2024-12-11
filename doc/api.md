@@ -3266,6 +3266,7 @@ Get Org Users
 | --- | --- | --- |
 | params | <code>object</code> | Params to get Org Users |
 | params.orgId | <code>string</code> | Organization id (_id database); |
+| params.userIds | <code>array</code> | UserIds |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  
@@ -3274,6 +3275,7 @@ const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
   orgId: '5edd11c46b6ce9729c2c297c',
+  userIds: []
 }
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.process.getOrgUsers(params, session);

@@ -2325,6 +2325,7 @@ class Process {
    * @description Get Org Users
    * @param {object} params Params to get Org Users
    * @param {string} params.orgId Organization id (_id database);
+   * @param {array} params.userIds UserIds
    * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
@@ -2335,6 +2336,7 @@ class Process {
    * const api = new API();
    * const params = {
    *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   userIds: []
    * }
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.process.getOrgUsers(params, session);
@@ -2345,10 +2347,15 @@ class Process {
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.userIds, Joi__default["default"].array().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
   
-        const {orgId} = params;
-        const apiCall = self._client.get(`/organizations/${orgId}/users`, self._setHeader(session));
+        const {orgId, userIds} = params;
+        let queryString = '';
+				if(!___default["default"].isEmpty(userIds)) {
+					queryString = `?userIds=${JSON.stringify(userIds)}&{"sort":{"name":1}}`;
+				}
+        const apiCall = self._client.get(`/admin/organizations/${orgId}/orgusers${queryString}`, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
