@@ -439,7 +439,7 @@ class Process {
     }
   }
 
-    /**
+  /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Get DocType properties of process
    * @param {object} params Params to get document DocType
@@ -471,6 +471,83 @@ class Process {
   
         const {docTypeId, orgId} = params;
         const apiCall = self._client.get(`/organizations/${orgId}/doctype/${docTypeId}`, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
+
+    /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get Org Groups
+   * @param {object} params Params to get Org Groups
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   * }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.process.getOrgGroups(params, session);
+   */
+    async getOrgGroups(params, session) {
+      const self = this;
+  
+      try {
+        Joi.assert(params, Joi.object().required());
+        Joi.assert(params.orgId, Joi.string().required());
+        Joi.assert(session, Joi.string().required());
+  
+        const {orgId} = params;
+        const apiCall = self._client.get(`/organizations/${orgId}/groups`, self._setHeader(session));
+        return self._returnData(await apiCall);
+      } catch (ex) {
+        throw ex;
+      }
+    }
+
+    /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get Org Users
+   * @param {object} params Params to get Org Users
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {array} params.userIds UserIds
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   userIds: []
+   * }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.process.getOrgUsers(params, session);
+   */
+    async getOrgUsers(params, session) {
+      const self = this;
+  
+      try {
+        Joi.assert(params, Joi.object().required());
+        Joi.assert(params.orgId, Joi.string().required());
+        Joi.assert(params.userIds, Joi.array().required());
+        Joi.assert(session, Joi.string().required());
+  
+        const {orgId, userIds} = params;
+        let queryString = '';
+				if(!_.isEmpty(userIds)) {
+					queryString = `?userIds=${JSON.stringify(userIds)}&{"sort":{"name":1}}`;
+				}
+        const apiCall = self._client.get(`/admin/organizations/${orgId}/orgusers${queryString}`, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;

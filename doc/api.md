@@ -2942,6 +2942,8 @@ Class for process, permission user
     * [.processDocs(params, session)](#Process+processDocs) ⇒ <code>promise</code> \| <code>array.&lt;object&gt;</code>
     * [.downloadDocs(params, session)](#Process+downloadDocs) ⇒ <code>promise</code>
     * [.getOrgDocTypes(params, session)](#Process+getOrgDocTypes) ⇒ <code>Promise</code>
+    * [.getOrgGroups(params, session)](#Process+getOrgGroups) ⇒ <code>Promise</code>
+    * [.getOrgUsers(params, session)](#Process+getOrgUsers) ⇒ <code>Promise</code>
 
 <a name="Process+start"></a>
 
@@ -3225,6 +3227,58 @@ const params = {
 }
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.process.getOrgDocTypes(params, session);
+```
+<a name="Process+getOrgGroups"></a>
+
+### process.getOrgGroups(params, session) ⇒ <code>Promise</code>
+Get Org Groups
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get Org Groups |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5edd11c46b6ce9729c2c297c',
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.getOrgGroups(params, session);
+```
+<a name="Process+getOrgUsers"></a>
+
+### process.getOrgUsers(params, session) ⇒ <code>Promise</code>
+Get Org Users
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get Org Users |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| params.userIds | <code>array</code> | UserIds |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5edd11c46b6ce9729c2c297c',
+  userIds: []
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.getOrgUsers(params, session);
 ```
 <a name="Register"></a>
 
