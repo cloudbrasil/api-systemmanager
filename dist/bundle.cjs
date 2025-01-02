@@ -26,7 +26,7 @@ class Dispatch {
 
     const self = this;
     self.parent = options.parent;
-    self._client = Axios__default["default"].create({baseURL: self.parent.options.uri});
+    self._client = Axios__default["default"].create({baseURL: self.parent.options.uri, withCredentials: true});
   }
 
   /**
