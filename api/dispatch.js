@@ -6,15 +6,72 @@ import Axios from 'axios';
  * @class Api dispatch manager
  */
 class Dispatch {
-
   constructor(options) {
-
     Joi.assert(options, Joi.object().required());
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
     self.parent = options.parent;
+    self._cache = options.cache;
     self._client = Axios.create({baseURL: self.parent.options.uri, withCredentials: true});
+
+    // Add request interceptor for offline handling
+    self._client.interceptors.request.use(
+        async (config) => {
+          if (self._isOnline()) {
+            return config;
+          }
+
+          const cachedData = await self._getCache(config.url, {
+            method: config.method,
+            data: config.data,
+            params: config.params,
+            headers: config.headers
+          });
+
+          if (cachedData) {
+            // Cancel the actual request and return cached data
+            const dummyResponse = {
+              status: 200,
+              data: cachedData,
+              headers: {},
+              config,
+              cached: true
+            };
+
+            // Throwing a special error that includes our cached response
+            throw {
+              __CACHE_HIT__: true,
+              response: dummyResponse
+            };
+          }
+
+          throw new Error('Network error: No internet connection and no cached data available');
+        },
+        error => Promise.reject(error)
+    );
+
+    // Add response interceptor to handle cache hits and cache successful responses
+    self._client.interceptors.response.use(
+        async response => {
+          // Cache successful responses when online
+          if (response.status === 200 && self._isOnline()) {
+            await self._setCache(response.config.url, {
+              method: response.config.method,
+              data: response.config.data,
+              params: response.config.params,
+              headers: response.config.headers
+            }, response.data);
+          }
+          return response;
+        },
+        error => {
+          if (error.__CACHE_HIT__) {
+            return error.response;
+          }
+          return Promise.reject(error);
+        }
+    );
   }
 
   /**
@@ -48,6 +105,47 @@ class Dispatch {
   }
 
   /**
+   * @description Check if the browser/client is currently online
+   * @return {boolean} True if online, false if offline
+   * @private
+   */
+  _isOnline() {
+    return typeof navigator !== 'undefined' && navigator.onLine && this._cache;
+  }
+
+  /**
+   * @description Get cached data for a specific request
+   * @param {string} url The request URL
+   * @param {object} options Request options including method, data, params, and headers
+   * @return {Promise<object|null>} Cached data or null if no cache exists
+   * @private
+   */
+  async _getCache(url, options) {
+    try {
+      return await this._cache.getCache(url, options);
+    } catch (error) {
+      console.warn('Cache retrieval failed:', error);
+      return null;
+    }
+  }
+
+  /**
+   * @description Set data in cache for a specific request
+   * @param {string} url The request URL
+   * @param {object} options Request options including method, data, params, and headers
+   * @param {object} data The data to cache
+   * @return {Promise<void>}
+   * @private
+   */
+  async _setCache(url, options, data) {
+    try {
+      await this._cache.setCache(url, options, data);
+    } catch (error) {
+      console.warn('Cache storage failed:', error);
+    }
+  }
+
+  /**
    * Get the URL context
    * @param url {string} Full url
    * @param session {session} Session, token JWT
@@ -72,8 +170,8 @@ class Dispatch {
 
     const self = this;
     const header = session ? self._setHeader(session) : {};
-    const apiCall = self._client.get(url, header);
-    return self._returnData(await apiCall);
+    const apiCall = await self._client.get(url, header);
+    return self._returnData(apiCall);
   }
 
   /**
