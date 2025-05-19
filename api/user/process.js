@@ -42,7 +42,7 @@ class Process {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -289,18 +289,18 @@ class Process {
    */
     async exportStatusData(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required(), 'Params to export status data');
         Joi.assert(params.query, Joi.object().required(), 'The query for the search');
         Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
         Joi.assert(session, Joi.string().required(), 'Session token JWT');
-  
+
         const {query, orgId} = params;
         const queryString = JSON.stringify(query);
         const apiCall = self._client
           .get(`/organizations/${orgId}/process/export/status/data?query=${queryString}`, self._setHeader(session));
-  
+
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
@@ -328,18 +328,18 @@ class Process {
    */
     async exportProcessData(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required(), 'Params to export process data');
         Joi.assert(params.query, Joi.object().required(), 'The query for the search');
         Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
         Joi.assert(session, Joi.string().required(), 'Session token JWT');
-  
+
         const {query, orgId} = params;
         const queryString = JSON.stringify(query);
         const apiCall = self._client
           .get(`/organizations/${orgId}/process/export/collect/data?query=${queryString}`, self._setHeader(session));
-  
+
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
@@ -462,13 +462,13 @@ class Process {
    */
     async getOrgDocTypes(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.docTypeId, Joi.string().required());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {docTypeId, orgId} = params;
         const apiCall = self._client.get(`/organizations/${orgId}/doctype/${docTypeId}`, self._setHeader(session));
         return self._returnData(await apiCall);
@@ -498,12 +498,12 @@ class Process {
    */
     async getOrgGroups(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {orgId} = params;
         const apiCall = self._client.get(`/organizations/${orgId}/groups`, self._setHeader(session));
         return self._returnData(await apiCall);
@@ -535,13 +535,13 @@ class Process {
    */
     async getOrgUsers(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(params.userIds, Joi.array().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {orgId, userIds} = params;
         let queryString = '';
 				if(!_.isEmpty(userIds)) {

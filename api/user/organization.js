@@ -43,7 +43,7 @@ class Organization {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -212,7 +212,7 @@ class Organization {
 
       const options = {
         method,
-        headers: {authorization: session},
+        headers: { Authorization: session },
         url,
       };
 

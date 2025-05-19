@@ -42,7 +42,7 @@ class MyndAI {
   _setHeader(authorization) {
     return {
       headers: {
-        authorization,
+        Authorization: authorization,
       }
     };
   }

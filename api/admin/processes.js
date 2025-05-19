@@ -215,7 +215,7 @@ class AdminProcesses {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }

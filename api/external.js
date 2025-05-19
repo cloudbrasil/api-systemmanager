@@ -42,7 +42,7 @@ class External {
   _setHeader(authorization) {
     return {
       headers: {
-        authorization,
+        Authorization: authorization,
       }
     };
   }
