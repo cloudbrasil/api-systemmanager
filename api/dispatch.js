@@ -11,17 +11,23 @@ class Dispatch {
     Joi.assert(options.parent, Joi.object().required());
 
     const self = this;
+    self._cache = options.parent.options.cache;
+    self._forceCache = options.parent.options.forceCache;
     self.parent = options.parent;
-    self._cache = options.cache;
-    self._client = Axios.create({baseURL: self.parent.options.uri, withCredentials: true});
+    self._client = Axios.create({
+      baseURL: self.parent.options.uri,
+      withCredentials: true
+    });
 
-    // Add request interceptor for offline handling
+    // Add request interceptor for offline handling.
     self._client.interceptors.request.use(
         async (config) => {
-          if (self._isOnline()) {
+          // If online or no cache is provided, proceed normally.
+          if (self._isOnline() || !self._cache) {
             return config;
           }
 
+          // We're offline and caching is enabled – try to retrieve cached data.
           const cachedData = await self._getCache(config.url, {
             method: config.method,
             data: config.data,
@@ -30,44 +36,51 @@ class Dispatch {
           });
 
           if (cachedData) {
-            // Cancel the actual request and return cached data
-            const dummyResponse = {
-              status: 200,
-              data: cachedData,
-              headers: {},
-              config,
-              cached: true
-            };
-
-            // Throwing a special error that includes our cached response
-            throw {
-              __CACHE_HIT__: true,
-              response: dummyResponse
-            };
+            // Instead of returning the modified config (which would trigger a network call),
+            // return a rejected promise with a flag and a fake response.
+            return Promise.reject({
+              __fromCache: true,
+              response: {
+                data: cachedData,
+                status: 200,
+                statusText: 'OK',
+                headers: config.headers,
+                config: config,
+                request: {} // empty placeholder
+              }
+            });
           }
 
-          throw new Error('Network error: No internet connection and no cached data available');
+          // No cached data found – signal an offline error.
+          self.errorOffline();
+          return Promise.reject(new Error('Network error: No internet connection and no cached data available'));
         },
         error => Promise.reject(error)
     );
 
-    // Add response interceptor to handle cache hits and cache successful responses
+    // Add response interceptor to handle caching and to return a cached response when available.
     self._client.interceptors.response.use(
         async response => {
-          // Cache successful responses when online
-          if (response.status === 200 && self._isOnline()) {
-            await self._setCache(response.config.url, {
-              method: response.config.method,
-              data: response.config.data,
-              params: response.config.params,
-              headers: response.config.headers
-            }, response.data);
+          // If online, the response is OK, caching is enabled, and this wasn’t a cached response,
+          // then cache the new response data.
+          if (response.status === 200 && self._isOnline() && self._cache && !response.config.cached) {
+            await self._setCache(
+                response.config.url,
+                {
+                  method: response.config.method,
+                  data: response.config.data,
+                  params: response.config.params,
+                  headers: response.config.headers
+                },
+                response.data
+            );
           }
           return response;
         },
         error => {
-          if (error.__CACHE_HIT__) {
-            return error.response;
+          // If the error was generated because we had a cached response, then return that response.
+          if (error.__fromCache && error.response) {
+            return Promise.resolve(error.response);
           }
           return Promise.reject(error);
         }
@@ -75,49 +88,48 @@ class Dispatch {
   }
 
   /**
-   * @author Augusto Pissarra <abernardo.br@gmail.com>
-   * @description Get the return data and check for errors
-   * @param {object} retData Response HTTP
+   * @description Get the return data and check for errors.
+   * @param {object} retData Response HTTP.
+   * @param {*} [def={}] Default value to return if no data is found.
    * @return {*}
    * @private
    */
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
-      throw Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
-    } else {
-      return _.get(retData, 'data', def);
+      throw new Error(_.get(retData, 'message', 'No error message reported!'));
     }
+    return _.get(retData, 'data', def);
   }
 
   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Set header with new session
-   * @param {string} session Session, token JWT
-   * @return {object} header with new session
+   * @description Set header with new session.
+   * @param {string} session Session token (JWT).
+   * @return {object} Header object with the new session.
    * @private
    */
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
 
   /**
-   * @description Check if the browser/client is currently online
-   * @return {boolean} True if online, false if offline
+   * @description Check if the browser/client is currently online.
+   * @return {boolean} True if online, false if offline.
    * @private
    */
   _isOnline() {
-    return typeof navigator !== 'undefined' && navigator.onLine && this._cache;
+    if (this._forceCache) return false;
+    return typeof navigator !== 'undefined' && navigator.onLine;
   }
 
   /**
-   * @description Get cached data for a specific request
-   * @param {string} url The request URL
-   * @param {object} options Request options including method, data, params, and headers
-   * @return {Promise<object|null>} Cached data or null if no cache exists
+   * @description Get cached data for a specific request.
+   * @param {string} url The request URL.
+   * @param {object} options Request options including method, data, params, and headers.
+   * @return {Promise<object|null>} Cached data or null if no cache exists.
    * @private
    */
   async _getCache(url, options) {
@@ -130,10 +142,10 @@ class Dispatch {
   }
 
   /**
-   * @description Set data in cache for a specific request
-   * @param {string} url The request URL
-   * @param {object} options Request options including method, data, params, and headers
-   * @param {object} data The data to cache
+   * @description Set data in cache for a specific request.
+   * @param {string} url The request URL.
+   * @param {object} options Request options including method, data, params, and headers.
+   * @param {object} data The data to cache.
    * @return {Promise<void>}
    * @private
    */
@@ -146,23 +158,27 @@ class Dispatch {
   }
 
   /**
-   * Get the URL context
-   * @param url {string} Full url
-   * @param session {session} Session, token JWT
-   * @return {Promise<object>} The full data context of the URL
+   * Called when no cache is available and the client is offline.
+   */
+  errorOffline() {
+    if (this._cache && typeof this._cache.errorOffline === 'function') {
+      this._cache.errorOffline();
+    }
+  }
+
+  /**
+   * Get the URL context.
+   * @param {string} url Full URL.
+   * @param {string|null} [session=null] Session token (JWT).
+   * @return {Promise<object>} The full data context of the URL.
    * @public
    * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-   *
    */
   async getContext(url, session = null) {
     Joi.assert(url, Joi.string().required());
 
-    if(url.includes('?')) {
+    // Append the json flag to the URL.
+    if (url.includes('?')) {
       url = `${url}&json=true`;
     } else {
       url = `${url}?json=true`;
@@ -175,24 +191,12 @@ class Dispatch {
   }
 
   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Get client Axios
-   * @return {promise} return client axios
+   * @description Get the Axios client.
+   * @return {AxiosInstance} The Axios client.
    * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * await api.dispatch.getClient();
    */
   getClient() {
-    try {
-      const self = this;
-      return self._client;
-    } catch (ex) {
-      return ex;
-    }
+    return this._client;
   }
 }
 

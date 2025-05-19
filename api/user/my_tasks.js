@@ -213,7 +213,7 @@ class MyTasks {
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description remove multi task user
-   * @param {object} params Params of the user to be removed 
+   * @param {object} params Params of the user to be removed
    * @param {string} params.userId User id
    * @param {string} params.orgId Organization id
    * @param {string} params.taskId Task Id
@@ -235,16 +235,16 @@ class MyTasks {
    */
   async removeMultiTaskUser(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.userId, Joi.string().required());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(params.taskId, Joi.string().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {taskId, orgId, userId} = params;
-  
+
         const apiCall = self._client.delete(`/organizations/${orgId}/tasks/${taskId}/users/${userId}`, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
@@ -277,16 +277,16 @@ class MyTasks {
    */
   async addMultiTaskUser(params, session) {
       const self = this;
-  
+
       try {
         Joi.assert(params, Joi.object().required());
         Joi.assert(params.userId, Joi.string().required());
         Joi.assert(params.orgId, Joi.string().required());
         Joi.assert(params.taskId, Joi.string().required());
         Joi.assert(session, Joi.string().required());
-  
+
         const {taskId, orgId, userId} = params;
-  
+
         const apiCall = self._client.put(`/organizations/${orgId}/tasks/${taskId}/users`, { userIdToAdd: userId }, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
