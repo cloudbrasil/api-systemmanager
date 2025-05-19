@@ -296,7 +296,7 @@ class Documents {
       Joi.assert(session, Joi.string().required().error(new Error('session is required')));
       const {id, orgId} = params;
       const apiCall = self._client
-          .get(`/organizations/${orgId}/documents/${id}/data/DOC`, params, self._setHeader(session));
+          .get(`/organizations/${orgId}/documents/${id}/data/DOC`, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -690,7 +690,8 @@ class Documents {
         'Content-Type': type
       },
       maxContentLength: Infinity,
-      maxBodyLength: Infinity
+      maxBodyLength: Infinity,
+      withCredentials: false
     };
 
     const onUploadProgress = params.onUploadProgress;
