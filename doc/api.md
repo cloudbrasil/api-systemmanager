@@ -1374,6 +1374,7 @@ Class for Applications, permission user
 * [Application](#Application)
     * [.list(params, session)](#Application+list) ⇒ <code>promise</code>
     * [.changeApplication(params, session)](#Application+changeApplication) ⇒ <code>promise</code>
+    * [.getCache(params, session)](#Application+getCache) ⇒ <code>promise</code>
 
 <a name="Application+list"></a>
 
@@ -1424,6 +1425,33 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.application.changeApplication(params, session);
+```
+<a name="Application+getCache"></a>
+
+### application.getCache(params, session) ⇒ <code>promise</code>
+Gets the application and pages to start the cache process
+
+**Kind**: instance method of [<code>Application</code>](#Application)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> |  |
+| params.orgId | <code>object</code> | the orgId of this application |
+| params.appId | <code>object</code> | the application id |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ orgId: '55e4a3bd6be6b45210833f78',
+ appId: '55e4a3bd6be6b45210833fae',
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.application.getCache(params, session);
 ```
 <a name="Chart"></a>
 

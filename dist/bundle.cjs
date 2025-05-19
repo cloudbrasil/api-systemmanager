@@ -23,17 +23,23 @@ class Dispatch {
     Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
 
     const self = this;
+    self._cache = options.parent.options.cache;
+    self._forceCache = options.parent.options.forceCache;
     self.parent = options.parent;
-    self._cache = options.cache;
-    self._client = Axios__default["default"].create({baseURL: self.parent.options.uri, withCredentials: true});
+    self._client = Axios__default["default"].create({
+      baseURL: self.parent.options.uri,
+      withCredentials: true
+    });
 
-    // Add request interceptor for offline handling
+    // Add request interceptor for offline handling.
     self._client.interceptors.request.use(
         async (config) => {
-          if (self._isOnline()) {
+          // If online or no cache is provided, proceed normally.
+          if (self._isOnline() || !self._cache) {
             return config;
           }
 
+          // We're offline and caching is enabled – try to retrieve cached data.
           const cachedData = await self._getCache(config.url, {
             method: config.method,
             data: config.data,
@@ -42,44 +48,51 @@ class Dispatch {
           });
 
           if (cachedData) {
-            // Cancel the actual request and return cached data
-            const dummyResponse = {
-              status: 200,
-              data: cachedData,
-              headers: {},
-              config,
-              cached: true
-            };
-
-            // Throwing a special error that includes our cached response
-            throw {
-              __CACHE_HIT__: true,
-              response: dummyResponse
-            };
+            // Instead of returning the modified config (which would trigger a network call),
+            // return a rejected promise with a flag and a fake response.
+            return Promise.reject({
+              __fromCache: true,
+              response: {
+                data: cachedData,
+                status: 200,
+                statusText: 'OK',
+                headers: config.headers,
+                config: config,
+                request: {} // empty placeholder
+              }
+            });
           }
 
-          throw new Error('Network error: No internet connection and no cached data available');
+          // No cached data found – signal an offline error.
+          self.errorOffline();
+          return Promise.reject(new Error('Network error: No internet connection and no cached data available'));
         },
         error => Promise.reject(error)
     );
 
-    // Add response interceptor to handle cache hits and cache successful responses
+    // Add response interceptor to handle caching and to return a cached response when available.
     self._client.interceptors.response.use(
         async response => {
-          // Cache successful responses when online
-          if (response.status === 200 && self._isOnline()) {
-            await self._setCache(response.config.url, {
-              method: response.config.method,
-              data: response.config.data,
-              params: response.config.params,
-              headers: response.config.headers
-            }, response.data);
+          // If online, the response is OK, caching is enabled, and this wasn’t a cached response,
+          // then cache the new response data.
+          if (response.status === 200 && self._isOnline() && self._cache && !response.config.cached) {
+            await self._setCache(
+                response.config.url,
+                {
+                  method: response.config.method,
+                  data: response.config.data,
+                  params: response.config.params,
+                  headers: response.config.headers
+                },
+                response.data
+            );
           }
           return response;
         },
         error => {
-          if (error.__CACHE_HIT__) {
-            return error.response;
+          // If the error was generated because we had a cached response, then return that response.
+          if (error.__fromCache && error.response) {
+            return Promise.resolve(error.response);
           }
           return Promise.reject(error);
         }
@@ -87,49 +100,48 @@ class Dispatch {
   }
 
   /**
-   * @author Augusto Pissarra <abernardo.br@gmail.com>
-   * @description Get the return data and check for errors
-   * @param {object} retData Response HTTP
+   * @description Get the return data and check for errors.
+   * @param {object} retData Response HTTP.
+   * @param {*} [def={}] Default value to return if no data is found.
    * @return {*}
    * @private
    */
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
-      throw Boom.badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
-    } else {
-      return ___default["default"].get(retData, 'data', def);
+      throw new Error(___default["default"].get(retData, 'message', 'No error message reported!'));
     }
+    return ___default["default"].get(retData, 'data', def);
   }
 
   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Set header with new session
-   * @param {string} session Session, token JWT
-   * @return {object} header with new session
+   * @description Set header with new session.
+   * @param {string} session Session token (JWT).
+   * @return {object} Header object with the new session.
    * @private
    */
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
 
   /**
-   * @description Check if the browser/client is currently online
-   * @return {boolean} True if online, false if offline
+   * @description Check if the browser/client is currently online.
+   * @return {boolean} True if online, false if offline.
    * @private
    */
   _isOnline() {
-    return typeof navigator !== 'undefined' && navigator.onLine && this._cache;
+    if (this._forceCache) return false;
+    return typeof navigator !== 'undefined' && navigator.onLine;
   }
 
   /**
-   * @description Get cached data for a specific request
-   * @param {string} url The request URL
-   * @param {object} options Request options including method, data, params, and headers
-   * @return {Promise<object|null>} Cached data or null if no cache exists
+   * @description Get cached data for a specific request.
+   * @param {string} url The request URL.
+   * @param {object} options Request options including method, data, params, and headers.
+   * @return {Promise<object|null>} Cached data or null if no cache exists.
    * @private
    */
   async _getCache(url, options) {
@@ -142,10 +154,10 @@ class Dispatch {
   }
 
   /**
-   * @description Set data in cache for a specific request
-   * @param {string} url The request URL
-   * @param {object} options Request options including method, data, params, and headers
-   * @param {object} data The data to cache
+   * @description Set data in cache for a specific request.
+   * @param {string} url The request URL.
+   * @param {object} options Request options including method, data, params, and headers.
+   * @param {object} data The data to cache.
    * @return {Promise<void>}
    * @private
    */
@@ -158,23 +170,27 @@ class Dispatch {
   }
 
   /**
-   * Get the URL context
-   * @param url {string} Full url
-   * @param session {session} Session, token JWT
-   * @return {Promise<object>} The full data context of the URL
+   * Called when no cache is available and the client is offline.
+   */
+  errorOffline() {
+    if (this._cache && typeof this._cache.errorOffline === 'function') {
+      this._cache.errorOffline();
+    }
+  }
+
+  /**
+   * Get the URL context.
+   * @param {string} url Full URL.
+   * @param {string|null} [session=null] Session token (JWT).
+   * @return {Promise<object>} The full data context of the URL.
    * @public
    * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-   *
    */
   async getContext(url, session = null) {
     Joi__default["default"].assert(url, Joi__default["default"].string().required());
 
-    if(url.includes('?')) {
+    // Append the json flag to the URL.
+    if (url.includes('?')) {
       url = `${url}&json=true`;
     } else {
       url = `${url}?json=true`;
@@ -187,24 +203,12 @@ class Dispatch {
   }
 
   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Get client Axios
-   * @return {promise} return client axios
+   * @description Get the Axios client.
+   * @return {AxiosInstance} The Axios client.
    * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * await api.dispatch.getClient();
    */
   getClient() {
-    try {
-      const self = this;
-      return self._client;
-    } catch (ex) {
-      return ex;
-    }
+    return this._client;
   }
 }
 
@@ -250,7 +254,7 @@ class Session {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -328,7 +332,7 @@ class Login {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -460,7 +464,7 @@ class Login {
    *
    * const API = require('@docbrasil/api-systemmanager');
    *
-   * // Params of the instance  
+   * // Params of the instance
    * const params = {...}
    * const api = new API(params);
    * const params = {
@@ -591,7 +595,7 @@ class GeoLocation {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -706,7 +710,7 @@ class Documents {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -946,7 +950,7 @@ class Documents {
       Joi__default["default"].assert(session, Joi__default["default"].string().required().error(new Error('session is required')));
       const {id, orgId} = params;
       const apiCall = self._client
-          .get(`/organizations/${orgId}/documents/${id}/data/DOC`, params, self._setHeader(session));
+          .get(`/organizations/${orgId}/documents/${id}/data/DOC`, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -1340,7 +1344,8 @@ class Documents {
         'Content-Type': type
       },
       maxContentLength: Infinity,
-      maxBodyLength: Infinity
+      maxBodyLength: Infinity,
+      withCredentials: false
     };
 
     const onUploadProgress = params.onUploadProgress;
@@ -1724,7 +1729,7 @@ class Organization$1 {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -1893,7 +1898,7 @@ class Organization$1 {
 
       const options = {
         method,
-        headers: {authorization: session},
+        headers: { Authorization: session },
         url,
       };
 
@@ -1948,7 +1953,7 @@ class Process {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -2195,18 +2200,18 @@ class Process {
    */
     async exportStatusData(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export status data');
         Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
         Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
-  
+
         const {query, orgId} = params;
         const queryString = JSON.stringify(query);
         const apiCall = self._client
           .get(`/organizations/${orgId}/process/export/status/data?query=${queryString}`, self._setHeader(session));
-  
+
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
@@ -2234,18 +2239,18 @@ class Process {
    */
     async exportProcessData(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export process data');
         Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
         Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
-  
+
         const {query, orgId} = params;
         const queryString = JSON.stringify(query);
         const apiCall = self._client
           .get(`/organizations/${orgId}/process/export/collect/data?query=${queryString}`, self._setHeader(session));
-  
+
         return self._returnData(await apiCall);
       } catch (ex) {
         throw ex;
@@ -2368,13 +2373,13 @@ class Process {
    */
     async getOrgDocTypes(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.docTypeId, Joi__default["default"].string().required());
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {docTypeId, orgId} = params;
         const apiCall = self._client.get(`/organizations/${orgId}/doctype/${docTypeId}`, self._setHeader(session));
         return self._returnData(await apiCall);
@@ -2404,12 +2409,12 @@ class Process {
    */
     async getOrgGroups(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {orgId} = params;
         const apiCall = self._client.get(`/organizations/${orgId}/groups`, self._setHeader(session));
         return self._returnData(await apiCall);
@@ -2441,13 +2446,13 @@ class Process {
    */
     async getOrgUsers(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
         Joi__default["default"].assert(params.userIds, Joi__default["default"].array().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {orgId, userIds} = params;
         let queryString = '';
 				if(!___default["default"].isEmpty(userIds)) {
@@ -2501,7 +2506,7 @@ class TaskAvailable {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -2631,7 +2636,7 @@ class MyTasks {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -2802,7 +2807,7 @@ class MyTasks {
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description remove multi task user
-   * @param {object} params Params of the user to be removed 
+   * @param {object} params Params of the user to be removed
    * @param {string} params.userId User id
    * @param {string} params.orgId Organization id
    * @param {string} params.taskId Task Id
@@ -2824,16 +2829,16 @@ class MyTasks {
    */
   async removeMultiTaskUser(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.userId, Joi__default["default"].string().required());
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
         Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {taskId, orgId, userId} = params;
-  
+
         const apiCall = self._client.delete(`/organizations/${orgId}/tasks/${taskId}/users/${userId}`, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
@@ -2866,16 +2871,16 @@ class MyTasks {
    */
   async addMultiTaskUser(params, session) {
       const self = this;
-  
+
       try {
         Joi__default["default"].assert(params, Joi__default["default"].object().required());
         Joi__default["default"].assert(params.userId, Joi__default["default"].string().required());
         Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
         Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required());
         Joi__default["default"].assert(session, Joi__default["default"].string().required());
-  
+
         const {taskId, orgId, userId} = params;
-  
+
         const apiCall = self._client.put(`/organizations/${orgId}/tasks/${taskId}/users`, { userIdToAdd: userId }, self._setHeader(session));
         return self._returnData(await apiCall);
       } catch (ex) {
@@ -3085,7 +3090,7 @@ class Task {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -3322,7 +3327,7 @@ class User {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -10433,7 +10438,7 @@ class Register {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -10632,7 +10637,7 @@ class Notification {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -10919,7 +10924,7 @@ class Updates {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -10992,7 +10997,7 @@ class Help {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -11105,7 +11110,7 @@ class Datasource {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -11244,7 +11249,7 @@ class Page {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -11333,7 +11338,7 @@ class Application {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -11409,6 +11414,45 @@ class Application {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Gets the application and pages to start the cache process
+   * @param {object} params
+   * @param {object} params.orgId the orgId of this application
+   * @param {object} params.appId the application id
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '55e4a3bd6be6b45210833f78',
+   *  appId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.application.getCache(params, session);
+   */
+  async getCache(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'The organizations id');
+      Joi__default["default"].assert(params.appId, Joi__default["default"].string().required(), 'The application id');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { orgId, appId} = params;
+      const apiCall = self._client
+          .get(`/organizations/${orgId}/applications/${appId}/cache`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**
@@ -11456,7 +11500,7 @@ class Settings {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -11587,7 +11631,7 @@ class Chart {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -11804,7 +11848,7 @@ class AdminDocuments {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -12131,7 +12175,7 @@ class AdminForm {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -12302,7 +12346,7 @@ class AdminNotification {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -12530,7 +12574,7 @@ class AdminLists {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -12658,7 +12702,7 @@ class AdminPlugin {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -12842,7 +12886,7 @@ class AdminTask {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -12962,7 +13006,7 @@ class AdminUser {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -13462,7 +13506,7 @@ class AdminProcesses {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -13654,7 +13698,7 @@ class AdminMessage {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -13837,7 +13881,7 @@ class AdminDocTypes {
     _setHeader(session) {
         return {
             headers: {
-                authorization: session,
+                Authorization: session,
             }
         };
     }
@@ -13913,7 +13957,7 @@ class Organization {
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
@@ -14062,7 +14106,7 @@ class External {
   _setHeader(authorization) {
     return {
       headers: {
-        authorization,
+        Authorization: authorization,
       }
     };
   }
@@ -14273,7 +14317,7 @@ class MyndAI {
   _setHeader(authorization) {
     return {
       headers: {
-        authorization,
+        Authorization: authorization,
       }
     };
   }

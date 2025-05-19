@@ -207,6 +207,45 @@ class Application {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Gets the application and pages to start the cache process
+   * @param {object} params
+   * @param {object} params.orgId the orgId of this application
+   * @param {object} params.appId the application id
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  orgId: '55e4a3bd6be6b45210833f78',
+   *  appId: '55e4a3bd6be6b45210833fae',
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.application.getCache(params, session);
+   */
+  async getCache(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to get task');
+      Joi.assert(params.orgId, Joi.string().required(), 'The organizations id');
+      Joi.assert(params.appId, Joi.string().required(), 'The application id');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const { orgId, appId} = params;
+      const apiCall = self._client
+          .get(`/organizations/${orgId}/applications/${appId}/cache`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 export default Application;
