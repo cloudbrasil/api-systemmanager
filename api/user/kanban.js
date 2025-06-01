@@ -435,6 +435,8 @@ class Kanban {
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates the status list order for a specific flow in an organization process on the Kanban board
+   *  Can also be used to update the name, expanded and or the color value of an status of the status list
+   *  That is: updates the whole status list
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process

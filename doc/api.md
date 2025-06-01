@@ -2534,6 +2534,8 @@ Expected response structure (error):
 
 ### kanban.updateStatusList(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
 Updates the status list order for a specific flow in an organization process on the Kanban board
+ Can also be used to update the name, expanded and or the color value of an status of the status list
+ That is: updates the whole status list
 
 **Kind**: instance method of [<code>Kanban</code>](#Kanban)  
 **Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
