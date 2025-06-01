@@ -64,6 +64,9 @@
 <dt><a href="#Users">Users</a></dt>
 <dd><p>API request, user permission level</p>
 </dd>
+<dt><a href="#Kanban">Kanban</a></dt>
+<dd><p>Class for task, permission user</p>
+</dd>
 <dt><a href="#MyTasks">MyTasks</a></dt>
 <dd><p>Class for my tasks, permission user</p>
 </dd>
@@ -2248,6 +2251,337 @@ API request, user permission level
 | options | <code>object</code> | Params of the constructor |
 | options.parent | <code>object</code> | This of the pararent |
 
+<a name="Kanban"></a>
+
+## Kanban
+Class for task, permission user
+
+**Kind**: global class  
+
+* [Kanban](#Kanban)
+    * [.get(params, session)](#Kanban+get) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>Array</code> \| <code>string</code> \| <code>string</code> \| <code>boolean</code> \| <code>Array</code> \| <code>Array</code>
+    * [.updateTaskOrder(params, session)](#Kanban+updateTaskOrder) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+    * [.updateTasksOrder(params, session)](#Kanban+updateTasksOrder) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+    * [.updateTaskStatus(params, session)](#Kanban+updateTaskStatus) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+    * [.addTaskTag(params, session)](#Kanban+addTaskTag) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+    * [.removeTaskTag(params, session)](#Kanban+removeTaskTag) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+    * [.updateStatusList(params, session)](#Kanban+updateStatusList) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+
+<a name="Kanban+get"></a>
+
+### kanban.get(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>Array</code> \| <code>string</code> \| <code>string</code> \| <code>boolean</code> \| <code>Array</code> \| <code>Array</code>
+Retrieves the Kanban board data for a specified organization process
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to Kanban board data<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>Array</code> - returns.data.kanban - Array of status columns with their tasks<code>string</code> - returns.data.kanban[].id - Unique identifier for the status column<code>string</code> - returns.data.kanban[].title - Display title of the status column<code>boolean</code> - returns.data.kanban[].isExpanded - Whether the status column is expanded or collapsed<code>Array</code> - returns.data.kanban[].taskList - Array of tasks within this status column<code>Array</code> - returns.data.kanban[].statusTagsList - List of status tags available for filtering  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.orgProcessName | <code>string</code> | The name of the organization process |
+| params.flowName | <code>string</code> | Flow name for the specific kanban flow |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  orgProcessName: 'employee-onboarding',
+  flowName: 'approval-flow'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const kanbanData = await api.user.kanban.get(params, session);
+
+Expected response structure:
+{
+  success: true,
+  kanban: [
+    {
+      id: 'pending',
+      title: 'Pending Tasks',
+      isExpanded: true,
+      taskList: [
+        { taskId: '507f1f77bcf86cd799439011', title: 'Review Document', ... },
+        { taskId: '507f1f77bcf86cd799439012', title: 'Approve Request', ... }
+      ],
+      statusTagsList: ['urgent', 'review', 'approved', 'rejected']
+    },
+    {
+      id: 'in-progress',
+      title: 'In Progress',
+      isExpanded: true,
+      taskList: [...],
+      statusTagsList: ['urgent', 'review', 'approved', 'rejected']
+    }
+  ]
+}
+```
+<a name="Kanban+updateTaskOrder"></a>
+
+### kanban.updateTaskOrder(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Updates the order of a task in its status column on the Kanban board
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | The ID of the task to update |
+| params.order | <code>number</code> | The new order position of the task |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  order: 3
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateTaskOrder(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}
+```
+<a name="Kanban+updateTasksOrder"></a>
+
+### kanban.updateTasksOrder(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Updates the order of multiple tasks in their status columns on the Kanban board
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.tasks | <code>Array</code> | Array of task objects containing taskId and order |
+| params.tasks[].taskId | <code>string</code> | The unique identifier of the task to update |
+| params.tasks[].order | <code>number</code> | The new order position for the task |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  tasks: [
+    { taskId: '507f1f77bcf86cd799439011', order: 1 },
+    { taskId: '507f1f77bcf86cd799439012', order: 2 },
+    { taskId: '507f1f77bcf86cd799439013', order: 3 }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateTasksOrder(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "One or more tasks not found"
+}
+```
+<a name="Kanban+updateTaskStatus"></a>
+
+### kanban.updateTaskStatus(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Updates the status of a task on the Kanban board when moved between columns
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | The ID of the task to update |
+| params.status | <code>string</code> | The new status value for the task |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  status: 'in-progress'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateTaskStatus(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}
+```
+<a name="Kanban+addTaskTag"></a>
+
+### kanban.addTaskTag(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Adds a tag to a task on the Kanban board without creating duplicates
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | The ID of the task to update |
+| params.tag | <code>string</code> | The tag to add to the task |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  tag: 'urgent'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.addTaskTag(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}
+```
+<a name="Kanban+removeTaskTag"></a>
+
+### kanban.removeTaskTag(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Removes a specific tag from a task on the Kanban board
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | The ID of the task to update |
+| params.tag | <code>string</code> | The tag to remove from the task |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  tag: 'urgent'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.removeTaskTag(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}
+```
+<a name="Kanban+updateStatusList"></a>
+
+### kanban.updateStatusList(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Updates the status list order for a specific flow in an organization process on the Kanban board
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.orgProcessName | <code>string</code> | The name of the organization process |
+| params.flowName | <code>string</code> | The name of the organization process step flowName |
+| params.statusList | <code>Array</code> | The status list with new order |
+| params.statusList[ | <code>Object</code> | Status object configuration |
+| params.statusList[].value | <code>string</code> | The title of the status |
+| params.statusList[].expanded | <code>boolean</code> | If the status column is expanded or not |
+| params.statusList[].color | <code>string</code> | The hexadecimal color code for the status |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  orgProcessName: 'employee-onboarding',
+  flowName: 'approval-flow',
+  statusList: [
+    { value: 'Pending', expanded: true, color: '#FF6B6B' },
+    { value: 'In Progress', expanded: true, color: '#4ECDC4' },
+    { value: 'Under Review', expanded: false, color: '#45B7D1' },
+    { value: 'Completed', expanded: true, color: '#96CEB4' }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateStatusList(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Organization process not found"
+}
+```
 <a name="MyTasks"></a>
 
 ## MyTasks
@@ -4032,44 +4366,38 @@ Api dispatch manager
 **Kind**: global class  
 
 * [Dispatch](#Dispatch)
-    * [.getContext(url, session)](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
-    * [.getClient()](#Dispatch+getClient) ⇒ <code>promise</code>
+    * [.errorOffline()](#Dispatch+errorOffline)
+    * [.getContext(url, [session])](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getClient()](#Dispatch+getClient) ⇒ <code>AxiosInstance</code>
 
-<a name="Dispatch+getContext"></a>
+<a name="Dispatch+errorOffline"></a>
 
-### dispatch.getContext(url, session) ⇒ <code>Promise.&lt;object&gt;</code>
-Get the URL context
+### dispatch.errorOffline()
+Called when no cache is available and the client is offline.
 
 **Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL  
+<a name="Dispatch+getContext"></a>
+
+### dispatch.getContext(url, [session]) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the URL context.
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - The full data context of the URL.  
 **Access**: public  
 
 | Param | Type | Default | Description |
 | --- | --- | --- | --- |
-| url | <code>string</code> |  | Full url |
-| session | <code>session</code> | <code></code> | Session, token JWT |
+| url | <code>string</code> |  | Full URL. |
+| [session] | <code>string</code> \| <code>null</code> | <code>null</code> | Session token (JWT). |
 
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-```
 <a name="Dispatch+getClient"></a>
 
-### dispatch.getClient() ⇒ <code>promise</code>
-Get client Axios
+### dispatch.getClient() ⇒ <code>AxiosInstance</code>
+Get the Axios client.
 
 **Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
-**Returns**: <code>promise</code> - return client axios  
+**Returns**: <code>AxiosInstance</code> - The Axios client.  
 **Access**: public  
-**Author**: Myndware <augusto.pissarra@myndware.com>  
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-await api.dispatch.getClient();
-```
 <a name="External"></a>
 
 ## External
@@ -4311,7 +4639,7 @@ Login with user and password
 ```js
 const API = require('@docbrasil/api-systemmanager');
 
-// Params of the instance  
+// Params of the instance
 const params = {...}
 const api = new API(params);
 const params = {

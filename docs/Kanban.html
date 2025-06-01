@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> MyTasks</title>
+  <title> Kanban</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>MyTasks</h1>
+                    <h1>Kanban</h1>
                 </header>
                 
 
@@ -85,9 +85,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>MyTasks<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Kanban<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class for my tasks, permission user</div>
+            <div class="class-description">Class for task, permission user</div>
         
     
 </header>
@@ -106,12 +106,12 @@
 
 
     
-    <h4 class="name" id="MyTasks">
-        <a class="href-link" href="#MyTasks">#</a>
+    <h4 class="name" id="Kanban">
+        <a class="href-link" href="#Kanban">#</a>
         
         <span class="code-name">
             
-                new MyTasks<span class="signature">()</span><span class="type-signature"></span>
+                new Kanban<span class="signature">()</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -165,9 +165,9 @@
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line9">line 9</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line11">line 11</a>
             </span>
         </p>
     
@@ -224,8 +224,8 @@
 
 
     
-    <h4 class="name" id="addMultiTaskUser">
-        <a class="href-link" href="#addMultiTaskUser">#</a>
+    <h4 class="name" id="addTaskTag">
+        <a class="href-link" href="#addTaskTag">#</a>
         
             
                 <span class='tag'>async</span>
@@ -233,7 +233,7 @@
         
         <span class="code-name">
             
-                addMultiTaskUser<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+                addTaskTag<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
             
         </span>
     </h4>
@@ -242,7 +242,7 @@
     
     
     <div class="description">
-        Add Multi Task User
+        Adds a tag to a task on the Kanban board without creating duplicates
     </div>
     
 
@@ -286,7 +286,7 @@
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">Object</code>
 
 
   
@@ -296,33 +296,10 @@
 
   
 
-  <td class="description last">Params for adding multi task user</td>
+  <td class="description last">Parameters object</td>
 </tr>
 
   
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>userId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">User id</td>
-</tr>
-
   
     
 <tr class="deep-level-1">
@@ -334,864 +311,6 @@
   
       
 <code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization id</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>taskId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Task Id</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Is token JWT of user</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
-            <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line278">line 278</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise</code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
-   userId: '646386c9583e04a131adc8946',
-   orgId: '646386c9583e04a131adc894',
-   taskId: '646386c9583e04a131adc895'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.addMultiTaskUser(params, session);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="assignTaskUsers">
-        <a class="href-link" href="#assignTaskUsers">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                assignTaskUsers<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Assign Task user
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The params to assign task to user</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>orgName</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization Name</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>userId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">User id that will be assigned the task</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>taskId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Task Id</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Is token JWT of user</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
-            <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line359">line 359</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise</code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
-   orgName: 'pinkbrain',
-   userId: '646386c9583e04a131adc894',
-   taskId: '646386c9583e04a131adc895'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.assignTaskUser(params, session);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="escalate">
-        <a class="href-link" href="#escalate">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                escalate<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Escalate task
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The params to escalate task</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>orgName</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization Name</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>taskId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Task Id</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Is token JWT of user</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
-            <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line438">line 438</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise</code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
-   orgName: 'pinkbrain',
-   taskId: '646386c9583e04a131adc895'
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.escalate(params, session);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="find">
-        <a class="href-link" href="#find">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                find<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|number|array.&lt;object>|number|number}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Method to find my tasks for a user
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to get tasks</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>query</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Search my tasks query</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>orgId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
 
 
   
@@ -1202,6 +321,52 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
   
 
   <td class="description last">Organization id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>taskId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The ID of the task to update</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tag</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The tag to add to the task</td>
 </tr>
 
   
@@ -1281,9 +446,9 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line74">line 74</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line351">line 351</a>
             </span>
         </p>
     
@@ -1314,7 +479,7 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>returned data from the search</div>
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1332,13 +497,13 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>count the count of items searched</div>
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">number</code>
+<code class="param-type">Object</code>
 
 
     </div>
@@ -1350,13 +515,13 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>items the items returned from search</div>
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">array.&lt;object></code>
+<code class="param-type">boolean</code>
 
 
     </div>
@@ -1368,31 +533,13 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>page the page of the search (on pagination), zero indexed</div>
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">number</code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>perPage how many items per page</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">number</code>
+<code class="param-type">string</code>
 
 
     </div>
@@ -1412,11 +559,23 @@ await api.user.task.mytasks.escalate(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
- query: {"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20, filter: {checklistsTags:['checklist']}},
- orgId: '55e4a3bd6be6b45210833fae',
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  tag: 'urgent'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const retSearch = await api.user.task.mytasks.find(params, session);</code></pre>
+const result = await api.user.kanban.addTaskTag(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}</code></pre>
     
 
 
@@ -1426,8 +585,8 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
 
 
     
-    <h4 class="name" id="getAssignTaskUsers">
-        <a class="href-link" href="#getAssignTaskUsers">#</a>
+    <h4 class="name" id="get">
+        <a class="href-link" href="#get">#</a>
         
             
                 <span class='tag'>async</span>
@@ -1435,7 +594,7 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
         
         <span class="code-name">
             
-                getAssignTaskUsers<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise}</span>
+                get<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|Array|string|string|boolean|Array|Array}</span>
             
         </span>
     </h4>
@@ -1444,7 +603,7 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
     
     
     <div class="description">
-        Method to get assign task users
+        Retrieves the Kanban board data for a specified organization process
     </div>
     
 
@@ -1488,7 +647,7 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">Object</code>
 
 
   
@@ -1498,33 +657,10 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
 
   
 
-  <td class="description last">Params to get task</td>
+  <td class="description last">Parameters object</td>
 </tr>
 
   
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>taskId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Task id (_id database)</td>
-</tr>
-
   
     
 <tr class="deep-level-1">
@@ -1535,7 +671,7 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">string</code>
 
 
   
@@ -1546,6 +682,52 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
   
 
   <td class="description last">Organization id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgProcessName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The name of the organization process</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>flowName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Flow name for the specific kanban flow</td>
 </tr>
 
   
@@ -1625,9 +807,9 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line317">line 317</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line108">line 108</a>
             </span>
         </p>
     
@@ -1658,11 +840,157 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>Promise that resolves to Kanban board data</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
 <code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.kanban - Array of status columns with their tasks</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Array</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.kanban[].id - Unique identifier for the status column</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.kanban[].title - Display title of the status column</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.kanban[].isExpanded - Whether the status column is expanded or collapsed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.kanban[].taskList - Array of tasks within this status column</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Array</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.kanban[].statusTagsList - List of status tags available for filtering</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Array</code>
 
 
     </div>
@@ -1682,11 +1010,36 @@ const retSearch = await api.user.task.mytasks.find(params, session);</code></pre
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
- taskId: '5df7f19618430c89a41a19d2',
- orgId: '55e4a3bd6be6b45210833fae',
+  orgId: '55e4a3bd6be6b45210833fae',
+  orgProcessName: 'employee-onboarding',
+  flowName: 'approval-flow'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
+const kanbanData = await api.user.kanban.get(params, session);
+
+Expected response structure:
+{
+  success: true,
+  kanban: [
+    {
+      id: 'pending',
+      title: 'Pending Tasks',
+      isExpanded: true,
+      taskList: [
+        { taskId: '507f1f77bcf86cd799439011', title: 'Review Document', ... },
+        { taskId: '507f1f77bcf86cd799439012', title: 'Approve Request', ... }
+      ],
+      statusTagsList: ['urgent', 'review', 'approved', 'rejected']
+    },
+    {
+      id: 'in-progress',
+      title: 'In Progress',
+      isExpanded: true,
+      taskList: [...],
+      statusTagsList: ['urgent', 'review', 'approved', 'rejected']
+    }
+  ]
+}</code></pre>
     
 
 
@@ -1696,8 +1049,8 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
 
 
     
-    <h4 class="name" id="getTaskMultiUsers">
-        <a class="href-link" href="#getTaskMultiUsers">#</a>
+    <h4 class="name" id="removeTaskTag">
+        <a class="href-link" href="#removeTaskTag">#</a>
         
             
                 <span class='tag'>async</span>
@@ -1705,7 +1058,7 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
         
         <span class="code-name">
             
-                getTaskMultiUsers<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise}</span>
+                removeTaskTag<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
             
         </span>
     </h4>
@@ -1714,7 +1067,7 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
     
     
     <div class="description">
-        Method to get task multi users
+        Removes a specific tag from a task on the Kanban board
     </div>
     
 
@@ -1758,7 +1111,7 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">Object</code>
 
 
   
@@ -1768,33 +1121,10 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
 
   
 
-  <td class="description last">Params to get task</td>
+  <td class="description last">Parameters object</td>
 </tr>
 
   
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>taskId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Task id (_id database)</td>
-</tr>
-
   
     
 <tr class="deep-level-1">
@@ -1805,7 +1135,7 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">string</code>
 
 
   
@@ -1816,6 +1146,52 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
   
 
   <td class="description last">Organization id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>taskId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The ID of the task to update</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tag</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The tag to remove from the task</td>
 </tr>
 
   
@@ -1895,9 +1271,9 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line194">line 194</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line411">line 411</a>
             </span>
         </p>
     
@@ -1927,6 +1303,8 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
                     
 
 <div class="columns">
+    
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1940,245 +1318,53 @@ await api.user.task.mytasks.getAssignTaskUsers(params, session);</code></pre>
 </div>
 
                 
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- taskId: '5df7f19618430c89a41a19d2',
- orgId: '55e4a3bd6be6b45210833fae',
-};
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.getTaskMultiUsers(params, session);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="removeDueDate">
-        <a class="href-link" href="#removeDueDate">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                removeDueDate<span class="signature">(session)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Update task dueDate
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>data.orgId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization id</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>data.taskId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Task Id</td>
-</tr>
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Is token JWT of user NOT allow SU</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
-            <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line156">line 156</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
                     
 
 <div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise</code>
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
 
 
     </div>
@@ -2198,11 +1384,23 @@ await api.user.task.mytasks.getTaskMultiUsers(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-   orgId: '646386c9583e04a131adc894',
-   taskId: '646386c9583e04a131adc895'
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  tag: 'urgent'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
+const result = await api.user.kanban.removeTaskTag(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}</code></pre>
     
 
 
@@ -2212,8 +1410,8 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
 
     
-    <h4 class="name" id="removeMultiTaskUser">
-        <a class="href-link" href="#removeMultiTaskUser">#</a>
+    <h4 class="name" id="updateStatusList">
+        <a class="href-link" href="#updateStatusList">#</a>
         
             
                 <span class='tag'>async</span>
@@ -2221,7 +1419,7 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
         
         <span class="code-name">
             
-                removeMultiTaskUser<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+                updateStatusList<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
             
         </span>
     </h4>
@@ -2230,7 +1428,7 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
     
     
     <div class="description">
-        remove multi task user
+        Updates the status list order for a specific flow in an organization process on the Kanban board
     </div>
     
 
@@ -2274,7 +1472,7 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">Object</code>
 
 
   
@@ -2284,33 +1482,10 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Params of the user to be removed</td>
+  <td class="description last">Parameters object</td>
 </tr>
 
   
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>userId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">User id</td>
-</tr>
-
   
     
 <tr class="deep-level-1">
@@ -2331,14 +1506,14 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Organization id</td>
+  <td class="description last">Organization id (_id database)</td>
 </tr>
 
   
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>taskId</code></td>
+      <td class="name"><code>orgProcessName</code></td>
   
 
   <td class="type">
@@ -2354,7 +1529,145 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Task Id</td>
+  <td class="description last">The name of the organization process</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>flowName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The name of the organization process step flowName</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>statusList</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The status list with new order</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>statusList[</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Status object configuration</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>statusList[].value</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The title of the status</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>statusList[].expanded</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">If the status column is expanded or not</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>statusList[].color</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The hexadecimal color code for the status</td>
 </tr>
 
   
@@ -2381,7 +1694,7 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Is token JWT of user</td>
+  <td class="description last">Session, token JWT</td>
 </tr>
 
 
@@ -2434,9 +1747,9 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line236">line 236</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line482">line 482</a>
             </span>
         </p>
     
@@ -2467,11 +1780,67 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise</code>
+<code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
 
 
     </div>
@@ -2491,12 +1860,29 @@ await api.user.task.mytasks.removeDueDate(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-   userId: '646386c9583e04a131adc896',
-   orgId: '646386c9583e04a131adc894',
-   taskId: '646386c9583e04a131adc895'
+  orgId: '55e4a3bd6be6b45210833fae',
+  orgProcessName: 'employee-onboarding',
+  flowName: 'approval-flow',
+  statusList: [
+    { value: 'Pending', expanded: true, color: '#FF6B6B' },
+    { value: 'In Progress', expanded: true, color: '#4ECDC4' },
+    { value: 'Under Review', expanded: false, color: '#45B7D1' },
+    { value: 'Completed', expanded: true, color: '#96CEB4' }
+  ]
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
+const result = await api.user.kanban.updateStatusList(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Organization process not found"
+}</code></pre>
     
 
 
@@ -2506,8 +1892,8 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
 
     
-    <h4 class="name" id="saveDueDate">
-        <a class="href-link" href="#saveDueDate">#</a>
+    <h4 class="name" id="updateTaskOrder">
+        <a class="href-link" href="#updateTaskOrder">#</a>
         
             
                 <span class='tag'>async</span>
@@ -2515,7 +1901,7 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
         
         <span class="code-name">
             
-                saveDueDate<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+                updateTaskOrder<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
             
         </span>
     </h4>
@@ -2524,7 +1910,7 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
     
     
     <div class="description">
-        Update task dueDate
+        Updates the order of a task in its status column on the Kanban board
     </div>
     
 
@@ -2568,7 +1954,7 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">Object</code>
 
 
   
@@ -2578,33 +1964,10 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
   
 
-  <td class="description last">The Date to save</td>
+  <td class="description last">Parameters object</td>
 </tr>
 
   
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>dueDate</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">DueDate</td>
-</tr>
-
   
     
 <tr class="deep-level-1">
@@ -2625,7 +1988,7 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
   
 
-  <td class="description last">Organization id</td>
+  <td class="description last">Organization id (_id database)</td>
 </tr>
 
   
@@ -2648,7 +2011,30 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
   
 
-  <td class="description last">Task Id</td>
+  <td class="description last">The ID of the task to update</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>order</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The new order position of the task</td>
 </tr>
 
   
@@ -2675,7 +2061,7 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
   
 
-  <td class="description last">Is token JWT of user</td>
+  <td class="description last">Session, token JWT</td>
 </tr>
 
 
@@ -2728,9 +2114,9 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line117">line 117</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line168">line 168</a>
             </span>
         </p>
     
@@ -2761,11 +2147,67 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise</code>
+<code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
 
 
     </div>
@@ -2785,12 +2227,23 @@ await api.user.task.mytasks.removeMultiTaskUser(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-   dueDate: '2011-10-05T14:48:00.000Z',
-   orgId: '646386c9583e04a131adc894',
-   taskId: '646386c9583e04a131adc895'
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  order: 3
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
+const result = await api.user.kanban.updateTaskOrder(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}</code></pre>
     
 
 
@@ -2800,8 +2253,8 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
 
     
-    <h4 class="name" id="unclaim">
-        <a class="href-link" href="#unclaim">#</a>
+    <h4 class="name" id="updateTaskStatus">
+        <a class="href-link" href="#updateTaskStatus">#</a>
         
             
                 <span class='tag'>async</span>
@@ -2809,7 +2262,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
         
         <span class="code-name">
             
-                unclaim<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+                updateTaskStatus<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
             
         </span>
     </h4>
@@ -2818,7 +2271,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
     
     
     <div class="description">
-        Unclaim task
+        Updates the status of a task on the Kanban board when moved between columns
     </div>
     
 
@@ -2862,7 +2315,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">Object</code>
 
 
   
@@ -2872,7 +2325,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">The params to unclaim task</td>
+  <td class="description last">Parameters object</td>
 </tr>
 
   
@@ -2880,7 +2333,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>orgName</code></td>
+      <td class="name"><code>orgId</code></td>
   
 
   <td class="type">
@@ -2896,7 +2349,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Organization Name</td>
+  <td class="description last">Organization id (_id database)</td>
 </tr>
 
   
@@ -2919,7 +2372,30 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Task Id</td>
+  <td class="description last">The ID of the task to update</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>status</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The new status value for the task</td>
 </tr>
 
   
@@ -2946,7 +2422,7 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
   
 
-  <td class="description last">Is token JWT of user</td>
+  <td class="description last">Session, token JWT</td>
 </tr>
 
 
@@ -2999,9 +2475,9 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
     
         <p class="tag-source">
-            <a href="user_my_tasks.js.html" class="button">View Source</a>
+            <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_my_tasks.js.html">user/my_tasks.js</a>, <a href="user_my_tasks.js.html#line399">line 399</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line291">line 291</a>
             </span>
         </p>
     
@@ -3032,11 +2508,67 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise</code>
+<code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
 
 
     </div>
@@ -3056,11 +2588,410 @@ await api.user.task.mytasks.saveDueDate(params, session);</code></pre>
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-   orgName: 'pinkbrain',
-   taskId: '646386c9583e04a131adc895'
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '507f1f77bcf86cd799439011',
+  status: 'in-progress'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.task.mytasks.unclaim(params, session);</code></pre>
+const result = await api.user.kanban.updateTaskStatus(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Task not found"
+}</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateTasksOrder">
+        <a class="href-link" href="#updateTasksOrder">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                updateTasksOrder<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the order of multiple tasks in their status columns on the Kanban board
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Parameters object</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of task objects containing taskId and order</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks[].taskId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The unique identifier of the task to update</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks[].order</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The new order position for the task</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_kanban.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line232">line 232</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  tasks: [
+    { taskId: '507f1f77bcf86cd799439011', order: 1 },
+    { taskId: '507f1f77bcf86cd799439012', order: 2 },
+    { taskId: '507f1f77bcf86cd799439013', order: 3 }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateTasksOrder(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "One or more tasks not found"
+}</code></pre>
     
 
 

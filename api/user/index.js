@@ -14,6 +14,8 @@ import Datasource from './datasource.js';
 import Application from './application.js';
 import Settings from './settings.js';
 import Dashboard from './dashboard.js';
+import Kanban from './kanban.js';
+
 
 /**
  * @class API request, user permission level
@@ -43,6 +45,7 @@ class Users {
     self.help = new Help(options);
     self.application = new Application(options);
     self.dashboard = new Dashboard(options);
+    self.kanban = new Kanban(options);
   }
 }
 

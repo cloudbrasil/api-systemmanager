@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -101,15 +101,20 @@ class Dispatch {
     self._cache = options.parent.options.cache;
     self._forceCache = options.parent.options.forceCache;
     self.parent = options.parent;
-    self._client = Axios.create({baseURL: self.parent.options.uri, withCredentials: true});
+    self._client = Axios.create({
+      baseURL: self.parent.options.uri,
+      withCredentials: true
+    });
 
-    // Add request interceptor for offline handling
+    // Add request interceptor for offline handling.
     self._client.interceptors.request.use(
         async (config) => {
+          // If online or no cache is provided, proceed normally.
           if (self._isOnline() || !self._cache) {
             return config;
           }
 
+          // We're offline and caching is enabled – try to retrieve cached data.
           const cachedData = await self._getCache(config.url, {
             method: config.method,
             data: config.data,
@@ -118,45 +123,51 @@ class Dispatch {
           });
 
           if (cachedData) {
-            // Cancel the actual request and return cached data
-            const dummyResponse = {
-              status: 200,
-              data: cachedData,
-              headers: {},
-              config,
-              cached: true
-            };
-
-            // Throwing a special error that includes our cached response
-            throw {
-              __CACHE_HIT__: true,
-              response: dummyResponse
-            };
+            // Instead of returning the modified config (which would trigger a network call),
+            // return a rejected promise with a flag and a fake response.
+            return Promise.reject({
+              __fromCache: true,
+              response: {
+                data: cachedData,
+                status: 200,
+                statusText: 'OK',
+                headers: config.headers,
+                config: config,
+                request: {} // empty placeholder
+              }
+            });
           }
 
+          // No cached data found – signal an offline error.
           self.errorOffline();
-          throw new Error('Network error: No internet connection and no cached data available');
+          return Promise.reject(new Error('Network error: No internet connection and no cached data available'));
         },
         error => Promise.reject(error)
     );
 
-    // Add response interceptor to handle cache hits and cache successful responses
+    // Add response interceptor to handle caching and to return a cached response when available.
     self._client.interceptors.response.use(
         async response => {
-          // Cache successful responses when online
-          if (response.status === 200 &amp;&amp; self._isOnline() &amp;&amp; self._cache) {
-            await self._setCache(response.config.url, {
-              method: response.config.method,
-              data: response.config.data,
-              params: response.config.params,
-              headers: response.config.headers
-            }, response.data);
+          // If online, the response is OK, caching is enabled, and this wasn’t a cached response,
+          // then cache the new response data.
+          if (response.status === 200 &amp;&amp; self._isOnline() &amp;&amp; self._cache &amp;&amp; !response.config.cached) {
+            await self._setCache(
+                response.config.url,
+                {
+                  method: response.config.method,
+                  data: response.config.data,
+                  params: response.config.params,
+                  headers: response.config.headers
+                },
+                response.data
+            );
           }
           return response;
         },
         error => {
-          if (error.__CACHE_HIT__) {
-            return error.response;
+          // If the error was generated because we had a cached response, then return that response.
+          if (error.__fromCache &amp;&amp; error.response) {
+            return Promise.resolve(error.response);
           }
           return Promise.reject(error);
         }
@@ -164,50 +175,48 @@ class Dispatch {
   }
 
   /**
-   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
-   * @description Get the return data and check for errors
-   * @param {object} retData Response HTTP
+   * @description Get the return data and check for errors.
+   * @param {object} retData Response HTTP.
+   * @param {*} [def={}] Default value to return if no data is found.
    * @return {*}
    * @private
    */
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
-      throw Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
-    } else {
-      return _.get(retData, 'data', def);
+      throw new Error(_.get(retData, 'message', 'No error message reported!'));
     }
+    return _.get(retData, 'data', def);
   }
 
   /**
-   * @author Myndware &lt;augusto.pissarra@myndware.com>
-   * @description Set header with new session
-   * @param {string} session Session, token JWT
-   * @return {object} header with new session
+   * @description Set header with new session.
+   * @param {string} session Session token (JWT).
+   * @return {object} Header object with the new session.
    * @private
    */
   _setHeader(session) {
     return {
       headers: {
-        authorization: session,
+        Authorization: session,
       }
     };
   }
 
   /**
-   * @description Check if the browser/client is currently online
-   * @return {boolean} True if online, false if offline
+   * @description Check if the browser/client is currently online.
+   * @return {boolean} True if online, false if offline.
    * @private
    */
   _isOnline() {
-    if(this._forceCache) return false;
+    if (this._forceCache) return false;
     return typeof navigator !== 'undefined' &amp;&amp; navigator.onLine;
   }
 
   /**
-   * @description Get cached data for a specific request
-   * @param {string} url The request URL
-   * @param {object} options Request options including method, data, params, and headers
-   * @return {Promise&lt;object|null>} Cached data or null if no cache exists
+   * @description Get cached data for a specific request.
+   * @param {string} url The request URL.
+   * @param {object} options Request options including method, data, params, and headers.
+   * @return {Promise&lt;object|null>} Cached data or null if no cache exists.
    * @private
    */
   async _getCache(url, options) {
@@ -220,10 +229,10 @@ class Dispatch {
   }
 
   /**
-   * @description Set data in cache for a specific request
-   * @param {string} url The request URL
-   * @param {object} options Request options including method, data, params, and headers
-   * @param {object} data The data to cache
+   * @description Set data in cache for a specific request.
+   * @param {string} url The request URL.
+   * @param {object} options Request options including method, data, params, and headers.
+   * @param {object} data The data to cache.
    * @return {Promise&lt;void>}
    * @private
    */
@@ -235,28 +244,28 @@ class Dispatch {
     }
   }
 
+  /**
+   * Called when no cache is available and the client is offline.
+   */
   errorOffline() {
-    this._cache.errorOffline();
+    if (this._cache &amp;&amp; typeof this._cache.errorOffline === 'function') {
+      this._cache.errorOffline();
+    }
   }
 
   /**
-   * Get the URL context
-   * @param url {string} Full url
-   * @param session {session} Session, token JWT
-   * @return {Promise&lt;object>} The full data context of the URL
+   * Get the URL context.
+   * @param {string} url Full URL.
+   * @param {string|null} [session=null] Session token (JWT).
+   * @return {Promise&lt;object>} The full data context of the URL.
    * @public
    * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const retContext = await api.dispatch.getContext('http://myndware.io/login/myorg);
-   *
    */
   async getContext(url, session = null) {
     Joi.assert(url, Joi.string().required());
 
-    if(url.includes('?')) {
+    // Append the json flag to the URL.
+    if (url.includes('?')) {
       url = `${url}&amp;json=true`;
     } else {
       url = `${url}?json=true`;
@@ -269,24 +278,12 @@ class Dispatch {
   }
 
   /**
-   * @author Myndware &lt;augusto.pissarra@myndware.com>
-   * @description Get client Axios
-   * @return {promise} return client axios
+   * @description Get the Axios client.
+   * @return {AxiosInstance} The Axios client.
    * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * await api.dispatch.getClient();
    */
   getClient() {
-    try {
-      const self = this;
-      return self._client;
-    } catch (ex) {
-      return ex;
-    }
+    return this._client;
   }
 }
 
