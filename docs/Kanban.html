@@ -448,7 +448,7 @@
         <p class="tag-source">
             <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line351">line 351</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line415">line 415</a>
             </span>
         </p>
     
@@ -711,7 +711,7 @@ Expected response structure (error):
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>flowName</code></td>
+      <td class="name"><code>flowId</code></td>
   
 
   <td class="type">
@@ -727,7 +727,7 @@ Expected response structure (error):
 
   
 
-  <td class="description last">Flow name for the specific kanban flow</td>
+  <td class="description last">Flow id for the specific kanban flow</td>
 </tr>
 
   
@@ -1012,7 +1012,7 @@ const api = new API();
 const params = {
   orgId: '55e4a3bd6be6b45210833fae',
   orgProcessName: 'employee-onboarding',
-  flowName: 'approval-flow'
+  flowId: 'Task_16888el'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const kanbanData = await api.user.kanban.get(params, session);
@@ -1273,7 +1273,7 @@ Expected response structure:
         <p class="tag-source">
             <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line411">line 411</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line475">line 475</a>
             </span>
         </p>
     
@@ -1400,6 +1400,416 @@ Expected response structure (error):
 {
   success: false,
   error: "Task not found"
+}</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="update">
+        <a class="href-link" href="#update">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                update<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise|Object|boolean|string}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates the tasks order and status
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Parameters object</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">Array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of task objects containing taskId and order</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks[].taskId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The unique identifier of the task to update</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks[].order</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The new order position for the task</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>tasks[].status</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The status of the task</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_kanban.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line173">line 173</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Promise that resolves to operation status</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data - The response data containing:</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>returns.data.success - Indicates if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>[returns.data.error] - Error message if operation failed</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  tasks: [
+    { taskId: '507f1f77bcf86cd799439011', order: 0, status: '507f1f77bcf86cd799439012' },
+    { taskId: '507f1f77bcf86cd799439012', order: 1, status: '507f1f77bcf86cd799439012' },
+    { taskId: '507f1f77bcf86cd799439013', order: 0, status: '507f1f77bcf86cd799439013' }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateTasksOrder(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "One or more tasks not found"
 }</code></pre>
     
 
@@ -1538,7 +1948,7 @@ Expected response structure (error):
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>flowName</code></td>
+      <td class="name"><code>flowId</code></td>
   
 
   <td class="type">
@@ -1554,7 +1964,7 @@ Expected response structure (error):
 
   
 
-  <td class="description last">The name of the organization process step flowName</td>
+  <td class="description last">The id of the organization process step flowId</td>
 </tr>
 
   
@@ -1751,7 +2161,7 @@ Expected response structure (error):
         <p class="tag-source">
             <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line484">line 484</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line548">line 548</a>
             </span>
         </p>
     
@@ -1864,7 +2274,7 @@ const api = new API();
 const params = {
   orgId: '55e4a3bd6be6b45210833fae',
   orgProcessName: 'employee-onboarding',
-  flowName: 'approval-flow',
+  flowId: 'Task_16888el',
   statusList: [
     { value: 'Pending', expanded: true, color: '#FF6B6B' },
     { value: 'In Progress', expanded: true, color: '#4ECDC4' },
@@ -2118,7 +2528,7 @@ Expected response structure (error):
         <p class="tag-source">
             <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line168">line 168</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line232">line 232</a>
             </span>
         </p>
     
@@ -2479,7 +2889,7 @@ Expected response structure (error):
         <p class="tag-source">
             <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line291">line 291</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line355">line 355</a>
             </span>
         </p>
     
@@ -2863,7 +3273,7 @@ Expected response structure (error):
         <p class="tag-source">
             <a href="user_kanban.js.html" class="button">View Source</a>
             <span>
-                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line232">line 232</a>
+                <a href="user_kanban.js.html">user/kanban.js</a>, <a href="user_kanban.js.html#line296">line 296</a>
             </span>
         </p>
     

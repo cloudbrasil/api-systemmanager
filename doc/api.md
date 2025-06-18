@@ -2260,6 +2260,7 @@ Class for task, permission user
 
 * [Kanban](#Kanban)
     * [.get(params, session)](#Kanban+get) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>Array</code> \| <code>string</code> \| <code>string</code> \| <code>boolean</code> \| <code>Array</code> \| <code>Array</code>
+    * [.update(params, session)](#Kanban+update) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
     * [.updateTaskOrder(params, session)](#Kanban+updateTaskOrder) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
     * [.updateTasksOrder(params, session)](#Kanban+updateTasksOrder) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
     * [.updateTaskStatus(params, session)](#Kanban+updateTaskStatus) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
@@ -2282,7 +2283,7 @@ Retrieves the Kanban board data for a specified organization process
 | params | <code>Object</code> | Parameters object |
 | params.orgId | <code>string</code> | Organization id (_id database) |
 | params.orgProcessName | <code>string</code> | The name of the organization process |
-| params.flowName | <code>string</code> | Flow name for the specific kanban flow |
+| params.flowId | <code>string</code> | Flow id for the specific kanban flow |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  
@@ -2292,7 +2293,7 @@ const api = new API();
 const params = {
   orgId: '55e4a3bd6be6b45210833fae',
   orgProcessName: 'employee-onboarding',
-  flowName: 'approval-flow'
+  flowId: 'Task_16888el'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const kanbanData = await api.user.kanban.get(params, session);
@@ -2319,6 +2320,52 @@ Expected response structure:
       statusTagsList: ['urgent', 'review', 'approved', 'rejected']
     }
   ]
+}
+```
+<a name="Kanban+update"></a>
+
+### kanban.update(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+Updates the tasks order and status
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.tasks | <code>Array</code> | Array of task objects containing taskId and order |
+| params.tasks[].taskId | <code>string</code> | The unique identifier of the task to update |
+| params.tasks[].order | <code>number</code> | The new order position for the task |
+| params.tasks[].status | <code>string</code> | The status of the task |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  tasks: [
+    { taskId: '507f1f77bcf86cd799439011', order: 0, status: '507f1f77bcf86cd799439012' },
+    { taskId: '507f1f77bcf86cd799439012', order: 1, status: '507f1f77bcf86cd799439012' },
+    { taskId: '507f1f77bcf86cd799439013', order: 0, status: '507f1f77bcf86cd799439013' }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.updateTasksOrder(params, session);
+
+Expected response structure (success):
+{
+  success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "One or more tasks not found"
 }
 ```
 <a name="Kanban+updateTaskOrder"></a>
@@ -2547,7 +2594,7 @@ Updates the status list order for a specific flow in an organization process on 
 | params | <code>Object</code> | Parameters object |
 | params.orgId | <code>string</code> | Organization id (_id database) |
 | params.orgProcessName | <code>string</code> | The name of the organization process |
-| params.flowName | <code>string</code> | The name of the organization process step flowName |
+| params.flowId | <code>string</code> | The id of the organization process step flowId |
 | params.statusList | <code>Array</code> | The status list with new order |
 | params.statusList[ | <code>Object</code> | Status object configuration |
 | params.statusList[].value | <code>string</code> | The title of the status |
@@ -2562,7 +2609,7 @@ const api = new API();
 const params = {
   orgId: '55e4a3bd6be6b45210833fae',
   orgProcessName: 'employee-onboarding',
-  flowName: 'approval-flow',
+  flowId: 'Task_16888el',
   statusList: [
     { value: 'Pending', expanded: true, color: '#FF6B6B' },
     { value: 'In Progress', expanded: true, color: '#4ECDC4' },

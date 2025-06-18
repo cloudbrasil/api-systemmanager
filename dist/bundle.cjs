@@ -11830,7 +11830,7 @@ class Kanban {
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process
-   * @param {string} params.flowName - Flow name for the specific kanban flow
+   * @param {string} params.flowId - Flow id for the specific kanban flow
    * @param {string} session - Session, token JWT
    * @returns {promise} Promise that resolves to Kanban board data
    * @returns {Object} returns.data - The response data containing:
@@ -11849,7 +11849,7 @@ class Kanban {
    * const params = {
    *   orgId: '55e4a3bd6be6b45210833fae',
    *   orgProcessName: 'employee-onboarding',
-   *   flowName: 'approval-flow'
+   *   flowId: 'Task_16888el'
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * const kanbanData = await api.user.kanban.get(params, session);
@@ -11885,16 +11885,80 @@ class Kanban {
       Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get task');
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
       Joi__default["default"].assert(params.orgProcessName, Joi__default["default"].string().required(), 'The organization process name');
-      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name for the specific kanban flow');
+      Joi__default["default"].assert(params.flowId, Joi__default["default"].string().required(), 'Flow id for the specific kanban flow');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
-      const { orgId, orgProcessName, flowName } = params;
+      const { orgId, orgProcessName, flowId } = params;
 
-      // Build API endpoint with flowName as part of the path
-      const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/flow/${flowName}`;
+      // Build API endpoint with flowId as part of the path
+      const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/flow/${flowId}`;
 
       const apiCall = self._client
           .get(endpoint, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Updates the tasks order and status
+   * @param {Object} params - Parameters object
+   * @param {string} params.orgId - Organization id (_id database)
+   * @param {Array} params.tasks - Array of task objects containing taskId and order
+   * @param {string} params.tasks[].taskId - The unique identifier of the task to update
+   * @param {number} params.tasks[].order - The new order position for the task
+   * @param {string} params.tasks[].status - The status of the task
+   * @param {string} session - Session, token JWT
+   * @returns {promise} Promise that resolves to operation status
+   * @returns {Object} returns.data - The response data containing:
+   * @returns {boolean} returns.data.success - Indicates if the operation was successful
+   * @returns {string} [returns.data.error] - Error message if operation failed
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   tasks: [
+   *     { taskId: '507f1f77bcf86cd799439011', order: 0, status: '507f1f77bcf86cd799439012' },
+   *     { taskId: '507f1f77bcf86cd799439012', order: 1, status: '507f1f77bcf86cd799439012' },
+   *     { taskId: '507f1f77bcf86cd799439013', order: 0, status: '507f1f77bcf86cd799439013' }
+   *   ]
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const result = await api.user.kanban.updateTasksOrder(params, session);
+   *
+   * Expected response structure (success):
+   * {
+   *   success: true
+   * }
+   *
+   * Expected response structure (error):
+   * {
+   *   success: false,
+   *   error: "One or more tasks not found"
+   * }
+   */
+  async update(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to update tasks order');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.tasks, Joi__default["default"].array().required(), 'Array of task objects containing taskId and order');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { orgId, tasks } = params;
+
+      // Build API endpoint for updating multiple tasks order
+      const endpoint = `/organization/${orgId}/kanban/tasks`;
+
+      const apiCall = self._client
+          .put(endpoint, { tasks }, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -12213,7 +12277,7 @@ class Kanban {
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process
-   * @param {string} params.flowName - The name of the organization process step flowName
+   * @param {string} params.flowId - The id of the organization process step flowId
    * @param {Array} params.statusList - The status list with new order
    * @param {Object} params.statusList[] - Status object configuration
    * @param {string} params.statusList[].value - The title of the status
@@ -12232,7 +12296,7 @@ class Kanban {
    * const params = {
    *   orgId: '55e4a3bd6be6b45210833fae',
    *   orgProcessName: 'employee-onboarding',
-   *   flowName: 'approval-flow',
+   *   flowId: 'Task_16888el',
    *   statusList: [
    *     { value: 'Pending', expanded: true, color: '#FF6B6B' },
    *     { value: 'In Progress', expanded: true, color: '#4ECDC4' },
@@ -12261,14 +12325,14 @@ class Kanban {
       Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to update status list');
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
       Joi__default["default"].assert(params.orgProcessName, Joi__default["default"].string().required(), 'The name of the organization process');
-      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'The name of the organization process step flowName');
+      Joi__default["default"].assert(params.flowId, Joi__default["default"].string().required(), 'The id of the organization process step flowId');
       Joi__default["default"].assert(params.statusList, Joi__default["default"].array().required(), 'The status list with new order');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
-      const { orgId, orgProcessName, flowName, statusList } = params;
+      const { orgId, orgProcessName, flowId, statusList } = params;
 
       // Build API endpoint for updating status list
-      const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/flow/${flowName}`;
+      const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/flow/${flowId}`;
 
       const apiCall = self._client
           .put(endpoint, { statusList }, self._setHeader(session));
