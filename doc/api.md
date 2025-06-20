@@ -2597,6 +2597,7 @@ Updates the status list order for a specific flow in an organization process on 
 | params.flowId | <code>string</code> | The id of the organization process step flowId |
 | params.statusList | <code>Array</code> | The status list with new order |
 | params.statusList[ | <code>Object</code> | Status object configuration |
+| params.statusList[].guid | <code>string</code> | The guid of the status (the id) |
 | params.statusList[].value | <code>string</code> | The title of the status |
 | params.statusList[].expanded | <code>boolean</code> | If the status column is expanded or not |
 | params.statusList[].color | <code>string</code> | The hexadecimal color code for the status |
