@@ -574,6 +574,8 @@ class Kanban {
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Starts a new task in the Kanban board for a specific organization process
+   * @description It will create the task, set the new order for all tasks (if you send them) and return the the task
+   * @description The new task is the full object of the task, like when you search the task
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process

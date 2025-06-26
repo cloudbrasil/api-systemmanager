@@ -2636,7 +2636,7 @@ Expected response structure (error):
 <a name="Kanban+startTask"></a>
 
 ### kanban.startTask(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code> \| <code>string</code>
-Starts a new task in the Kanban board for a specific organization process
+The new task is the full object of the task, like when you search the task
 
 **Kind**: instance method of [<code>Kanban</code>](#Kanban)  
 **Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.taskId] - The ID of the newly created task<code>string</code> - [returns.data.error] - Error message if operation failed  
