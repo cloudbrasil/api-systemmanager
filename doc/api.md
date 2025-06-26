@@ -2639,7 +2639,7 @@ Expected response structure (error):
 The new task is the full object of the task, like when you search the task
 
 **Kind**: instance method of [<code>Kanban</code>](#Kanban)  
-**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.taskId] - The ID of the newly created task<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.task] - The created task and its properties<code>string</code> - [returns.data.error] - Error message if operation failed  
 **Access**: public  
 **Author**: Myndware <augusto.pissarra@myndware.com>  
 
@@ -2672,7 +2672,7 @@ const result = await api.user.kanban.startTask(params, session);
 Expected response structure (success):
 {
   success: true,
-  taskId: '507f1f77bcf86cd799439013'
+  task: { _id: '507f1f77bcf86cd799439013', ... }
 }
 
 Expected response structure (error):

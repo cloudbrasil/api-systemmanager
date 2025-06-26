@@ -587,7 +587,7 @@ class Kanban {
    * @returns {promise} Promise that resolves to operation status
    * @returns {Object} returns.data - The response data containing:
    * @returns {boolean} returns.data.success - Indicates if the operation was successful
-   * @returns {string} [returns.data.taskId] - The ID of the newly created task
+   * @returns {string} [returns.data.task] - The created task and its properties
    * @returns {string} [returns.data.error] - Error message if operation failed
    * @public
    * @example
@@ -608,7 +608,7 @@ class Kanban {
    * Expected response structure (success):
    * {
    *   success: true,
-   *   taskId: '507f1f77bcf86cd799439013'
+   *   task: { _id: '507f1f77bcf86cd799439013', ... }
    * }
    *
    * Expected response structure (error):
