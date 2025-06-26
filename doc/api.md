@@ -2651,7 +2651,7 @@ The new task is the full object of the task, like when you search the task
 | params.title | <code>string</code> | The title of the new task |
 | params.status | <code>string</code> | The status id of the new task |
 | [params.tags] | <code>Array</code> | Array of tag ids for the new task (optional) |
-| [params.tasks] | <code>Array</code> | The task ids of each task inside the same status (optional) |
+| [params.tasks] | <code>Array</code> | The task ids, in their current order, of each task inside the same status (optional) |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  

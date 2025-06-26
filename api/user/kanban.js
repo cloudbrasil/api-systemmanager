@@ -582,7 +582,7 @@ class Kanban {
    * @param {string} params.title - The title of the new task
    * @param {string} params.status - The status id of the new task
    * @param {Array} [params.tags] - Array of tag ids for the new task (optional)
-   * @param {Array} [params.tasks] - The task ids of each task inside the same status (optional)
+   * @param {Array} [params.tasks] - The task ids, in their current order, of each task inside the same status (optional)
    * @param {string} session - Session, token JWT
    * @returns {promise} Promise that resolves to operation status
    * @returns {Object} returns.data - The response data containing:
