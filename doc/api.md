@@ -2267,6 +2267,7 @@ Class for task, permission user
     * [.addTaskTag(params, session)](#Kanban+addTaskTag) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
     * [.removeTaskTag(params, session)](#Kanban+removeTaskTag) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
     * [.updateStatusList(params, session)](#Kanban+updateStatusList) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code>
+    * [.startTask(params, session)](#Kanban+startTask) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code> \| <code>string</code>
 
 <a name="Kanban+get"></a>
 
@@ -2624,6 +2625,54 @@ const result = await api.user.kanban.updateStatusList(params, session);
 Expected response structure (success):
 {
   success: true
+}
+
+Expected response structure (error):
+{
+  success: false,
+  error: "Organization process not found"
+}
+```
+<a name="Kanban+startTask"></a>
+
+### kanban.startTask(params, session) ⇒ <code>promise</code> \| <code>Object</code> \| <code>boolean</code> \| <code>string</code> \| <code>string</code>
+Starts a new task in the Kanban board for a specific organization process
+
+**Kind**: instance method of [<code>Kanban</code>](#Kanban)  
+**Returns**: <code>promise</code> - Promise that resolves to operation status<code>Object</code> - returns.data - The response data containing:<code>boolean</code> - returns.data.success - Indicates if the operation was successful<code>string</code> - [returns.data.taskId] - The ID of the newly created task<code>string</code> - [returns.data.error] - Error message if operation failed  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>Object</code> | Parameters object |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.orgProcessName | <code>string</code> | The name of the organization process |
+| params.title | <code>string</code> | The title of the new task |
+| params.status | <code>string</code> | The status id of the new task |
+| [params.tags] | <code>Array</code> | Array of tag ids for the new task (optional) |
+| [params.tasks] | <code>Array</code> | The task ids of each task inside the same status (optional) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  orgProcessName: 'employee-onboarding',
+  title: 'Complete employee documentation',
+  status: '507f1f77bcf86cd799439014',
+  tags: ['507f1f77bcf86cd799439015', '507f1f77bcf86cd799439016'],
+  tasks: ['507f1f77bcf86cd799439011', '507f1f77bcf86cd799439012']
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.kanban.startTask(params, session);
+
+Expected response structure (success):
+{
+  success: true,
+  taskId: '507f1f77bcf86cd799439013'
 }
 
 Expected response structure (error):

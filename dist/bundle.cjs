@@ -12280,6 +12280,7 @@ class Kanban {
    * @param {string} params.flowId - The id of the organization process step flowId
    * @param {Array} params.statusList - The status list with new order
    * @param {Object} params.statusList[] - Status object configuration
+   * @param {string} params.statusList[].guid - The guid of the status (the id)
    * @param {string} params.statusList[].value - The title of the status
    * @param {boolean} params.statusList[].expanded - If the status column is expanded or not
    * @param {string} params.statusList[].color - The hexadecimal color code for the status
@@ -12336,6 +12337,89 @@ class Kanban {
 
       const apiCall = self._client
           .put(endpoint, { statusList }, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Starts a new task in the Kanban board for a specific organization process
+   * @param {Object} params - Parameters object
+   * @param {string} params.orgId - Organization id (_id database)
+   * @param {string} params.orgProcessName - The name of the organization process
+   * @param {string} params.title - The title of the new task
+   * @param {string} params.status - The status id of the new task
+   * @param {Array} [params.tags] - Array of tag ids for the new task (optional)
+   * @param {Array} [params.tasks] - The task ids of each task inside the same status (optional)
+   * @param {string} session - Session, token JWT
+   * @returns {promise} Promise that resolves to operation status
+   * @returns {Object} returns.data - The response data containing:
+   * @returns {boolean} returns.data.success - Indicates if the operation was successful
+   * @returns {string} [returns.data.taskId] - The ID of the newly created task
+   * @returns {string} [returns.data.error] - Error message if operation failed
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   orgProcessName: 'employee-onboarding',
+   *   title: 'Complete employee documentation',
+   *   status: '507f1f77bcf86cd799439014',
+   *   tags: ['507f1f77bcf86cd799439015', '507f1f77bcf86cd799439016'],
+   *   tasks: ['507f1f77bcf86cd799439011', '507f1f77bcf86cd799439012']
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const result = await api.user.kanban.startTask(params, session);
+   *
+   * Expected response structure (success):
+   * {
+   *   success: true,
+   *   taskId: '507f1f77bcf86cd799439013'
+   * }
+   *
+   * Expected response structure (error):
+   * {
+   *   success: false,
+   *   error: "Organization process not found"
+   * }
+   */
+  async startTask(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to start task');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.orgProcessName, Joi__default["default"].string().required(), 'The name of the organization process');
+      Joi__default["default"].assert(params.title, Joi__default["default"].string().required(), 'The title of the new task');
+      Joi__default["default"].assert(params.status, Joi__default["default"].string().required(), 'The status id of the new task');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {
+        orgId,
+        orgProcessName,
+        title,
+        status,
+        tags = [],
+        tasks = []
+      } = params;
+
+      // Build API endpoint for starting a new task
+      const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/tasks`;
+
+      const payload = {
+        title,
+        status,
+        tags,
+        tasks
+      };
+
+      const apiCall = self._client
+          .put(endpoint, payload, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
