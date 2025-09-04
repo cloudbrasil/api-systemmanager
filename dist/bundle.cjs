@@ -927,6 +927,40 @@ class Documents {
 
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Updates a document
+   * @param {array<string>} ids array of document _id
+   * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { ... };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params, session);
+   */
+  async findByIdsAndUpdate(ids, params, session) {
+    const self = this;
+    try {
+      Joi__default["default"].assert(ids, Joi__default["default"].array().required().error(new Error('ids is required')));
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(session, Joi__default["default"].string().required().error(new Error('session is required')));
+      const { areaId, orgId } = params;
+      params.ids = ids;
+      const apiCall = self._client
+          .put(`/organizations/${orgId}/areas/${areaId}/documents/batch`, params, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document.
    *  IMPORTANT: if your document has a content, it will NOT bring the content.
    * @param {string} id Document _id
@@ -12347,18 +12381,20 @@ class Kanban {
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Starts a new task in the Kanban board for a specific organization process
+   * @description It will create the task, set the new order for all tasks (if you send them) and return the the task
+   * @description The new task is the full object of the task, like when you search the task
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process
    * @param {string} params.title - The title of the new task
    * @param {string} params.status - The status id of the new task
    * @param {Array} [params.tags] - Array of tag ids for the new task (optional)
-   * @param {Array} [params.tasks] - The task ids of each task inside the same status (optional)
+   * @param {Array} [params.tasks] - The task ids, in their current order, of each task inside the same status (optional)
    * @param {string} session - Session, token JWT
    * @returns {promise} Promise that resolves to operation status
    * @returns {Object} returns.data - The response data containing:
    * @returns {boolean} returns.data.success - Indicates if the operation was successful
-   * @returns {string} [returns.data.taskId] - The ID of the newly created task
+   * @returns {string} [returns.data.task] - The created task and its properties
    * @returns {string} [returns.data.error] - Error message if operation failed
    * @public
    * @example
@@ -12379,7 +12415,7 @@ class Kanban {
    * Expected response structure (success):
    * {
    *   success: true,
-   *   taskId: '507f1f77bcf86cd799439013'
+   *   task: { _id: '507f1f77bcf86cd799439013', ... }
    * }
    *
    * Expected response structure (error):

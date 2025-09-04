@@ -1657,7 +1657,7 @@ Checks if a document can be added and it does not repeat its primary key</li>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line794">line 794</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line828">line 828</a>
             </span>
         </p>
     
@@ -1950,7 +1950,7 @@ const retDocs = await api.user.document.checkPrimaryKeys(params, session);</code
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line882">line 882</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line916">line 916</a>
             </span>
         </p>
     
@@ -2222,7 +2222,7 @@ const retSearch = await api.user.document.exportExcelForAllPages(params, session
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line922">line 922</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line956">line 956</a>
             </span>
         </p>
     
@@ -2912,7 +2912,7 @@ const retSearch = await api.user.document.exportWmsExcelForAllPages(params, sess
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line341">line 341</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line375">line 375</a>
             </span>
         </p>
     
@@ -3138,7 +3138,7 @@ await api.user.document.findByIdAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line290">line 290</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line324">line 324</a>
             </span>
         </p>
     
@@ -3404,7 +3404,7 @@ await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);</code></p
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line425">line 425</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line459">line 459</a>
             </span>
         </p>
     
@@ -4032,7 +4032,7 @@ await api.user.document.findByIdAndUpdate('5edf9f8ee896b817e45b8dad', params, se
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line470">line 470</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line504">line 504</a>
             </span>
         </p>
     
@@ -4184,6 +4184,249 @@ const params - {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdsAndRemove(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="findByIdsAndUpdate">
+        <a class="href-link" href="#findByIdsAndUpdate">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                findByIdsAndUpdate<span class="signature">(ids, params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Updates a document
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>ids</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;string></code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">array of document _id</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Object for document payload to update. It has to be the FULL document data, that you can get with findById</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_document.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line291">line 291</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { ... };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params, session);</code></pre>
     
 
 
@@ -4417,7 +4660,7 @@ await api.user.document.findByIdsAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line972">line 972</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1006">line 1006</a>
             </span>
         </p>
     
@@ -4698,7 +4941,7 @@ const retSearch = await api.user.document.performDownloadComplete(params, sessio
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line842">line 842</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line876">line 876</a>
             </span>
         </p>
     
@@ -5042,7 +5285,7 @@ const retSearch = await api.user.document.searchDocuments(params, session);</cod
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1017">line 1017</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1051">line 1051</a>
             </span>
         </p>
     
@@ -5501,7 +5744,7 @@ const retSearch = await api.user.document.searchDocumentsDirect(params, session)
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line536">line 536</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line570">line 570</a>
             </span>
         </p>
     
@@ -6017,7 +6260,7 @@ const base64Data = await api.user.document.signedUrl(params, session);</code></p
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line632">line 632</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line666">line 666</a>
             </span>
         </p>
     
@@ -6415,7 +6658,7 @@ const base64Data = await api.user.document.signedUrls(params, session);</code></
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line736">line 736</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line770">line 770</a>
             </span>
         </p>
     
@@ -6706,7 +6949,7 @@ onUploadProgress return the progressEvent
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line680">line 680</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line714">line 714</a>
             </span>
         </p>
     

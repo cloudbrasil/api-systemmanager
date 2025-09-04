@@ -360,6 +360,40 @@ class Documents {
 
   /**
    * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Updates a document
+   * @param {array&lt;string>} ids array of document _id
+   * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
+   * @param {string} session Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { ... };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params, session);
+   */
+  async findByIdsAndUpdate(ids, params, session) {
+    const self = this;
+    try {
+      Joi.assert(ids, Joi.array().required().error(new Error('ids is required')));
+      Joi.assert(params, Joi.object().required().error(new Error('params is required')));
+      Joi.assert(session, Joi.string().required().error(new Error('session is required')));
+      const { areaId, orgId } = params;
+      params.ids = ids;
+      const apiCall = self._client
+          .put(`/organizations/${orgId}/areas/${areaId}/documents/batch`, params, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
    * @description Updates a document.
    *  IMPORTANT: if your document has a content, it will NOT bring the content.
    * @param {string} id Document _id
