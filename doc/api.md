@@ -1702,14 +1702,16 @@ Updates a document
 | Param | Type | Description |
 | --- | --- | --- |
 | ids | <code>array.&lt;string&gt;</code> | array of document _id |
-| params | <code>object</code> | Object for document payload to update. It has to be the FULL document data, that you can get with findById |
+| params | <code>object</code> | Object for document payload to update. It has the orgId and areaId (required) and the fields to update.  Partial updates accepted, such as docTypeFieldsData.extraFieldName |
+| params.orgId | <code>string</code> | The orgId of the organization |
+| params.areaId | <code>string</code> | The areaId to update in batch |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  
 ```js
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
-const params = { ... };
+const params = { orgId: '5edf9f8ee896b817e45b8da7', areaId: '5edf9f8ee896b817e45b8da8', 'docTypeFieldsData.extraName': 'New name' };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params, session);
 ```

@@ -275,7 +275,10 @@ class Documents {
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document
    * @param {array<string>} ids array of document _id
-   * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
+   * @param {object} params Object for document payload to update. It has the orgId and areaId (required) and the fields to update.
+   *  Partial updates accepted, such as docTypeFieldsData.extraFieldName
+   * @param {string} params.orgId The orgId of the organization
+   * @param {string} params.areaId The areaId to update in batch
    * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
@@ -284,7 +287,7 @@ class Documents {
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
-   * const params = { ... };
+   * const params = { orgId: '5edf9f8ee896b817e45b8da7', areaId: '5edf9f8ee896b817e45b8da8', 'docTypeFieldsData.extraName': 'New name' };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params, session);
    */
@@ -293,11 +296,14 @@ class Documents {
     try {
       Joi.assert(ids, Joi.array().required().error(new Error('ids is required')));
       Joi.assert(params, Joi.object().required().error(new Error('params is required')));
+      Joi.assert(params.orgId, Joi.string().required().error(new Error('orgId is required')));
+      Joi.assert(params.areaId, Joi.string().required().error(new Error('areaId is required')));
       Joi.assert(session, Joi.string().required().error(new Error('session is required')));
       const { areaId, orgId } = params;
-      params.ids = ids;
+      delete params.areaId;
+      delete params.orgId;
       const apiCall = self._client
-          .put(`/organizations/${orgId}/areas/${areaId}/documents/batch`, params, self._setHeader(session));
+          .put(`/organizations/${orgId}/areas/${areaId}/documents/batch`, { ids, data: params }, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {

@@ -929,7 +929,10 @@ class Documents {
    * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document
    * @param {array<string>} ids array of document _id
-   * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
+   * @param {object} params Object for document payload to update. It has the orgId and areaId (required) and the fields to update.
+   *  Partial updates accepted, such as docTypeFieldsData.extraFieldName
+   * @param {string} params.orgId The orgId of the organization
+   * @param {string} params.areaId The areaId to update in batch
    * @param {string} session Session, token JWT
    * @return {Promise}
    * @public
@@ -938,7 +941,7 @@ class Documents {
    *
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
-   * const params = { ... };
+   * const params = { orgId: '5edf9f8ee896b817e45b8da7', areaId: '5edf9f8ee896b817e45b8da8', 'docTypeFieldsData.extraName': 'New name' };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params, session);
    */
@@ -947,11 +950,14 @@ class Documents {
     try {
       Joi__default["default"].assert(ids, Joi__default["default"].array().required().error(new Error('ids is required')));
       Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required().error(new Error('orgId is required')));
+      Joi__default["default"].assert(params.areaId, Joi__default["default"].string().required().error(new Error('areaId is required')));
       Joi__default["default"].assert(session, Joi__default["default"].string().required().error(new Error('session is required')));
       const { areaId, orgId } = params;
-      params.ids = ids;
+      delete params.areaId;
+      delete params.orgId;
       const apiCall = self._client
-          .put(`/organizations/${orgId}/areas/${areaId}/documents/batch`, params, self._setHeader(session));
+          .put(`/organizations/${orgId}/areas/${areaId}/documents/batch`, { ids, data: params }, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
