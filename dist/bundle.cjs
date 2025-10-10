@@ -12683,7 +12683,6 @@ class AdminDocuments {
    * const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiKey);
    */
   async signedUrl(params = {}, apiKey) {
-
     Joi__default["default"].assert(params, Joi__default["default"].object().required());
     Joi__default["default"].assert(params.methodType, Joi__default["default"].string().required());
     Joi__default["default"].assert(params.docId, Joi__default["default"].string().required());
@@ -12721,7 +12720,6 @@ class AdminDocuments {
    * await api.admin.document.updateContent(params, apiKey);
    */
   async updateContent(params = {}, apiKey) {
-
     Joi__default["default"].assert(params, Joi__default["default"].object().required());
     Joi__default["default"].assert(params.content, Joi__default["default"].string().required());
     Joi__default["default"].assert(params.docId, Joi__default["default"].string().required());
@@ -12768,7 +12766,6 @@ class AdminDocuments {
    * await api.admin.document.updateContent(params, apiKey);
    */
   async updateAI(params = {}, apiKey) {
-
     Joi__default["default"].assert(params, Joi__default["default"].object().required());
     Joi__default["default"].assert(params.docId, Joi__default["default"].string().required());
     Joi__default["default"].assert(apiKey, Joi__default["default"].string().required());
@@ -12813,7 +12810,6 @@ class AdminDocuments {
    * await api.admin.document.getContent(params, apiKey);
    */
   async getContent(params = {}, apiKey) {
-
     Joi__default["default"].assert(params, Joi__default["default"].object().required());
     Joi__default["default"].assert(params.docId, Joi__default["default"].string().required());
     Joi__default["default"].assert(params.page, Joi__default["default"].string().required());
@@ -12822,6 +12818,39 @@ class AdminDocuments {
     const self = this;
     const { page, docId } = params;
     const url = `/api/documents/${docId}/content/${page}?apiKey=${apiKey}`;
+    const apiCall = self._client
+        .get(url);
+    return self._returnData(await apiCall);
+  }
+
+  /**
+   *
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the data of a document
+   * @param {object} params Params to request signed url
+   * @param {string} params.id The unique id of the document
+   * @param {string} apiKey Api Key as permission to use this functionality
+   * @return {Promise<object>} data the document data
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params - {
+   *  id: '5dadd01dc4af3941d42f8c5c'
+   * };
+   * const apiKey: '...';
+   * await api.admin.document.getDocumentData(params, apiKey);
+   */
+  async getDocumentData(params = {}, apiKey) {
+    Joi__default["default"].assert(params, Joi__default["default"].object().required());
+    Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+    Joi__default["default"].assert(apiKey, Joi__default["default"].string().required());
+
+    const self = this;
+    const { id } = params;
+    const url = `/api/documents/${id}?apiKey=${apiKey}`;
     const apiCall = self._client
         .get(url);
     return self._returnData(await apiCall);

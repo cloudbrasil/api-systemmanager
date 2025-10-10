@@ -131,6 +131,7 @@ Admin Class for documents, permission admin
     * [.updateContent(params, apiKey)](#AdminDocuments+updateContent) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.updateAI(params, apiKey)](#AdminDocuments+updateAI) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getContent(params, apiKey)](#AdminDocuments+getContent) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>string</code> \| <code>number</code>
+    * [.getDocumentData(params, apiKey)](#AdminDocuments+getDocumentData) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="AdminDocuments+advancedSearch"></a>
 
@@ -333,6 +334,32 @@ const params - {
 };
 const apiKey: '...';
 await api.admin.document.getContent(params, apiKey);
+```
+<a name="AdminDocuments+getDocumentData"></a>
+
+### adminDocuments.getDocumentData(params, apiKey) ⇒ <code>Promise.&lt;object&gt;</code>
+Get the data of a document
+
+**Kind**: instance method of [<code>AdminDocuments</code>](#AdminDocuments)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data the document data  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to request signed url |
+| params.id | <code>string</code> | The unique id of the document |
+| apiKey | <code>string</code> | Api Key as permission to use this functionality |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ id: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.getDocumentData(params, apiKey);
 ```
 <a name="AdminForm"></a>
 

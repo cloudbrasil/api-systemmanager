@@ -984,7 +984,7 @@ await api.admin.document.findById(params, session);</code></pre>
         <p class="tag-source">
             <a href="admin_document.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line315">line 315</a>
+                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line312">line 312</a>
             </span>
         </p>
     
@@ -1136,6 +1136,254 @@ const params - {
 };
 const apiKey: '...';
 await api.admin.document.getContent(params, apiKey);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getDocumentData">
+        <a class="href-link" href="#getDocumentData">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                getDocumentData<span class="signature">(params, apiKey)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get the data of a document
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Params to request signed url</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>id</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The unique id of the document</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>apiKey</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Api Key as permission to use this functionality</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_document.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line346">line 346</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data the document data</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params - {
+ id: '5dadd01dc4af3941d42f8c5c'
+};
+const apiKey: '...';
+await api.admin.document.getDocumentData(params, apiKey);</code></pre>
     
 
 
@@ -1857,7 +2105,7 @@ const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiK
         <p class="tag-source">
             <a href="admin_document.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line270">line 270</a>
+                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line268">line 268</a>
             </span>
         </p>
     
@@ -2129,7 +2377,7 @@ await api.admin.document.updateContent(params, apiKey);</code></pre>
         <p class="tag-source">
             <a href="admin_document.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line223">line 223</a>
+                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line222">line 222</a>
             </span>
         </p>
     
