@@ -2504,6 +2504,47 @@ class Process {
         throw ex;
       }
     }
+
+    /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get step history of a process flow
+   * @param {object} params Params to get step history
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.flowId Flow id;
+   * @param {string} session Session, token JWT
+   * @return {Promise<Array>} Array of step history entries
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   flowId: 'Task_18v1xx7'
+   * }
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const stepHistory = await api.user.process.getStepHistory(params, session);
+   */
+    async getStepHistory(params, session) {
+      const self = this;
+
+      try {
+        Joi__default["default"].assert(params, Joi__default["default"].object().required());
+        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.processId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(params.flowId, Joi__default["default"].string().required());
+        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+        const {orgId, processId, flowId} = params;
+        const apiCall = self._client.get(`/organizations/${orgId}/process/${processId}/flow/${flowId}/history`, self._setHeader(session));
+        return self._returnData(await apiCall, []);
+      } catch (ex) {
+        throw ex;
+      }
+    }
 }
 
 /**

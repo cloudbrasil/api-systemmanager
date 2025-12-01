@@ -3458,6 +3458,7 @@ Class for process, permission user
     * [.getOrgDocTypes(params, session)](#Process+getOrgDocTypes) ⇒ <code>Promise</code>
     * [.getOrgGroups(params, session)](#Process+getOrgGroups) ⇒ <code>Promise</code>
     * [.getOrgUsers(params, session)](#Process+getOrgUsers) ⇒ <code>Promise</code>
+    * [.getStepHistory(params, session)](#Process+getStepHistory) ⇒ <code>Promise.&lt;Array&gt;</code>
 
 <a name="Process+start"></a>
 
@@ -3793,6 +3794,36 @@ const params = {
 }
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.process.getOrgUsers(params, session);
+```
+<a name="Process+getStepHistory"></a>
+
+### process.getStepHistory(params, session) ⇒ <code>Promise.&lt;Array&gt;</code>
+Get step history of a process flow
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>Promise.&lt;Array&gt;</code> - Array of step history entries  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get step history |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| params.processId | <code>string</code> | Process id (_id database); |
+| params.flowId | <code>string</code> | Flow id; |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5edd11c46b6ce9729c2c297c',
+  processId: '5dadd01dc4af3941d42f8c5c',
+  flowId: 'Task_18v1xx7'
+}
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const stepHistory = await api.user.process.getStepHistory(params, session);
 ```
 <a name="Register"></a>
 
