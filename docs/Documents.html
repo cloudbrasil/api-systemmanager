@@ -1377,6 +1377,1047 @@ await api.user.document.add(params, session);</code></pre>
 
 
     
+    <h4 class="name" id="addDocuments">
+        <a class="href-link" href="#addDocuments">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                addDocuments<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|boolean|array.&lt;object>|array.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Add multiple documents to a doc area under a doc type
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Object for adding documents</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Organization id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">User id (_id database)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docAreaName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">The name of the doc area</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docTypeName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">The name of the doc type</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;object></code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Array of documents to add</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.document</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The url to the document on S3, an external URL or a base64 representation of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.type</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The mime type of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.name</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The name of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.content</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The content of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.bytes</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          0
+      
+      </td>
+  
+
+  <td class="description last">The bytes (in kb) of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.urlType</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The urlType of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.description</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The description of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.category</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The category of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.tags</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;string></code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          []
+      
+      </td>
+  
+
+  <td class="description last">The tags of the document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.docTypeFieldsData</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          {}
+      
+      </td>
+  
+
+  <td class="description last">The data related to this document</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.hasPhisicalStorage</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">boolean</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          false
+      
+      </td>
+  
+
+  <td class="description last">The flag to define if the document has physical storage or not</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.boxId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The boxId if we define the document has physical storage</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.status</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">The document status</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>docs.storageStatus</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          ''
+      
+      </td>
+  
+
+  <td class="description last">The storageStatus if we define the document has physical storage</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_document.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line296">line 296</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>The result of the operation</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>return.success True if the operation was successful</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">boolean</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>return.added Array of added documents</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">array.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>return.notAdded Array of documents that could not be added</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">array.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5df7f19618430c89a41a19d2',
+  userId: '5df7f19618430c89a41a19d3',
+  docAreaName: 'My Doc Area',
+  docTypeName: 'My Doc Type',
+  docs: [
+    {
+      document: 'https://s3.amazonaws.com/...',
+      type: 'application/pdf',
+      name: 'Document 1',
+      description: 'First document',
+      category: 'Category 1',
+      tags: ['tag1', 'tag2'],
+      docTypeFieldsData: { extraField: 'value' },
+      bytes: 12345
+    }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.document.addDocuments(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
     <h4 class="name" id="checkPrimaryKeys">
         <a class="href-link" href="#checkPrimaryKeys">#</a>
         
@@ -1657,7 +2698,7 @@ Checks if a document can be added and it does not repeat its primary key</li>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line834">line 834</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line909">line 909</a>
             </span>
         </p>
     
@@ -1950,7 +2991,7 @@ const retDocs = await api.user.document.checkPrimaryKeys(params, session);</code
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line922">line 922</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line997">line 997</a>
             </span>
         </p>
     
@@ -2222,7 +3263,7 @@ const retSearch = await api.user.document.exportExcelForAllPages(params, session
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line962">line 962</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1037">line 1037</a>
             </span>
         </p>
     
@@ -2912,7 +3953,7 @@ const retSearch = await api.user.document.exportWmsExcelForAllPages(params, sess
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line381">line 381</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line456">line 456</a>
             </span>
         </p>
     
@@ -3138,7 +4179,7 @@ await api.user.document.findByIdAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line330">line 330</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line405">line 405</a>
             </span>
         </p>
     
@@ -3404,7 +4445,7 @@ await api.user.document.findById('5edf9f8ee896b817e45b8dad', session);</code></p
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line465">line 465</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line540">line 540</a>
             </span>
         </p>
     
@@ -3742,7 +4783,7 @@ await api.user.document.findByIdAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line258">line 258</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line333">line 333</a>
             </span>
         </p>
     
@@ -4032,7 +5073,7 @@ await api.user.document.findByIdAndUpdate('5edf9f8ee896b817e45b8dad', params, se
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line510">line 510</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line585">line 585</a>
             </span>
         </p>
     
@@ -4420,7 +5461,7 @@ await api.user.document.findByIdsAndRemove(params, session);</code></pre>
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line294">line 294</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line369">line 369</a>
             </span>
         </p>
     
@@ -4710,7 +5751,7 @@ await api.user.document.findByIdsAndUpdate(['5edf9f8ee896b817e45b8dad'], params,
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1012">line 1012</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1087">line 1087</a>
             </span>
         </p>
     
@@ -4991,7 +6032,7 @@ const retSearch = await api.user.document.performDownloadComplete(params, sessio
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line882">line 882</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line957">line 957</a>
             </span>
         </p>
     
@@ -5335,7 +6376,7 @@ const retSearch = await api.user.document.searchDocuments(params, session);</cod
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1057">line 1057</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line1132">line 1132</a>
             </span>
         </p>
     
@@ -5794,7 +6835,7 @@ const retSearch = await api.user.document.searchDocumentsDirect(params, session)
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line576">line 576</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line651">line 651</a>
             </span>
         </p>
     
@@ -6310,7 +7351,7 @@ const base64Data = await api.user.document.signedUrl(params, session);</code></p
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line672">line 672</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line747">line 747</a>
             </span>
         </p>
     
@@ -6708,7 +7749,7 @@ const base64Data = await api.user.document.signedUrls(params, session);</code></
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line776">line 776</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line851">line 851</a>
             </span>
         </p>
     
@@ -6999,7 +8040,7 @@ onUploadProgress return the progressEvent
         <p class="tag-source">
             <a href="user_document.js.html" class="button">View Source</a>
             <span>
-                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line720">line 720</a>
+                <a href="user_document.js.html">user/document.js</a>, <a href="user_document.js.html#line795">line 795</a>
             </span>
         </p>
     

@@ -1619,6 +1619,7 @@ Class for documents, permission user
 
 * [Documents](#Documents)
     * [.add(params, session)](#Documents+add) ⇒ <code>Promise</code>
+    * [.addDocuments(params, session)](#Documents+addDocuments) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code>
     * [.findByIdAndUpdate(id, params, session)](#Documents+findByIdAndUpdate) ⇒ <code>Promise</code>
     * [.findByIdsAndUpdate(ids, params, session)](#Documents+findByIdsAndUpdate) ⇒ <code>Promise</code>
     * [.findById(id, session)](#Documents+findById) ⇒ <code>Promise</code>
@@ -1693,6 +1694,65 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.document.add(params, session);
+```
+<a name="Documents+addDocuments"></a>
+
+### documents.addDocuments(params, session) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code>
+Add multiple documents to a doc area under a doc type
+
+**Kind**: instance method of [<code>Documents</code>](#Documents)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - The result of the operation<code>boolean</code> - return.success True if the operation was successful<code>array.&lt;object&gt;</code> - return.added Array of added documents<code>array.&lt;object&gt;</code> - return.notAdded Array of documents that could not be added  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Object for adding documents |
+| params.orgId | <code>string</code> |  | Organization id (_id database) |
+| params.userId | <code>string</code> |  | User id (_id database) |
+| params.docAreaName | <code>string</code> |  | The name of the doc area |
+| params.docTypeName | <code>string</code> |  | The name of the doc type |
+| params.docs | <code>array.&lt;object&gt;</code> |  | Array of documents to add |
+| [params.docs.document] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The url to the document on S3, an external URL or a base64 representation of the document |
+| [params.docs.type] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The mime type of the document |
+| [params.docs.name] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The name of the document |
+| [params.docs.content] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The content of the document |
+| [params.docs.bytes] | <code>number</code> | <code>0</code> | The bytes (in kb) of the document |
+| [params.docs.urlType] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The urlType of the document |
+| [params.docs.description] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The description of the document |
+| [params.docs.category] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The category of the document |
+| [params.docs.tags] | <code>array.&lt;string&gt;</code> | <code>[]</code> | The tags of the document |
+| [params.docs.docTypeFieldsData] | <code>object</code> | <code>{}</code> | The data related to this document |
+| [params.docs.hasPhisicalStorage] | <code>boolean</code> | <code>false</code> | The flag to define if the document has physical storage or not |
+| [params.docs.boxId] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The boxId if we define the document has physical storage |
+| [params.docs.status] | <code>number</code> |  | The document status |
+| [params.docs.storageStatus] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The storageStatus if we define the document has physical storage |
+| session | <code>string</code> |  | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5df7f19618430c89a41a19d2',
+  userId: '5df7f19618430c89a41a19d3',
+  docAreaName: 'My Doc Area',
+  docTypeName: 'My Doc Type',
+  docs: [
+    {
+      document: 'https://s3.amazonaws.com/...',
+      type: 'application/pdf',
+      name: 'Document 1',
+      description: 'First document',
+      category: 'Category 1',
+      tags: ['tag1', 'tag2'],
+      docTypeFieldsData: { extraField: 'value' },
+      bytes: 12345
+    }
+  ]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.document.addDocuments(params, session);
 ```
 <a name="Documents+findByIdAndUpdate"></a>
 

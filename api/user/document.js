@@ -240,6 +240,81 @@ class Documents {
 
   /**
    * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Add multiple documents to a doc area under a doc type
+   * @param {object} params Object for adding documents
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.userId User id (_id database)
+   * @param {string} params.docAreaName The name of the doc area
+   * @param {string} params.docTypeName The name of the doc type
+   * @param {array<object>} params.docs Array of documents to add
+   * @param {string} [params.docs.document=''] The url to the document on S3, an external URL or a base64 representation of the document
+   * @param {string} [params.docs.type=''] The mime type of the document
+   * @param {string} [params.docs.name=''] The name of the document
+   * @param {string} [params.docs.content=''] The content of the document
+   * @param {number} [params.docs.bytes=0] The bytes (in kb) of the document
+   * @param {string} [params.docs.urlType=''] The urlType of the document
+   * @param {string} [params.docs.description=''] The description of the document
+   * @param {string} [params.docs.category=''] The category of the document
+   * @param {array<string>} [params.docs.tags=[]] The tags of the document
+   * @param {object} [params.docs.docTypeFieldsData={}] The data related to this document
+   * @param {boolean} [params.docs.hasPhisicalStorage=false] The flag to define if the document has physical storage or not
+   * @param {string} [params.docs.boxId=''] The boxId if we define the document has physical storage
+   * @param {number} [params.docs.status] The document status
+   * @param {string} [params.docs.storageStatus=''] The storageStatus if we define the document has physical storage
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} The result of the operation
+   * @return {boolean} return.success True if the operation was successful
+   * @return {array<object>} return.added Array of added documents
+   * @return {array<object>} return.notAdded Array of documents that could not be added
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '5df7f19618430c89a41a19d2',
+   *   userId: '5df7f19618430c89a41a19d3',
+   *   docAreaName: 'My Doc Area',
+   *   docTypeName: 'My Doc Type',
+   *   docs: [
+   *     {
+   *       document: 'https://s3.amazonaws.com/...',
+   *       type: 'application/pdf',
+   *       name: 'Document 1',
+   *       description: 'First document',
+   *       category: 'Category 1',
+   *       tags: ['tag1', 'tag2'],
+   *       docTypeFieldsData: { extraField: 'value' },
+   *       bytes: 12345
+   *     }
+   *   ]
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const result = await api.user.document.addDocuments(params, session);
+   */
+  async addDocuments(params, session) {
+    const self = this;
+    try {
+      Joi.assert(params, Joi.object().required().error(new Error('params is required')));
+      Joi.assert(params.orgId, Joi.string().required().error(new Error('orgId is required')));
+      Joi.assert(params.userId, Joi.string().required().error(new Error('userId is required')));
+      Joi.assert(params.docAreaName, Joi.string().required().error(new Error('docAreaName is required')));
+      Joi.assert(params.docTypeName, Joi.string().required().error(new Error('docTypeName is required')));
+      Joi.assert(params.docs, Joi.array().required().error(new Error('docs is required')));
+      Joi.assert(session, Joi.string().required().error(new Error('session is required')));
+
+      const apiCall = self._client
+        .put('/organizations/documents', params, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
    * @description Updates a document
    * @param {string} id Document _id
    * @param {object} params Object for document payload to update. It has to be the FULL document data, that you can get with findById
