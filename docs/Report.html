@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> AdminTask</title>
+  <title> Report</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>AdminTask</h1>
+                    <h1>Report</h1>
                 </header>
                 
 
@@ -85,9 +85,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>AdminTask<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>Report<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Admin Class for task, permission admin</div>
+            <div class="class-description">Class user access to reports</div>
         
     
 </header>
@@ -106,12 +106,12 @@
 
 
     
-    <h4 class="name" id="AdminTask">
-        <a class="href-link" href="#AdminTask">#</a>
+    <h4 class="name" id="Report">
+        <a class="href-link" href="#Report">#</a>
         
         <span class="code-name">
             
-                new AdminTask<span class="signature">()</span><span class="type-signature"></span>
+                new Report<span class="signature">()</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -165,9 +165,9 @@
 
     
         <p class="tag-source">
-            <a href="admin_task.js.html" class="button">View Source</a>
+            <a href="user_dashboard.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_task.js.html">admin/task.js</a>, <a href="admin_task.js.html#line9">line 9</a>
+                <a href="user_dashboard.js.html">user/dashboard.js</a>, <a href="user_dashboard.js.html#line130">line 130</a>
             </span>
         </p>
     
@@ -224,8 +224,8 @@
 
 
     
-    <h4 class="name" id="find">
-        <a class="href-link" href="#find">#</a>
+    <h4 class="name" id="getData">
+        <a class="href-link" href="#getData">#</a>
         
             
                 <span class='tag'>async</span>
@@ -233,7 +233,7 @@
         
         <span class="code-name">
             
-                find<span class="signature">(params, session)</span><span class="type-signature"></span>
+                getData<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {promise}</span>
             
         </span>
     </h4>
@@ -242,7 +242,7 @@
     
     
     <div class="description">
-        Get task by user Id
+        Get the data for a report
     </div>
     
 
@@ -267,11 +267,7 @@
             <th>Type</th>
 
             
-            <th>Attributes</th>
-            
 
-            
-            <th>Default</th>
             
 
             <th class="last">Description</th>
@@ -297,22 +293,10 @@
   </td>
 
   
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
 
   
-      <td class="default">
-      
-      </td>
-  
 
-  <td class="description last">Params to get task</td>
+  <td class="description last">Params to get helps from topic</td>
 </tr>
 
   
@@ -320,81 +304,7 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>userId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last">User id (_id database)</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>filter</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          NOT_DONE
-      
-      </td>
-  
-
-  <td class="description last">Filter type CLEAN | EXECUTED | PENDING | LATE | NOT_DONE | DONE</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>project</code></td>
+      <td class="name"><code>type</code></td>
   
 
   <td class="type">
@@ -407,166 +317,33 @@
   </td>
 
   
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
 
   
-      <td class="default">
-      
-      </td>
-  
 
-  <td class="description last">Project to return</td>
+  <td class="description last">Type of the report data</td>
 </tr>
 
   
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>project.returnProcessProperties</code></td>
+      <td class="name"><code>query</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">boolean</code>
+<code class="param-type">object</code>
 
 
   
   </td>
 
   
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
 
   
-      <td class="default">
-      
-      </td>
-  
 
-  <td class="description last">Return process properties</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>project.returnInitParams</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">boolean</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last">Return init params</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>userId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
-  
-
-  <td class="description last">User id (_id database)</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>includeOwner</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">boolean</code>
-
-
-  
-  </td>
-
-  
-      <td class="attributes">
-      
-          &lt;optional><br>
-      
-
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-          false
-      
-      </td>
-  
-
-  <td class="description last">Include owner true | false</td>
+  <td class="description last">The query if any (to search documents)</td>
 </tr>
 
   
@@ -590,19 +367,7 @@
   </td>
 
   
-      <td class="attributes">
-      
 
-      
-
-      
-      </td>
-  
-
-  
-      <td class="default">
-      
-      </td>
   
 
   <td class="description last">Session, token JWT</td>
@@ -658,9 +423,9 @@
 
     
         <p class="tag-source">
-            <a href="admin_task.js.html" class="button">View Source</a>
+            <a href="user_dashboard.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_task.js.html">admin/task.js</a>, <a href="admin_task.js.html#line95">line 95</a>
+                <a href="user_dashboard.js.html">user/dashboard.js</a>, <a href="user_dashboard.js.html#line190">line 190</a>
             </span>
         </p>
     
@@ -683,6 +448,29 @@
 
 
 
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">promise</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
 
 
 
@@ -692,10 +480,11 @@
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
- userId: '55e4a3bd6be6b45210833fae',
+ type: '[REPORTS] Myndie:vat_data',
+ query: { ... } // the last query to search documents
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.task.find(params, session);</code></pre>
+await api.user.dashboard.report.getData(params, session);</code></pre>
     
 
 

@@ -49,6 +49,9 @@
 <dt><a href="#Chart">Chart</a></dt>
 <dd><p>Class user access to charts</p>
 </dd>
+<dt><a href="#Report">Report</a></dt>
+<dd><p>Class user access to reports</p>
+</dd>
 <dt><a href="#Dashboard">Dashboard</a></dt>
 <dd><p>Class user access to dashboards</p>
 </dd>
@@ -1550,12 +1553,50 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.dashboard.chart.getQuestion(params, session);
 ```
+<a name="Report"></a>
+
+## Report
+Class user access to reports
+
+**Kind**: global class  
+<a name="Report+getData"></a>
+
+### report.getData(params, session) ⇒ <code>promise</code>
+Get the data for a report
+
+**Kind**: instance method of [<code>Report</code>](#Report)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get helps from topic |
+| params.type | <code>object</code> | Type of the report data |
+| params.query | <code>object</code> | The query if any (to search documents) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+ type: '[REPORTS] Myndie:vat_data',
+ query: { ... } // the last query to search documents
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.dashboard.report.getData(params, session);
+```
 <a name="Dashboard"></a>
 
 ## Dashboard
 Class user access to dashboards
 
 **Kind**: global class  
+
+* [Dashboard](#Dashboard)
+    * [.chart](#Dashboard+chart)
+    * [.report](#Dashboard+report)
+
 <a name="Dashboard+chart"></a>
 
 ### dashboard.chart
@@ -1564,13 +1605,14 @@ return the chart
 **Kind**: instance property of [<code>Dashboard</code>](#Dashboard)  
 **Access**: public  
 **Author**: Augusto Pissarra <abernardo.br@gmail.com>  
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.user.help.getTopics({}, session);
-```
+<a name="Dashboard+report"></a>
+
+### dashboard.report
+return the report
+
+**Kind**: instance property of [<code>Dashboard</code>](#Dashboard)  
+**Access**: public  
+**Author**: Augusto Pissarra <abernardo.br@gmail.com>  
 <a name="Datasource"></a>
 
 ## Datasource

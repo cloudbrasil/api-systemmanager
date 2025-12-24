@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Report.html">Report</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -211,6 +211,88 @@ class Chart {
 }
 
 /**
+ * Class user access to reports
+ * @class
+ */
+class Report {
+  constructor(options) {
+    Joi.assert(options, Joi.object().required());
+    Joi.assert(options.parent, Joi.object().required());
+
+    const self = this;
+    self.parent = options.parent;
+    self._client = self.parent.dispatch.getClient();
+  }
+
+  /**
+   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      return Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
+    } else {
+      return _.get(retData, 'data', def);
+    }
+  }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(session) {
+    return {
+      headers: {
+        Authorization: session,
+      }
+    };
+  }
+
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Get the data for a report
+   * @param {object} params Params to get helps from topic
+   * @param {object} params.type Type of the report data
+   * @param {object} params.query The query if any (to search documents)
+   * @param {string} session Session, token JWT
+   * @returns {promise}
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *  type: '[REPORTS] Myndie:vat_data',
+   *  query: { ... } // the last query to search documents
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.dashboard.report.getData(params, session);
+   */
+  async getData(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to helps from a topic');
+      Joi.assert(params.type, Joi.string().required(), 'Type of graph');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const { type, query = {} } = params;
+      const apiCall = self._client.post(`/organizations/dashboard/report/data/${type}`, query, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+/**
  * Class user access to dashboards
  * @class
  */
@@ -224,6 +306,7 @@ class Dashboard {
     self.parent = options.parent;
     self._client = self.parent.dispatch.getClient();
     self._chart = new Chart(options);
+    self._report = new Report(options);
   }
 
   /**
@@ -260,17 +343,20 @@ class Dashboard {
    * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
    * @description return the chart
    * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.help.getTopics({}, session);
    */
     get chart() {
       const self = this;
       return self._chart;
+  }
+
+  /**
+   * @author Augusto Pissarra &lt;abernardo.br@gmail.com>
+   * @description return the report
+   * @public
+   */
+  get report() {
+    const self = this;
+    return self._report;
   }
 }
 
