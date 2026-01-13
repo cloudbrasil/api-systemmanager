@@ -4131,6 +4131,8 @@ Class for task, permission user
     * [.findByIdAndUpdate(params, session)](#Task+findByIdAndUpdate) ⇒ <code>Promise</code>
     * [.executeActionFinalize(params, session)](#Task+executeActionFinalize) ⇒ <code>Promise</code>
     * [.getSummaryByTags(params, session)](#Task+getSummaryByTags) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code>
+    * [.saveTask(params, session)](#Task+saveTask) ⇒ <code>Promise</code>
+    * [.endTask(params, session)](#Task+endTask) ⇒ <code>Promise</code>
 
 <a name="Task+findById"></a>
 
@@ -4253,6 +4255,112 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.task.getSummaryByTags(params, session);
+```
+<a name="Task+saveTask"></a>
+
+### task.saveTask(params, session) ⇒ <code>Promise</code>
+Save task progress without completing it
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to save task |
+| params.processId | <code>string</code> | Process id (_id database) |
+| params.taskId | <code>string</code> | Task id (_id database) |
+| params.flowName | <code>string</code> | Flow name |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.formData | <code>array</code> | Form data to save |
+| [params.selectedDocs] | <code>array</code> | Selected documents |
+| [params.selectedAssignees] | <code>array</code> | Selected assignees |
+| [params.selectedBoxes] | <code>array</code> | Selected boxes |
+| [params.advFormData] | <code>object</code> | Advanced form data |
+| [params.advFormSchema] | <code>object</code> | Advanced form schema |
+| [params.status] | <code>string</code> | Task status (empty string for save) |
+| [params.order] | <code>number</code> | Task order |
+| [params.title] | <code>string</code> | Task title |
+| [params.tags] | <code>array</code> | Task tags |
+| [params.dueDate] | <code>string</code> | Due date ISO string |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  taskId: '5df7f19618430c89a41a19d2',
+  flowName: 'simpleTask',
+  orgId: '55e4a3bd6be6b45210833fae',
+  formData: [{ name: 'Group', fields: [...] }],
+  selectedDocs: [],
+  selectedAssignees: [],
+  selectedBoxes: [],
+  advFormData: {},
+  advFormSchema: {},
+  status: '',
+  order: 0,
+  title: 'My Task',
+  tags: [],
+  dueDate: '2024-01-15T00:00:00Z'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.saveTask(params, session);
+```
+<a name="Task+endTask"></a>
+
+### task.endTask(params, session) ⇒ <code>Promise</code>
+End/complete a task and advance the workflow
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to end task |
+| params.processId | <code>string</code> | Process id (_id database) |
+| params.taskId | <code>string</code> | Task id (_id database) |
+| params.flowName | <code>string</code> | Flow name |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.formData | <code>array</code> | Form data to submit |
+| [params.selectedDocs] | <code>array</code> | Selected documents |
+| [params.selectedAssignees] | <code>array</code> | Selected assignees |
+| [params.selectedBoxes] | <code>array</code> | Selected boxes |
+| [params.advFormData] | <code>object</code> | Advanced form data |
+| [params.advFormSchema] | <code>object</code> | Advanced form schema |
+| [params.status] | <code>string</code> | Task status |
+| [params.order] | <code>number</code> | Task order |
+| [params.title] | <code>string</code> | Task title |
+| [params.tags] | <code>array</code> | Task tags |
+| [params.dueDate] | <code>string</code> | Due date ISO string |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  taskId: '5df7f19618430c89a41a19d2',
+  flowName: 'simpleTask',
+  orgId: '55e4a3bd6be6b45210833fae',
+  formData: [{ name: 'Group', fields: [...] }],
+  selectedDocs: [],
+  selectedAssignees: [],
+  selectedBoxes: [],
+  advFormData: {},
+  advFormSchema: {},
+  status: '',
+  order: 0,
+  title: 'My Task',
+  tags: [],
+  dueDate: '2024-01-15T00:00:00Z'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.endTask(params, session);
 ```
 <a name="TaskAvailable"></a>
 
