@@ -3436,6 +3436,226 @@ class Task {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Save task progress without completing it
+   * @param {object} params - Params to save task
+   * @param {string} params.processId - Process id (_id database)
+   * @param {string} params.taskId - Task id (_id database)
+   * @param {string} params.flowName - Flow name
+   * @param {string} params.orgId - Organization id (_id database)
+   * @param {array} params.formData - Form data to save
+   * @param {array=} params.selectedDocs - Selected documents
+   * @param {array=} params.selectedAssignees - Selected assignees
+   * @param {array=} params.selectedBoxes - Selected boxes
+   * @param {object=} params.advFormData - Advanced form data
+   * @param {object=} params.advFormSchema - Advanced form schema
+   * @param {string=} params.status - Task status (empty string for save)
+   * @param {number=} params.order - Task order
+   * @param {string=} params.title - Task title
+   * @param {array=} params.tags - Task tags
+   * @param {string=} params.dueDate - Due date ISO string
+   * @param {string} session - Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   taskId: '5df7f19618430c89a41a19d2',
+   *   flowName: 'simpleTask',
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   formData: [{ name: 'Group', fields: [...] }],
+   *   selectedDocs: [],
+   *   selectedAssignees: [],
+   *   selectedBoxes: [],
+   *   advFormData: {},
+   *   advFormSchema: {},
+   *   status: '',
+   *   order: 0,
+   *   title: 'My Task',
+   *   tags: [],
+   *   dueDate: '2024-01-15T00:00:00Z'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.saveTask(params, session);
+   */
+  async saveTask(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required(), 'Task id (_id database)');
+      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.formData, Joi__default["default"].array().required(), 'Form data to save');
+      Joi__default["default"].assert(params.selectedDocs, Joi__default["default"].array(), 'Selected documents');
+      Joi__default["default"].assert(params.selectedAssignees, Joi__default["default"].array(), 'Selected assignees');
+      Joi__default["default"].assert(params.selectedBoxes, Joi__default["default"].array(), 'Selected boxes');
+      Joi__default["default"].assert(params.advFormData, Joi__default["default"].object(), 'Advanced form data');
+      Joi__default["default"].assert(params.advFormSchema, Joi__default["default"].object(), 'Advanced form schema');
+      Joi__default["default"].assert(params.status, Joi__default["default"].string().allow(''), 'Task status');
+      Joi__default["default"].assert(params.order, Joi__default["default"].number(), 'Task order');
+      Joi__default["default"].assert(params.title, Joi__default["default"].string().allow(''), 'Task title');
+      Joi__default["default"].assert(params.tags, Joi__default["default"].array(), 'Task tags');
+      Joi__default["default"].assert(params.dueDate, Joi__default["default"].string(), 'Due date ISO string');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {
+        processId,
+        taskId,
+        flowName,
+        orgId,
+        formData,
+        selectedDocs = [],
+        selectedAssignees = [],
+        selectedBoxes = [],
+        advFormData = {},
+        advFormSchema = {},
+        status = '',
+        order = 0,
+        title = '',
+        tags = [],
+        dueDate
+      } = params;
+
+      const body = {
+        formData,
+        selectedDocs,
+        selectedAssignees,
+        selectedBoxes,
+        advFormData,
+        advFormSchema,
+        status,
+        order,
+        title,
+        tags
+      };
+      if (dueDate) body.dueDate = dueDate;
+
+      const url = `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`;
+      const apiCall = self._client.put(url, body, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description End/complete a task and advance the workflow
+   * @param {object} params - Params to end task
+   * @param {string} params.processId - Process id (_id database)
+   * @param {string} params.taskId - Task id (_id database)
+   * @param {string} params.flowName - Flow name
+   * @param {string} params.orgId - Organization id (_id database)
+   * @param {array} params.formData - Form data to submit
+   * @param {array=} params.selectedDocs - Selected documents
+   * @param {array=} params.selectedAssignees - Selected assignees
+   * @param {array=} params.selectedBoxes - Selected boxes
+   * @param {object=} params.advFormData - Advanced form data
+   * @param {object=} params.advFormSchema - Advanced form schema
+   * @param {string=} params.status - Task status
+   * @param {number=} params.order - Task order
+   * @param {string=} params.title - Task title
+   * @param {array=} params.tags - Task tags
+   * @param {string=} params.dueDate - Due date ISO string
+   * @param {string} session - Session, token JWT
+   * @return {Promise}
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   taskId: '5df7f19618430c89a41a19d2',
+   *   flowName: 'simpleTask',
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   formData: [{ name: 'Group', fields: [...] }],
+   *   selectedDocs: [],
+   *   selectedAssignees: [],
+   *   selectedBoxes: [],
+   *   advFormData: {},
+   *   advFormSchema: {},
+   *   status: '',
+   *   order: 0,
+   *   title: 'My Task',
+   *   tags: [],
+   *   dueDate: '2024-01-15T00:00:00Z'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.endTask(params, session);
+   */
+  async endTask(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().required(), 'Task id (_id database)');
+      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.formData, Joi__default["default"].array().required(), 'Form data to submit');
+      Joi__default["default"].assert(params.selectedDocs, Joi__default["default"].array(), 'Selected documents');
+      Joi__default["default"].assert(params.selectedAssignees, Joi__default["default"].array(), 'Selected assignees');
+      Joi__default["default"].assert(params.selectedBoxes, Joi__default["default"].array(), 'Selected boxes');
+      Joi__default["default"].assert(params.advFormData, Joi__default["default"].object(), 'Advanced form data');
+      Joi__default["default"].assert(params.advFormSchema, Joi__default["default"].object(), 'Advanced form schema');
+      Joi__default["default"].assert(params.status, Joi__default["default"].string().allow(''), 'Task status');
+      Joi__default["default"].assert(params.order, Joi__default["default"].number(), 'Task order');
+      Joi__default["default"].assert(params.title, Joi__default["default"].string().allow(''), 'Task title');
+      Joi__default["default"].assert(params.tags, Joi__default["default"].array(), 'Task tags');
+      Joi__default["default"].assert(params.dueDate, Joi__default["default"].string(), 'Due date ISO string');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {
+        processId,
+        taskId,
+        flowName,
+        orgId,
+        formData,
+        selectedDocs = [],
+        selectedAssignees = [],
+        selectedBoxes = [],
+        advFormData = {},
+        advFormSchema = {},
+        status = '',
+        order = 0,
+        title = '',
+        tags = [],
+        dueDate
+      } = params;
+
+      const body = {
+        formData,
+        selectedDocs,
+        selectedAssignees,
+        selectedBoxes,
+        advFormData,
+        advFormSchema,
+        status,
+        order,
+        title,
+        tags
+      };
+      if (dueDate) body.dueDate = dueDate;
+
+      const url = `organizations/${orgId}/adhoc/${processId}/endprocess/${taskId}/${flowName}`;
+      const apiCall = self._client.put(url, body, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**
