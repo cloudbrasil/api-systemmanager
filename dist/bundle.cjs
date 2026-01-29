@@ -11481,6 +11481,47 @@ class Help {
     }
   }
 
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Update a schedule associated with a help page.
+   * Allows partial updates (e.g., just the cron expression).
+   * @param {object} params Params for update
+   * @param {string} params.id Schedule id (_id database)
+   * @param {object} params.data Partial update data (e.g., { schedule: { cron: '0 9 * * *' } })
+   * @param {string} session Session, token JWT
+   * @returns {promise<object>} Updated schedule document
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   id: '5dadd01dc4af3941d42f8c5c',
+   *   data: {
+   *     schedule: { cron: '0 9 * * *' }
+   *   }
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.help.updateSchedule(params, session);
+   */
+  async updateSchedule(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to update schedule');
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required(), 'Schedule id (_id database)');
+      Joi__default["default"].assert(params.data, Joi__default["default"].object().required(), 'Data to update');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { id, data } = params;
+      const apiCall = self._client.put(`/help/schedule/${id}`, data, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
 }
 
 /**

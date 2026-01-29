@@ -2330,6 +2330,7 @@ Class for user registration in a user
     * [.getTopics(filter, session)](#Help+getTopics)
     * [.get(params, session)](#Help+get) ⇒ <code>promise</code>
     * [.listExternalUrls(session)](#Help+listExternalUrls) ⇒ <code>promise.&lt;Array&gt;</code>
+    * [.updateSchedule(params, session)](#Help+updateSchedule) ⇒ <code>promise.&lt;object&gt;</code>
 
 <a name="Help+getTopics"></a>
 
@@ -2408,6 +2409,37 @@ const externalUrls = await api.user.help.listExternalUrls(session);
 //     showCreatedBy: false
 //   }
 // ]
+```
+<a name="Help+updateSchedule"></a>
+
+### help.updateSchedule(params, session) ⇒ <code>promise.&lt;object&gt;</code>
+Update a schedule associated with a help page.
+Allows partial updates (e.g., just the cron expression).
+
+**Kind**: instance method of [<code>Help</code>](#Help)  
+**Returns**: <code>promise.&lt;object&gt;</code> - Updated schedule document  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params for update |
+| params.id | <code>string</code> | Schedule id (_id database) |
+| params.data | <code>object</code> | Partial update data (e.g., { schedule: { cron: '0 9 * * *' } }) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  id: '5dadd01dc4af3941d42f8c5c',
+  data: {
+    schedule: { cron: '0 9 * * *' }
+  }
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.help.updateSchedule(params, session);
 ```
 <a name="Users"></a>
 
