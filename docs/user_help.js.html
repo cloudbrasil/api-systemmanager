@@ -200,6 +200,43 @@ class Help {
     }
   }
 
+  /**
+   * @author Myndware &lt;augusto.pissarra@myndware.com>
+   * @description Get list of external URL help pages available for the logged user.
+   * Returns help pages where the user has permission based on their groups or user ID.
+   * @param {string} session Session, token JWT
+   * @returns {promise&lt;Array>} Array of external URL help pages with permissions
+   * @public
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const externalUrls = await api.user.help.listExternalUrls(session);
+   * // Returns:
+   * // [
+   * //   {
+   * //     _id: '...',
+   * //     title: 'Help Page Title',
+   * //     permissions: ['VIEW', 'CREATE_EXTERNAL_URL'],
+   * //     showPoweredBy: true,
+   * //     showCreatedBy: false
+   * //   }
+   * // ]
+   */
+  async listExternalUrls(session) {
+    const self = this;
+
+    try {
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const apiCall = self._client.get('/help/external-urls', self._setHeader(session));
+      return self._returnData(await apiCall, []);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
 }
 
 export default Help;

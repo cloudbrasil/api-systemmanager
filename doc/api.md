@@ -2329,6 +2329,7 @@ Class for user registration in a user
 * [Help](#Help)
     * [.getTopics(filter, session)](#Help+getTopics)
     * [.get(params, session)](#Help+get) ⇒ <code>promise</code>
+    * [.listExternalUrls(session)](#Help+listExternalUrls) ⇒ <code>promise.&lt;Array&gt;</code>
 
 <a name="Help+getTopics"></a>
 
@@ -2375,6 +2376,38 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.help.get(params, session);
+```
+<a name="Help+listExternalUrls"></a>
+
+### help.listExternalUrls(session) ⇒ <code>promise.&lt;Array&gt;</code>
+Get list of external URL help pages available for the logged user.
+Returns help pages where the user has permission based on their groups or user ID.
+
+**Kind**: instance method of [<code>Help</code>](#Help)  
+**Returns**: <code>promise.&lt;Array&gt;</code> - Array of external URL help pages with permissions  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const externalUrls = await api.user.help.listExternalUrls(session);
+// Returns:
+// [
+//   {
+//     _id: '...',
+//     title: 'Help Page Title',
+//     permissions: ['VIEW', 'CREATE_EXTERNAL_URL'],
+//     showPoweredBy: true,
+//     showCreatedBy: false
+//   }
+// ]
 ```
 <a name="Users"></a>
 
