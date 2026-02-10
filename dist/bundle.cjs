@@ -13883,6 +13883,220 @@ class AdminLists {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Filter organization lists by name
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {array} [params.names=[]] Array of list names to filter (empty = all)
+   * @param {string} session JWT session token
+   * @return {Promise<array>} Array of matching org lists sorted by name
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { orgId: '5edd11c46b6ce9729c2c297c', names: ['Tags', 'Categorias'] };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const lists = await api.admin.list.filterByName(params, session);
+   */
+  async filterByName(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const { orgId, names = [] } = params;
+      const payload = { names };
+
+      const apiCall = self._client.post(
+        `/admin/organizations/${orgId}/orgtags/filter`,
+        payload,
+        self._setHeader(session)
+      );
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Create a new organization list
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {string} params.name List name (required)
+   * @param {array} [params.list=[]] Initial list items
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Created list document
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { orgId: '5edd11c46b6ce9729c2c297c', name: 'My List', list: [] };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const list = await api.admin.list.create(params, session);
+   */
+  async create(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.name, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const { orgId, name, list = [] } = params;
+      const payload = { orgId, name, list };
+
+      const apiCall = self._client.put(
+        `/admin/organizations/${orgId}/orgtags`,
+        payload,
+        self._setHeader(session)
+      );
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Update an organization list
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {string} params.id List ID (required)
+   * @param {object} params.data Fields to update (name, list, etc.)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated list document
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae', data: { name: 'Renamed' } };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const list = await api.admin.list.update(params, session);
+   */
+  async update(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.data, Joi__default["default"].object().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const { orgId, id, data } = params;
+
+      const apiCall = self._client.put(
+        `/admin/organizations/${orgId}/orgtags/${id}`,
+        data,
+        self._setHeader(session)
+      );
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Remove an organization list
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {string} params.id List ID to remove (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Removal confirmation
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae' };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.list.remove(params, session);
+   */
+  async remove(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const { orgId, id } = params;
+
+      const apiCall = self._client.delete(
+        `/admin/organizations/${orgId}/orgtags/${id}`,
+        self._setHeader(session)
+      );
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Update list items of an organization list
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {string} params.id List ID (required)
+   * @param {array} params.list Updated list items array (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated list document
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   id: '55e4a3bd6be6b45210833fae',
+   *   list: [{ _id: '1', value: 'Item 1', filter: '', order: 0 }]
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const list = await api.admin.list.updateListItems(params, session);
+   */
+  async updateListItems(params = {}, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.id, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.list, Joi__default["default"].array().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const { orgId, id, list } = params;
+
+      const apiCall = self._client.put(
+        `/admin/organizations/${orgId}/orgtags/${id}`,
+        { list },
+        self._setHeader(session)
+      );
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**
@@ -14202,6 +14416,46 @@ class AdminUser {
     const self = this;
     self.parent = options.parent;
     self.client = self.parent.dispatch.getClient();
+    self._orgId = null;
+  }
+
+  /**
+   * @description Set the organization ID for org-scoped API calls
+   * @param {string} orgId - Organization ID
+   * @return {AdminUser} this instance for chaining
+   * @public
+   */
+  setOrgId(orgId) {
+    this._orgId = orgId;
+    return this;
+  }
+
+  /**
+   * @description Get the base path for user admin API calls.
+   * When orgId is set, uses org-scoped endpoints.
+   * When orgId is not set, falls back to legacy admin endpoints.
+   * @return {string} base path
+   * @private
+   */
+  _basePath() {
+    if (this._orgId) {
+      return `/organizations/${this._orgId}/adminusers`;
+    }
+    return '/admin/users';
+  }
+
+  /**
+   * @description Get the base path for org-specific operations (groups, orgchart).
+   * When orgId is set, uses org-scoped endpoints.
+   * @param {string} orgId - Organization ID for the operation
+   * @return {string} base path
+   * @private
+   */
+  _orgPath(orgId) {
+    if (this._orgId) {
+      return `/organizations/${orgId}/adminusers`;
+    }
+    return `/admin/organizations/${orgId}`;
   }
 
   /**
@@ -14258,7 +14512,7 @@ class AdminUser {
       Joi__default["default"].assert(userId, Joi__default["default"].string().required());
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-      const apiCall = self.client.get(`/admin/users/${userId}`, self._setHeader(session));
+      const apiCall = self.client.get(`${self._basePath()}/${userId}`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -14329,7 +14583,7 @@ class AdminUser {
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
       const { userId, ...payload } = params;
-      const apiCall = self.client.put(`/admin/users/${userId}/password`, payload, self._setHeader(session));
+      const apiCall = self.client.put(`${self._basePath()}/${userId}/password`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -14359,7 +14613,7 @@ class AdminUser {
       Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
       const payload = { email };
-      const apiCall = self.client.post(`/admin/users/email/exist`, payload, self._setHeader(session));
+      const apiCall = self.client.post(`${self._basePath()}/email/exist`, payload, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -14391,7 +14645,84 @@ class AdminUser {
       Joi__default["default"].assert(payload, Joi__default["default"].object().required(), 'Payload to update');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session user admin');
 
-      const apiCall = self.client.put(`/admin/users/${userId}`, payload, self._setHeader(session));
+      const apiCall = self.client.put(`${self._basePath()}/${userId}`, payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Create a new user
+   * @param {object} payload User data to create
+   * @param {string} payload.name Full name (required)
+   * @param {string} payload.username Username (required)
+   * @param {string} payload.email Email (required)
+   * @param {string} payload.orgId Primary organization ID (required)
+   * @param {array} [payload.orgIds] Organization IDs
+   * @param {array} [payload.role=[2]] Security roles
+   * @param {string} [payload.password] Initial password
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Created user document
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const payload = {
+   *   name: 'Maria Silva',
+   *   username: 'maria.silva',
+   *   email: 'maria@example.com',
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   role: [2]
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.user.create(payload, session);
+   */
+  async create(payload, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(payload, Joi__default["default"].object().required(), 'User data to create');
+      Joi__default["default"].assert(payload.name, Joi__default["default"].string().required(), 'Full name');
+      Joi__default["default"].assert(payload.username, Joi__default["default"].string().required(), 'Username');
+      Joi__default["default"].assert(payload.email, Joi__default["default"].string().email().required(), 'Email');
+      Joi__default["default"].assert(payload.orgId, Joi__default["default"].string().required(), 'Primary organization ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.put(self._basePath(), payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Remove a user
+   * @param {string} userId User ID to remove (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Removal confirmation
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const userId = '55e4a3bd6be6b45210833fae';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.user.remove(userId, session);
+   */
+  async remove(userId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.delete(`${self._basePath()}/${userId}`, self._setHeader(session));
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
@@ -14419,7 +14750,7 @@ class AdminUser {
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session user admin');
 
       const payload = { email };
-      const apiCall = self.client.post('/admin/users/change/password', payload, self._setHeader(session));
+      const apiCall = self.client.post(`${self._basePath()}/change/password`, payload, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -14452,7 +14783,7 @@ class AdminUser {
       Joi__default["default"].assert(payload.newPassword, Joi__default["default"].string().required(), 'New password');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session user admin');
 
-      const apiCall = self.client.put('/admin/users/change/password', payload, self._setHeader(session));
+      const apiCall = self.client.put(`${self._basePath()}/change/password`, payload, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -14500,16 +14831,302 @@ class AdminUser {
         page = 1,
         perPage = 200,
         project = PROJECTION_DEFAULT,
-        sort = SORT_DEFAULT
+        sort = SORT_DEFAULT,
+        filter = {}
       } = params;
 
-      const payloadToSend = {$project: project, sort};
+      const payloadToSend = {$project: project, sort, ...filter};
 
-      const apiCall = self._client
-          .post(`/admin/users?page=${page}&perPage=${perPage}`, payloadToSend, self._setHeader(session));
+      const apiCall = self.client
+          .post(`${self._basePath()}?page=${page}&perPage=${perPage}`, payloadToSend, self._setHeader(session));
 
       return self._returnData(await apiCall);
 
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Block a user (prevent login)
+   * @param {string} userId User ID to block (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated user
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const userId = '55e4a3bd6be6b45210833fae';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.user.block(userId, session);
+   */
+  async block(userId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.put(`${self._basePath()}/${userId}/block`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Unblock a user (allow login)
+   * @param {string} userId User ID to unblock (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated user
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const userId = '55e4a3bd6be6b45210833fae';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.user.unblock(userId, session);
+   */
+  async unblock(userId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.put(`${self._basePath()}/${userId}/unblock`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Block email notifications for a user
+   * @param {string} userId User ID (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated user
+   * @public
+   * @async
+   */
+  async blockEmail(userId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.put(`${self._basePath()}/${userId}/blockemail`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Unblock email notifications for a user
+   * @param {string} userId User ID (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated user
+   * @public
+   * @async
+   */
+  async unblockEmail(userId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.put(`${self._basePath()}/${userId}/unblockemail`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Update user type classification
+   * @param {object} params Parameters
+   * @param {string} params.userId User ID (required)
+   * @param {string} params.userType New user type (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated user
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { userId: '55e4a3bd6be6b45210833fae', userType: 'USER' };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.user.updateUserType(params, session);
+   */
+  async updateUserType(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Parameters');
+      Joi__default["default"].assert(params.userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(params.userType, Joi__default["default"].string().required(), 'User type');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const { userId, userType } = params;
+      const apiCall = self.client.put(`${self._basePath()}/${userId}/type/${userType}`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get organization groups with their permissions
+   * @param {string} orgId Organization ID (required)
+   * @param {string} session JWT session token
+   * @return {Promise<array>} Array of groups with permissions
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const orgId = '5edd11c46b6ce9729c2c297c';
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const groups = await api.admin.user.getGroupsPermissions(orgId, session);
+   */
+  async getGroupsPermissions(orgId, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(orgId, Joi__default["default"].string().required(), 'Organization ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.get(
+        `${self._orgPath(orgId)}/groups/permissions`,
+        self._setHeader(session)
+      );
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Update user's group memberships in an organization
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {string} params.userId User ID (required)
+   * @param {array} params.groups Array of group IDs (required)
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Updated groups
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   userId: '55e4a3bd6be6b45210833fae',
+   *   groups: ['groupId1', 'groupId2']
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.admin.user.updateUserGroups(params, session);
+   */
+  async updateUserGroups(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Parameters');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization ID');
+      Joi__default["default"].assert(params.userId, Joi__default["default"].string().required(), 'User ID');
+      Joi__default["default"].assert(params.groups, Joi__default["default"].array().required(), 'Group IDs');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const { orgId, userId, groups } = params;
+      const apiCall = self.client.put(
+        `${self._orgPath(orgId)}/groups/${userId}`,
+        { groups },
+        self._setHeader(session)
+      );
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get organizations the admin user can manage
+   * @param {string} session JWT session token
+   * @return {Promise<array>} Array of organizations
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const orgs = await api.admin.user.getOrganizations(session);
+   */
+  async getOrganizations(session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const apiCall = self.client.get(`${self._basePath()}/organizations`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get users belonging to an organization
+   * @param {object} params Parameters
+   * @param {string} params.orgId Organization ID (required)
+   * @param {array} [params.userIds] Optional array of user IDs to filter
+   * @param {string} session JWT session token
+   * @return {Promise<array>} Array of users with id, name, email, title
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = { orgId: '5edd11c46b6ce9729c2c297c' };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const users = await api.admin.user.getOrgUsers(params, session);
+   */
+  async getOrgUsers(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Parameters');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization ID');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      const { orgId, userIds } = params;
+      let url = this._orgId ? `${self._orgPath(orgId)}/orgusers` : `/admin/organizations/${orgId}/orgusers`;
+      if (userIds && userIds.length > 0) {
+        url += `?userIds=${JSON.stringify(userIds)}`;
+      }
+
+      const apiCall = self.client.get(url, self._setHeader(session));
+      return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
     }

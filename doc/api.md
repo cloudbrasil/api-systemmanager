@@ -478,6 +478,11 @@ Admin Class for lists, permission admin
 * [AdminLists](#AdminLists)
     * [.findById(params, session)](#AdminLists+findById) ⇒ <code>Promise</code>
     * [.find(params, session)](#AdminLists+find) ⇒ <code>Promise</code>
+    * [.filterByName(params, session)](#AdminLists+filterByName) ⇒ <code>Promise.&lt;array&gt;</code>
+    * [.create(params, session)](#AdminLists+create) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.update(params, session)](#AdminLists+update) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.remove(params, session)](#AdminLists+remove) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.updateListItems(params, session)](#AdminLists+updateListItems) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="AdminLists+findById"></a>
 
@@ -532,6 +537,138 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.list.find(params, session);
+```
+<a name="AdminLists+filterByName"></a>
+
+### adminLists.filterByName(params, session) ⇒ <code>Promise.&lt;array&gt;</code>
+Filter organization lists by name
+
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - Array of matching org lists sorted by name  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Parameters |
+| params.orgId | <code>string</code> |  | Organization ID (required) |
+| [params.names] | <code>array</code> | <code>[]</code> | Array of list names to filter (empty = all) |
+| session | <code>string</code> |  | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { orgId: '5edd11c46b6ce9729c2c297c', names: ['Tags', 'Categorias'] };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const lists = await api.admin.list.filterByName(params, session);
+```
+<a name="AdminLists+create"></a>
+
+### adminLists.create(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Create a new organization list
+
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Created list document  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Parameters |
+| params.orgId | <code>string</code> |  | Organization ID (required) |
+| params.name | <code>string</code> |  | List name (required) |
+| [params.list] | <code>array</code> | <code>[]</code> | Initial list items |
+| session | <code>string</code> |  | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { orgId: '5edd11c46b6ce9729c2c297c', name: 'My List', list: [] };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const list = await api.admin.list.create(params, session);
+```
+<a name="AdminLists+update"></a>
+
+### adminLists.update(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Update an organization list
+
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated list document  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.orgId | <code>string</code> | Organization ID (required) |
+| params.id | <code>string</code> | List ID (required) |
+| params.data | <code>object</code> | Fields to update (name, list, etc.) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae', data: { name: 'Renamed' } };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const list = await api.admin.list.update(params, session);
+```
+<a name="AdminLists+remove"></a>
+
+### adminLists.remove(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Remove an organization list
+
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Removal confirmation  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.orgId | <code>string</code> | Organization ID (required) |
+| params.id | <code>string</code> | List ID to remove (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { orgId: '5edd11c46b6ce9729c2c297c', id: '55e4a3bd6be6b45210833fae' };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.list.remove(params, session);
+```
+<a name="AdminLists+updateListItems"></a>
+
+### adminLists.updateListItems(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Update list items of an organization list
+
+**Kind**: instance method of [<code>AdminLists</code>](#AdminLists)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated list document  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.orgId | <code>string</code> | Organization ID (required) |
+| params.id | <code>string</code> | List ID (required) |
+| params.list | <code>array</code> | Updated list items array (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5edd11c46b6ce9729c2c297c',
+  id: '55e4a3bd6be6b45210833fae',
+  list: [{ _id: '1', value: 'Item 1', filter: '', order: 0 }]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const list = await api.admin.list.updateListItems(params, session);
 ```
 <a name="AdminMessage"></a>
 
@@ -1140,14 +1277,39 @@ Admin Class for user, permission admin
 **Kind**: global class  
 
 * [AdminUser](#AdminUser)
+    * [.setOrgId(orgId)](#AdminUser+setOrgId) ⇒ [<code>AdminUser</code>](#AdminUser)
     * [.findById(userId, session)](#AdminUser+findById) ⇒ <code>Promise</code>
     * [.findByIds(userIds, apiKey)](#AdminUser+findByIds) ⇒ <code>Promise</code>
     * [.findByIdAndUpdatePassword(params, session)](#AdminUser+findByIdAndUpdatePassword) ⇒ <code>Promise.&lt;unknown&gt;</code>
     * [.emailExist(email, session)](#AdminUser+emailExist)
     * [.findByIdAndUpdate(userId, payload, session)](#AdminUser+findByIdAndUpdate) ⇒ <code>Promise.&lt;\*&gt;</code>
+    * [.create(payload, session)](#AdminUser+create) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.remove(userId, session)](#AdminUser+remove) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getChangePasswordGuid(email)](#AdminUser+getChangePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
     * [.changePasswordGuid(Payload)](#AdminUser+changePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
     * [.getUserList(params, session)](#AdminUser+getUserList) ⇒ <code>Promise</code>
+    * [.block(userId, session)](#AdminUser+block) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.unblock(userId, session)](#AdminUser+unblock) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.blockEmail(userId, session)](#AdminUser+blockEmail) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.unblockEmail(userId, session)](#AdminUser+unblockEmail) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.updateUserType(params, session)](#AdminUser+updateUserType) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getGroupsPermissions(orgId, session)](#AdminUser+getGroupsPermissions) ⇒ <code>Promise.&lt;array&gt;</code>
+    * [.updateUserGroups(params, session)](#AdminUser+updateUserGroups) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.getOrganizations(session)](#AdminUser+getOrganizations) ⇒ <code>Promise.&lt;array&gt;</code>
+    * [.getOrgUsers(params, session)](#AdminUser+getOrgUsers) ⇒ <code>Promise.&lt;array&gt;</code>
+
+<a name="AdminUser+setOrgId"></a>
+
+### adminUser.setOrgId(orgId) ⇒ [<code>AdminUser</code>](#AdminUser)
+Set the organization ID for org-scoped API calls
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: [<code>AdminUser</code>](#AdminUser) - this instance for chaining  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgId | <code>string</code> | Organization ID |
 
 <a name="AdminUser+findById"></a>
 
@@ -1267,6 +1429,65 @@ const payload = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 ```
+<a name="AdminUser+create"></a>
+
+### adminUser.create(payload, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Create a new user
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Created user document  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| payload | <code>object</code> |  | User data to create |
+| payload.name | <code>string</code> |  | Full name (required) |
+| payload.username | <code>string</code> |  | Username (required) |
+| payload.email | <code>string</code> |  | Email (required) |
+| payload.orgId | <code>string</code> |  | Primary organization ID (required) |
+| [payload.orgIds] | <code>array</code> |  | Organization IDs |
+| [payload.role] | <code>array</code> | <code>[2]</code> | Security roles |
+| [payload.password] | <code>string</code> |  | Initial password |
+| session | <code>string</code> |  | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const payload = {
+  name: 'Maria Silva',
+  username: 'maria.silva',
+  email: 'maria@example.com',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  role: [2]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.create(payload, session);
+```
+<a name="AdminUser+remove"></a>
+
+### adminUser.remove(userId, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Remove a user
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Removal confirmation  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | User ID to remove (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.remove(userId, session);
+```
 <a name="AdminUser+getChangePasswordGuid"></a>
 
 ### adminUser.getChangePasswordGuid(email) ⇒ <code>Promise.&lt;\*&gt;</code>
@@ -1335,6 +1556,206 @@ const params - {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.form.getUserList(params, session);
+```
+<a name="AdminUser+block"></a>
+
+### adminUser.block(userId, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Block a user (prevent login)
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated user  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | User ID to block (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.block(userId, session);
+```
+<a name="AdminUser+unblock"></a>
+
+### adminUser.unblock(userId, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Unblock a user (allow login)
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated user  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | User ID to unblock (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.unblock(userId, session);
+```
+<a name="AdminUser+blockEmail"></a>
+
+### adminUser.blockEmail(userId, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Block email notifications for a user
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated user  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | User ID (required) |
+| session | <code>string</code> | JWT session token |
+
+<a name="AdminUser+unblockEmail"></a>
+
+### adminUser.unblockEmail(userId, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Unblock email notifications for a user
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated user  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| userId | <code>string</code> | User ID (required) |
+| session | <code>string</code> | JWT session token |
+
+<a name="AdminUser+updateUserType"></a>
+
+### adminUser.updateUserType(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Update user type classification
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated user  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.userId | <code>string</code> | User ID (required) |
+| params.userType | <code>string</code> | New user type (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { userId: '55e4a3bd6be6b45210833fae', userType: 'USER' };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.updateUserType(params, session);
+```
+<a name="AdminUser+getGroupsPermissions"></a>
+
+### adminUser.getGroupsPermissions(orgId, session) ⇒ <code>Promise.&lt;array&gt;</code>
+Get organization groups with their permissions
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - Array of groups with permissions  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| orgId | <code>string</code> | Organization ID (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '5edd11c46b6ce9729c2c297c';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const groups = await api.admin.user.getGroupsPermissions(orgId, session);
+```
+<a name="AdminUser+updateUserGroups"></a>
+
+### adminUser.updateUserGroups(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Update user's group memberships in an organization
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Updated groups  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.orgId | <code>string</code> | Organization ID (required) |
+| params.userId | <code>string</code> | User ID (required) |
+| params.groups | <code>array</code> | Array of group IDs (required) |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5edd11c46b6ce9729c2c297c',
+  userId: '55e4a3bd6be6b45210833fae',
+  groups: ['groupId1', 'groupId2']
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.updateUserGroups(params, session);
+```
+<a name="AdminUser+getOrganizations"></a>
+
+### adminUser.getOrganizations(session) ⇒ <code>Promise.&lt;array&gt;</code>
+Get organizations the admin user can manage
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - Array of organizations  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const orgs = await api.admin.user.getOrganizations(session);
+```
+<a name="AdminUser+getOrgUsers"></a>
+
+### adminUser.getOrgUsers(params, session) ⇒ <code>Promise.&lt;array&gt;</code>
+Get users belonging to an organization
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;array&gt;</code> - Array of users with id, name, email, title  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.orgId | <code>string</code> | Organization ID (required) |
+| [params.userIds] | <code>array</code> | Optional array of user IDs to filter |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { orgId: '5edd11c46b6ce9729c2c297c' };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const users = await api.admin.user.getOrgUsers(params, session);
 ```
 <a name="GeoLocation"></a>
 

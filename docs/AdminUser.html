@@ -224,6 +224,435 @@
 
 
     
+    <h4 class="name" id="block">
+        <a class="href-link" href="#block">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                block<span class="signature">(userId, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Block a user (prevent login)
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID to block (required)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line465">line 465</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Updated user</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.block(userId, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="blockEmail">
+        <a class="href-link" href="#blockEmail">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                blockEmail<span class="signature">(userId, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Block email notifications for a user
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID (required)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line518">line 518</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Updated user</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
     <h4 class="name" id="changePasswordGuid">
         <a class="href-link" href="#changePasswordGuid">#</a>
         
@@ -393,7 +822,7 @@
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line259">line 259</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line376">line 376</a>
             </span>
         </p>
     
@@ -450,6 +879,516 @@
   newPassword: '123456789'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="create">
+        <a class="href-link" href="#create">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                create<span class="signature">(payload, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Create a new user
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+            <th>Default</th>
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>payload</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">User data to create</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>name</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Full name (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>username</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Username (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>email</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Email (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Primary organization ID (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgIds</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Organization IDs</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>role</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+          [2]
+      
+      </td>
+  
+
+  <td class="description last">Security roles</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>password</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">Initial password</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+      <td class="default">
+      
+      </td>
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line283">line 283</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Created user document</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const payload = {
+  name: 'Maria Silva',
+  username: 'maria.silva',
+  email: 'maria@example.com',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  role: [2]
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.create(payload, session);</code></pre>
     
 
 
@@ -611,7 +1550,7 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line167">line 167</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line207">line 207</a>
             </span>
         </p>
     
@@ -806,7 +1745,7 @@ await api.admin.user.emailExist(email, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line66">line 66</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line106">line 106</a>
             </span>
         </p>
     
@@ -1042,7 +1981,7 @@ await api.admin.user.findById(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line199">line 199</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line239">line 239</a>
             </span>
         </p>
     
@@ -1333,7 +2272,7 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line134">line 134</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line174">line 174</a>
             </span>
         </p>
     
@@ -1555,7 +2494,7 @@ await api.admin.user.findByIdAndUpdatePassword(params, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line97">line 97</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line137">line 137</a>
             </span>
         </p>
     
@@ -1741,7 +2680,7 @@ await api.admin.user.findByIds(userIds, apiKey);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line227">line 227</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line344">line 344</a>
             </span>
         </p>
     
@@ -1797,6 +2736,725 @@ await api.admin.user.findByIds(userIds, apiKey);</code></pre>
   email: 'maria@gmail.com'
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getGroupsPermissions">
+        <a class="href-link" href="#getGroupsPermissions">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                getGroupsPermissions<span class="signature">(orgId, session)</span><span class="type-signature"> &rarr; {Promise.&lt;array>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get organization groups with their permissions
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization ID (required)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line606">line 606</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Array of groups with permissions</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;array></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const orgId = '5edd11c46b6ce9729c2c297c';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const groups = await api.admin.user.getGroupsPermissions(orgId, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getOrgUsers">
+        <a class="href-link" href="#getOrgUsers">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                getOrgUsers<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;array>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get users belonging to an organization
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Organization ID (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>userIds</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Optional array of user IDs to filter</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line713">line 713</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Array of users with id, name, email, title</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;array></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { orgId: '5edd11c46b6ce9729c2c297c' };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const users = await api.admin.user.getOrgUsers(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getOrganizations">
+        <a class="href-link" href="#getOrganizations">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                getOrganizations<span class="signature">(session)</span><span class="type-signature"> &rarr; {Promise.&lt;array>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get organizations the admin user can manage
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line682">line 682</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Array of organizations</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;array></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const orgs = await api.admin.user.getOrganizations(session);</code></pre>
     
 
 
@@ -2087,7 +3745,7 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line298">line 298</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line415">line 415</a>
             </span>
         </p>
     
@@ -2146,6 +3804,1393 @@ const params - {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.form.getUserList(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="remove">
+        <a class="href-link" href="#remove">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                remove<span class="signature">(userId, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Remove a user
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID to remove (required)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line317">line 317</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Removal confirmation</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.remove(userId, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="setOrgId">
+        <a class="href-link" href="#setOrgId">#</a>
+        
+        <span class="code-name">
+            
+                setOrgId<span class="signature">(orgId)</span><span class="type-signature"> &rarr; {<a href="AdminUser.html">AdminUser</a>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Set the organization ID for org-scoped API calls
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization ID</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line27">line 27</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>this instance for chaining</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type"><a href="AdminUser.html">AdminUser</a></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="unblock">
+        <a class="href-link" href="#unblock">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                unblock<span class="signature">(userId, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Unblock a user (allow login)
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID to unblock (required)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line495">line 495</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Updated user</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const userId = '55e4a3bd6be6b45210833fae';
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.unblock(userId, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="unblockEmail">
+        <a class="href-link" href="#unblockEmail">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                unblockEmail<span class="signature">(userId, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Unblock email notifications for a user
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID (required)</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line541">line 541</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Updated user</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateUserGroups">
+        <a class="href-link" href="#updateUserGroups">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                updateUserGroups<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Update user's group memberships in an organization
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization ID (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>groups</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of group IDs (required)</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line646">line 646</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Updated groups</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '5edd11c46b6ce9729c2c297c',
+  userId: '55e4a3bd6be6b45210833fae',
+  groups: ['groupId1', 'groupId2']
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.updateUserGroups(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateUserType">
+        <a class="href-link" href="#updateUserType">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                updateUserType<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Update user type classification
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>userId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">User ID (required)</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>userType</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">New user type (required)</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line573">line 573</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Updated user</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = { userId: '55e4a3bd6be6b45210833fae', userType: 'USER' };
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.admin.user.updateUserType(params, session);</code></pre>
     
 
 
