@@ -5,7 +5,7 @@
   
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title> AdminDocuments</title>
+  <title> AISession</title>
 
   <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script>
   <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
@@ -74,7 +74,7 @@
             <div class="content">
                 <header class="page-title">
                     <p>Class</p>
-                    <h1>AdminDocuments</h1>
+                    <h1>AISession</h1>
                 </header>
                 
 
@@ -85,9 +85,9 @@
 
 <header>
     
-        <h2><span class="attribs"><span class="type-signature"></span></span>AdminDocuments<span class="signature">()</span><span class="type-signature"></span></h2>
+        <h2><span class="attribs"><span class="type-signature"></span></span>AISession<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Admin Class for documents, permission admin</div>
+            <div class="class-description">Class for AI Session management</div>
         
     
 </header>
@@ -106,12 +106,12 @@
 
 
     
-    <h4 class="name" id="AdminDocuments">
-        <a class="href-link" href="#AdminDocuments">#</a>
+    <h4 class="name" id="AISession">
+        <a class="href-link" href="#AISession">#</a>
         
         <span class="code-name">
             
-                new AdminDocuments<span class="signature">()</span><span class="type-signature"></span>
+                new AISession<span class="signature">()</span><span class="type-signature"></span>
             
         </span>
     </h4>
@@ -165,9 +165,9 @@
 
     
         <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
+            <a href="ai_sessions.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line9">line 9</a>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line9">line 9</a>
             </span>
         </p>
     
@@ -224,8 +224,8 @@
 
 
     
-    <h4 class="name" id="advancedSearch">
-        <a class="href-link" href="#advancedSearch">#</a>
+    <h4 class="name" id="addDocuments">
+        <a class="href-link" href="#addDocuments">#</a>
         
             
                 <span class='tag'>async</span>
@@ -233,7 +233,7 @@
         
         <span class="code-name">
             
-                advancedSearch<span class="signature">(params<span class="signature-attributes">non-null</span>, session<span class="signature-attributes">non-null</span>)</span><span class="type-signature"> &rarr; {Promise}</span>
+                addDocuments<span class="signature">(params, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
             
         </span>
     </h4>
@@ -242,7 +242,8 @@
     
     
     <div class="description">
-        Advanced search of document in elastic search ussing system manager
+        Add documents to an existing agent session.
+The agent will handle the documentIds accordingly.
     </div>
     
 
@@ -296,7 +297,7 @@
 
   
 
-  <td class="description last">Params to search document</td>
+  <td class="description last">Parameters</td>
 </tr>
 
   
@@ -304,7 +305,7 @@
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>docId</code></td>
+      <td class="name"><code>sessionId</code></td>
   
 
   <td class="type">
@@ -320,20 +321,20 @@
 
   
 
-  <td class="description last">Document id (_id database)</td>
+  <td class="description last">The session ID</td>
 </tr>
 
   
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>query</code></td>
+      <td class="name"><code>documentIds</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">object</code>
+<code class="param-type">array.&lt;string></code>
 
 
   
@@ -343,7 +344,7 @@
 
   
 
-  <td class="description last">Query to search in elastic search</td>
+  <td class="description last">Array of document IDs to add</td>
 </tr>
 
   
@@ -354,7 +355,7 @@
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>session</code></td>
+      <td class="name"><code>authorization</code></td>
   
 
   <td class="type">
@@ -370,7 +371,7 @@
 
   
 
-  <td class="description last">Session, token JWT</td>
+  <td class="description last">Authorization token</td>
 </tr>
 
 
@@ -423,9 +424,9 @@
 
     
         <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
+            <a href="ai_sessions.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line90">line 90</a>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line270">line 270</a>
             </span>
         </p>
     
@@ -456,11 +457,13 @@
 
 <div class="columns">
     
+    <div class='param-desc column is-7'>data The result from the agent</div>
+    
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">Promise</code>
+<code class="param-type">Promise.&lt;object></code>
 
 
     </div>
@@ -479,301 +482,12 @@
     
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
+const authorization = '...';
 const params = {
-  docId: '5edd11c46b6ce9729c2c297c',
-  query: {
-     "query": {
-       "bool": {
-         "minimum_should_match": 1,
-         "should": [
-           {
-             "match": {
-               "locationText.keyword": {
-                 "query": "sao pau"
-               }
-             }
-           },
-           {
-             "wildcard": {
-               "locationText.normalized": "*sao pau*"
-             }
-           }
-         ]
-       }
-     }
-   }
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.document.advancedSearch(params, session);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="findById">
-        <a class="href-link" href="#findById">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                findById<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Get document by id
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to get document by id</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>docId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Document id (_id database)</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>orgId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization id (_id database)</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Session, token JWT</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
-            <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line130">line 130</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise</code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
- docId: '5edd11c46b6ce9729c2c297c',
- orgId: '55e4a3bd6be6b45210833fae'
+  sessionId: 'session-abc-123',
+  documentIds: ['doc-123', 'doc-456']
 };
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-await api.admin.document.findById(params, session);</code></pre>
+const retData = await api.ai.sessions.addDocuments(params, authorization);</code></pre>
     
 
 
@@ -783,8 +497,8 @@ await api.admin.document.findById(params, session);</code></pre>
 
 
     
-    <h4 class="name" id="getContent">
-        <a class="href-link" href="#getContent">#</a>
+    <h4 class="name" id="create">
+        <a class="href-link" href="#create">#</a>
         
             
                 <span class='tag'>async</span>
@@ -792,7 +506,7 @@ await api.admin.document.findById(params, session);</code></pre>
         
         <span class="code-name">
             
-                getContent<span class="signature">(params, apiKey)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|string|string|string|string|number}</span>
+                create<span class="signature">(params, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|string|string}</span>
             
         </span>
     </h4>
@@ -801,7 +515,8 @@ await api.admin.document.findById(params, session);</code></pre>
     
     
     <div class="description">
-        Get the content of a document
+        Create a new agent session.
+Use this to create a session with full metadata before triggering execution.
     </div>
     
 
@@ -825,6 +540,8 @@ await api.admin.document.findById(params, session);</code></pre>
 
             <th>Type</th>
 
+            
+            <th>Attributes</th>
             
 
             
@@ -852,10 +569,18 @@ await api.admin.document.findById(params, session);</code></pre>
   </td>
 
   
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">Params to request signed url</td>
+  <td class="description last">Parameters</td>
 </tr>
 
   
@@ -863,7 +588,7 @@ await api.admin.document.findById(params, session);</code></pre>
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>docId</code></td>
+      <td class="name"><code>agentType</code></td>
   
 
   <td class="type">
@@ -876,33 +601,84 @@ await api.admin.document.findById(params, session);</code></pre>
   </td>
 
   
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">The unique id of the document</td>
+  <td class="description last">The agent type (e.g., 'doc-rlm-ingest')</td>
 </tr>
 
   
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>page</code></td>
+      <td class="name"><code>config</code></td>
   
 
   <td class="type">
   
       
-<code class="param-type">string</code>
+<code class="param-type">object</code>
 
 
   
   </td>
 
   
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">The page, from 0, or 'all' if all pages (the full content)</td>
+  <td class="description last">Agent configuration options</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>metadata</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Session metadata (documentId, pipelineVariant, analysisMode, etc.)</td>
 </tr>
 
   
@@ -913,7 +689,7 @@ await api.admin.document.findById(params, session);</code></pre>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>apiKey</code></td>
+      <td class="name"><code>authorization</code></td>
   
 
   <td class="type">
@@ -926,10 +702,18 @@ await api.admin.document.findById(params, session);</code></pre>
   </td>
 
   
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">Api Key as permission to use this functionality</td>
+  <td class="description last">Authorization token</td>
 </tr>
 
 
@@ -982,9 +766,9 @@ await api.admin.document.findById(params, session);</code></pre>
 
     
         <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
+            <a href="ai_sessions.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line312">line 312</a>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line187">line 187</a>
             </span>
         </p>
     
@@ -1015,7 +799,7 @@ await api.admin.document.findById(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data the document content</div>
+    <div class='param-desc column is-7'>data The created session</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1033,7 +817,7 @@ await api.admin.document.findById(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data._id the _id of the document</div>
+    <div class='param-desc column is-7'>data.sessionId The session ID</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1051,7 +835,338 @@ await api.admin.document.findById(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data.content all the pages or if asked by page, just one page, the one requested</div>
+    <div class='param-desc column is-7'>data.status The session status</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">string</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  agentType: 'doc-rlm-ingest',
+  metadata: {
+    documentId: 'doc-123',
+    documentName: 'Patient Report.pdf',
+    pipelineVariant: 'A',
+    analysisMode: 'full'
+  }
+};
+const retData = await api.ai.sessions.create(params, authorization);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="execute">
+        <a class="href-link" href="#execute">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                execute<span class="signature">(params, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|string|string}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Start execution on an existing agent session.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>sessionId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">The session ID to execute</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>input</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Execution input (documentId, options, etc.)</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>authorization</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Authorization token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="ai_sessions.js.html" class="button">View Source</a>
+            <span>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line230">line 230</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data The execution data</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.executionId The execution ID</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1069,7 +1184,7 @@ await api.admin.document.findById(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data.content.TextOverlay the overlay text if requested</div>
+    <div class='param-desc column is-7'>data.status The execution status</div>
     
     
     <div class='column is-5 has-text-left'>
@@ -1083,17 +1198,252 @@ await api.admin.document.findById(params, session);</code></pre>
 </div>
 
                 
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  sessionId: 'session-abc-123',
+  input: {
+    documentId: 'doc-123',
+    options: { pipelineVariant: 'A', analysisMode: 'full' }
+  }
+};
+const retData = await api.ai.sessions.execute(params, authorization);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="getByDocument">
+        <a class="href-link" href="#getByDocument">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                getByDocument<span class="signature">(params, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|object|object|array.&lt;object>|array.&lt;object>|array.&lt;object>|object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Get full session data by document ID.
+Returns session, execution, activities, pages, triples and summary.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>documentId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The document ID to look up the session for</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>authorization</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Authorization token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="ai_sessions.js.html" class="button">View Source</a>
+            <span>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line77">line 77</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
                     
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data.content.ParsedText the page text content</div>
+    <div class='param-desc column is-7'>data The full session data</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
-<code class="param-type">string</code>
+<code class="param-type">Promise.&lt;object></code>
 
 
     </div>
@@ -1105,103 +1455,816 @@ await api.admin.document.findById(params, session);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data.total the total number of pages</div>
+    <div class='param-desc column is-7'>data.session The session object</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
+<code class="param-type">object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.execution The latest execution or null</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.activities Activity log entries</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">array.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.pages Extracted page objects</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">array.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.triples Ontology triple objects</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">array.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.summary Document summary or null</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">object</code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = { documentId: 'doc-123' };
+const retData = await api.ai.sessions.getByDocument(params, authorization);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="removeDocuments">
+        <a class="href-link" href="#removeDocuments">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                removeDocuments<span class="signature">(params, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Remove documents from an existing agent session.
+The agent will handle the documentIds accordingly.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>sessionId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The session ID</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>documentIds</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;string></code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Array of document IDs to remove</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>authorization</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Authorization token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="ai_sessions.js.html" class="button">View Source</a>
+            <span>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line312">line 312</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data The result from the agent</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  sessionId: 'session-abc-123',
+  documentIds: ['doc-123', 'doc-456']
+};
+const retData = await api.ai.sessions.removeDocuments(params, authorization);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="updateData">
+        <a class="href-link" href="#updateData">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                updateData<span class="signature">(params, authorization)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|array.&lt;object>|object|object}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Update session document data (pages, triples, summary).
+Used by Scarface to push corrections or enrichments for a document.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+            <th>Attributes</th>
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Parameters</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>documentId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">The document ID</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>pages</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;object></code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Page updates</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>pages.pageNumber</code></td>
+  
+
+  <td class="type">
+  
+      
 <code class="param-type">number</code>
 
 
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- page: '0',
- docId: '5dadd01dc4af3941d42f8c5c'
-};
-const apiKey: '...';
-await api.admin.document.getContent(params, apiKey);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="getDocumentData">
-        <a class="href-link" href="#getDocumentData">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                getDocumentData<span class="signature">(params, apiKey)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Get the data of a document
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
   
-      <td class="name"><code>params</code></td>
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">1-based page number</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>pages.markdown</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Updated markdown text</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>pages.entities</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;object></code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Updated entities</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>triples</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">array.&lt;object></code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">New triples to add</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>triples.pageNumber</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Source page number</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>triples.subject</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Subject entity text</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>triples.predicate</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Relationship predicate</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>triples.object</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Object entity text</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>summary</code></td>
   
 
   <td class="type">
@@ -1214,18 +2277,27 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
   </td>
 
   
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">Params to request signed url</td>
+  <td class="description last">Summary field updates</td>
 </tr>
 
-  
   
     
 <tr class="deep-level-1">
   
-      <td class="name"><code>id</code></td>
+      <td class="name"><code>summary.documentName</code></td>
   
 
   <td class="type">
@@ -1238,10 +2310,86 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
   </td>
 
   
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">The unique id of the document</td>
+  <td class="description last">Document name</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>summary.entityCount</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Total entity count</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>summary.tripleCount</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">number</code>
+
+
+  
+  </td>
+
+  
+      <td class="attributes">
+      
+          &lt;optional><br>
+      
+
+      
+
+      
+      </td>
+  
+
+  
+
+  <td class="description last">Total triple count</td>
 </tr>
 
   
@@ -1252,7 +2400,7 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
             
 <tr class="deep-level-0">
   
-      <td class="name"><code>apiKey</code></td>
+      <td class="name"><code>authorization</code></td>
   
 
   <td class="type">
@@ -1265,10 +2413,18 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
   </td>
 
   
+      <td class="attributes">
+      
+
+      
+
+      
+      </td>
+  
 
   
 
-  <td class="description last">Api Key as permission to use this functionality</td>
+  <td class="description last">Authorization token</td>
 </tr>
 
 
@@ -1321,9 +2477,9 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
 
     
         <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
+            <a href="ai_sessions.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line346">line 346</a>
+                <a href="ai_sessions.js.html">ai/sessions.js</a>, <a href="ai_sessions.js.html#line138">line 138</a>
             </span>
         </p>
     
@@ -1354,13 +2510,67 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
 
 <div class="columns">
     
-    <div class='param-desc column is-7'>data the document data</div>
+    <div class='param-desc column is-7'>data The update results</div>
     
     
     <div class='column is-5 has-text-left'>
         <label>Type: </label>
         
 <code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.pages Page update results [{pageNumber, updated}]</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">array.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.triples Triple insert results {added: number}</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">object</code>
+
+
+    </div>
+    
+</div>
+
+                
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>data.summary Applied summary updates</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">object</code>
 
 
     </div>
@@ -1379,1066 +2589,19 @@ await api.admin.document.getContent(params, apiKey);</code></pre>
     
         <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
 const api = new API();
-const params - {
- id: '5dadd01dc4af3941d42f8c5c'
+const authorization = '...';
+const params = {
+  documentId: 'doc-123',
+  pages: [
+    { pageNumber: 1, markdown: '# Updated page content' }
+  ],
+  summary: {
+    documentName: 'Patient Report.pdf',
+    entityCount: 42,
+    tripleCount: 15
+  }
 };
-const apiKey: '...';
-await api.admin.document.getDocumentData(params, apiKey);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="signedUrl">
-        <a class="href-link" href="#signedUrl">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                signedUrl<span class="signature">(params, apiKey)</span><span class="type-signature"> &rarr; {Promise.&lt;object>|string|string|string|string|string}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Request signed url url to put or get
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to request signed url</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>methodType</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Method type HTTP get or put</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>docId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The unique id of the document</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>apiKey</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Api Key as permission to use this functionality</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
-            <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line185">line 185</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc Returned document data with the signed url</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise.&lt;object></code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc.docId Document id</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">string</code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc.name The name of the document, which is the fileName</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">string</code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc.areaId docAreaId of the document</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">string</code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc.type the document mimi type</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">string</code>
-
-
-    </div>
-    
-</div>
-
-                
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc.signedUrl the signed URL to upload</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">string</code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Examples</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- methodType: 'put',
- docId: '5dadd01dc4af3941d42f8c5c'
-};
-const apiKey: '...';
-const { docId, name, areaId, type, signedUrl } = await api.admin.document.signedUrl(params, apiKey);</code></pre>
-    
-
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- methodType: 'get',
- docId: '5dadd01dc4af3941d42f8c5c'
-};
-const apiKey: '...';
-const { signedUrl, imageType } = await api.admin.document.signedUrl(params, apiKey);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="updateAI">
-        <a class="href-link" href="#updateAI">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                updateAI<span class="signature">(params, apiKey)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Update a document content
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to request signed url</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>content</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The content text</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>docId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The unique id of the document</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>searchablePDFURL</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The searchable PDF Url</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>overlay</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The overlay information</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>entities</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">array</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The list of entities extracted from the text</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>language</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The language detected</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>language.name</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The language name detected</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>language.confidence</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The confidence that it is the language</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>apiKey</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Api Key as permission to use this functionality</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
-            <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line268">line 268</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc Returned document data with the signed url</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise.&lt;object></code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- content: 'some text...',
- docId: '5dadd01dc4af3941d42f8c5c'
-};
-const apiKey: '...';
-await api.admin.document.updateContent(params, apiKey);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
-    <h4 class="name" id="updateContent">
-        <a class="href-link" href="#updateContent">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                updateContent<span class="signature">(params, apiKey)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Update a document content
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to request signed url</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>content</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The content text</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>docId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">The unique id of the document</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>apiKey</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Api Key as permission to use this functionality</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="admin_document.js.html" class="button">View Source</a>
-            <span>
-                <a href="admin_document.js.html">admin/document.js</a>, <a href="admin_document.js.html#line222">line 222</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>doc Returned document data with the signed url</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise.&lt;object></code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params - {
- content: 'some text...',
- docId: '5dadd01dc4af3941d42f8c5c'
-};
-const apiKey: '...';
-await api.admin.document.updateContent(params, apiKey);</code></pre>
+const retData = await api.ai.sessions.updateData(params, authorization);</code></pre>
     
 
 

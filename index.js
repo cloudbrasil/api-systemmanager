@@ -9,7 +9,7 @@ import General from './api/general/index.js';
 import User from './api/user/index.js';
 import Admin from './api/admin/index.js';
 import External from './api/external.js';
-import MyndAI from './api/ai.js';
+import MyndAI from './api/ai/index.js';
 
 /**
  * Class API
@@ -68,6 +68,7 @@ class API {
         }
       },
       uri: 'http://localhost:8080',
+      akamaiUri: null,
       attemptsRetry: 3,
       httpStatusToRetry: [401],
       debug: {success: true, error: true}
@@ -83,6 +84,23 @@ class API {
     self.admin = new Admin({parent: self});
     self.external = new External({parent: self});
     self.ai = new MyndAI({parent: self});
+
+    // If akamaiUri was provided in options, configure the Akamai client
+    if (self.options.akamaiUri) {
+      self.dispatch.setAkamaiBaseUrl(self.options.akamaiUri, { headerBuilder: self.options.akamaiHeaderBuilder });
+    }
+  }
+
+  /**
+   * @description Set the Akamai base URL for agent/AI routes.
+   * @param {string} url The Akamai base URL.
+   * @param {object} [options] Optional configuration
+   * @param {function} [options.headerBuilder] Function returning Akamai headers.
+   *   Called at request time — can read live app state (e.g., auth store).
+   * @public
+   */
+  setAkamaiBaseUrl(url, options = {}) {
+    this.dispatch.setAkamaiBaseUrl(url, options);
   }
 }
 

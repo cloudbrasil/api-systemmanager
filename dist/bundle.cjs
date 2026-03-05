@@ -210,6 +210,55 @@ class Dispatch {
   getClient() {
     return this._client;
   }
+
+  /**
+   * @description Create a dedicated Axios client for Akamai routes.
+   * In DEV there is no NGiNX to translate the Authorization JWT into the
+   * x-api-key / x-user-id / x-organization-id headers that Akamai expects.
+   * When a headerBuilder function is supplied, the client adds a request
+   * interceptor that replaces the Authorization header with the x-* headers
+   * returned by the function.
+   * @param {string} url The Akamai base URL (e.g., http://localhost:9008 in DEV).
+   * @param {object} [options] Optional configuration
+   * @param {function} [options.headerBuilder] A function that returns an object
+   *   with the Akamai headers (x-api-key, x-user-id, x-organization-id, x-country).
+   *   Called at request time so it can read live application state (e.g., auth store).
+   * @public
+   */
+  setAkamaiBaseUrl(url, options = {}) {
+    Joi__default["default"].assert(url, Joi__default["default"].string().required());
+
+    const self = this;
+
+    self._akamaiClient = Axios__default["default"].create({
+      baseURL: url,
+      withCredentials: true
+    });
+
+    // When a headerBuilder is provided, add interceptor to replace Authorization with Akamai headers
+    if (typeof options.headerBuilder === 'function') {
+      self._akamaiClient.interceptors.request.use((config) => {
+        const headers = options.headerBuilder();
+        if (headers) {
+          Object.assign(config.headers, headers);
+          // Remove the Authorization header — Akamai doesn't use it
+          delete config.headers.Authorization;
+          delete config.headers.authorization;
+        }
+        return config;
+      });
+    }
+  }
+
+  /**
+   * @description Get the Akamai Axios client. Falls back to the default client
+   * for backward compatibility (e.g., PROD where NGiNX proxies all routes).
+   * @return {AxiosInstance} The Akamai client or default client.
+   * @public
+   */
+  getAkamaiClient() {
+    return this._akamaiClient || this._client;
+  }
 }
 
 /**
@@ -2294,170 +2343,38 @@ class Process {
     }
   }
 
-    /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Method to export status data
-   * @param {object} params Params to export status data
-   * @param {object} params.query Search process query
-   * @param {object} params.orgId Organization id (_id database)
-   * @param {string} session Session, token JWT
-   * @public
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
-   *  orgId: '55e4a3bd6be6b45210833fae',
-   * };
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retSearch = await api.user.process.exportStatusData(params, session);
-   */
-    async exportStatusData(params, session) {
-      const self = this;
-
-      try {
-        Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export status data');
-        Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
-        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
-        Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
-
-        const {query, orgId} = params;
-        const queryString = JSON.stringify(query);
-        const apiCall = self._client
-          .get(`/organizations/${orgId}/process/export/status/data?query=${queryString}`, self._setHeader(session));
-
-        return self._returnData(await apiCall);
-      } catch (ex) {
-        throw ex;
-      }
-    }
-
-    /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Method to export process data
-   * @param {object} params Params to export process data
-   * @param {object} params.query Search process query
-   * @param {object} params.orgId Organization id (_id database)
-   * @param {string} session Session, token JWT
-   * @public
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
-   *  orgId: '55e4a3bd6be6b45210833fae',
-   * };
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retSearch = await api.user.process.exportProcessData(params, session);
-   */
-    async exportProcessData(params, session) {
-      const self = this;
-
-      try {
-        Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export process data');
-        Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
-        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
-        Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
-
-        const {query, orgId} = params;
-        const queryString = JSON.stringify(query);
-        const apiCall = self._client
-          .get(`/organizations/${orgId}/process/export/collect/data?query=${queryString}`, self._setHeader(session));
-
-        return self._returnData(await apiCall);
-      } catch (ex) {
-        throw ex;
-      }
-    }
-
-   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Method to get Process Docs
-   * @param {object} params Params to get process docs
-   * @param {string} params.orgProcessId Organization Process Id
-   * @param {string} params.processId Process Id
-   * @param {string} params.orgId Organization id (_id database)
-   * @param {string} session Session, token JWT
-   * @returns {promise} returned data from the get process docs
-   * @returns {array<object>} Docs returned from process
-   * @public
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *  orgProcessId: '55e4a3bd6be6b45210833fae',
-   *  processId: '55e4a3bd6be6b45210833fae',
-   *  orgId: '55e4a3bd6be6b45210833fae',
-   * };
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const retSearch = await api.user.process.processDocs(params, session);
-   */
-  async processDocs(params, session) {
-    const self = this;
-
-    try {
-      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get process docs');
-      Joi__default["default"].assert(params.orgProcessId, Joi__default["default"].string().required(), 'Organization Process Id');
-      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process Id');
-      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
-      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
-
-      const {orgProcessId, processId, orgId} = params;
-      const apiCall = self._client.get(`/organizations/${orgId}/orgprocess/${orgProcessId}/process/${processId}/documents`, self._setHeader(session));
-      return self._returnData(await apiCall);
-    } catch (ex) {
-      throw ex;
-    }
-  }
-
   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Method to download the process documents
-   * @param {object} params Params to download the process documents
-   * @param {string} params.orgId Organization id (_id database)
-   * @param {string} params.type Document Type
-   * @param {array} params.docIds Documents Ids
-   * @param {string} params.footer Documents Footer
-   * @param {string} session Session, token JWT
-   * @returns {promise} returned data from the search
-   * @public
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *  orgId: '55e4a3bd6be6b45210833fae',
-   *  type: 'Docs',
-   *  docIds: ['55e4a3bd6be6b45210833fae'],
-   *  footer: 'Documento - {page} de {pages}'
-   * };
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const result = await api.user.process.downloadDocs(params, session);
-   */
-  async downloadDocs(params, session) {
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Method to export status data
+  * @param {object} params Params to export status data
+  * @param {object} params.query Search process query
+  * @param {object} params.orgId Organization id (_id database)
+  * @param {string} session Session, token JWT
+  * @public
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+  *  orgId: '55e4a3bd6be6b45210833fae',
+  * };
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * const retSearch = await api.user.process.exportStatusData(params, session);
+  */
+  async exportStatusData(params, session) {
     const self = this;
 
     try {
-      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to download the process documents');
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export status data');
+      Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
-      Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), 'Document Type');
-      Joi__default["default"].assert(params.docIds, Joi__default["default"].array().required(), 'Document Ids');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
-      const {orgId, type, docIds, footer} = params;
-      const data = {
-        docIds
-      };
-
-      if (footer) {
-        data.footer = footer;
-      }
-
+      const {query, orgId} = params;
+      const queryString = JSON.stringify(query);
       const apiCall = self._client
-        .post(`/organizations/${orgId}/documents/download/${type}`, data, self._setHeader(session));
+        .get(`/organizations/${orgId}/process/export/status/data?query=${queryString}`, self._setHeader(session));
 
       return self._returnData(await apiCall);
     } catch (ex) {
@@ -2466,129 +2383,285 @@ class Process {
   }
 
   /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Get DocType properties of process
-   * @param {object} params Params to get document DocType
-   * @param {string} params.docTypeId Document DocTypeId id (_id database);
-   * @param {string} params.orgId Organization id (_id database);
-   * @param {string} session Session, token JWT
-   * @return {Promise}
-   * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *   docTypeId: '5dadd01dc4af3941d42f8c5c',
-   *   orgId: '5edd11c46b6ce9729c2c297c',
-   * }
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.process.getOrgDocTypes(params, session);
-   */
-    async getOrgDocTypes(params, session) {
-      const self = this;
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Method to export process data
+  * @param {object} params Params to export process data
+  * @param {object} params.query Search process query
+  * @param {object} params.orgId Organization id (_id database)
+  * @param {string} session Session, token JWT
+  * @public
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *  query: {"orgProcessId": {"value":"62c2d1cdfb5455c195d1baa1","oper":"=","type":"string"},"s":[{"historyBegin":{"order":"desc"}}],"i":1,"p":20},
+  *  orgId: '55e4a3bd6be6b45210833fae',
+  * };
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * const retSearch = await api.user.process.exportProcessData(params, session);
+  */
+  async exportProcessData(params, session) {
+    const self = this;
 
-      try {
-        Joi__default["default"].assert(params, Joi__default["default"].object().required());
-        Joi__default["default"].assert(params.docTypeId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to export process data');
+      Joi__default["default"].assert(params.query, Joi__default["default"].object().required(), 'The query for the search');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
-        const {docTypeId, orgId} = params;
-        const apiCall = self._client.get(`/organizations/${orgId}/doctype/${docTypeId}`, self._setHeader(session));
-        return self._returnData(await apiCall);
-      } catch (ex) {
-        throw ex;
-      }
+      const {query, orgId} = params;
+      const queryString = JSON.stringify(query);
+      const apiCall = self._client
+        .get(`/organizations/${orgId}/process/export/collect/data?query=${queryString}`, self._setHeader(session));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Method to get Process Docs
+  * @param {object} params Params to get process docs
+  * @param {string} params.orgProcessId Organization Process Id
+  * @param {string} params.processId Process Id
+  * @param {string} params.orgId Organization id (_id database)
+  * @param {string} session Session, token JWT
+  * @returns {promise} returned data from the get process docs
+  * @returns {array<object>} Docs returned from process
+  * @public
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *  orgProcessId: '55e4a3bd6be6b45210833fae',
+  *  processId: '55e4a3bd6be6b45210833fae',
+  *  orgId: '55e4a3bd6be6b45210833fae',
+  * };
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * const retSearch = await api.user.process.processDocs(params, session);
+  */
+  async processDocs(params, session) {
+  const self = this;
+
+  try {
+    Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get process docs');
+    Joi__default["default"].assert(params.orgProcessId, Joi__default["default"].string().required(), 'Organization Process Id');
+    Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process Id');
+    Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+    Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+    const {orgProcessId, processId, orgId} = params;
+    const apiCall = self._client.get(`/organizations/${orgId}/orgprocess/${orgProcessId}/process/${processId}/documents`, self._setHeader(session));
+    return self._returnData(await apiCall);
+  } catch (ex) {
+    throw ex;
+  }
+  }
+
+  /**
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Method to download the process documents
+  * @param {object} params Params to download the process documents
+  * @param {string} params.orgId Organization id (_id database)
+  * @param {string} params.type Document Type
+  * @param {array} params.docIds Documents Ids
+  * @param {string} params.footer Documents Footer
+  * @param {string} session Session, token JWT
+  * @returns {promise} returned data from the search
+  * @public
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *  orgId: '55e4a3bd6be6b45210833fae',
+  *  type: 'Docs',
+  *  docIds: ['55e4a3bd6be6b45210833fae'],
+  *  footer: 'Documento - {page} de {pages}'
+  * };
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * const result = await api.user.process.downloadDocs(params, session);
+  */
+  async downloadDocs(params, session) {
+  const self = this;
+
+  try {
+    Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to download the process documents');
+    Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+    Joi__default["default"].assert(params.type, Joi__default["default"].string().required(), 'Document Type');
+    Joi__default["default"].assert(params.docIds, Joi__default["default"].array().required(), 'Document Ids');
+    Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+    const {orgId, type, docIds, footer} = params;
+    const data = {
+      docIds
+    };
+
+    if (footer) {
+      data.footer = footer;
     }
 
-    /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Get Org Groups
-   * @param {object} params Params to get Org Groups
-   * @param {string} params.orgId Organization id (_id database);
-   * @param {string} session Session, token JWT
-   * @return {Promise}
-   * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *   orgId: '5edd11c46b6ce9729c2c297c',
-   * }
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.process.getOrgGroups(params, session);
-   */
-    async getOrgGroups(params, session) {
-      const self = this;
+    const apiCall = self._client
+      .post(`/organizations/${orgId}/documents/download/${type}`, data, self._setHeader(session));
 
-      try {
-        Joi__default["default"].assert(params, Joi__default["default"].object().required());
-        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+    return self._returnData(await apiCall);
+  } catch (ex) {
+    throw ex;
+  }
+  }
 
-        const {orgId} = params;
-        const apiCall = self._client.get(`/organizations/${orgId}/groups`, self._setHeader(session));
-        return self._returnData(await apiCall);
-      } catch (ex) {
-        throw ex;
-      }
+  /**
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Get DocType properties of process
+  * @param {object} params Params to get document DocType
+  * @param {string} params.docTypeId Document DocTypeId id (_id database);
+  * @param {string} params.orgId Organization id (_id database);
+  * @param {string} session Session, token JWT
+  * @return {Promise}
+  * @public
+  * @async
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *   docTypeId: '5dadd01dc4af3941d42f8c5c',
+  *   orgId: '5edd11c46b6ce9729c2c297c',
+  * }
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * await api.user.process.getOrgDocTypes(params, session);
+  */
+  async getOrgDocTypes(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.docTypeId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const {docTypeId, orgId} = params;
+      const apiCall = self._client.get(`/organizations/${orgId}/doctype/${docTypeId}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
     }
+  }
 
-    /**
-   * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Get Org Users
-   * @param {object} params Params to get Org Users
-   * @param {string} params.orgId Organization id (_id database);
-   * @param {array} params.userIds UserIds
-   * @param {string} session Session, token JWT
-   * @return {Promise}
-   * @public
-   * @async
-   * @example
-   *
-   * const API = require('@docbrasil/api-systemmanager');
-   * const api = new API();
-   * const params = {
-   *   orgId: '5edd11c46b6ce9729c2c297c',
-   *   userIds: []
-   * }
-   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * await api.user.process.getOrgUsers(params, session);
-   */
-    async getOrgUsers(params, session) {
-      const self = this;
+  /**
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Get Org Groups
+  * @param {object} params Params to get Org Groups
+  * @param {string} params.orgId Organization id (_id database);
+  * @param {string} session Session, token JWT
+  * @return {Promise}
+  * @public
+  * @async
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *   orgId: '5edd11c46b6ce9729c2c297c',
+  * }
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * await api.user.process.getOrgGroups(params, session);
+  */
+  async getOrgGroups(params, session) {
+    const self = this;
 
-      try {
-        Joi__default["default"].assert(params, Joi__default["default"].object().required());
-        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(params.userIds, Joi__default["default"].array().required());
-        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
 
-        const {orgId, userIds} = params;
-        let queryString = '';
-				if(!___default["default"].isEmpty(userIds)) {
-					queryString = `?userIds=${JSON.stringify(userIds)}&{"sort":{"name":1}}`;
-				}
-        const apiCall = self._client.get(`/admin/organizations/${orgId}/orgusers${queryString}`, self._setHeader(session));
-        return self._returnData(await apiCall);
-      } catch (ex) {
-        throw ex;
-      }
+      const {orgId} = params;
+      const apiCall = self._client.get(`/organizations/${orgId}/groups`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
     }
+  }
 
-    /**
+  /**
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Get Org Users
+  * @param {object} params Params to get Org Users
+  * @param {string} params.orgId Organization id (_id database);
+  * @param {array} params.userIds UserIds
+  * @param {string} session Session, token JWT
+  * @return {Promise}
+  * @public
+  * @async
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *   orgId: '5edd11c46b6ce9729c2c297c',
+  *   userIds: []
+  * }
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * await api.user.process.getOrgUsers(params, session);
+  */
+  async getOrgUsers(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.userIds, Joi__default["default"].array().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const {orgId, userIds} = params;
+      let queryString = '';
+              if(!___default["default"].isEmpty(userIds)) {
+                  queryString = `?userIds=${JSON.stringify(userIds)}&{"sort":{"name":1}}`;
+              }
+      const apiCall = self._client.get(`/admin/organizations/${orgId}/orgusers${queryString}`, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+  * @author Myndware <augusto.pissarra@myndware.com>
+  * @description Get step history of a process flow
+  * @param {object} params Params to get step history
+  * @param {string} params.orgId Organization id (_id database);
+  * @param {string} params.processId Process id (_id database);
+  * @param {string} params.flowId Flow id;
+  * @param {string} session Session, token JWT
+  * @return {Promise<Array>} Array of step history entries
+  * @public
+  * @async
+  * @example
+  *
+  * const API = require('@docbrasil/api-systemmanager');
+  * const api = new API();
+  * const params = {
+  *   orgId: '5edd11c46b6ce9729c2c297c',
+  *   processId: '5dadd01dc4af3941d42f8c5c',
+  *   flowId: 'Task_18v1xx7'
+  * }
+  * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+  * const stepHistory = await api.user.process.getStepHistory(params, session);
+  */
+  /**
    * @author Myndware <augusto.pissarra@myndware.com>
-   * @description Get step history of a process flow
-   * @param {object} params Params to get step history
-   * @param {string} params.orgId Organization id (_id database);
+   * @description Restart a finished process from a specific flow step. Resets the process completion state
+   * and triggers re-execution from the specified flow name.
+   * @param {object} params Params to restart the process
    * @param {string} params.processId Process id (_id database);
-   * @param {string} params.flowId Flow id;
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} params.flowName The flow name of the step to restart from;
    * @param {string} session Session, token JWT
-   * @return {Promise<Array>} Array of step history entries
+   * @return {Promise<object>} { response: 'OK' } on success
    * @public
    * @async
    * @example
@@ -2596,30 +2669,134 @@ class Process {
    * const API = require('@docbrasil/api-systemmanager');
    * const api = new API();
    * const params = {
-   *   orgId: '5edd11c46b6ce9729c2c297c',
    *   processId: '5dadd01dc4af3941d42f8c5c',
-   *   flowId: 'Task_18v1xx7'
-   * }
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   flowName: 'Task_1'
+   * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-   * const stepHistory = await api.user.process.getStepHistory(params, session);
+   * await api.user.process.restart(params, session);
    */
-    async getStepHistory(params, session) {
-      const self = this;
+  async restart(params, session) {
+    const self = this;
 
-      try {
-        Joi__default["default"].assert(params, Joi__default["default"].object().required());
-        Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(params.processId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(params.flowId, Joi__default["default"].string().required());
-        Joi__default["default"].assert(session, Joi__default["default"].string().required());
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to restart the process');
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name of the step');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
-        const {orgId, processId, flowId} = params;
-        const apiCall = self._client.get(`/organizations/${orgId}/process/${processId}/flow/${flowId}/history`, self._setHeader(session));
-        return self._returnData(await apiCall, []);
-      } catch (ex) {
-        throw ex;
-      }
+      const {processId, orgId, flowName} = params;
+      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}/restart/${flowName}`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
     }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Re-execute a specific flow step in a running process. Unlike restart, this does not
+   * reset the process completion state. Task creation is deferred to the BPMN engine via RabbitMQ.
+   * @param {object} params Params to re-execute the process step
+   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} params.flowName The flow name of the step to re-execute;
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} { response: 'OK' } on success
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   flowName: 'Task_1'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.process.reexecute(params, session);
+   */
+  async reexecute(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to re-execute the process step');
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name of the step');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {processId, orgId, flowName} = params;
+      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}/reexecute/${flowName}`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Re-execute a specific user task step in a running process, creating a new task
+   * synchronously with optional userId reassignment. For non-group tasks, the task is reassigned
+   * to the current logged-in user. For group tasks, the original assignment is preserved.
+   * @param {object} params Params to re-execute the task
+   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} params.flowName The flow name of the user task step to re-execute;
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} { response: 'OK', taskId } on success
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   processId: '5dadd01dc4af3941d42f8c5c',
+   *   orgId: '5edd11c46b6ce9729c2c297c',
+   *   flowName: 'Task_1'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * const result = await api.user.process.reexecuteTask(params, session);
+   * console.log(result.taskId);
+   */
+  async reexecuteTask(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to re-execute the task');
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name of the user task step');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {processId, orgId, flowName} = params;
+      const apiCall = self._client.put(`/organizations/${orgId}/process/${processId}/reexecutetask/${flowName}`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  async getStepHistory(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required());
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(params.flowId, Joi__default["default"].string().required());
+      Joi__default["default"].assert(session, Joi__default["default"].string().required());
+
+      const {orgId, processId, flowId} = params;
+      const apiCall = self._client.get(`/organizations/${orgId}/process/${processId}/flow/${flowId}/history`, self._setHeader(session));
+      return self._returnData(await apiCall, []);
+    } catch (ex) {
+      throw ex;
+    }
+  }
 }
 
 /**
@@ -16118,10 +16295,10 @@ class External {
 }
 
 /**
- * Class using AI
+ * Class for AI Session management
  * @class
  */
-class MyndAI {
+class AISession {
 
   constructor(options) {
     Joi__default["default"].assert(options, Joi__default["default"].object().required());
@@ -16129,7 +16306,6 @@ class MyndAI {
 
     const self = this;
     self.parent = options.parent;
-    self._client = self.parent.dispatch.getClient();
   }
 
   /**
@@ -16142,9 +16318,343 @@ class MyndAI {
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
       throw Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
-    } else {
-      return ___default["default"].get(retData, 'data', def);
     }
+    const body = ___default["default"].get(retData, 'data', def);
+    // Unwrap Akamai response envelope { statusCode, message, data }
+    if (body && typeof body === 'object' && body.statusCode !== undefined && body.data !== undefined) {
+      return body.data;
+    }
+    return body;
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Set header with new session
+   * @param {string} session Session, token JWT
+   * @return {object} header with new session
+   * @private
+   */
+  _setHeader(authorization) {
+    return {
+      headers: {
+        Authorization: authorization,
+      }
+    };
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get full session data by document ID.
+   * Returns session, execution, activities, pages, triples and summary.
+   * @param {object} params Parameters
+   * @param {string} params.documentId The document ID to look up the session for
+   * @param {string} authorization Authorization token
+   * @return {Promise<object>} data The full session data
+   * @return {object} data.session The session object
+   * @return {object} data.execution The latest execution or null
+   * @return {array<object>} data.activities Activity log entries
+   * @return {array<object>} data.pages Extracted page objects
+   * @return {array<object>} data.triples Ontology triple objects
+   * @return {object} data.summary Document summary or null
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = { documentId: 'doc-123' };
+   * const retData = await api.ai.sessions.getByDocument(params, authorization);
+   */
+  async getByDocument(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.documentId, Joi__default["default"].string().required().error(new Error('documentId is required')));
+
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
+        .get(`/agents/session/document/${params.documentId}`, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Update session document data (pages, triples, summary).
+   * Used by Scarface to push corrections or enrichments for a document.
+   * @param {object} params Parameters
+   * @param {string} params.documentId The document ID
+   * @param {array<object>} [params.pages] Page updates
+   * @param {number} params.pages.pageNumber 1-based page number
+   * @param {string} [params.pages.markdown] Updated markdown text
+   * @param {array<object>} [params.pages.entities] Updated entities
+   * @param {array<object>} [params.triples] New triples to add
+   * @param {number} params.triples.pageNumber Source page number
+   * @param {string} params.triples.subject Subject entity text
+   * @param {string} params.triples.predicate Relationship predicate
+   * @param {string} params.triples.object Object entity text
+   * @param {object} [params.summary] Summary field updates
+   * @param {string} [params.summary.documentName] Document name
+   * @param {number} [params.summary.entityCount] Total entity count
+   * @param {number} [params.summary.tripleCount] Total triple count
+   * @param {string} authorization Authorization token
+   * @return {Promise<object>} data The update results
+   * @return {array<object>} data.pages Page update results [{pageNumber, updated}]
+   * @return {object} data.triples Triple insert results {added: number}
+   * @return {object} data.summary Applied summary updates
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *   documentId: 'doc-123',
+   *   pages: [
+   *     { pageNumber: 1, markdown: '# Updated page content' }
+   *   ],
+   *   summary: {
+   *     documentName: 'Patient Report.pdf',
+   *     entityCount: 42,
+   *     tripleCount: 15
+   *   }
+   * };
+   * const retData = await api.ai.sessions.updateData(params, authorization);
+   */
+  async updateData(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.documentId, Joi__default["default"].string().required().error(new Error('documentId is required')));
+
+      const { documentId, ...payload } = params;
+
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
+        .patch(`/agents/session/document/${documentId}`, payload, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Create a new agent session.
+   * Use this to create a session with full metadata before triggering execution.
+   * @param {object} params Parameters
+   * @param {string} params.agentType The agent type (e.g., 'doc-rlm-ingest')
+   * @param {object} [params.config] Agent configuration options
+   * @param {object} [params.metadata] Session metadata (documentId, pipelineVariant, analysisMode, etc.)
+   * @param {string} authorization Authorization token
+   * @return {Promise<object>} data The created session
+   * @return {string} data.sessionId The session ID
+   * @return {string} data.status The session status
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *   agentType: 'doc-rlm-ingest',
+   *   metadata: {
+   *     documentId: 'doc-123',
+   *     documentName: 'Patient Report.pdf',
+   *     pipelineVariant: 'A',
+   *     analysisMode: 'full'
+   *   }
+   * };
+   * const retData = await api.ai.sessions.create(params, authorization);
+   */
+  async create(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.agentType, Joi__default["default"].string().required().error(new Error('agentType is required')));
+
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
+        .post('/agents/create', params, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Start execution on an existing agent session.
+   * @param {object} params Parameters
+   * @param {string} params.sessionId The session ID to execute
+   * @param {object} [params.input] Execution input (documentId, options, etc.)
+   * @param {string} authorization Authorization token
+   * @return {Promise<object>} data The execution data
+   * @return {string} data.executionId The execution ID
+   * @return {string} data.status The execution status
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *   sessionId: 'session-abc-123',
+   *   input: {
+   *     documentId: 'doc-123',
+   *     options: { pipelineVariant: 'A', analysisMode: 'full' }
+   *   }
+   * };
+   * const retData = await api.ai.sessions.execute(params, authorization);
+   */
+  async execute(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.sessionId, Joi__default["default"].string().required().error(new Error('sessionId is required')));
+
+      const { sessionId, ...payload } = params;
+
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
+        .post(`/agents/${sessionId}/execute`, payload, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Add documents to an existing agent session.
+   * The agent will handle the documentIds accordingly.
+   * @param {object} params Parameters
+   * @param {string} params.sessionId The session ID
+   * @param {array<string>} params.documentIds Array of document IDs to add
+   * @param {string} authorization Authorization token
+   * @return {Promise<object>} data The result from the agent
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *   sessionId: 'session-abc-123',
+   *   documentIds: ['doc-123', 'doc-456']
+   * };
+   * const retData = await api.ai.sessions.addDocuments(params, authorization);
+   */
+  async addDocuments(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.sessionId, Joi__default["default"].string().required().error(new Error('sessionId is required')));
+      Joi__default["default"].assert(params.documentIds, Joi__default["default"].array().items(Joi__default["default"].string()).min(1).required().error(new Error('documentIds is required and must be a non-empty array')));
+
+      const { sessionId, documentIds } = params;
+
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
+        .post(`/agents/${sessionId}/documents/add`, { documentIds }, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Remove documents from an existing agent session.
+   * The agent will handle the documentIds accordingly.
+   * @param {object} params Parameters
+   * @param {string} params.sessionId The session ID
+   * @param {array<string>} params.documentIds Array of document IDs to remove
+   * @param {string} authorization Authorization token
+   * @return {Promise<object>} data The result from the agent
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const authorization = '...';
+   * const params = {
+   *   sessionId: 'session-abc-123',
+   *   documentIds: ['doc-123', 'doc-456']
+   * };
+   * const retData = await api.ai.sessions.removeDocuments(params, authorization);
+   */
+  async removeDocuments(params, authorization) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
+      Joi__default["default"].assert(params.sessionId, Joi__default["default"].string().required().error(new Error('sessionId is required')));
+      Joi__default["default"].assert(params.documentIds, Joi__default["default"].array().items(Joi__default["default"].string()).min(1).required().error(new Error('documentIds is required and must be a non-empty array')));
+
+      const { sessionId, documentIds } = params;
+
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
+        .post(`/agents/${sessionId}/documents/remove`, { documentIds }, self._setHeader(authorization));
+
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+}
+
+/**
+ * Class using AI
+ * @class
+ */
+class MyndAI {
+
+  constructor(options) {
+    Joi__default["default"].assert(options, Joi__default["default"].object().required());
+    Joi__default["default"].assert(options.parent, Joi__default["default"].object().required());
+
+    const self = this;
+    self.parent = options.parent;
+
+    self.sessions = new AISession(options);
+  }
+
+  /**
+   * @author Augusto Pissarra <abernardo.br@gmail.com>
+   * @description Get the return data and check for errors
+   * @param {object} retData Response HTTP
+   * @return {*}
+   * @private
+   */
+  _returnData(retData, def = {}) {
+    if (retData.status !== 200) {
+      throw Boom__default["default"].badRequest(___default["default"].get(retData, 'message', 'No error message reported!'))
+    }
+    const body = ___default["default"].get(retData, 'data', def);
+    // Unwrap Akamai response envelope { statusCode, message, data }
+    if (body && typeof body === 'object' && body.statusCode !== undefined && body.data !== undefined) {
+      return body.data;
+    }
+    return body;
   }
 
   /**
@@ -16204,7 +16714,8 @@ class MyndAI {
       Joi__default["default"].assert(params, Joi__default["default"].object().required().error(new Error('params is required')));
       Joi__default["default"].assert(params.prompt, Joi__default["default"].string().required().error(new Error('Provide a prompt')));
 
-      const apiCall = self._client
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
           .post('/agents/explain', params, self._setHeader(authorization));
 
       return self._returnData(await apiCall);
@@ -16271,6 +16782,7 @@ class API {
         }
       },
       uri: 'http://localhost:8080',
+      akamaiUri: null,
       attemptsRetry: 3,
       httpStatusToRetry: [401],
       debug: {success: true, error: true}
@@ -16286,6 +16798,23 @@ class API {
     self.admin = new Admin({parent: self});
     self.external = new External({parent: self});
     self.ai = new MyndAI({parent: self});
+
+    // If akamaiUri was provided in options, configure the Akamai client
+    if (self.options.akamaiUri) {
+      self.dispatch.setAkamaiBaseUrl(self.options.akamaiUri, { headerBuilder: self.options.akamaiHeaderBuilder });
+    }
+  }
+
+  /**
+   * @description Set the Akamai base URL for agent/AI routes.
+   * @param {string} url The Akamai base URL.
+   * @param {object} [options] Optional configuration
+   * @param {function} [options.headerBuilder] Function returning Akamai headers.
+   *   Called at request time — can read live app state (e.g., auth store).
+   * @public
+   */
+  setAkamaiBaseUrl(url, options = {}) {
+    this.dispatch.setAkamaiBaseUrl(url, options);
   }
 }
 

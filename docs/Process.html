@@ -66,7 +66,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Report.html">Report</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AISession.html">AISession</a></li><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Report.html">Report</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -2801,302 +2801,6 @@ await api.user.process.getProcessProperties(params, session);</code></pre>
 
 
     
-    <h4 class="name" id="getStepHistory">
-        <a class="href-link" href="#getStepHistory">#</a>
-        
-            
-                <span class='tag'>async</span>
-            
-        
-        <span class="code-name">
-            
-                getStepHistory<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;Array>}</span>
-            
-        </span>
-    </h4>
-    
-
-    
-    
-    <div class="description">
-        Get step history of a process flow
-    </div>
-    
-
-
-
-
-
-
-
-
-
-    <h5>Parameters:</h5>
-    
-<div class="table-container">
-    <table class="params table">
-        <thead>
-        <tr>
-            
-            <th>Name</th>
-            
-
-            <th>Type</th>
-
-            
-
-            
-
-            <th class="last">Description</th>
-        </tr>
-        </thead>
-
-        <tbody>
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>params</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">object</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Params to get step history</td>
-</tr>
-
-  
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>orgId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Organization id (_id database);</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>processId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Process id (_id database);</td>
-</tr>
-
-  
-    
-<tr class="deep-level-1">
-  
-      <td class="name"><code>flowId</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Flow id;</td>
-</tr>
-
-  
-
-
-        
-
-            
-<tr class="deep-level-0">
-  
-      <td class="name"><code>session</code></td>
-  
-
-  <td class="type">
-  
-      
-<code class="param-type">string</code>
-
-
-  
-  </td>
-
-  
-
-  
-
-  <td class="description last">Session, token JWT</td>
-</tr>
-
-
-        
-        </tbody>
-    </table>
-</div>
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-author">Author:</dt>
-    <dd class="tag-author">
-        <ul>
-            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-
-    
-    
-
-    
-
-    
-
-    
-        <p class="tag-source">
-            <a href="user_process.js.html" class="button">View Source</a>
-            <span>
-                <a href="user_process.js.html">user/process.js</a>, <a href="user_process.js.html#line580">line 580</a>
-            </span>
-        </p>
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div class='columns method-parameter'>
-        <div class="column is-2"><label>Returns:</label></div>
-        <div class="column is-10">
-            
-                    
-
-<div class="columns">
-    
-    <div class='param-desc column is-7'>Array of step history entries</div>
-    
-    
-    <div class='column is-5 has-text-left'>
-        <label>Type: </label>
-        
-<code class="param-type">Promise.&lt;Array></code>
-
-
-    </div>
-    
-</div>
-
-                
-        </div>
-    </div>
-
-
-
-
-    <h5>Example</h5>
-    
-    
-        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const params = {
-  orgId: '5edd11c46b6ce9729c2c297c',
-  processId: '5dadd01dc4af3941d42f8c5c',
-  flowId: 'Task_18v1xx7'
-}
-const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const stepHistory = await api.user.process.getStepHistory(params, session);</code></pre>
-    
-
-
-</div>
-            
-                <div class="member">
-
-
-    
     <h4 class="name" id="processDocs">
         <a class="href-link" href="#processDocs">#</a>
         
@@ -3411,6 +3115,602 @@ const retSearch = await api.user.process.processDocs(params, session);</code></p
 
 
     
+    <h4 class="name" id="reexecute">
+        <a class="href-link" href="#reexecute">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                reexecute<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Re-execute a specific flow step in a running process. Unlike restart, this does not
+reset the process completion state. Task creation is deferred to the BPMN engine via RabbitMQ.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Params to re-execute the process step</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>processId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Process id (_id database);</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization id (_id database);</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>flowName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The flow name of the step to re-execute;</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_process.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_process.js.html">user/process.js</a>, <a href="user_process.js.html#line646">line 646</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>{ response: 'OK' } on success</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  flowName: 'Task_1'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.reexecute(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="reexecuteTask">
+        <a class="href-link" href="#reexecuteTask">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                reexecuteTask<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Re-execute a specific user task step in a running process, creating a new task
+synchronously with optional userId reassignment. For non-group tasks, the task is reassigned
+to the current logged-in user. For group tasks, the original assignment is preserved.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Params to re-execute the task</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>processId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Process id (_id database);</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization id (_id database);</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>flowName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The flow name of the user task step to re-execute;</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_process.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_process.js.html">user/process.js</a>, <a href="user_process.js.html#line690">line 690</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>{ response: 'OK', taskId } on success</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  flowName: 'Task_1'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.process.reexecuteTask(params, session);
+console.log(result.taskId);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
     <h4 class="name" id="remove">
         <a class="href-link" href="#remove">#</a>
         
@@ -3649,6 +3949,303 @@ const params = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const retSearch = await api.user.process.remove(params, session);</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
+    <h4 class="name" id="restart">
+        <a class="href-link" href="#restart">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                restart<span class="signature">(params, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Restart a finished process from a specific flow step. Resets the process completion state
+and triggers re-execution from the specified flow name.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>params</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">object</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Params to restart the process</td>
+</tr>
+
+  
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>processId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Process id (_id database);</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>orgId</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Organization id (_id database);</td>
+</tr>
+
+  
+    
+<tr class="deep-level-1">
+  
+      <td class="name"><code>flowName</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">The flow name of the step to restart from;</td>
+</tr>
+
+  
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">Session, token JWT</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="user_process.js.html" class="button">View Source</a>
+            <span>
+                <a href="user_process.js.html">user/process.js</a>, <a href="user_process.js.html#line604">line 604</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>{ response: 'OK' } on success</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  flowName: 'Task_1'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.restart(params, session);</code></pre>
     
 
 

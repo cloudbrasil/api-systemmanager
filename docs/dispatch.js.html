@@ -68,7 +68,7 @@
             
             <nav>
                 
-                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Report.html">Report</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
+                    <h2><a href="index.html">Documentation</a></h2><div class="category"><h3>Classes</h3><ul><li><a href="AISession.html">AISession</a></li><li><a href="Admin.html">Admin</a></li><li><a href="AdminDocuments.html">AdminDocuments</a></li><li><a href="AdminForm.html">AdminForm</a></li><li><a href="AdminLists.html">AdminLists</a></li><li><a href="AdminMessage.html">AdminMessage</a></li><li><a href="AdminNotification.html">AdminNotification</a></li><li><a href="AdminPlugin.html">AdminPlugin</a></li><li><a href="AdminPolicy.html">AdminPolicy</a></li><li><a href="AdminProcesses.html">AdminProcesses</a></li><li><a href="AdminTask.html">AdminTask</a></li><li><a href="AdminUser.html">AdminUser</a></li><li><a href="Application.html">Application</a></li><li><a href="Chart.html">Chart</a></li><li><a href="Dashboard.html">Dashboard</a></li><li><a href="Datasource.html">Datasource</a></li><li><a href="Dispatch.html">Dispatch</a></li><li><a href="Documents.html">Documents</a></li><li><a href="External.html">External</a></li><li><a href="GeoLocation.html">GeoLocation</a></li><li><a href="Help.html">Help</a></li><li><a href="Kanban.html">Kanban</a></li><li><a href="Login.html">Login</a></li><li><a href="MyTasks.html">MyTasks</a></li><li><a href="MyndAI.html">MyndAI</a></li><li><a href="Notification.html">Notification</a></li><li><a href="Organization.html">Organization</a></li><li><a href="Page.html">Page</a></li><li><a href="Process.html">Process</a></li><li><a href="Register.html">Register</a></li><li><a href="Report.html">Report</a></li><li><a href="Session.html">Session</a></li><li><a href="Settings.html">Settings</a></li><li><a href="Task.html">Task</a></li><li><a href="TaskAvailable.html">TaskAvailable</a></li><li><a href="Updates.html">Updates</a></li><li><a href="User.html">User</a></li><li><a href="Users.html">Users</a></li></ul></div>
                 
             </nav>
         </div>
@@ -284,6 +284,55 @@ class Dispatch {
    */
   getClient() {
     return this._client;
+  }
+
+  /**
+   * @description Create a dedicated Axios client for Akamai routes.
+   * In DEV there is no NGiNX to translate the Authorization JWT into the
+   * x-api-key / x-user-id / x-organization-id headers that Akamai expects.
+   * When a headerBuilder function is supplied, the client adds a request
+   * interceptor that replaces the Authorization header with the x-* headers
+   * returned by the function.
+   * @param {string} url The Akamai base URL (e.g., http://localhost:9008 in DEV).
+   * @param {object} [options] Optional configuration
+   * @param {function} [options.headerBuilder] A function that returns an object
+   *   with the Akamai headers (x-api-key, x-user-id, x-organization-id, x-country).
+   *   Called at request time so it can read live application state (e.g., auth store).
+   * @public
+   */
+  setAkamaiBaseUrl(url, options = {}) {
+    Joi.assert(url, Joi.string().required());
+
+    const self = this;
+
+    self._akamaiClient = Axios.create({
+      baseURL: url,
+      withCredentials: true
+    });
+
+    // When a headerBuilder is provided, add interceptor to replace Authorization with Akamai headers
+    if (typeof options.headerBuilder === 'function') {
+      self._akamaiClient.interceptors.request.use((config) => {
+        const headers = options.headerBuilder();
+        if (headers) {
+          Object.assign(config.headers, headers);
+          // Remove the Authorization header — Akamai doesn't use it
+          delete config.headers.Authorization;
+          delete config.headers.authorization;
+        }
+        return config;
+      });
+    }
+  }
+
+  /**
+   * @description Get the Akamai Axios client. Falls back to the default client
+   * for backward compatibility (e.g., PROD where NGiNX proxies all routes).
+   * @return {AxiosInstance} The Akamai client or default client.
+   * @public
+   */
+  getAkamaiClient() {
+    return this._akamaiClient || this._client;
   }
 }
 

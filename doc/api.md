@@ -37,6 +37,12 @@
 <dt><a href="#AdminUser">AdminUser</a></dt>
 <dd><p>Admin Class for user, permission admin</p>
 </dd>
+<dt><a href="#MyndAI">MyndAI</a></dt>
+<dd><p>Class using AI</p>
+</dd>
+<dt><a href="#AISession">AISession</a></dt>
+<dd><p>Class for AI Session management</p>
+</dd>
 <dt><a href="#GeoLocation">GeoLocation</a></dt>
 <dd><p>General Class for user, permission organization</p>
 </dd>
@@ -102,9 +108,6 @@
 </dd>
 <dt><a href="#User">User</a></dt>
 <dd><p>Class for user, permission user</p>
-</dd>
-<dt><a href="#MyndAI">MyndAI</a></dt>
-<dd><p>Class using AI</p>
 </dd>
 <dt><a href="#Dispatch">Dispatch</a></dt>
 <dd><p>Api dispatch manager</p>
@@ -1756,6 +1759,262 @@ const api = new API();
 const params = { orgId: '5edd11c46b6ce9729c2c297c' };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const users = await api.admin.user.getOrgUsers(params, session);
+```
+<a name="MyndAI"></a>
+
+## MyndAI
+Class using AI
+
+**Kind**: global class  
+<a name="MyndAI+explain"></a>
+
+### myndAI.explain(params) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>object</code> \| <code>string</code> \| <code>number</code>
+Create new document
+
+**Kind**: instance method of [<code>MyndAI</code>](#MyndAI)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success true|false for success<code>object</code> - data.result the result of the AI call<code>string</code> - data.result.response The actual text response according the prompt<code>number</code> - data.result.tokens The quantity of token used in this request  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>object</code> |  | Object for add new document |
+| params.model | <code>string</code> |  | The model to use for the explain |
+| params.context | <code>object</code> |  | The context to apply to a prompt |
+| params.text | <code>string</code> |  | The text to add to the prompt |
+| params.medias | <code>array.&lt;object&gt;</code> |  | Medias to add (PDF, Image, Video, Audio) |
+| params.medias.type | <code>string</code> |  | can be base64 | document |
+| params.medias.mime | <code>string</code> |  | the mime type of the media |
+| params.medias.base64 | <code>string</code> |  | the base64 of the image (in the case the type is base64) |
+| params.medias.document | <code>string</code> |  | the document path for the image (in the case the type is document) |
+| params.prompt | <code>string</code> |  | The actual prompt with context and text to apply to |
+| params.json | <code>boolean</code> | <code>false</code> | If we return in json format or not |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+ model: 'model-name',
+ context: { name: 'Some name' },
+ text: 'Say hello to the world',
+ medias: ['...'],
+ prompt: 'Write a story about {{name}} with the following theme: {{text}}',
+};
+const retData = await api.ai.explain(params, authorization);
+```
+<a name="AISession"></a>
+
+## AISession
+Class for AI Session management
+
+**Kind**: global class  
+
+* [AISession](#AISession)
+    * [.getByDocument(params, authorization)](#AISession+getByDocument) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>object</code>
+    * [.updateData(params, authorization)](#AISession+updateData) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+    * [.create(params, authorization)](#AISession+create) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code>
+    * [.execute(params, authorization)](#AISession+execute) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code>
+    * [.addDocuments(params, authorization)](#AISession+addDocuments) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.removeDocuments(params, authorization)](#AISession+removeDocuments) ⇒ <code>Promise.&lt;object&gt;</code>
+
+<a name="AISession+getByDocument"></a>
+
+### aiSession.getByDocument(params, authorization) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>object</code>
+Get full session data by document ID.
+Returns session, execution, activities, pages, triples and summary.
+
+**Kind**: instance method of [<code>AISession</code>](#AISession)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The full session data<code>object</code> - data.session The session object<code>object</code> - data.execution The latest execution or null<code>array.&lt;object&gt;</code> - data.activities Activity log entries<code>array.&lt;object&gt;</code> - data.pages Extracted page objects<code>array.&lt;object&gt;</code> - data.triples Ontology triple objects<code>object</code> - data.summary Document summary or null  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.documentId | <code>string</code> | The document ID to look up the session for |
+| authorization | <code>string</code> | Authorization token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = { documentId: 'doc-123' };
+const retData = await api.ai.sessions.getByDocument(params, authorization);
+```
+<a name="AISession+updateData"></a>
+
+### aiSession.updateData(params, authorization) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>array.&lt;object&gt;</code> \| <code>object</code> \| <code>object</code>
+Update session document data (pages, triples, summary).
+Used by Scarface to push corrections or enrichments for a document.
+
+**Kind**: instance method of [<code>AISession</code>](#AISession)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The update results<code>array.&lt;object&gt;</code> - data.pages Page update results [{pageNumber, updated}]<code>object</code> - data.triples Triple insert results {added: number}<code>object</code> - data.summary Applied summary updates  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.documentId | <code>string</code> | The document ID |
+| [params.pages] | <code>array.&lt;object&gt;</code> | Page updates |
+| params.pages.pageNumber | <code>number</code> | 1-based page number |
+| [params.pages.markdown] | <code>string</code> | Updated markdown text |
+| [params.pages.entities] | <code>array.&lt;object&gt;</code> | Updated entities |
+| [params.triples] | <code>array.&lt;object&gt;</code> | New triples to add |
+| params.triples.pageNumber | <code>number</code> | Source page number |
+| params.triples.subject | <code>string</code> | Subject entity text |
+| params.triples.predicate | <code>string</code> | Relationship predicate |
+| params.triples.object | <code>string</code> | Object entity text |
+| [params.summary] | <code>object</code> | Summary field updates |
+| [params.summary.documentName] | <code>string</code> | Document name |
+| [params.summary.entityCount] | <code>number</code> | Total entity count |
+| [params.summary.tripleCount] | <code>number</code> | Total triple count |
+| authorization | <code>string</code> | Authorization token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  documentId: 'doc-123',
+  pages: [
+    { pageNumber: 1, markdown: '# Updated page content' }
+  ],
+  summary: {
+    documentName: 'Patient Report.pdf',
+    entityCount: 42,
+    tripleCount: 15
+  }
+};
+const retData = await api.ai.sessions.updateData(params, authorization);
+```
+<a name="AISession+create"></a>
+
+### aiSession.create(params, authorization) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code>
+Create a new agent session.
+Use this to create a session with full metadata before triggering execution.
+
+**Kind**: instance method of [<code>AISession</code>](#AISession)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The created session<code>string</code> - data.sessionId The session ID<code>string</code> - data.status The session status  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.agentType | <code>string</code> | The agent type (e.g., 'doc-rlm-ingest') |
+| [params.config] | <code>object</code> | Agent configuration options |
+| [params.metadata] | <code>object</code> | Session metadata (documentId, pipelineVariant, analysisMode, etc.) |
+| authorization | <code>string</code> | Authorization token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  agentType: 'doc-rlm-ingest',
+  metadata: {
+    documentId: 'doc-123',
+    documentName: 'Patient Report.pdf',
+    pipelineVariant: 'A',
+    analysisMode: 'full'
+  }
+};
+const retData = await api.ai.sessions.create(params, authorization);
+```
+<a name="AISession+execute"></a>
+
+### aiSession.execute(params, authorization) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>string</code> \| <code>string</code>
+Start execution on an existing agent session.
+
+**Kind**: instance method of [<code>AISession</code>](#AISession)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The execution data<code>string</code> - data.executionId The execution ID<code>string</code> - data.status The execution status  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.sessionId | <code>string</code> | The session ID to execute |
+| [params.input] | <code>object</code> | Execution input (documentId, options, etc.) |
+| authorization | <code>string</code> | Authorization token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  sessionId: 'session-abc-123',
+  input: {
+    documentId: 'doc-123',
+    options: { pipelineVariant: 'A', analysisMode: 'full' }
+  }
+};
+const retData = await api.ai.sessions.execute(params, authorization);
+```
+<a name="AISession+addDocuments"></a>
+
+### aiSession.addDocuments(params, authorization) ⇒ <code>Promise.&lt;object&gt;</code>
+Add documents to an existing agent session.
+The agent will handle the documentIds accordingly.
+
+**Kind**: instance method of [<code>AISession</code>](#AISession)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The result from the agent  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.sessionId | <code>string</code> | The session ID |
+| params.documentIds | <code>array.&lt;string&gt;</code> | Array of document IDs to add |
+| authorization | <code>string</code> | Authorization token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  sessionId: 'session-abc-123',
+  documentIds: ['doc-123', 'doc-456']
+};
+const retData = await api.ai.sessions.addDocuments(params, authorization);
+```
+<a name="AISession+removeDocuments"></a>
+
+### aiSession.removeDocuments(params, authorization) ⇒ <code>Promise.&lt;object&gt;</code>
+Remove documents from an existing agent session.
+The agent will handle the documentIds accordingly.
+
+**Kind**: instance method of [<code>AISession</code>](#AISession)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - data The result from the agent  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Parameters |
+| params.sessionId | <code>string</code> | The session ID |
+| params.documentIds | <code>array.&lt;string&gt;</code> | Array of document IDs to remove |
+| authorization | <code>string</code> | Authorization token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const authorization = '...';
+const params = {
+  sessionId: 'session-abc-123',
+  documentIds: ['doc-123', 'doc-456']
+};
+const retData = await api.ai.sessions.removeDocuments(params, authorization);
 ```
 <a name="GeoLocation"></a>
 
@@ -4046,7 +4305,9 @@ Class for process, permission user
     * [.getOrgDocTypes(params, session)](#Process+getOrgDocTypes) ⇒ <code>Promise</code>
     * [.getOrgGroups(params, session)](#Process+getOrgGroups) ⇒ <code>Promise</code>
     * [.getOrgUsers(params, session)](#Process+getOrgUsers) ⇒ <code>Promise</code>
-    * [.getStepHistory(params, session)](#Process+getStepHistory) ⇒ <code>Promise.&lt;Array&gt;</code>
+    * [.restart(params, session)](#Process+restart) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.reexecute(params, session)](#Process+reexecute) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.reexecuteTask(params, session)](#Process+reexecuteTask) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="Process+start"></a>
 
@@ -4383,22 +4644,23 @@ const params = {
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.process.getOrgUsers(params, session);
 ```
-<a name="Process+getStepHistory"></a>
+<a name="Process+restart"></a>
 
-### process.getStepHistory(params, session) ⇒ <code>Promise.&lt;Array&gt;</code>
-Get step history of a process flow
+### process.restart(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Restart a finished process from a specific flow step. Resets the process completion state
+and triggers re-execution from the specified flow name.
 
 **Kind**: instance method of [<code>Process</code>](#Process)  
-**Returns**: <code>Promise.&lt;Array&gt;</code> - Array of step history entries  
+**Returns**: <code>Promise.&lt;object&gt;</code> - { response: 'OK' } on success  
 **Access**: public  
 **Author**: Myndware <augusto.pissarra@myndware.com>  
 
 | Param | Type | Description |
 | --- | --- | --- |
-| params | <code>object</code> | Params to get step history |
-| params.orgId | <code>string</code> | Organization id (_id database); |
+| params | <code>object</code> | Params to restart the process |
 | params.processId | <code>string</code> | Process id (_id database); |
-| params.flowId | <code>string</code> | Flow id; |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| params.flowName | <code>string</code> | The flow name of the step to restart from; |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  
@@ -4406,12 +4668,76 @@ Get step history of a process flow
 const API = require('@docbrasil/api-systemmanager');
 const api = new API();
 const params = {
-  orgId: '5edd11c46b6ce9729c2c297c',
   processId: '5dadd01dc4af3941d42f8c5c',
-  flowId: 'Task_18v1xx7'
-}
+  orgId: '5edd11c46b6ce9729c2c297c',
+  flowName: 'Task_1'
+};
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
-const stepHistory = await api.user.process.getStepHistory(params, session);
+await api.user.process.restart(params, session);
+```
+<a name="Process+reexecute"></a>
+
+### process.reexecute(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Re-execute a specific flow step in a running process. Unlike restart, this does not
+reset the process completion state. Task creation is deferred to the BPMN engine via RabbitMQ.
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - { response: 'OK' } on success  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to re-execute the process step |
+| params.processId | <code>string</code> | Process id (_id database); |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| params.flowName | <code>string</code> | The flow name of the step to re-execute; |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  flowName: 'Task_1'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.process.reexecute(params, session);
+```
+<a name="Process+reexecuteTask"></a>
+
+### process.reexecuteTask(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Re-execute a specific user task step in a running process, creating a new task
+synchronously with optional userId reassignment. For non-group tasks, the task is reassigned
+to the current logged-in user. For group tasks, the original assignment is preserved.
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - { response: 'OK', taskId } on success  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to re-execute the task |
+| params.processId | <code>string</code> | Process id (_id database); |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| params.flowName | <code>string</code> | The flow name of the user task step to re-execute; |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  processId: '5dadd01dc4af3941d42f8c5c',
+  orgId: '5edd11c46b6ce9729c2c297c',
+  flowName: 'Task_1'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+const result = await api.user.process.reexecuteTask(params, session);
+console.log(result.taskId);
 ```
 <a name="Register"></a>
 
@@ -5193,50 +5519,6 @@ const orgIds: ['616eccaaa9360a05293b10fe'];
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const jwtToken = await api.user.getChartTags(orgIds, session);
 ```
-<a name="MyndAI"></a>
-
-## MyndAI
-Class using AI
-
-**Kind**: global class  
-<a name="MyndAI+explain"></a>
-
-### myndAI.explain(params) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>boolean</code> \| <code>object</code> \| <code>string</code> \| <code>number</code>
-Create new document
-
-**Kind**: instance method of [<code>MyndAI</code>](#MyndAI)  
-**Returns**: <code>Promise.&lt;object&gt;</code> - data<code>boolean</code> - data.success true|false for success<code>object</code> - data.result the result of the AI call<code>string</code> - data.result.response The actual text response according the prompt<code>number</code> - data.result.tokens The quantity of token used in this request  
-**Access**: public  
-**Author**: Myndware <augusto.pissarra@myndware.com>  
-
-| Param | Type | Default | Description |
-| --- | --- | --- | --- |
-| params | <code>object</code> |  | Object for add new document |
-| params.model | <code>string</code> |  | The model to use for the explain |
-| params.context | <code>object</code> |  | The context to apply to a prompt |
-| params.text | <code>string</code> |  | The text to add to the prompt |
-| params.medias | <code>array.&lt;object&gt;</code> |  | Medias to add (PDF, Image, Video, Audio) |
-| params.medias.type | <code>string</code> |  | can be base64 | document |
-| params.medias.mime | <code>string</code> |  | the mime type of the media |
-| params.medias.base64 | <code>string</code> |  | the base64 of the image (in the case the type is base64) |
-| params.medias.document | <code>string</code> |  | the document path for the image (in the case the type is document) |
-| params.prompt | <code>string</code> |  | The actual prompt with context and text to apply to |
-| params.json | <code>boolean</code> | <code>false</code> | If we return in json format or not |
-
-**Example**  
-```js
-const API = require('@docbrasil/api-systemmanager');
-const api = new API();
-const authorization = '...';
-const params = {
- model: 'model-name',
- context: { name: 'Some name' },
- text: 'Say hello to the world',
- medias: ['...'],
- prompt: 'Write a story about {{name}} with the following theme: {{text}}',
-};
-const retData = await api.ai.explain(params, authorization);
-```
 <a name="Dispatch"></a>
 
 ## Dispatch
@@ -5248,6 +5530,8 @@ Api dispatch manager
     * [.errorOffline()](#Dispatch+errorOffline)
     * [.getContext(url, [session])](#Dispatch+getContext) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getClient()](#Dispatch+getClient) ⇒ <code>AxiosInstance</code>
+    * [.setAkamaiBaseUrl(url, [options])](#Dispatch+setAkamaiBaseUrl)
+    * [.getAkamaiClient()](#Dispatch+getAkamaiClient) ⇒ <code>AxiosInstance</code>
 
 <a name="Dispatch+errorOffline"></a>
 
@@ -5276,6 +5560,34 @@ Get the Axios client.
 
 **Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
 **Returns**: <code>AxiosInstance</code> - The Axios client.  
+**Access**: public  
+<a name="Dispatch+setAkamaiBaseUrl"></a>
+
+### dispatch.setAkamaiBaseUrl(url, [options])
+Create a dedicated Axios client for Akamai routes.
+In DEV there is no NGiNX to translate the Authorization JWT into the
+x-api-key / x-user-id / x-organization-id headers that Akamai expects.
+When a headerBuilder function is supplied, the client adds a request
+interceptor that replaces the Authorization header with the x-* headers
+returned by the function.
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Access**: public  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| url | <code>string</code> | The Akamai base URL (e.g., http://localhost:9008 in DEV). |
+| [options] | <code>object</code> | Optional configuration |
+| [options.headerBuilder] | <code>function</code> | A function that returns an object   with the Akamai headers (x-api-key, x-user-id, x-organization-id, x-country).   Called at request time so it can read live application state (e.g., auth store). |
+
+<a name="Dispatch+getAkamaiClient"></a>
+
+### dispatch.getAkamaiClient() ⇒ <code>AxiosInstance</code>
+Get the Akamai Axios client. Falls back to the default client
+for backward compatibility (e.g., PROD where NGiNX proxies all routes).
+
+**Kind**: instance method of [<code>Dispatch</code>](#Dispatch)  
+**Returns**: <code>AxiosInstance</code> - The Akamai client or default client.  
 **Access**: public  
 <a name="External"></a>
 

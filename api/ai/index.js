@@ -1,6 +1,7 @@
 import _ from 'lodash';
 import Boom from '@hapi/boom';
 import Joi from 'joi';
+import AISession from './sessions.js';
 
 /**
  * Class using AI
@@ -14,7 +15,8 @@ class MyndAI {
 
     const self = this;
     self.parent = options.parent;
-    self._client = self.parent.dispatch.getClient();
+
+    self.sessions = new AISession(options);
   }
 
   /**
@@ -27,9 +29,13 @@ class MyndAI {
   _returnData(retData, def = {}) {
     if (retData.status !== 200) {
       throw Boom.badRequest(_.get(retData, 'message', 'No error message reported!'))
-    } else {
-      return _.get(retData, 'data', def);
     }
+    const body = _.get(retData, 'data', def);
+    // Unwrap Akamai response envelope { statusCode, message, data }
+    if (body && typeof body === 'object' && body.statusCode !== undefined && body.data !== undefined) {
+      return body.data;
+    }
+    return body;
   }
 
   /**
@@ -89,7 +95,8 @@ class MyndAI {
       Joi.assert(params, Joi.object().required().error(new Error('params is required')));
       Joi.assert(params.prompt, Joi.string().required().error(new Error('Provide a prompt')));
 
-      const apiCall = self._client
+      const client = self.parent.dispatch.getAkamaiClient();
+      const apiCall = client
           .post('/agents/explain', params, self._setHeader(authorization));
 
       return self._returnData(await apiCall);

@@ -198,6 +198,55 @@ class Dispatch {
   getClient() {
     return this._client;
   }
+
+  /**
+   * @description Create a dedicated Axios client for Akamai routes.
+   * In DEV there is no NGiNX to translate the Authorization JWT into the
+   * x-api-key / x-user-id / x-organization-id headers that Akamai expects.
+   * When a headerBuilder function is supplied, the client adds a request
+   * interceptor that replaces the Authorization header with the x-* headers
+   * returned by the function.
+   * @param {string} url The Akamai base URL (e.g., http://localhost:9008 in DEV).
+   * @param {object} [options] Optional configuration
+   * @param {function} [options.headerBuilder] A function that returns an object
+   *   with the Akamai headers (x-api-key, x-user-id, x-organization-id, x-country).
+   *   Called at request time so it can read live application state (e.g., auth store).
+   * @public
+   */
+  setAkamaiBaseUrl(url, options = {}) {
+    Joi.assert(url, Joi.string().required());
+
+    const self = this;
+
+    self._akamaiClient = Axios.create({
+      baseURL: url,
+      withCredentials: true
+    });
+
+    // When a headerBuilder is provided, add interceptor to replace Authorization with Akamai headers
+    if (typeof options.headerBuilder === 'function') {
+      self._akamaiClient.interceptors.request.use((config) => {
+        const headers = options.headerBuilder();
+        if (headers) {
+          Object.assign(config.headers, headers);
+          // Remove the Authorization header — Akamai doesn't use it
+          delete config.headers.Authorization;
+          delete config.headers.authorization;
+        }
+        return config;
+      });
+    }
+  }
+
+  /**
+   * @description Get the Akamai Axios client. Falls back to the default client
+   * for backward compatibility (e.g., PROD where NGiNX proxies all routes).
+   * @return {AxiosInstance} The Akamai client or default client.
+   * @public
+   */
+  getAkamaiClient() {
+    return this._akamaiClient || this._client;
+  }
 }
 
 export default Dispatch;
