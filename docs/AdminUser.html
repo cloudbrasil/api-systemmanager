@@ -224,6 +224,271 @@
 
 
     
+    <h4 class="name" id="batchCreate">
+        <a class="href-link" href="#batchCreate">#</a>
+        
+            
+                <span class='tag'>async</span>
+            
+        
+        <span class="code-name">
+            
+                batchCreate<span class="signature">(formData, session)</span><span class="type-signature"> &rarr; {Promise.&lt;object>}</span>
+            
+        </span>
+    </h4>
+    
+
+    
+    
+    <div class="description">
+        Batch-create users from an uploaded Excel (.xlsx) or CSV file.
+
+Uploads the file as multipart/form-data. The server parses it, validates
+headers, de-duplicates emails, admits rows FIFO against the organization's
+user cap, and delegates the actual creation to the existing registration
+chain. Response is a per-row result array (created / existing / skipped).
+
+Status codes:
+  - 200 when at least one row was created or matched an existing user.
+  - 422 (same JSON body shape) when EVERY row was skipped — callers
+    should promote the 422 response body to a completed result, not an
+    error. Axios throws on 422 by default, so catch and inspect
+    `ex.response.data.results`.
+  - 400 for structural failures (invalid_file, missing_columns, empty_file,
+    too_many_rows) — `response.data.code` carries the machine-readable code.
+  - 403 when the caller does not belong to the target organization or lacks
+    user-admin role (code: 'forbidden').
+  - 413 when the uploaded file exceeds 2 MB.
+    </div>
+    
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+<div class="table-container">
+    <table class="params table">
+        <thead>
+        <tr>
+            
+            <th>Name</th>
+            
+
+            <th>Type</th>
+
+            
+
+            
+
+            <th class="last">Description</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>formData</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">FormData</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">A browser FormData instance with a single field
+  named `file` whose value is the .xlsx or .csv File/Blob. Must be
+  FormData so the browser/axios can set the multipart boundary.</td>
+</tr>
+
+
+        
+
+            
+<tr class="deep-level-0">
+  
+      <td class="name"><code>session</code></td>
+  
+
+  <td class="type">
+  
+      
+<code class="param-type">string</code>
+
+
+  
+  </td>
+
+  
+
+  
+
+  <td class="description last">JWT session token</td>
+</tr>
+
+
+        
+        </tbody>
+    </table>
+</div>
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li><a href="mailto:augusto.pissarra@myndware.com">Myndware</a></li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+
+    
+    
+
+    
+
+    
+
+    
+        <p class="tag-source">
+            <a href="admin_user.js.html" class="button">View Source</a>
+            <span>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line363">line 363</a>
+            </span>
+        </p>
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class='columns method-parameter'>
+        <div class="column is-2"><label>Returns:</label></div>
+        <div class="column is-10">
+            
+                    
+
+<div class="columns">
+    
+    <div class='param-desc column is-7'>Batch result:
+  {
+    total: number,
+    created: number,
+    existing: number,
+    skipped: number,
+    results: Array<{
+      row: number,                      // spreadsheet row (1-based, header = 1)
+      email: string,
+      status: 'created' | 'existing' | 'skipped',
+      userId: string | null,
+      message: string | null            // snake_case code, optionally `code:detail`
+    }>
+  }</div>
+    
+    
+    <div class='column is-5 has-text-left'>
+        <label>Type: </label>
+        
+<code class="param-type">Promise.&lt;object></code>
+
+
+    </div>
+    
+</div>
+
+                
+        </div>
+    </div>
+
+
+
+
+    <h5>Example</h5>
+    
+    
+        <pre class="prettyprint"><code>const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const fd = new FormData();
+fd.append('file', fileInput.files[0]);   // .xlsx or .csv
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+// Ensure the client is scoped to the caller's org:
+api.admin.user.setOrgId(myOrgId);
+try {
+  const result = await api.admin.user.batchCreate(fd, session);
+  console.log(`${result.created} created, ${result.skipped} skipped`);
+} catch (ex) {
+  if (ex?.response?.status === 422 &amp;&amp; ex.response.data?.results) {
+    // All-skipped batch — still a valid result to render.
+    console.warn('All rows skipped:', ex.response.data.results);
+  } else {
+    throw ex;
+  }
+}</code></pre>
+    
+
+
+</div>
+            
+                <div class="member">
+
+
+    
     <h4 class="name" id="block">
         <a class="href-link" href="#block">#</a>
         
@@ -376,7 +641,7 @@
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line465">line 465</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line549">line 549</a>
             </span>
         </p>
     
@@ -596,7 +861,7 @@ await api.admin.user.block(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line518">line 518</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line602">line 602</a>
             </span>
         </p>
     
@@ -822,7 +1087,7 @@ await api.admin.user.block(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line376">line 376</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line460">line 460</a>
             </span>
         </p>
     
@@ -2680,7 +2945,7 @@ await api.admin.user.findByIds(userIds, apiKey);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line344">line 344</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line428">line 428</a>
             </span>
         </p>
     
@@ -2897,7 +3162,7 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line606">line 606</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line690">line 690</a>
             </span>
         </p>
     
@@ -3202,7 +3467,7 @@ const groups = await api.admin.user.getGroupsPermissions(orgId, session);</code>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line713">line 713</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line797">line 797</a>
             </span>
         </p>
     
@@ -3397,7 +3662,7 @@ const users = await api.admin.user.getOrgUsers(params, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line682">line 682</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line766">line 766</a>
             </span>
         </p>
     
@@ -3745,7 +4010,7 @@ const orgs = await api.admin.user.getOrganizations(session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line415">line 415</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line499">line 499</a>
             </span>
         </p>
     
@@ -3965,7 +4230,7 @@ await api.user.form.getUserList(params, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line317">line 317</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line401">line 401</a>
             </span>
         </p>
     
@@ -4358,7 +4623,7 @@ await api.admin.user.remove(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line495">line 495</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line579">line 579</a>
             </span>
         </p>
     
@@ -4578,7 +4843,7 @@ await api.admin.user.unblock(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line541">line 541</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line625">line 625</a>
             </span>
         </p>
     
@@ -4859,7 +5124,7 @@ await api.admin.user.unblock(userId, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line646">line 646</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line730">line 730</a>
             </span>
         </p>
     
@@ -5132,7 +5397,7 @@ await api.admin.user.updateUserGroups(params, session);</code></pre>
         <p class="tag-source">
             <a href="admin_user.js.html" class="button">View Source</a>
             <span>
-                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line573">line 573</a>
+                <a href="admin_user.js.html">admin/user.js</a>, <a href="admin_user.js.html#line657">line 657</a>
             </span>
         </p>
     

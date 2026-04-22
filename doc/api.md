@@ -1287,6 +1287,7 @@ Admin Class for user, permission admin
     * [.emailExist(email, session)](#AdminUser+emailExist)
     * [.findByIdAndUpdate(userId, payload, session)](#AdminUser+findByIdAndUpdate) ⇒ <code>Promise.&lt;\*&gt;</code>
     * [.create(payload, session)](#AdminUser+create) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.batchCreate(formData, session)](#AdminUser+batchCreate) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.remove(userId, session)](#AdminUser+remove) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.getChangePasswordGuid(email)](#AdminUser+getChangePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
     * [.changePasswordGuid(Payload)](#AdminUser+changePasswordGuid) ⇒ <code>Promise.&lt;\*&gt;</code>
@@ -1467,6 +1468,72 @@ const payload = {
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.admin.user.create(payload, session);
+```
+<a name="AdminUser+batchCreate"></a>
+
+### adminUser.batchCreate(formData, session) ⇒ <code>Promise.&lt;object&gt;</code>
+Batch-create users from an uploaded Excel (.xlsx) or CSV file.
+
+Uploads the file as multipart/form-data. The server parses it, validates
+headers, de-duplicates emails, admits rows FIFO against the organization's
+user cap, and delegates the actual creation to the existing registration
+chain. Response is a per-row result array (created / existing / skipped).
+
+Status codes:
+  - 200 when at least one row was created or matched an existing user.
+  - 422 (same JSON body shape) when EVERY row was skipped — callers
+    should promote the 422 response body to a completed result, not an
+    error. Axios throws on 422 by default, so catch and inspect
+    `ex.response.data.results`.
+  - 400 for structural failures (invalid_file, missing_columns, empty_file,
+    too_many_rows) — `response.data.code` carries the machine-readable code.
+  - 403 when the caller does not belong to the target organization or lacks
+    user-admin role (code: 'forbidden').
+  - 413 when the uploaded file exceeds 2 MB.
+
+**Kind**: instance method of [<code>AdminUser</code>](#AdminUser)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - Batch result:
+  {
+    total: number,
+    created: number,
+    existing: number,
+    skipped: number,
+    results: Array<{
+      row: number,                      // spreadsheet row (1-based, header = 1)
+      email: string,
+      status: 'created' | 'existing' | 'skipped',
+      userId: string | null,
+      message: string | null            // snake_case code, optionally `code:detail`
+    }>
+  }  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| formData | <code>FormData</code> | A browser FormData instance with a single field   named `file` whose value is the .xlsx or .csv File/Blob. Must be   FormData so the browser/axios can set the multipart boundary. |
+| session | <code>string</code> | JWT session token |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const fd = new FormData();
+fd.append('file', fileInput.files[0]);   // .xlsx or .csv
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+// Ensure the client is scoped to the caller's org:
+api.admin.user.setOrgId(myOrgId);
+try {
+  const result = await api.admin.user.batchCreate(fd, session);
+  console.log(`${result.created} created, ${result.skipped} skipped`);
+} catch (ex) {
+  if (ex?.response?.status === 422 && ex.response.data?.results) {
+    // All-skipped batch — still a valid result to render.
+    console.warn('All rows skipped:', ex.response.data.results);
+  } else {
+    throw ex;
+  }
+}
 ```
 <a name="AdminUser+remove"></a>
 
@@ -4308,6 +4375,7 @@ Class for process, permission user
     * [.restart(params, session)](#Process+restart) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.reexecute(params, session)](#Process+reexecute) ⇒ <code>Promise.&lt;object&gt;</code>
     * [.reexecuteTask(params, session)](#Process+reexecuteTask) ⇒ <code>Promise.&lt;object&gt;</code>
+    * [.end(params, session)](#Process+end) ⇒ <code>Promise.&lt;object&gt;</code>
 
 <a name="Process+start"></a>
 
@@ -4739,6 +4807,22 @@ const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 const result = await api.user.process.reexecuteTask(params, session);
 console.log(result.taskId);
 ```
+<a name="Process+end"></a>
+
+### process.end(params, session) ⇒ <code>Promise.&lt;object&gt;</code>
+End a running process task from a specific flow step.
+
+**Kind**: instance method of [<code>Process</code>](#Process)  
+**Returns**: <code>Promise.&lt;object&gt;</code> - { response: 'OK' } on success  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to end the process task |
+| params.processId | <code>string</code> | Process id (_id database); |
+| params.orgId | <code>string</code> | Organization id (_id database); |
+| params.flowName | <code>string</code> | The flow name of the step to end; |
+| session | <code>string</code> | Session, token JWT |
+
 <a name="Register"></a>
 
 ## Register

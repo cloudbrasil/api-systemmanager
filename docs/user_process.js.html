@@ -792,6 +792,33 @@ class Process {
     }
   }
 
+  /**
+   * @description End a running process task from a specific flow step.
+   * @param {object} params Params to end the process task
+   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} params.flowName The flow name of the step to end;
+   * @param {string} session Session, token JWT
+   * @return {Promise&lt;object>} { response: 'OK' } on success
+   */
+  async end(params, session) {
+    const self = this;
+
+    try {
+      Joi.assert(params, Joi.object().required(), 'Params to end the process task');
+      Joi.assert(params.processId, Joi.string().required(), 'Process id (_id database)');
+      Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
+      Joi.assert(params.flowName, Joi.string().required(), 'Flow name of the step');
+      Joi.assert(session, Joi.string().required(), 'Session token JWT');
+
+      const {processId, orgId, flowName} = params;
+      const apiCall = self._client.post(`/organizations/${orgId}/process/${processId}/task/${flowName}/end`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
   async getStepHistory(params, session) {
     const self = this;
 

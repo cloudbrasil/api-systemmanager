@@ -2780,6 +2780,33 @@ class Process {
     }
   }
 
+  /**
+   * @description End a running process task from a specific flow step.
+   * @param {object} params Params to end the process task
+   * @param {string} params.processId Process id (_id database);
+   * @param {string} params.orgId Organization id (_id database);
+   * @param {string} params.flowName The flow name of the step to end;
+   * @param {string} session Session, token JWT
+   * @return {Promise<object>} { response: 'OK' } on success
+   */
+  async end(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to end the process task');
+      Joi__default["default"].assert(params.processId, Joi__default["default"].string().required(), 'Process id (_id database)');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.flowName, Joi__default["default"].string().required(), 'Flow name of the step');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const {processId, orgId, flowName} = params;
+      const apiCall = self._client.post(`/organizations/${orgId}/process/${processId}/task/${flowName}/end`, {}, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
   async getStepHistory(params, session) {
     const self = this;
 
@@ -14870,6 +14897,90 @@ class AdminUser {
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
 
       const apiCall = self.client.put(self._basePath(), payload, self._setHeader(session));
+      return self._returnData(await apiCall);
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Batch-create users from an uploaded Excel (.xlsx) or CSV file.
+   *
+   * Uploads the file as multipart/form-data. The server parses it, validates
+   * headers, de-duplicates emails, admits rows FIFO against the organization's
+   * user cap, and delegates the actual creation to the existing registration
+   * chain. Response is a per-row result array (created / existing / skipped).
+   *
+   * Status codes:
+   *   - 200 when at least one row was created or matched an existing user.
+   *   - 422 (same JSON body shape) when EVERY row was skipped — callers
+   *     should promote the 422 response body to a completed result, not an
+   *     error. Axios throws on 422 by default, so catch and inspect
+   *     `ex.response.data.results`.
+   *   - 400 for structural failures (invalid_file, missing_columns, empty_file,
+   *     too_many_rows) — `response.data.code` carries the machine-readable code.
+   *   - 403 when the caller does not belong to the target organization or lacks
+   *     user-admin role (code: 'forbidden').
+   *   - 413 when the uploaded file exceeds 2 MB.
+   *
+   * @param {FormData} formData A browser FormData instance with a single field
+   *   named `file` whose value is the .xlsx or .csv File/Blob. Must be
+   *   FormData so the browser/axios can set the multipart boundary.
+   * @param {string} session JWT session token
+   * @return {Promise<object>} Batch result:
+   *   {
+   *     total: number,
+   *     created: number,
+   *     existing: number,
+   *     skipped: number,
+   *     results: Array<{
+   *       row: number,                      // spreadsheet row (1-based, header = 1)
+   *       email: string,
+   *       status: 'created' | 'existing' | 'skipped',
+   *       userId: string | null,
+   *       message: string | null            // snake_case code, optionally `code:detail`
+   *     }>
+   *   }
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const fd = new FormData();
+   * fd.append('file', fileInput.files[0]);   // .xlsx or .csv
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * // Ensure the client is scoped to the caller's org:
+   * api.admin.user.setOrgId(myOrgId);
+   * try {
+   *   const result = await api.admin.user.batchCreate(fd, session);
+   *   console.log(`${result.created} created, ${result.skipped} skipped`);
+   * } catch (ex) {
+   *   if (ex?.response?.status === 422 && ex.response.data?.results) {
+   *     // All-skipped batch — still a valid result to render.
+   *     console.warn('All rows skipped:', ex.response.data.results);
+   *   } else {
+   *     throw ex;
+   *   }
+   * }
+   */
+  async batchCreate(formData, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(formData, Joi__default["default"].any().required(), 'Multipart FormData with a `file` field');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token');
+
+      // Do NOT force Content-Type — let the browser/axios set it with the
+      // correct multipart boundary. Raise the axios body-size caps to 5 MB
+      // (server enforces its own 2 MB cap via Hapi `maxBytes`).
+      const cfg = {
+        ...self._setHeader(session),
+        maxContentLength: 5 * 1024 * 1024,
+        maxBodyLength:    5 * 1024 * 1024
+      };
+      const apiCall = self.client.put(`${self._basePath()}/batch`, formData, cfg);
       return self._returnData(await apiCall);
     } catch (ex) {
       throw ex;
