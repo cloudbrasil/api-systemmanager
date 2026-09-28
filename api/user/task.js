@@ -256,6 +256,7 @@ class Task {
    * @param {string=} params.title - Task title
    * @param {array=} params.tags - Task tags
    * @param {string=} params.dueDate - Due date ISO string
+ * @param {object=} params.processProperties - Keys merged into the process's processProperties bag (search, task cards, BI); omitted when empty
    * @param {string} session - Session, token JWT
    * @return {Promise}
    * @public
@@ -279,7 +280,8 @@ class Task {
    *   order: 0,
    *   title: 'My Task',
    *   tags: [],
-   *   dueDate: '2024-01-15T00:00:00Z'
+   *   dueDate: '2024-01-15T00:00:00Z',
+ *   processProperties: { surgicalPatientName: 'Maria' } // optional, merged into the process bag
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.saveTask(params, session);
@@ -304,6 +306,7 @@ class Task {
       Joi.assert(params.title, Joi.string().allow(''), 'Task title');
       Joi.assert(params.tags, Joi.array(), 'Task tags');
       Joi.assert(params.dueDate, Joi.string(), 'Due date ISO string');
+      Joi.assert(params.processProperties, Joi.object(), 'Process properties to merge into the process bag');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {
@@ -321,7 +324,8 @@ class Task {
         order = 0,
         title = '',
         tags = [],
-        dueDate
+        dueDate,
+        processProperties
       } = params;
 
       const body = {
@@ -337,6 +341,13 @@ class Task {
         tags
       };
       if (dueDate) body.dueDate = dueDate;
+      // Forwarded verbatim; the server MERGES each key into the process's own
+      // `processProperties` bag (site setStepData). Omitted when empty so a save
+      // that has nothing to publish carries no key at all. Only a plain object
+      // travels: an array or scalar would be folded into the bag index by index.
+      if (_.isPlainObject(processProperties) && !_.isEmpty(processProperties)) {
+        body.processProperties = processProperties;
+      }
 
       const url = `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`;
       const apiCall = self._client.put(url, body, self._setHeader(session));
@@ -366,6 +377,7 @@ class Task {
    * @param {string=} params.title - Task title
    * @param {array=} params.tags - Task tags
    * @param {string=} params.dueDate - Due date ISO string
+ * @param {object=} params.processProperties - Keys merged into the process's processProperties bag (search, task cards, BI); omitted when empty
    * @param {string} session - Session, token JWT
    * @return {Promise}
    * @public
@@ -389,7 +401,8 @@ class Task {
    *   order: 0,
    *   title: 'My Task',
    *   tags: [],
-   *   dueDate: '2024-01-15T00:00:00Z'
+   *   dueDate: '2024-01-15T00:00:00Z',
+ *   processProperties: { surgicalPatientName: 'Maria' } // optional, merged into the process bag
    * };
    * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
    * await api.user.task.endTask(params, session);
@@ -414,6 +427,7 @@ class Task {
       Joi.assert(params.title, Joi.string().allow(''), 'Task title');
       Joi.assert(params.tags, Joi.array(), 'Task tags');
       Joi.assert(params.dueDate, Joi.string(), 'Due date ISO string');
+      Joi.assert(params.processProperties, Joi.object(), 'Process properties to merge into the process bag');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {
@@ -431,7 +445,8 @@ class Task {
         order = 0,
         title = '',
         tags = [],
-        dueDate
+        dueDate,
+        processProperties
       } = params;
 
       const body = {
@@ -447,6 +462,13 @@ class Task {
         tags
       };
       if (dueDate) body.dueDate = dueDate;
+      // Forwarded verbatim; the server MERGES each key into the process's own
+      // `processProperties` bag (site setStepData). Omitted when empty so a save
+      // that has nothing to publish carries no key at all. Only a plain object
+      // travels: an array or scalar would be folded into the bag index by index.
+      if (_.isPlainObject(processProperties) && !_.isEmpty(processProperties)) {
+        body.processProperties = processProperties;
+      }
 
       const url = `organizations/${orgId}/adhoc/${processId}/endprocess/${taskId}/${flowName}`;
       const apiCall = self._client.put(url, body, self._setHeader(session));
