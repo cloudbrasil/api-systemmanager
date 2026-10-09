@@ -257,6 +257,7 @@ class Task {
    * @param {array=} params.tags - Task tags
    * @param {string=} params.dueDate - Due date ISO string
  * @param {object=} params.processProperties - Keys merged into the process's processProperties bag (search, task cards, BI); omitted when empty
+   * @param {array=} params.fluencetaskhistories - task history entries to append, each { entryId, at, kind, component, version, where, data }
    * @param {string} session - Session, token JWT
    * @return {Promise}
    * @public
@@ -307,6 +308,7 @@ class Task {
       Joi.assert(params.tags, Joi.array(), 'Task tags');
       Joi.assert(params.dueDate, Joi.string(), 'Due date ISO string');
       Joi.assert(params.processProperties, Joi.object(), 'Process properties to merge into the process bag');
+      Joi.assert(params.fluencetaskhistories, Joi.array(), 'Task history entries to append');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {
@@ -325,7 +327,8 @@ class Task {
         title = '',
         tags = [],
         dueDate,
-        processProperties
+        processProperties,
+        fluencetaskhistories
       } = params;
 
       const body = {
@@ -347,6 +350,10 @@ class Task {
       // travels: an array or scalar would be folded into the bag index by index.
       if (_.isPlainObject(processProperties) && !_.isEmpty(processProperties)) {
         body.processProperties = processProperties;
+      }
+      // Task history entries (fluencetaskhistories) to append; omitted when empty.
+      if (Array.isArray(fluencetaskhistories) && fluencetaskhistories.length) {
+        body.fluencetaskhistories = fluencetaskhistories;
       }
 
       const url = `organizations/${orgId}/adhoc/${processId}/save/${taskId}/${flowName}`;
@@ -378,6 +385,7 @@ class Task {
    * @param {array=} params.tags - Task tags
    * @param {string=} params.dueDate - Due date ISO string
  * @param {object=} params.processProperties - Keys merged into the process's processProperties bag (search, task cards, BI); omitted when empty
+   * @param {array=} params.fluencetaskhistories - task history entries to append, each { entryId, at, kind, component, version, where, data }
    * @param {string} session - Session, token JWT
    * @return {Promise}
    * @public
@@ -428,6 +436,7 @@ class Task {
       Joi.assert(params.tags, Joi.array(), 'Task tags');
       Joi.assert(params.dueDate, Joi.string(), 'Due date ISO string');
       Joi.assert(params.processProperties, Joi.object(), 'Process properties to merge into the process bag');
+      Joi.assert(params.fluencetaskhistories, Joi.array(), 'Task history entries to append');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
       const {
@@ -446,7 +455,8 @@ class Task {
         title = '',
         tags = [],
         dueDate,
-        processProperties
+        processProperties,
+        fluencetaskhistories
       } = params;
 
       const body = {
@@ -468,6 +478,10 @@ class Task {
       // travels: an array or scalar would be folded into the bag index by index.
       if (_.isPlainObject(processProperties) && !_.isEmpty(processProperties)) {
         body.processProperties = processProperties;
+      }
+      // Task history entries (fluencetaskhistories) to append; omitted when empty.
+      if (Array.isArray(fluencetaskhistories) && fluencetaskhistories.length) {
+        body.fluencetaskhistories = fluencetaskhistories;
       }
 
       const url = `organizations/${orgId}/adhoc/${processId}/endprocess/${taskId}/${flowName}`;
