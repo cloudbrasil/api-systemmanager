@@ -3896,6 +3896,205 @@ class Task {
       throw ex;
     }
   }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get one page of a task's history entries (fluencetaskhistories)
+   * @param {object} params Params to get the task history
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.taskId Task id (_id database, 24 hex characters)
+   * @param {number=} params.page Page number, starting at 1 (default 1)
+   * @param {number=} params.perPage Entries per page, 1 to 500 (default 100)
+   * @param {string} session Session, token JWT
+   * @return {Promise} { hasPermission, total, entries }
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   taskId: '5df7f19618430c89a41a19d2',
+   *   page: 1,
+   *   perPage: 100
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.getTaskHistory(params, session);
+   */
+  async getTaskHistory(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get the task history');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().hex().length(24).required(), 'Task id (_id database)');
+      Joi__default["default"].assert(params.page, Joi__default["default"].number().integer().min(1), 'Page number');
+      Joi__default["default"].assert(params.perPage, Joi__default["default"].number().integer().min(1).max(500), 'Entries per page');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { orgId, taskId, page, perPage } = params;
+      const url = `/organizations/${orgId}/tasks/${taskId}/history?page=${page || 1}&perPage=${perPage || 100}`;
+      const apiCall = self._client.get(url, self._setHeader(session));
+
+      return self._returnData(await apiCall, { hasPermission: false, total: 0, entries: [] });
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the task chat sessions shown in the task history
+   * @param {object} params Params to get the task chat history
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.taskId Task id (_id database, 24 hex characters)
+   * @param {string} session Session, token JWT
+   * @return {Promise} { hasPermission, sessions }
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   taskId: '5df7f19618430c89a41a19d2'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.getTaskChatHistory(params, session);
+   */
+  async getTaskChatHistory(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get the task chat history');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().hex().length(24).required(), 'Task id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { orgId, taskId } = params;
+      const url = `/organizations/${orgId}/tasks/${taskId}/history/chats`;
+      const apiCall = self._client.get(url, self._setHeader(session));
+
+      return self._returnData(await apiCall, { hasPermission: false, sessions: [] });
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Get the task AI chat sessions shown in the task history
+   * @param {object} params Params to get the task AI chat history
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.taskId Task id (_id database, 24 hex characters)
+   * @param {string} session Session, token JWT
+   * @return {Promise} { hasPermission, sessions }
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   taskId: '5df7f19618430c89a41a19d2'
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.getTaskAiChatHistory(params, session);
+   */
+  async getTaskAiChatHistory(params, session) {
+    const self = this;
+
+    try {
+      Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to get the task AI chat history');
+      Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+      Joi__default["default"].assert(params.taskId, Joi__default["default"].string().hex().length(24).required(), 'Task id (_id database)');
+      Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+      const { orgId, taskId } = params;
+      const url = `/organizations/${orgId}/tasks/${taskId}/history/aichats`;
+      const apiCall = self._client.get(url, self._setHeader(session));
+
+      return self._returnData(await apiCall, { hasPermission: false, sessions: [] });
+    } catch (ex) {
+      throw ex;
+    }
+  }
+
+  /**
+   * @author Myndware <augusto.pissarra@myndware.com>
+   * @description Ask the server for an AI report of the task history. Never throws on an HTTP error:
+   *   it resolves { ok: false, status, message } so the caller keeps the status (e.g. 501 not configured, 403)
+   * @param {object} params Params to create the task AI report
+   * @param {string} params.orgId Organization id (_id database)
+   * @param {string} params.taskId Task id (_id database, 24 hex characters)
+   * @param {string=} params.language Report language: 'pt-BR' (default), 'en-US' or 'es'
+   * @param {object} params.processOntology Process ontology { entities: [], relations: [] }
+   * @param {array=} params.documentIds Document ids to read for the report (default [])
+   * @param {string} session Session, token JWT
+   * @return {Promise} { ok: true, status: 200, report } or { ok: false, status, message }
+   * @public
+   * @async
+   * @example
+   *
+   * const API = require('@docbrasil/api-systemmanager');
+   * const api = new API();
+   * const params = {
+   *   orgId: '55e4a3bd6be6b45210833fae',
+   *   taskId: '5df7f19618430c89a41a19d2',
+   *   language: 'pt-BR',
+   *   processOntology: { entities: [], relations: [] },
+   *   documentIds: []
+   * };
+   * const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+   * await api.user.task.createTaskAiReport(params, session);
+   */
+  async createTaskAiReport(params, session) {
+    const self = this;
+
+    Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to create the task AI report');
+    Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
+    Joi__default["default"].assert(params.taskId, Joi__default["default"].string().hex().length(24).required(), 'Task id (_id database)');
+    Joi__default["default"].assert(params.language, Joi__default["default"].string().valid('pt-BR', 'en-US', 'es'), 'Report language');
+    Joi__default["default"].assert(params.processOntology, Joi__default["default"].object({
+      entities: Joi__default["default"].array().required(),
+      relations: Joi__default["default"].array().required()
+    }).unknown(true).required(), 'Process ontology');
+    Joi__default["default"].assert(params.documentIds, Joi__default["default"].array().items(Joi__default["default"].string()), 'Document ids');
+    Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
+
+    const { orgId, taskId, language, processOntology, documentIds } = params;
+    const url = `/organizations/${orgId}/tasks/${taskId}/history/aireport`;
+    const body = {
+      language: language || 'pt-BR',
+      processOntology,
+      documentIds: documentIds || []
+    };
+    // The route takes up to about 115 s (20 s document reads + 90 s model).
+    const cfg = { ...self._setHeader(session), timeout: 150000 };
+
+    let response;
+    try {
+      response = await self._client.post(url, body, cfg);
+    } catch (ex) {
+      return {
+        ok: false,
+        status: (ex && ex.response && ex.response.status) || 0,
+        message: (ex && ex.response && ex.response.data && ex.response.data.message) || ''
+      };
+    }
+
+    if (response && response.status === 200) {
+      return { ok: true, status: 200, report: response.data };
+    }
+    return {
+      ok: false,
+      status: (response && response.status) || 0,
+      message: (response && response.data && response.data.message) || ''
+    };
+  }
 }
 
 /**
