@@ -664,7 +664,7 @@ class GeoLocation {
    * const api = new API();
    * const params = {
    *  address: 'Rua Sud Menucci, 615 - Vila Camilopolis, Santo André - SP',
-   *  apiKey: 'AIzaSyC7gJFOkuT-Mel3WZbX5uKuJ1USqLVkGnY',
+   *  apiKey: '...',
    * };
    * await api.general.geo.location(params);
    */
