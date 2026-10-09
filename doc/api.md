@@ -5029,6 +5029,10 @@ Class for task, permission user
     * [.getSummaryByTags(params, session)](#Task+getSummaryByTags) ⇒ <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code> \| <code>Promise.&lt;object&gt;</code>
     * [.saveTask(params, session)](#Task+saveTask) ⇒ <code>Promise</code>
     * [.endTask(params, session)](#Task+endTask) ⇒ <code>Promise</code>
+    * [.getTaskHistory(params, session)](#Task+getTaskHistory) ⇒ <code>Promise</code>
+    * [.getTaskChatHistory(params, session)](#Task+getTaskChatHistory) ⇒ <code>Promise</code>
+    * [.getTaskAiChatHistory(params, session)](#Task+getTaskAiChatHistory) ⇒ <code>Promise</code>
+    * [.createTaskAiReport(params, session)](#Task+createTaskAiReport) ⇒ <code>Promise</code>
 
 <a name="Task+findById"></a>
 
@@ -5179,6 +5183,8 @@ Save task progress without completing it
 | [params.title] | <code>string</code> | Task title |
 | [params.tags] | <code>array</code> | Task tags |
 | [params.dueDate] | <code>string</code> | Due date ISO string |
+| [params.processProperties] | <code>object</code> | Keys merged into the process's processProperties bag (search, task cards, BI); omitted when empty |
+| [params.fluencetaskhistories] | <code>array</code> | task history entries to append, each { entryId, at, kind, component, version, where, data } |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  
@@ -5200,7 +5206,8 @@ const params = {
   order: 0,
   title: 'My Task',
   tags: [],
-  dueDate: '2024-01-15T00:00:00Z'
+  dueDate: '2024-01-15T00:00:00Z',
+  processProperties: { surgicalPatientName: 'Maria' } // optional, merged into the process bag
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.task.saveTask(params, session);
@@ -5232,6 +5239,8 @@ End/complete a task and advance the workflow
 | [params.title] | <code>string</code> | Task title |
 | [params.tags] | <code>array</code> | Task tags |
 | [params.dueDate] | <code>string</code> | Due date ISO string |
+| [params.processProperties] | <code>object</code> | Keys merged into the process's processProperties bag (search, task cards, BI); omitted when empty |
+| [params.fluencetaskhistories] | <code>array</code> | task history entries to append, each { entryId, at, kind, component, version, where, data } |
 | session | <code>string</code> | Session, token JWT |
 
 **Example**  
@@ -5253,10 +5262,134 @@ const params = {
   order: 0,
   title: 'My Task',
   tags: [],
-  dueDate: '2024-01-15T00:00:00Z'
+  dueDate: '2024-01-15T00:00:00Z',
+  processProperties: { surgicalPatientName: 'Maria' } // optional, merged into the process bag
 };
 const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
 await api.user.task.endTask(params, session);
+```
+<a name="Task+getTaskHistory"></a>
+
+### task.getTaskHistory(params, session) ⇒ <code>Promise</code>
+Get one page of a task's history entries (fluencetaskhistories)
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Returns**: <code>Promise</code> - { hasPermission, total, entries }  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get the task history |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | Task id (_id database, 24 hex characters) |
+| [params.page] | <code>number</code> | Page number, starting at 1 (default 1) |
+| [params.perPage] | <code>number</code> | Entries per page, 1 to 500 (default 100) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '5df7f19618430c89a41a19d2',
+  page: 1,
+  perPage: 100
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.getTaskHistory(params, session);
+```
+<a name="Task+getTaskChatHistory"></a>
+
+### task.getTaskChatHistory(params, session) ⇒ <code>Promise</code>
+Get the task chat sessions shown in the task history
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Returns**: <code>Promise</code> - { hasPermission, sessions }  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get the task chat history |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | Task id (_id database, 24 hex characters) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '5df7f19618430c89a41a19d2'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.getTaskChatHistory(params, session);
+```
+<a name="Task+getTaskAiChatHistory"></a>
+
+### task.getTaskAiChatHistory(params, session) ⇒ <code>Promise</code>
+Get the task AI chat sessions shown in the task history
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Returns**: <code>Promise</code> - { hasPermission, sessions }  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to get the task AI chat history |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | Task id (_id database, 24 hex characters) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '5df7f19618430c89a41a19d2'
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.getTaskAiChatHistory(params, session);
+```
+<a name="Task+createTaskAiReport"></a>
+
+### task.createTaskAiReport(params, session) ⇒ <code>Promise</code>
+Ask the server for an AI report of the task history. Never throws on an HTTP error:
+  it resolves { ok: false, status, message } so the caller keeps the status (e.g. 501 not configured, 403)
+
+**Kind**: instance method of [<code>Task</code>](#Task)  
+**Returns**: <code>Promise</code> - { ok: true, status: 200, report } or { ok: false, status, message }  
+**Access**: public  
+**Author**: Myndware <augusto.pissarra@myndware.com>  
+
+| Param | Type | Description |
+| --- | --- | --- |
+| params | <code>object</code> | Params to create the task AI report |
+| params.orgId | <code>string</code> | Organization id (_id database) |
+| params.taskId | <code>string</code> | Task id (_id database, 24 hex characters) |
+| [params.language] | <code>string</code> | Report language: 'pt-BR' (default), 'en-US' or 'es' |
+| params.processOntology | <code>object</code> | Process ontology { entities: [], relations: [] } |
+| [params.documentIds] | <code>array</code> | Document ids to read for the report (default []) |
+| session | <code>string</code> | Session, token JWT |
+
+**Example**  
+```js
+const API = require('@docbrasil/api-systemmanager');
+const api = new API();
+const params = {
+  orgId: '55e4a3bd6be6b45210833fae',
+  taskId: '5df7f19618430c89a41a19d2',
+  language: 'pt-BR',
+  processOntology: { entities: [], relations: [] },
+  documentIds: []
+};
+const session = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+await api.user.task.createTaskAiReport(params, session);
 ```
 <a name="TaskAvailable"></a>
 
