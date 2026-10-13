@@ -579,7 +579,7 @@ class Kanban {
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process
-   * @param {string} params.title - The title of the new task
+   * @param {string} [params.title=''] - The title of the new task (optional, may be empty)
    * @param {string} params.status - The status id of the new task
    * @param {Array} [params.tags] - Array of tag ids for the new task (optional)
    * @param {Array} [params.tasks] - The task ids, in their current order, of each task inside the same status (optional)
@@ -624,7 +624,8 @@ class Kanban {
       Joi.assert(params, Joi.object().required(), 'Params to start task');
       Joi.assert(params.orgId, Joi.string().required(), 'Organization id (_id database)');
       Joi.assert(params.orgProcessName, Joi.string().required(), 'The name of the organization process');
-      Joi.assert(params.title, Joi.string().required(), 'The title of the new task');
+      // Optional and may be empty: a board that hides the title of its "+" creator starts an untitled task.
+      Joi.assert(params.title, Joi.string().allow('').optional(), 'The title of the new task');
       Joi.assert(params.status, Joi.string().required(), 'The status id of the new task');
       Joi.assert(session, Joi.string().required(), 'Session token JWT');
 
@@ -641,7 +642,7 @@ class Kanban {
       const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/tasks`;
 
       const payload = {
-        title,
+        title: title || '',
         status,
         tags,
         tasks

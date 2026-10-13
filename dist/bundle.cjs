@@ -13331,7 +13331,7 @@ class Kanban {
    * @param {Object} params - Parameters object
    * @param {string} params.orgId - Organization id (_id database)
    * @param {string} params.orgProcessName - The name of the organization process
-   * @param {string} params.title - The title of the new task
+   * @param {string} [params.title=''] - The title of the new task (optional, may be empty)
    * @param {string} params.status - The status id of the new task
    * @param {Array} [params.tags] - Array of tag ids for the new task (optional)
    * @param {Array} [params.tasks] - The task ids, in their current order, of each task inside the same status (optional)
@@ -13376,7 +13376,8 @@ class Kanban {
       Joi__default["default"].assert(params, Joi__default["default"].object().required(), 'Params to start task');
       Joi__default["default"].assert(params.orgId, Joi__default["default"].string().required(), 'Organization id (_id database)');
       Joi__default["default"].assert(params.orgProcessName, Joi__default["default"].string().required(), 'The name of the organization process');
-      Joi__default["default"].assert(params.title, Joi__default["default"].string().required(), 'The title of the new task');
+      // Optional and may be empty: a board that hides the title of its "+" creator starts an untitled task.
+      Joi__default["default"].assert(params.title, Joi__default["default"].string().allow('').optional(), 'The title of the new task');
       Joi__default["default"].assert(params.status, Joi__default["default"].string().required(), 'The status id of the new task');
       Joi__default["default"].assert(session, Joi__default["default"].string().required(), 'Session token JWT');
 
@@ -13393,7 +13394,7 @@ class Kanban {
       const endpoint = `/organization/${orgId}/kanban/${orgProcessName}/tasks`;
 
       const payload = {
-        title,
+        title: title || '',
         status,
         tags,
         tasks
