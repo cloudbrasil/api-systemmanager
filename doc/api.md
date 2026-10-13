@@ -3610,16 +3610,16 @@ The new task is the full object of the task, like when you search the task
 **Access**: public  
 **Author**: Myndware <augusto.pissarra@myndware.com>  
 
-| Param | Type | Description |
-| --- | --- | --- |
-| params | <code>Object</code> | Parameters object |
-| params.orgId | <code>string</code> | Organization id (_id database) |
-| params.orgProcessName | <code>string</code> | The name of the organization process |
-| params.title | <code>string</code> | The title of the new task |
-| params.status | <code>string</code> | The status id of the new task |
-| [params.tags] | <code>Array</code> | Array of tag ids for the new task (optional) |
-| [params.tasks] | <code>Array</code> | The task ids, in their current order, of each task inside the same status (optional) |
-| session | <code>string</code> | Session, token JWT |
+| Param | Type | Default | Description |
+| --- | --- | --- | --- |
+| params | <code>Object</code> |  | Parameters object |
+| params.orgId | <code>string</code> |  | Organization id (_id database) |
+| params.orgProcessName | <code>string</code> |  | The name of the organization process |
+| [params.title] | <code>string</code> | <code>&quot;&#x27;&#x27;&quot;</code> | The title of the new task (optional, may be empty) |
+| params.status | <code>string</code> |  | The status id of the new task |
+| [params.tags] | <code>Array</code> |  | Array of tag ids for the new task (optional) |
+| [params.tasks] | <code>Array</code> |  | The task ids, in their current order, of each task inside the same status (optional) |
+| session | <code>string</code> |  | Session, token JWT |
 
 **Example**  
 ```js
